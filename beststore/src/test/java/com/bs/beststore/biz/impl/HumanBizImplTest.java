@@ -23,7 +23,7 @@ public class HumanBizImplTest {
 		human.setHpwd(MD5Util.MD5(human.getHname() + human.getHpwd()));
 		human.setHsex(1);
 		human.setHlimit(2);
-		int index = humanBiz.add(human);
+		int index = humanBiz.register(human);
 		System.out.println(index);
 	}
 	
