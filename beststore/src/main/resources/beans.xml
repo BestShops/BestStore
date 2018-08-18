@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans.xsd
-    http://www.springframework.org/schema/context
-     http://www.springframework.org/schema/context/spring-context.xsd
-     http://www.springframework.org/schema/aop
-     http://www.springframework.org/schema/aop/spring-aop.xsd
-     http://www.springframework.org/schema/tx
-    http://www.springframework.org/schema/tx/spring-tx.xsd
-    http://www.springframework.org/schema/mvc
-    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	    http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd
+	    http://www.springframework.org/schema/aop
+	    http://www.springframework.org/schema/aop/spring-aop.xsd
+	    http://www.springframework.org/schema/tx
+	    http://www.springframework.org/schema/tx/spring-tx.xsd
+	    http://www.springframework.org/schema/mvc
+	    http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<!-- spring 包扫描 -->
-	<context:component-scan base-package="com.bs.beststore" />
+	<context:component-scan base-package="com.bs.beststore"/>
+	
+	<!--配置自动扫描 @Aspect 标签-->
+    <aop:aspectj-autoproxy/>
+ 
+    <!-- aop 开启 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 	
 	<!-- ======================以下是 spring mvc 相关配置======================= -->
 	<!-- spring mvc 用于处理静态资源 -->
-	<mvc:default-servlet-handler />
+	<mvc:default-servlet-handler/>
 	<!-- spring mvc 注解驱动 -->
 	<mvc:annotation-driven />
 	<!-- spring mvc 视图解析器 -->
-	<bean id="jspViewResolver"
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
@@ -38,22 +44,19 @@
 	
 	<!-- ======================以下是 mybatis 集成 spring 的相关配置======================= -->
 	<!-- spring 数据源 -->
-	<bean id="dataSource"
-		class="org.apache.commons.dbcp2.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName"
-			value="com.mysql.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://localhost/beststore?useUnicode=true&amp;characterEncoding=UTF-8" />
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://192.168.43.209:3306/beststore?useUnicode=true
+		&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
 		<property name="username" value="root" />
 		<property name="password" value="a" />
 	</bean>
 	<!-- mybatis 会话工厂 -->	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<!-- 引用 spring 数据源 -->
-		<property name="dataSource" ref="dataSource"></property>
+		<property name="dataSource" ref="dataSource"/>
 		<!-- 注册 mybatis 映射文件，纯接口方案可以省略这段配置 -->
-		<property name="mapperLocations" value="classpath:com.yc.demomybatis..*.xml"></property>
+		<property name="mapperLocations" value="classpath:com/bs/beststore/dao/*Mapper.xml"></property>
 		<!-- 配置其他 mybatis 框架属性 -->
 		<property name="configurationProperties">
 			<props>
@@ -63,7 +66,8 @@
 	</bean>
 	<!-- mapper 接口扫描bean，正确配置这个 bean 才能获取到 mybatis mapper -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="com.bs.beststore.dao" />
+		<property name="basePackage" value="com.bs.beststore.dao"></property>
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 	
 	<!-- ======================以下是 spring 事务管理的相关配置======================= -->
@@ -85,7 +89,7 @@
 
 	<!-- spring 事务切面配置 -->
     <aop:config>
-        <aop:pointcut id="txPc" expression="execution(* com.yc.**.biz.*.*(..))"/>
+        <aop:pointcut id="txPc" expression="execution(* com.bs.beststore.biz.**.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPc"/>
     </aop:config>
 
