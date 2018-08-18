@@ -34,7 +34,7 @@ public interface HumanBiz {
 	int upload(Human human);
 	
 	/**
-	 * 修改密码，因为是在用户界面，系统直接提供用户id、用户名，用户输入旧密码和新密码进行修改
+	 * 修改密码，因为是在用户界面，系统直接提供用户id、用户名，用户输入旧密码和新密码，根据用户id进行修改
 	 * @param human		存储在session中的登录者的信息
 	 * @param oldPwd	输入的旧密码
 	 * @param newPwd	输入的新密码
@@ -43,7 +43,7 @@ public interface HumanBiz {
 	int changePwd(Human human, String oldPwd, String newPwd) throws BizException;
 	
 	/**
-	 * 找回密码，验证过后，由用户名提供用户名、新的密码进行修改
+	 * 找回密码，验证过后，根据用户名修改新的密码
 	 * @param hname
 	 * @return	成功返回1，否则判定为失败
 	 */
