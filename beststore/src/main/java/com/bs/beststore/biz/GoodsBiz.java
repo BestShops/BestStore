@@ -36,11 +36,19 @@ public interface GoodsBiz {
 	Goods findByGid(int gid);
 	
 	/**
-	 * 通过关键字查找商品
-	 * @param goods	商品名，价格，上架时间
-	 * @return	返回商品信息
+	 * 通过关键字查找商品 
+	 * @param key 关键字 包括：商品名，价格，上架时间，*商品描述
+	 * @return 返回商品信息
 	 */
-	List<Goods> findByKeyWord(Goods goods);
+	List<Goods> findByKeyWord(String key);
 	
+	/**
+	 * 按价格区间查找商品信息
+	 * @param likeName 商品名包括的字段，模糊查找
+	 * @param minPrice 最低价格
+	 * @param maxPrice 最高价格
+	 * @return
+	 */
+	List<Goods> findByPrice(String likeName, Double minPrice, Double maxPrice);
 	
 }
