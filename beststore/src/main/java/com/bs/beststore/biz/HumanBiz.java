@@ -8,7 +8,7 @@ public interface HumanBiz {
 	
 	/**
 	 * 查看所有的用户信息
-	 * @return	返回一个Human类型的数组
+	 * @return	返回一个Human类型的集合
 	 */
 	List<Human> findAll();
 	
@@ -20,18 +20,18 @@ public interface HumanBiz {
 	int register(Human human);
 	
 	/**
-	 * 登录，由用户提供用户名和密码进行登录验证
+	 * 登录，由用户提供用户名(或手机号或邮箱)和密码进行登录验证
 	 * @param human 用户名、密码
 	 * @return	成功就返回登录者的具体信息，失败返回为空
 	 */
 	Human login(Human human);
 	
 	/**
-	 * 用户提供用户id，可以修改除密码外的所有信息，包括用户名
+	 * 修改用户信息  用户提供用户id，可以修改除密码外的所有信息，包括用户名
 	 * @param human
 	 * @return	成功返回1，否则判定为失败
 	 */
-	int upload(Human human);
+	int upload(Human human);    
 	
 	/**
 	 * 修改密码，因为是在用户界面，系统直接提供用户id、用户名，用户输入旧密码和新密码，根据用户id进行修改
@@ -48,5 +48,6 @@ public interface HumanBiz {
 	 * @return	成功返回1，否则判定为失败
 	 */
 	int findPwd(Human human);
+	
 
 }
