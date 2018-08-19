@@ -11,12 +11,12 @@ import com.bs.beststore.dao.GoodsMapper;
 import com.bs.beststore.vo.Goods;
 import com.bs.beststore.vo.GoodsExample;
 import com.bs.beststore.vo.GoodsExample.Criteria;
-import com.bs.beststore.vo.Type;
 
 @Service
 /**
  * 
  * 功能还没完善好，但大致功能已经实现，还没经过测试
+ * 
  * @author pch
  *
  */
@@ -54,35 +54,47 @@ public class GoodsBizImpl implements GoodsBiz {
 	}
 
 	@Override
-	public List<Goods> findAll(Type type) {
-
+	public List<Goods> findAll(Goods goods) {
+		// 可以根据商品id、商品类型、店铺id、商品状态
 		// ByExample查询
 		GoodsExample ge = new GoodsExample();
 		Criteria criteria = ge.createCriteria();
 
-		if (type != null) {
-			// 获取type.tid，传入类别，但是是以类别的tid进行查询
-			int tid = type.getTid();
-			criteria.andTidEqualTo(tid);
-			return gm.selectByExample(ge);
+		if (goods != null) {
+			// 获取商品id、商品类型、店铺id、商品状态，然后按条件查找，可多条件查找
+			if (goods.getTid() != null) {
+				int tid = goods.getTid();
+				criteria.andTidEqualTo(tid);
+			} else if (goods.getTid() != null) {
+				int gid = goods.getGid();
+				criteria.andTidEqualTo(gid);
+			} else if (goods.getSid() != null) {
+				int sid = goods.getSid();
+				criteria.andTidEqualTo(sid);
+			} else if (goods.getGstatus() != null) {
+				int gstatus = goods.getGstatus();
+				criteria.andTidEqualTo(gstatus);
+			}
+			/*
+			 *  相当于最后的限制条件，
+			 *  避免在上述类别都为空，但goods却不为空的情况下查询条件异常而导致查询出错，
+			 *  在原本的查询条件中，nowprice本就应当为空
+			 *  也就相当于拼接查询中的 where 1 = 1
+			 *  当然如果上述条件都不满足，查出的结果理想状态下应该为空
+			 */
+			criteria.andGnowpriceIsNull();
 		} else {
 			/*
 			 * 设置查询的tid不为空， 又因为tid是添加类别时系统自动生成的， 不可能为空，所以则为查询全部
 			 */
 			criteria.andTidIsNotNull();
-			return gm.selectByExample(ge);
 		}
-
-	}
-
-	@Override
-	public Goods findByGid(int gid) {
-		return gm.selectByPrimaryKey(gid);
+		return gm.selectByExample(ge);
 	}
 
 	@Override
 	public List<Goods> findByKeyWord(String key) {
-		
+
 		List<Goods> list = new ArrayList<Goods>();
 
 		// 按名字模糊查找
@@ -104,7 +116,7 @@ public class GoodsBizImpl implements GoodsBiz {
 		if (listByName != null) {
 			list.add((Goods) listByDesc);
 		}
-		
+
 		return list;
 	}
 
