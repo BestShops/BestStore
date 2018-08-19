@@ -19,6 +19,11 @@ public interface TypeBiz {
 	 */
 	int removeType(Type type);
 	
-	
+	/**
+	 * 修改商品类别
+	 * @param type	类别id
+	 * @return	成功返回1，否则为失败
+	 */
+	int modifyType(Type type);
 	
 }

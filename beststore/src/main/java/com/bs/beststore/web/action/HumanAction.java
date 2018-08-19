@@ -36,12 +36,11 @@ public class HumanAction {
 	 * 先验证验证码是否正确，然后再开始注册，注意，记得手动添加等级
 	 * @param human	用户名、密码、性别等
 	 * @param code	验证码
-	 * @param grade	用户等级（系统中固定）
 	 * @param out	返回给ajax的数据
 	 * @param session	将登录成功的登陆者的用户名存入session中hname
 	 */
 	@RequestMapping(value="register.do")
-	public void regist(Human human, String code, int grade, PrintWriter out, HttpSession session) {
+	public void regist(Human human, String code, PrintWriter out, HttpSession session) {
 		
 	}
 	
