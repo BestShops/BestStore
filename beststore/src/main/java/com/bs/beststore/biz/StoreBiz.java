@@ -20,19 +20,17 @@ public interface StoreBiz {
 	int register(Store store);
 	
 	/**
-	 * 登录，根据店铺名(或店铺号)和密码进行登录
-	 * @param store
+	 * 根据hid获取到店铺的详细信息
+	 * @param hid
 	 * @return	成功就返回店铺的具体信息，失败返回为null
 	 */
-	Store login(Store store);
+	Store findByHid(int hid) throws BizException;
 	
 	/**
-	 * 修改店铺信息
+	 * 修改店铺信息，根据主键sid修改，需要判断店铺名是否冲突
 	 * @param store	  店铺名，店铺说明，店铺状态
 	 * @return	成功返回1，否则为失败
 	 */
-	int changeInfo(Store store);
-	
-	
+	int changeInfo(Store store) throws BizException;
 	
 }
