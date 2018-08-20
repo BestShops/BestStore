@@ -3,7 +3,6 @@ package com.bs.beststore.biz;
 import java.util.List;
 
 import com.bs.beststore.vo.Goods;
-import com.bs.beststore.vo.Type;
 
 public interface GoodsBiz {
 	
@@ -22,25 +21,26 @@ public interface GoodsBiz {
 	int modifyGoods(Goods goods);
 	
 	/**
-	 * 查询所有的商品
-	 * @param type	type存在根据类别查询，type为null则查询所有
-	 * @return	返回商品信息集合
+	 * 查询所有的商品或者某个商品(具体查询)
+	 * @param goods  可以根据商品id、商品类型、店铺id、商品状态
+	 * @return
 	 */
-	List<Goods> findAll(Type type);
+	List<Goods> findAll(Goods goods);
 	
 	/**
-	 * 根据商品id查询商品信息
-	 * @param gid	商品号
-	 * @return	返回商品信息
+	 * 通过关键字查找商品 
+	 * @param key 关键字 包括：商品名，商品描述
+	 * @return 返回商品信息
 	 */
-	Goods findByGid(int gid);
+	List<Goods> findByKeyWord(String key);
 	
 	/**
-	 * 通过关键字查找商品
-	 * @param goods	商品名，价格，上架时间
-	 * @return	返回商品信息
+	 * 按价格区间查找商品信息
+	 * @param likeName 商品名包括的字段，模糊查找
+	 * @param minPrice 最低价格
+	 * @param maxPrice 最高价格
+	 * @return
 	 */
-	List<Goods> findByKeyWord(Goods goods);
-	
+	List<Goods> findByPrice(String likeName, Double minPrice, Double maxPrice);
 	
 }

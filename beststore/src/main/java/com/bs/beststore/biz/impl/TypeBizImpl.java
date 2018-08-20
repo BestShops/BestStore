@@ -43,7 +43,7 @@ public class TypeBizImpl implements TypeBiz {
 	}
 
 	@Override
-	public int changeType(Type type) throws BizException {
+	public int modifyType(Type type) throws BizException {
 		String tpriname = type.getTpriname();
 		String tsecname = type.getTsecname();
 		if (tpriname != null && tsecname != null && tpriname.equals(tsecname)) {

@@ -25,7 +25,7 @@ public interface TypeBiz {
 	 * @param type	id是必定会有的，类别名（主、次都可能有）
 	 * @return	成功返回1，否则为失败
 	 */
-	int changeType(Type type)  throws BizException;
+	int modifyType(Type type)  throws BizException;
 	
 	/**
 	 * 查看商品类别

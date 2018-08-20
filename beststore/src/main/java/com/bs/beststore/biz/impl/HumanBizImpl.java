@@ -14,6 +14,11 @@ import com.bs.beststore.vo.HumanExample;
 import com.bs.beststore.vo.HumanExample.Criteria;
 
 @Service
+/**
+ * 还没对此方式进行修改，睡觉了，明天晚上改！
+ * @author pch
+ *
+ */
 public class HumanBizImpl implements HumanBiz {
 
 	@Autowired
