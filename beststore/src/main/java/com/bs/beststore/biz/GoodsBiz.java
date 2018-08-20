@@ -1,7 +1,6 @@
 package com.bs.beststore.biz;
 
 import java.util.List;
-import java.util.Map;
 
 import com.bs.beststore.vo.Goods;
 
@@ -26,14 +25,14 @@ public interface GoodsBiz {
 	 * @param goods  可以根据商品id、商品类型、店铺id、商品状态
 	 * @return
 	 */
-	List<Map<String,Object>> findAll(Goods goods);
+	List<Goods> findAll(Goods goods);
 	
 	/**
 	 * 通过关键字查找商品 
 	 * @param key 关键字 包括：商品名，商品描述
 	 * @return 返回商品信息
 	 */
-	List<Map<String,Object>> findByKeyWord(String key);
+	List<Goods> findByKeyWord(String key);
 	
 	/**
 	 * 按价格区间查找商品信息
@@ -42,6 +41,6 @@ public interface GoodsBiz {
 	 * @param maxPrice 最高价格
 	 * @return
 	 */
-	List<Map<String,Object>> findByPrice(String likeName, Double minPrice, Double maxPrice);
+	List<Goods> findByPrice(String likeName, Double minPrice, Double maxPrice);
 	
 }

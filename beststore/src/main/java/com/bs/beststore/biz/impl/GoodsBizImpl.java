@@ -28,15 +28,11 @@ public class GoodsBizImpl implements GoodsBiz {
 	@Override
 	public int addGoods(Goods goods) {
 		// goods 必填(商品名，现价，描述，类别)，选填(原价)
-		if (goods.getGname() != null && goods.getGnowprice() != null && goods.getGdesc() != null
+		if (goods.getGname() != null 
+				&& goods.getGnowprice() != null 
+				&& goods.getGdesc() != null
 				&& goods.getTid() != null) {
-			// 用异常抛出判断是否写入成功，写入成功则返回1，写入失败则返回0
-			try {
-				gm.insert(goods);
-			} catch (Exception e) {
-				return 0;
-			}
-			return 1;
+			return gm.insert(goods);
 		} else {
 			return 0;
 		}
@@ -45,12 +41,7 @@ public class GoodsBizImpl implements GoodsBiz {
 	@Override
 	public int modifyGoods(Goods goods) {
 		// 可修改(商品名，原价，现价，描述，类别，商品状态)
-		try {
-			gm.updateByPrimaryKey(goods);
-		} catch (Exception e) {
-			return 0;
-		}
-		return 1;
+		return gm.updateByPrimaryKey(goods);
 	}
 
 	@Override
@@ -82,7 +73,7 @@ public class GoodsBizImpl implements GoodsBiz {
 			 *  也就相当于拼接查询中的 where 1 = 1
 			 *  当然如果上述条件都不满足，查出的结果理想状态下应该为空
 			 */
-			criteria.andGnowpriceIsNull();
+			criteria.andGnowpriceIsNotNull();
 		} else {
 			/*
 			 * 设置查询的tid不为空， 又因为tid是添加类别时系统自动生成的， 不可能为空，所以则为查询全部
