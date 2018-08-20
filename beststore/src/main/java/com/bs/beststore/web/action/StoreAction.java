@@ -11,7 +11,7 @@ import com.bs.beststore.vo.Store;
 @Controller
 public class StoreAction {
 
-	@Resource
+	//@Resource
 	private StoreBiz storeBiz;
 	
 	/**

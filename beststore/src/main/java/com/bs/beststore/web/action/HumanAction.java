@@ -26,8 +26,8 @@ public class HumanAction {
 	 * @param session	将登录成功的登陆者信息存入到session中的loginHuman(可读取完整数据)
 	 */
 	@RequestMapping(value="login.do")
-	public void login(Human human, String code, PrintWriter out, HttpSession session) {
-		
+	public String login(Human human, String code, PrintWriter out, HttpSession session) {
+		return "index";
 	}
 	
 	/**
@@ -40,8 +40,8 @@ public class HumanAction {
 	 * @param session	将登录成功的登陆者的用户名存入session中hname
 	 */
 	@RequestMapping(value="register.do")
-	public void regist(Human human, String code, PrintWriter out, HttpSession session) {
-		
+	public String regist(Human human, String code, PrintWriter out, HttpSession session) {
+		return "register";
 	}
 	
 	/**
