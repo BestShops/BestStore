@@ -34,7 +34,7 @@ public class StoreBizImpl implements StoreBiz {
 		StoreExample storeExample = new StoreExample();
 		Criteria criteria = storeExample.createCriteria();
 		criteria.andHidEqualTo(hid);
-		criteria.andStatusEqualTo(1);// 状态为正常
+		criteria.andSstatusEqualTo(1);// 状态为正常
 		List<Store> list = storeMapper.selectByExample(storeExample);
 		if (list == null || list.size() == 0) {
 			throw new BizException("该商铺不存在或已被下架，请联系超级管理员");
