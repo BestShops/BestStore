@@ -1,5 +1,8 @@
 package com.bs.beststore.biz;
 
+import java.util.List;
+import java.util.Map;
+
 import com.bs.beststore.vo.Ordersdetail;
 
 public interface OrdersdetailBiz {
@@ -13,9 +16,9 @@ public interface OrdersdetailBiz {
 	
 	
 	/**
-	 * 删除订单详情表
+	 * 查看订单详情表
 	 * @param ordersdetail	订单id
 	 * @return	成功返回1，否则为失败
 	 */
-	int removeOrdersDetail(Ordersdetail ordersdetail);
+	List<Map<String, Object>> findOrdersDetail(Ordersdetail ordersdetail);
 }

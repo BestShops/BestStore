@@ -73,9 +73,15 @@ public class HumanBizImpl implements HumanBiz {
 	}
 
 	@Override
-	public int findPwd(Human human) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int findPwd(Human human, String newPwd) {
+		// 通过验证后由用户名为查找条件，修改新密码
+		HumanExample example = new HumanExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andHnameEqualTo(human.getHname());
+		Human hm = new Human();
+		hm.setHpwd(MD5Util.MD5(human.getHname() + newPwd));
+		// 相当于：update human set password='xxx' where username='xxx'
+		return humanMapper.updateByExampleSelective(hm, example);
 	}
 	
 }
