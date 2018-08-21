@@ -32,4 +32,11 @@ public interface TypeBiz {
 	 */
 	List<Type> findAllType();
 	
+	/**
+	 * 根据主键查找
+	 * @param tid
+	 * @return
+	 */
+	Type findByTid(int tid);
+	
 }

@@ -34,4 +34,11 @@ public interface AddressBiz {
 	 */
 	List<Address> findAllAddress(int hid);
 	
+	/**
+	 * 根据主键查找
+	 * @param aid
+	 * @return
+	 */
+	Address findByAid(int aid);
+	
 }

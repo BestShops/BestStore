@@ -89,4 +89,9 @@ public class TypeBizImpl implements TypeBiz {
 		return false;
 	}
 
+	@Override
+	public Type findByTid(int tid) {
+		return typeMapper.selectByPrimaryKey(tid);
+	}
+
 }

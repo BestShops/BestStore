@@ -33,4 +33,11 @@ public interface StoreBiz {
 	 */
 	int changeInfo(Store store) throws BizException;
 	
+	/**
+	 * 根据主键查找
+	 * @param sid
+	 * @return
+	 */
+	Store findBySid(int sid);
+	
 }

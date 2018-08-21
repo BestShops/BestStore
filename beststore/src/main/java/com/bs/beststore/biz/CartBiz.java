@@ -1,7 +1,6 @@
 package com.bs.beststore.biz;
 
 import java.util.List;
-import java.util.Map;
 
 import com.bs.beststore.vo.Cart;
 
@@ -15,11 +14,18 @@ public interface CartBiz {
 	int addCartGoods(Cart cart);
 	
 	/**
-	 * 删除购物车商品或清空购物车
-	 * @param cart	购物车id
+	 * 清空购物车
+	 * @param hid	用户id
 	 * @return	成功返回1，否则为失败
 	 */
-	int removeCartGoods(Cart cart);
+	int removeCartGoods(int hid);
+	
+	/**
+	 * 根据cid删除购物车商品
+	 * @param cart
+	 * @return
+	 */
+	int removeByCid(Cart cart);
 	
 	/**
 	 * 修改购物车数量
@@ -29,14 +35,19 @@ public interface CartBiz {
 	int updateCartGoods(Cart cart);
 	
 	/**
-	 * 查询购物车的所有商品信息
+	 * 根据用户id去查询购物车的所有商品信息
 	 * @param cart	根据购物车信息去查找商品信息及商品图片信息
 	 * @return	商品信息和商品图片信息的集合
 	 */
-	List<Map<String,Object>> findCartGoods(Cart cart);
+	List<Cart> findByhid(int hid);
 	
 	
-	
+	/**
+	 * 根据主键查找
+	 * @param cid
+	 * @return
+	 */
+	Cart findByCid(int cid);
 	
 	
 }

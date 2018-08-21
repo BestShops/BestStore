@@ -58,4 +58,9 @@ public class StoreBizImpl implements StoreBiz {
 		return storeMapper.updateByPrimaryKeySelective(store);
 	}
 
+	@Override
+	public Store findBySid(int sid) {
+		return storeMapper.selectByPrimaryKey(sid);
+	}
+
 }
