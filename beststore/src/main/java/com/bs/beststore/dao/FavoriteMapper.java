@@ -10,8 +10,11 @@ import org.apache.ibatis.annotations.Select;
 
 public interface FavoriteMapper {
 	
-	@Select("select *,tid form favorite a left join goods b on a.gid=b.gid "
-			+ "left join photo c on b.gid=c.gid left join type t on b.tidwhere a.hid=#{params};")
+	@Select("select * form favorite f "
+			+ "left join goods g on f.gid=g.gid "
+			+ "left join photo p on g.gid=p.gid "
+			+ "left join type t on g.tid=t.tid "
+			+ "where f.hid=#{hid};")
 	List<Map<String, Object>> findByHid(@Param("hid")int hid);
 	
     /**

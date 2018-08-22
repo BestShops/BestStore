@@ -9,20 +9,13 @@ import org.springframework.stereotype.Service;
 
 import com.bs.beststore.biz.OrdersBiz;
 import com.bs.beststore.dao.OrdersMapper;
-import com.bs.beststore.dao.StoreMapper;
 import com.bs.beststore.vo.Orders;
-import com.bs.beststore.vo.OrdersExample;
-import com.bs.beststore.vo.OrdersExample.Criteria;
-import com.bs.beststore.vo.Store;
 
 @Service
 public class OrdersBizImpl implements OrdersBiz{
 
 	@Autowired
 	private OrdersMapper om;
-	
-	@Autowired
-	private StoreMapper sm;
 	
 	@Override
 	public int addOrders(Orders orders) {
@@ -61,23 +54,12 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public List<Map<String, Object>> findOrderByHid(Orders orders) {
-		OrdersExample example = new OrdersExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andHidEqualTo(orders.getHid());
-		om.selectByExample(example);
-		return null;
-		// TODO: 商量了之后再改
+		return om.findByHid(orders.getHid());
 	}
 
 	@Override
 	public List<Map<String, Object>> findOrderBySid(Orders orders, int sid) {
-		Store store = sm.selectByPrimaryKey(sid);
-		OrdersExample example = new OrdersExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andHidEqualTo(store.getHid());
-		om.selectByExample(example);
-		return null;
-		// TODO: 商量了之后再改
+		return om.findBySid(orders.getOstatus(), sid);	
 	}
 
 }
