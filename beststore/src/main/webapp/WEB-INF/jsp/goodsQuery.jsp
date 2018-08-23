@@ -102,7 +102,7 @@
 			<div class="pull-left">
 				<div class="item-list__area clearfix">
 					<div class="item-card">
-						<a href="item_show.html" class="photo">
+						<a href="goodsShowPage.do" class="photo">
 							<img src="images/temp/M-001.jpg" alt="锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款" class="cover">
 							<div class="name">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
 						</a>

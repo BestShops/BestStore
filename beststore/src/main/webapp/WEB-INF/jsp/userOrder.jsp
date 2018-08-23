@@ -50,7 +50,7 @@
 											<td>￥1000<br><span class="fz12 c6 text-nowrap">(含运费: ¥0.00)</span></td>
 											<td class="state">
 												<a class="but c6">等待付款</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -79,7 +79,7 @@
 											<td class="state">
 												<a class="but c6">等待收货</a>
 												<a href="udai_mail_query.html" class="but cr">查看物流</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -112,7 +112,7 @@
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
-												<a href="" class="but but-link">评价</a>
+												<a href="userOrderEvaluatePage.do" class="but but-link">评价</a>
 												<a href="" class="but c3">取消订单</a>
 											</td>
 										</tr>
@@ -136,11 +136,11 @@
 											<td class="state">
 												<a class="but c6">交易成功</a>
 												<a href="udai_mail_query.html" class="but cr">查看物流</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
-												<a href="" class="but but-link">评价</a>
+												<a href="userOrderEvaluatePage.do" class="but but-link">评价</a>
 												<a href="" class="but c3">取消订单</a>
 											</td>
 										</tr>
@@ -164,7 +164,7 @@
 											<td class="state">
 												<a class="but c6">交易成功</a>
 												<a href="udai_mail_query.html" class="but cr">查看物流</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -225,7 +225,7 @@
 											<td>￥1000<br><span class="fz12 c6 text-nowrap">(含运费: ¥0.00)</span></td>
 											<td class="state">
 												<a class="but c6">等待发货</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -252,7 +252,7 @@
 											<td>￥1000<br><span class="fz12 c6 text-nowrap">(含运费: ¥0.00)</span></td>
 											<td class="state">
 												<a class="but c6">等待发货</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -279,7 +279,7 @@
 											<td>￥1000<br><span class="fz12 c6 text-nowrap">(含运费: ¥0.00)</span></td>
 											<td class="state">
 												<a class="but c6">等待发货</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -339,7 +339,7 @@
 											<td class="state">
 												<a class="but c6">交易成功</a>
 												<a href="udai_mail_query.html" class="but cr">查看物流</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -367,7 +367,7 @@
 											<td class="state">
 												<a class="but c6">交易成功</a>
 												<a href="udai_mail_query.html" class="but cr">查看物流</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
@@ -395,7 +395,7 @@
 											<td class="state">
 												<a class="but c6">交易成功</a>
 												<a href="udai_mail_query.html" class="but cr">查看物流</a>
-												<a href="udai_order_detail.html" class="but c9">订单详情</a>
+												<a href="userOrderDetailPage.do" class="but c9">订单详情</a>
 											</td>
 											<td class="order">
 												<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
