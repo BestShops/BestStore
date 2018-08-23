@@ -23,7 +23,7 @@
 	<servlet-mapping>
 		<servlet-name>mvc</servlet-name>
 		<!-- 加个后缀，方便拦截动态请求 -->
-		<url-pattern>*.do</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<context-param>
 		<param-name>spring.profiles.active</param-name>

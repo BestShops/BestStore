@@ -44,11 +44,10 @@ public interface HumanBiz {
 	
 	/**
 	 * 找回密码，验证过后，根据用户名修改新的密码
-	 * @param hname 传入名字 human.setHname
-	 * @param newPwd 新密码
+	 * @param hname 传入名字 human.setHname，新密码
 	 * @return	成功返回1，否则判定为失败
 	 */
-	int findPwd(Human human, String newPwd);
+	int findPwd(Human human);
 	
 
 }

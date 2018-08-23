@@ -1,5 +1,7 @@
 package com.bs.beststore.web.action;
 
+import java.io.PrintWriter;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.vo.Goods;
+import com.bs.beststore.vo.Store;
 
 public class GoodsAction {
 	
@@ -15,22 +18,29 @@ public class GoodsAction {
 	
 	/**
 	 * 添加商品
-	 * @param goods	商品信息
+	 * @param goods	商品信息（包含类别id）
 	 * @param session	从会话中获取店铺id
 	 */
 	@RequestMapping(value="storeAddGoods.do")
-	public void addGoods(Goods goods,HttpSession session){
-		
+	public void addGoods(Goods goods,HttpSession session, PrintWriter out){
+		// 从session中获取sid，并设置到goods中
+		Store store = (Store) session.getAttribute("loginStore");
+		goods.setSid(store.getSid());
+		if (goodsBiz.addGoods(goods) == 1) {
+			out.print("OK");
+		} else {
+			out.println("添加失败，请稍后重试");
+		}
 	}
 	
 	/**
-	 * 修改商品信息(包括下架商品)
-	 * @param goods	商品信息
-	 * @param session	从会话中获取店铺id
+	 * 商家修改自己的商品信息(包括下架商品)
+	 * @param goods	商品信息 商品id
+	 * @param session
 	 */
 	@RequestMapping(value="storeModifyGoods.do")
 	public void modifyGoods(Goods goods,HttpSession session){
-		
+		goodsBiz.modifyGoods(goods);
 	}
 	
 	/**

@@ -10,4 +10,5 @@ public class AboutUsAction {
 	public String aboutUsPage(int page){
 		return "about-us-"+page;
 	}
+	
 }

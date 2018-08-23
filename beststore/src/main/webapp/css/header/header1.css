@@ -289,85 +289,56 @@
     position: relative; }
   .typeheader-1 .header-bottom .container .bottom3 {
     position: absolute;
-    bottom: 8px;
-    right: 0; }
-  .typeheader-1 .telephone {
-    float: right;
-    font-size: 12px; }
-  .typeheader-1 .telephone b {
-    font-size: 14px;
-    font-weight: 600; }
-  .typeheader-1 .telephone ul li {
-    display: inline-block;
-    position: relative;
-    list-style: outside none none;
-    padding-left: 18px;
-    margin-left: 18px;
-    padding-right: 0; }
-  .typeheader-1 .telephone ul li:after {
-    background-color: rgba(255, 255, 255, 0.4);
-    content: "";
-    height: 11px;
-    position: absolute;
-    left: 0;
-    top: 9px;
-    width: 1px; }
-  .typeheader-1 .telephone ul li a {
-    color: #fff;
-    text-transform: capitalize; }
-    .typeheader-1 .telephone ul li a i {
-      margin-right: 5px; }
+    bottom: 28px;
+    right: 175px;}
   .typeheader-1 .lang-curr {
     float: right; }
   .typeheader-1 .signin-w {
     padding-left: 30px;
-    float: right;
-    color: #fff;
-    font-size: 12px; }
+    float: right; }
   .typeheader-1 .signin-w ul li {
+	font-size: 14px;
+	font-weight:bold;
     float: left; }
   .typeheader-1 .signin-w ul li a {
-    color: #fff; }
-    .typeheader-1 .signin-w ul li a:hover {
-      color: #222; }
+    color: white; }
+  .typeheader-1 .signin-w ul li a:hover {
+    color: #FF5E00; }
   .typeheader-1 .welcome-msg {
     font-size: 12px;
     line-height: 36px;
     clear: both; }
-  .typeheader-1 .wishlist-comp {
+  .typeheader-1 .myinfo {
     float: right;
-    margin-right: 20px; }
-  .typeheader-1 .wishlist-comp li {
+    padding-right: 80px!important; }
+  .typeheader-1 .myinfo li {
     width: 40px;
     height: 40px;
     list-style: none;
     float: left;
-    padding-top: 8px;
-    margin-left: 15px; }
-  .typeheader-1 .wishlist-comp li.wishlist {
-    margin-top: 3px; }
-  .typeheader-1 .wishlist-comp li a i {
+    padding-top: 3px;
+     }
+  .typeheader-1 .myinfo li a i {
     font-size: 26px;
     color: #fff; }
-  .typeheader-1 .wishlist-comp li a span {
+  .typeheader-1 .myinfo li a span {
     display: none; }
-  .typeheader-1 .wishlist-comp li a.top-link-wishlist {
-    width: 35px;
-    height: 32px;
+  .typeheader-1 .myinfo li a.top-link-myheadphoto {
+    width: 40px;
+    height: 40px;
     text-align: center;
-    overflow: hidden;
     display: block;
     text-indent: -999em; }
-    .typeheader-1 .wishlist-comp li a.top-link-wishlist:before {
-      font-family: 'FontAwesome';
-      content: "\f004";
-      font-size: 26px;
-      color: #fff;
-      display: block;
-      text-indent: 0; }
-    .typeheader-1 .wishlist-comp li a.top-link-wishlist:hover:before {
-      color: #333; }
-  .typeheader-1 .wishlist-comp li a:hover i {
+  .typeheader-1 .myinfo li a.top-link-myheadphoto:before {
+    font-family: 'FontAwesome';
+    content: "";
+    font-size: 26px;
+    color: #fff;
+    display: block;
+    text-indent: 0; }
+  .typeheader-1 .myinfo li a.top-link-myheadphoto:hover:before {
+    color: #333; }
+  .typeheader-1 .myinfo li a:hover i {
     color: #333; }
   .typeheader-1 ul.top-link {
     list-style: none;
