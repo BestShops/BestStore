@@ -5,17 +5,17 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="css/iconfont.css">
-	<link rel="stylesheet" href="css/global.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="css/swiper.min.css">
-	<link rel="stylesheet" href="css/styles.css">
-	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
-	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
-	<script src="js/swiper.min.js" charset="UTF-8"></script>
-	<script src="js/global.js" charset="UTF-8"></script>
-	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
+	<link rel="stylesheet" href="/css/iconfont.css">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/css/swiper.min.css">
+	<link rel="stylesheet" href="/css/styles.css">
+	<script src="/js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+	<script src="/js/bootstrap.min.js" charset="UTF-8"></script>
+	<script src="/js/swiper.min.js" charset="UTF-8"></script>
+	<script src="/js/global.js" charset="UTF-8"></script>
+	<script src="/js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
 	<title>U袋网</title>
 </head>
 <body>
@@ -28,8 +28,8 @@
 				<a href="temp_article/udai_article4.html">帮助中心</a>
 			</div>
 			<div class="pull-right">
-				<a href="login.html"><span class="cr">登录</span></a>
-				<a href="login.html?p=register">注册</a>
+				<a href="loginPage.do"><span class="cr">登录</span></a>
+				<a href="loginPage.do?p=register">注册</a>
 				<a href="udai_welcome.html">我的U袋</a>
 				<a href="udai_order.html">我的订单</a>
 				<a href="udai_integral.html">积分平台</a>

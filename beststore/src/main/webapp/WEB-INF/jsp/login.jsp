@@ -5,16 +5,16 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="css/iconfont.css">
-	<link rel="stylesheet" href="css/global.css">
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="css/login.css">
-	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
-	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
-	<script src="js/jquery.form.js" charset="UTF-8"></script>
-	<script src="js/global.js" charset="UTF-8"></script>
-	<script src="js/login.js" charset="UTF-8"></script>
+	<link rel="stylesheet" href="/css/iconfont.css">
+	<link rel="stylesheet" href="/css/global.css">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="/css/login.css">
+	<script src="/js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+	<script src="/js/bootstrap.min.js" charset="UTF-8"></script>
+	<script src="/js/jquery.form.js" charset="UTF-8"></script>
+	<script src="/js/global.js" charset="UTF-8"></script>
+	<script src="/js/login.js" charset="UTF-8"></script>
 	<title>U袋网 - 登录 / 注册</title>
 </head>
 <body>

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexAction {
 	
-	@RequestMapping(path = {"/","/index"})
+	@RequestMapping(path = {"/"})
+	// 主页
 	public String index() {
 		return "index";
 	}
