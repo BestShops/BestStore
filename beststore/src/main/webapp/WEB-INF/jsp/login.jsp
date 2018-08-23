@@ -34,7 +34,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="login_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="login_phone" required placeholder="用户名/手机号/邮箱" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -96,14 +96,22 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="用户名" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group">
 								<input class="form-control" name="smscode" id="register_sms" placeholder="输入验证码" type="text">
 								<span class="input-group-btn">
-									<button class="btn btn-primary getsms" type="button">发送短信验证码</button>
+									<button class="btn btn-primary getsms" type="button">发送验证码</button>
 								</span>
 							</div>
 						</div>
@@ -157,14 +165,14 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="手机号" maxlength="11" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group">
 								<input class="form-control" name="sms" id="resetpwd_sms" placeholder="输入验证码" type="text">
 								<span class="input-group-btn">
-									<button class="btn btn-primary getsms" type="button">发送短信验证码</button>
+									<button class="btn btn-primary getsms" type="button">发送验证码</button>
 								</span>
 							</div>
 						</div>
