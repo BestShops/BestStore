@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * jsp页面的静态跳转
- *
  */
 @Controller
 public class IndexAction {
@@ -15,9 +14,10 @@ public class IndexAction {
 		return "index";
 	}
 	
-	@RequestMapping("loginPage.do")
-	public String loginPage() {
-		return "login";
+	@RequestMapping(path = "classRoomPage.do")
+	public String classRoomPage() {
+		return "classRoom";
 	}
+	
 
 }

@@ -1,330 +1,288 @@
-﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="zh-cmn-Hans">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">		
-	<title>Best Store</title>	
-	<link rel="stylesheet" type="text/css" href="css/style.css" />
-	<style type="text/css">
-	    .btn_tab_login{float: right; margin-top: 48px;}
-	    .btn_tab_login li{display: inline-block; margin-left:30px; font-size: 14px;}
-	    .btn_tab_login li.cur a{color:#d00;}
-	    input::-webkit-input-placeholder{color:#ccc;}
-	</style>
-	<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
-	<style type="text/css">
-	#weixin_login_container iframe{
-		width:158px;
-		height:158px;
-	}
-</style>
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/global.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/login.css">
+	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
+	<script src="js/jquery.form.js" charset="UTF-8"></script>
+	<script src="js/global.js" charset="UTF-8"></script>
+	<script src="js/login.js" charset="UTF-8"></script>
+	<title>U袋网 - 登录 / 注册</title>
 </head>
 <body>
-<div id="header">	
-</div>
-<div class="login-wrap">
-	<div class="wrap clearfix">
-		<div class="form-box fr loginV2"  style="display:block;">
-			<ul class="form-tab clearfix">
-				<li class="tab-li"><a href="javascript:;" tjjj="passport.login_type.wixin_qrcode">微信登录<i class="icon"></i></a></li>
-				<li class="tab-li cur"><a href="javascript:;" tjjj="passport.login_type.login_name">账号登录</a></li>
-			</ul>
-			<div class="form-con">
-				<div class="weixin-login" style="display:none;">
-					<div class="wx-box clearfix">
-						<a href="javascript:;" class="wx-img-box">
-							<img class="wx-qrCode" src="image/login/ewm.jpg" id="qrCodeImg">
-							<img class="wx-qrCode-logo" src="image/login/ewm.jpg" id="qrCodeLogo">
-							<img class="statusImg" src="image/login/wx-confirm.png" id="statusImg">
-							<div id="weixin_login_container" style="display:none;"></div>
-						</a>
-						<img src="image/login/wx-image.png" class="wx-image">
-					</div>
-					<p class="wx-text">微信扫一扫  快速登录</p>
-					<p class="wx-help"><a href="javascript:;" class="help-a">如何使用？</a></p>
-				</div>
-				<div class="login-normal" style="display:block;">
-					<form id="nameLoginForm" method="post" autocomplete="off" onsubmit="return false;">
-						<div class="form-error" style=""><i></i><label class="text"></label></div>
-						<dl class="clearfix">
-							<dt>账户名：</dt>
-							<dd><input type="text" name="loginName" id="normalUser" class="input-text" autocomplete="off" placeholder="用户名/邮箱/手机号" /></dd>
-						</dl>
-						<dl class="top1 clearfix">
-							<dt>密<em></em>码：</dt>
-							<dd><input type="password" name="password" id="normalPassword" class="input-text" placeholder="请输入密码" /></dd>
-						</dl>
-						
-						<div class="form-remember">
-							
-							<input name="rememberName" type="checkbox" id="remUser" class="rem-check" style="display:none;" checked="checked">
-							<span class="rem-box rem-box-r memCheck"><input name="rememberMe" type="checkbox" id="remLogin" class="rem-check">三个月之内免登录</span> 
-						</div>
-						<div class="btn-box clearfix">
-							<input id="normalSubmit" class="btn-settlement" type=submit value="登    录"  tjjj="passport.button.login" onclick="loginByName()">
-						
-						</div>
-						<div class="link-box clearfix">
-                            <a href="registerPage.do" class="register" tjjj="passport.login.fstreg">新用户注册</a>
-                            <a href="javascript:;" class="forget-pass" tjjj="passport.forget.password">忘记密码？</a>
-                        </div>
-					</form>
-					<div class="login-short clearfix">
-					   <div class="short-left">
-							<h3>使用合作账号登录：</h3>
-							<ul class="clearfix">
-								<li class="qq"><a a href="javascript:;" tjjj="passport.login.thd.login.qq"></a></li>
-								<li class="sina"><a href="javascript:;" tjjj="passport.login.thd.login.sina"></a></li>
-								<li class="weixin"><a href="javascript:;" tjjj="passport.login.thd.login.weixin"></a></li>
-							</ul>
-						</div>
-					   <div class="short-right">
-                            <h3>您还可以选择：</h3>
-                            <p class="phone-short clearfix">
-                                <i class="phone"></i>
-                                <a href="javascript:;" tjjj="" class="txt phoneLogin">手机快捷登录</a>
-                            </p>
-                       </div>
-					</div>
-				</div>
-			</div>
-		</div>
-			<!-- -快捷登录 -->	
-			<div class="form-box fr shortLogin" style="display:none;">
-				<h5 class="title">快捷登录</h5>
-           		 <div class="form-con">
-					<form id="mobileLoginForm" method="post" onsubmit="return mobileLoginCheck();">
-						<div class="form-error" style=""><i></i><label class="text"></label></div>
-						<dl class="clearfix">
-							<dt>手机号：</dt>
-							<dd><input name="mobile" type="text" id="partnerPhone" autocomplete="off" class="input-text mobile" maxlength="11" onblur="mobileCheck(this);"><span class="placeholder">请输入手机号</span></dd>
-						</dl>
-						<dl class="top1 clearfix">
-							<dt>验证码：</dt>
-							<dd>
-								<input name="smsCaptcha" type="text" id="partnerYzm" class="input-yzm" onblur="captchCheck(this);" maxlength="4" autocomplete="off"/>
-								<span class="span-yzm">
-									<img id="smsCaptchaImage" src="image/login/code.jpg" title="点击图片刷新校验码" alt="点击图片刷新校验码" onclick="changeCode('smsCaptchaImage','partnerYzm');"/>
-									<a href="javascript:changeCode('smsCaptchaImage','partnerYzm');" class="forget-pass">换一张</a>
-								</span>
-							</dd>
-						</dl>
-						<dl class="top2 clearfix">
-							<dt>校验码：</dt>
-							<dd>
-								<input name="code" type="text" id="partnerJym" class="input-jym" maxlength="6" autocomplete="off"/>
-								<a id="smsSendButton" href="javascript:sendSms(this);" class="span-jym disabled" tjjj="passport.send.msg">发送短信校验码</a>
-							</dd>
-						</dl>
-						<div class="form-remember">
-							
-							<input name="rememberName" type="checkbox" id="remUser1" class="rem-check" style="display:none;" checked="checked">
-							<span class="rem-box rem-box-r"><input name="rememberMe" type="checkbox" id="remLogin1" class="rem-check">三个月之内免登录</span> 
-						</div>
-						<div class="btn-box clearfix">
-							<input id="partnerSubmit" class="btn-settlement" type="submit" value="登    录" tjjj="passport.quick.button.login">
-							
-						</div>
-						<div class="link-box clearfix">
-                   			 <a href="javascript:;" class="backLogin">返回账号登录>></a>
-                		</div>
-					</form>
-					</div>
-			</div>
-			
+	<div class="public-head-layout container">
+		<a class="logo" href="index.html"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 	</div>
-</div>
-
-
-<div id="jia_footer">
-    <div class="jia_foot_info">
-        <div class="jia_foot_con">
-            <p class="jia_foot_link">
-                <a href="#" rel="nofollow" target="_blank">关于我们</a><span class="jia_split">|</span> <a href="#" target="_blank" rel="nofollow">联系我们</a><span class="jia_split">|</span> <a href="#" target="_blank" rel="nofollow">媒体报道</a><span class="jia_split">|</span> <a href="#" target="_blank" rel="nofollow">法律声明</a><span class="jia_split">|</span> <a href="javascript:;/help/0002.html" target="_blank" rel="nofollow">企业文化</a><span class="jia_split">|</span> <a href="javascript:;/link.html" target="_blank" rel="nofollow">友情链接</a><span class="jia_split">|</span> <a href="javascript:;/jmtg/index.html" target="_blank" rel="nofollow">加盟齐家</a><span class="jia_split">|</span> <a href="javascript:;/zhaoshang/" tjjj="sjrz.2" target="_blank" rel="nofollow">入驻齐家</a><span class="jia_split">|</span> <a href="javascript:;/help/0055.html" target="_blank" rel="nofollow">诚聘英才</a><span class="jia_split">|</span> <a href="javascript:;/help/0033.html" target="_blank">网站地图</a><span class="jia_split">|</span> <a href="javascript:;/app/" rel="nofollow" target="_blank">手机齐家</a><span class="jia_split">|</span> <a href="#" target="_blank" rel="nofollow">钱包</a><span class="jia_split">|</span> <a href="javascript:;/help/" tjjj="bottom.link.help">帮助中心</a><span class="jia_split">|</span> <a href="javascript:;" class="jia_foot_open">更多<i></i></a>
-            </p>
-            <p class="jia_foot_link footnone">
-                <a href="#" target="_blank" tjjj="footer.bottom.1">找装修公司</a><span class="jia_split">|</span> <a href="#" target="_blank" tjjj="footer.bottom.2">买建材家居</a>
-            </p>
-        </div>
-        <p>
-             版权所有Copyright ? 2005-2016 www.17sucai.com All rights reserved
-        </p>
-        <p>
-            沪ICP备xxxxxx号 沪B2-xxxx 组织机构代码证：xxxxx—1
-        </p>
-        <p>
-            中国互联网协会信用评价中心网信认证 网信编码:xxxxxx1
-        </p>
-
-        <p>
-            <a href="javascript:;">
-                <img src="image/login/gov-inco.jpg" border="0" width="40" height="44">
-            </a>
-            <a href="javascript:;/315/" target="_blank" style="margin-left:15px;">
-                <img src="image/login/315.gif" border="0">
-            </a>
-            <a style="margin-left:15px;" target="_blank" href="javascript:;">
-				<img border="0" src="image/login/jb.jpg">
-			</a>
-        </p>
-    </div>
-</div>
+	<div style="background:url(images/login_bg.jpg) no-repeat center center; ">
+		<div class="login-layout container">
+			<div class="form-box login">
+				<div class="tabs-nav">
+					<h2>欢迎登录U袋网平台</h2>
+				</div>
+				<div class="tabs_container">
+					<form class="tabs_form" action="" method="post" id="login_form">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="login_phone" required placeholder="用户名/手机号/邮箱" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								</div>
+								<input class="form-control password" name="password" id="login_pwd" placeholder="请输入密码" autocomplete="off" type="password">
+								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+							</div>
+						</div>
+						<div class="checkbox">
+	                        <label>
+	                        	<input checked="" id="login_checkbox" type="checkbox"><i></i> 30天内免登录
+	                        </label>
+	                        <a href="javascript:;" class="pull-right" id="resetpwd">忘记密码？</a>
+	                    </div>
+	                    <!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="login_error">
+								<!-- 错误信息 范例html
+								<div class="alert alert-warning alert-dismissible fade in" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<strong>密码错误</strong> 请重新输入密码
+								</div>
+								 -->
+							</div>
+						</div>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="login_submit" type="button">登录</button><br>
+	                    <p class="text-center">没有账号？<a href="javascript:;" id="register">免费注册</a></p>
+                    </form>
+                    <div class="tabs_div">
+	                    <div class="success-box">
+	                    	<div class="success-msg">
+								<i class="success-icon"></i>
+	                    		<p class="success-text">登录成功</p>
+	                    	</div>
+	                    </div>
+	                    <div class="option-box">
+	                    	<div class="buts-title">
+	                    		现在您可以
+	                    	</div>
+	                    	<div class="buts-box">
+	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
+	                    	</div>
+	                    </div>
+                    </div>
+                </div>
+			</div>
+			<div class="form-box register">
+  				<div class="tabs-nav">
+  					<h2>欢迎注册<a href="javascript:;" class="pull-right fz16" id="reglogin">返回登录</a></h2>
+  				</div>
+  				<div class="tabs_container">
+					<form class="tabs_form" action="index.html" method="post" id="register_form">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="用户名" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input class="form-control" name="smscode" id="register_sms" placeholder="输入验证码" type="text">
+								<span class="input-group-btn">
+									<button class="btn btn-primary getsms" type="button">发送验证码</button>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								</div>
+								<input class="form-control password" name="password" id="register_pwd" placeholder="请输入密码" autocomplete="off" type="password">
+								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+							</div>
+						</div>
+						<div class="checkbox">
+	                        <label>
+	                        	<input checked="" id="register_checkbox" type="checkbox"><i></i> 同意<a href="temp_article/udai_article3.html">U袋网用户协议</a>
+	                        </label>
+	                    </div>
+	                    <!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="register_error"></div>
+						</div>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="register_submit" type="button">注册</button>
+                    </form>
+                    <div class="tabs_div">
+	                    <div class="success-box">
+	                    	<div class="success-msg">
+								<i class="success-icon"></i>
+	                    		<p class="success-text">注册成功</p>
+	                    	</div>
+	                    </div>
+	                    <div class="option-box">
+	                    	<div class="buts-title">
+	                    		现在您可以
+	                    	</div>
+	                    	<div class="buts-box">
+	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
+	                    	</div>
+	                    </div>
+                    </div>
+                </div>
+			</div>
+			<div class="form-box resetpwd">
+  				<div class="tabs-nav clearfix">
+  					<h2>找回密码<a href="javascript:;" class="pull-right fz16" id="pwdlogin">返回登录</a></h2>
+  				</div>
+  				<div class="tabs_container">
+					<form class="tabs_form" action="https://rpg.blue/member.php?mod=logging&action=login" method="post" id="resetpwd_form">
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+								</div>
+								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<input class="form-control" name="sms" id="resetpwd_sms" placeholder="输入验证码" type="text">
+								<span class="input-group-btn">
+									<button class="btn btn-primary getsms" type="button">发送验证码</button>
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<div class="input-group-addon">
+									<span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+								</div>
+								<input class="form-control password" name="password" id="resetpwd_pwd" placeholder="新的密码" autocomplete="off" type="password">
+								<div class="input-group-addon pwd-toggle" title="显示密码"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+							</div>
+						</div>
+	                    <!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="resetpwd_error"></div>
+						</div>
+	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="resetpwd_submit" type="button">重置密码</button>
+                    </form>
+                    <div class="tabs_div">
+	                    <div class="success-box">
+	                    	<div class="success-msg">
+								<i class="success-icon"></i>
+	                    		<p class="success-text">密码重置成功</p>
+	                    	</div>
+	                    </div>
+	                    <div class="option-box">
+	                    	<div class="buts-title">
+	                    		现在您可以
+	                    	</div>
+	                    	<div class="buts-box">
+	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
+								<a role="button" href="login.html" class="btn btn-block btn-lg btn-info">返回登陆</a>
+	                    	</div>
+	                    </div>
+                    </div>
+                </div>
+			</div>
+			<script>
+				$(document).ready(function() {
+					// 判断直接进入哪个页面 例如 login.php?p=register
+					switch($.getUrlParam('p')) {
+						case 'register': $('.register').show(); break;
+						case 'resetpwd': $('.resetpwd').show(); break;
+						default: $('.login').show();
+					};
+					// 发送验证码事件
+					$('.getsms').click(function() {
+						var phone = $(this).parents('form').find('input.phone');
+						var error = $(this).parents('form').find('.error_msg');
+						switch(phone.validatemobile()) {
+							case 0:
+								// 短信验证码的php请求
+								error.html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
+								$(this).rewire(60);
+							break;
+							case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); break;
+							case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); break;
+							case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); break;
+						}
+					});
+					// 以下确定按钮仅供参考
+					$('.submit').click(function() {
+						var form = $(this).parents('form')
+						var phone = form.find('input.phone');
+						var pwd = form.find('input.password');
+						var error = form.find('.error_msg');
+						var success = form.siblings('.tabs_div');
+						var options = {
+							beforeSubmit: function () {
+								console.log('喵喵喵')
+							},
+							success: function (data) {
+								console.log(data)
+							}
+						}
+						// 验证手机号参考这个
+						switch(phone.validatemobile()) {
+							case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); return; break;
+							case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); return; break;
+							case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); return; break;
+						}
+						// 验证密码复杂度参考这个
+						switch(pwd.validatepwd()) {
+							case 1: error.html(msgtemp('<strong>密码不能为空</strong> 请输入密码',    'alert-warning')); return; break;
+							case 2: error.html(msgtemp('<strong>密码过短</strong> 请输入6位以上的密码','alert-warning')); return; break;
+							case 3: error.html(msgtemp('<strong>密码过于简单</strong><br>密码需为字母、数字或特殊字符组合',  'alert-warning')); return; break;
+						}
+						form.ajaxForm(options);
+						// 请求成功执行类似这样的事件
+						// form.fadeOut(150,function() {
+						// 	success.fadeIn(150);
+						// });
+					})
+				});
+			</script>
+		</div>
+	</div>
+	<div class="footer-login container clearfix">
+		<ul class="links">
+			<a href=""><li>网店代销</li></a>
+			<a href=""><li>U袋学堂</li></a>
+			<a href=""><li>联系我们</li></a>
+			<a href=""><li>企业简介</li></a>
+			<a href=""><li>新手上路</li></a>
+		</ul>
+		<!-- 版权 -->
+		<p class="copyright">
+			© 2005-2017 U袋网 版权所有，并保留所有权利<br>
+			ICP备案证书号：闽ICP备16015525号-2&nbsp;&nbsp;&nbsp;&nbsp;福建省宁德市福鼎市南下村小区（锦昌阁）1栋1梯602室&nbsp;&nbsp;&nbsp;&nbsp;Tel: 18650406668&nbsp;&nbsp;&nbsp;&nbsp;E-mail: 18650406668@qq.com
+		</p>
+	</div>
 </body>
 </html>
-<script type="text/javascript">
-var _wx_server_qr_code_count = 0;
-var _wx_server_qr_code_loaded = false;
-var _qr_code_limited = '';
-var _qr_code_wait_time = 20;
-var flashQrCodeWaitingTimer = null;
-var getQrCodeStatusTimer = null;
-var getQrCodeTimer = null;
-
-function loginByName() {
-	if (nameLoginCheck()) {
-		$.post("login.do",{
-			hname:$("#normalUser").val(),
-			hpwd:$("#normalPassword").val()
-		},function(data){
-			if (data == "OK") {
-				window.location.href = "/";
-			} else {
-				showError(data);
-			}
-		});
-	}
-}
-
-function nameLoginCheck(){
-	var loginName = $("#nameLoginForm").find("#normalUser").eq(0).val();
-	var password = $("#nameLoginForm").find("#normalPassword").eq(0).val();
-	if($(".tips ").is(":visible")){
-		return false;
-	}
-	if(loginName == null  || loginName == ""){
-		showError("请输入用户名");
-		return false;
-	}
-	if(password == null  || password == ""){
-		showError("请输入密码");
-		return false;
-	}
-	if($("#normalYzm")  && $("#nameLoginForm").find("#normalYzm").length > 0 ){
-		if($("#normalYzm").val() == "" || $("#normalYzm").val() == null){
-			showError("请输入验证码");
-			return false;
-		}
-	}
-	return true;
-}
-
-//手机登陆验证
-function mobileLoginCheck(){
-	var mobile = $("#mobileLoginForm").find("#partnerPhone").eq(0).val();
-	var captch = $("#mobileLoginForm").find("#partnerYzm").eq(0).val();
-	var code = $("#mobileLoginForm").find("#partnerJym").eq(0).val();
-	if(mobile == null || mobile == '' || !(_mobile_reg).test(mobile)){
-		showError("请填写正确的手机号");
-		return false;
-	}
-	if(captch == null || captch == "" || captch == undefined){
-		showError("请填写验证码");
-		return false;
-	}
-	if(code == null || code == ""){
-		showError("请填写校验码");
-		return false;
-	}
-	return true;
-}
-
-function mobileCheck(obj){
-	if(!(_mobile_reg).test($("#partnerPhone").val())){
-		showError("请填写正确的手机号");
-		return;
-	}else{
-		closeError();
-	}
-}
-
-//发送短信
-function sendSms(obj){
-	alert("信息已发送  www.17sucai.com - ");
-}
-
-function captchCheck(obj){
-	if(!(_mobile_reg).test($("#partnerPhone").val())){
-		showError("请填写正确的手机号");
-		return;
-	}
-	var captch = $(obj).val();
-	if(captch == '' || captch == null){
-		showError("请填写验证码");
-	}else{
-		checkCaptch(captch,
-					function(){
-						if(!$("#smsSendButton").hasClass("sending")){
-						 	$("#smsSendButton").removeClass("disabled");
-						}
-						 closeError();
-					},function(){
-						showError("验证码错误");
-						 $("#smsSendButton").addClass("disabled");
-					}
-		);
-	}
-}
-$(function(){
-	$(".form-tab li").on("click",function(){
-		var index = $(this).index();
-		$(this).addClass("cur").siblings().removeClass("cur");
-		$(".form-con>div").hide().eq(index).show();
-		if(index == 0){
-            $(".form-foot").hide();           
-        }else{
-            $(".form-foot").show();
-        }
-		$(".form-error").hide();
-	});
-	$(".weixin-login .help-a").hover(
-		function(){
-			$(".wx-img-box,.wx-image").stop();
-			$(this).parents(".weixin-login").find(".wx-img-box").animate({"marginLeft":"15px"},300,function(){
-				$(this).parents(".weixin-login").find(".wx-image").animate({"opacity":1},300);
-			});
-		},
-		function(){
-			$(".wx-img-box,.wx-image").stop();
-			$(this).parents(".weixin-login").find(".wx-image").stop().animate({"opacity":0},300,function(){
-				$(this).parents(".weixin-login").find(".wx-img-box").animate({"marginLeft":"110px"},300);
-			});
-		}
-	);
-
-	
-});
-
-$('.jia_foot_open').click(function(){
-    $('.footnone').slideToggle();
-    $(this).find('i').toggleClass('footnow');
-});
-$('.phoneLogin').click(function(){
-    $('.loginV2').hide();
-    $('.shortLogin').show();
-    $('.form-error').hide();
-});
-$('.backLogin').click(function(){
-	 $('.login-normal').show();
-    $('.loginV2').show();
-    $('.shortLogin').hide();
-    $('.form-error').hide();
-});
-//开启错误提示
-function showError(error){
-	$(".form-error").find("label").html(error);
-	$(".form-error").show();
-}
-</script>
