@@ -24,7 +24,7 @@ public interface HumanBiz {
 	 * @param human 用户名、密码
 	 * @return	成功就返回登录者的具体信息，失败返回为空
 	 */
-	Human login(Human human);
+	Human login(Human human)  throws BizException;
 	
 	/**
 	 * 修改用户信息  用户提供用户id，可以修改除密码外的所有信息，包括用户名

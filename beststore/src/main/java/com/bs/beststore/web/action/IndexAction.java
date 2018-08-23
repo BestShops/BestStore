@@ -16,7 +16,7 @@ public class IndexAction {
 		return "index";
 	}
 	
-	@RequestMapping("loginPage.do")
+	@RequestMapping("userLogin.do")
 	public String loginPage() {
 		return "login";
 	}

@@ -5,16 +5,16 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="/css/iconfont.css">
-	<link rel="stylesheet" href="/css/global.css">
-	<link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="/css/login.css">
-	<script src="/js/jquery.1.12.4.min.js" charset="UTF-8"></script>
-	<script src="/js/bootstrap.min.js" charset="UTF-8"></script>
-	<script src="/js/jquery.form.js" charset="UTF-8"></script>
-	<script src="/js/global.js" charset="UTF-8"></script>
-	<script src="/js/login.js" charset="UTF-8"></script>
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/global.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/login.css">
+	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
+	<script src="js/jquery.form.js" charset="UTF-8"></script>
+	<script src="js/global.js" charset="UTF-8"></script>
+	<script src="js/login.js" charset="UTF-8"></script>
 	<title>U袋网 - 登录 / 注册</title>
 </head>
 <body>
@@ -66,23 +66,6 @@
 	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="login_submit" type="button">登录</button><br>
 	                    <p class="text-center">没有账号？<a href="javascript:;" id="register">免费注册</a></p>
                     </form>
-                    <div class="tabs_div">
-	                    <div class="success-box">
-	                    	<div class="success-msg">
-								<i class="success-icon"></i>
-	                    		<p class="success-text">登录成功</p>
-	                    	</div>
-	                    </div>
-	                    <div class="option-box">
-	                    	<div class="buts-title">
-	                    		现在您可以
-	                    	</div>
-	                    	<div class="buts-box">
-	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
-								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
-	                    	</div>
-	                    </div>
-                    </div>
                 </div>
 			</div>
 			<div class="form-box register">
@@ -104,7 +87,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required placeholder="用户名" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_name" required placeholder="用户名" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -218,54 +201,29 @@
 						case 'resetpwd': $('.resetpwd').show(); break;
 						default: $('.login').show();
 					};
-					// 发送验证码事件
-					$('.getsms').click(function() {
-						var phone = $(this).parents('form').find('input.phone');
-						var error = $(this).parents('form').find('.error_msg');
-						switch(phone.validatemobile()) {
-							case 0:
-								// 短信验证码的php请求
-								error.html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
-								$(this).rewire(60);
-							break;
-							case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); break;
-							case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); break;
-							case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); break;
-						}
-					});
 					// 以下确定按钮仅供参考
-					$('.submit').click(function() {
-						var form = $(this).parents('form')
-						var phone = form.find('input.phone');
-						var pwd = form.find('input.password');
-						var error = form.find('.error_msg');
-						var success = form.siblings('.tabs_div');
-						var options = {
-							beforeSubmit: function () {
-								console.log('喵喵喵')
-							},
-							success: function (data) {
-								console.log(data)
+					$('#login_submit').click(function() {
+						var uname = $("#login_phone").val();
+						var upwd = $("#login_pwd").val();
+						if (uname == null || uname == "") {
+							$("#login_error").html(msgtemp('<strong>用户名为空</strong> 请输入用户名', 'alert-warning'));
+							return;
+						}
+						if (upwd == null || upwd == "") {
+							$("#login_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
+							return;
+						}
+						$.post("login.do",{
+							hname:uname,
+							hpwd:upwd
+						},function(data){
+							if (data == "OK") {
+								window.location.href = "showGoods.do";
+							} else {
+								$("#login_error").html(msgtemp(data, 'alert-warning'));
 							}
-						}
-						// 验证手机号参考这个
-						switch(phone.validatemobile()) {
-							case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); return; break;
-							case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); return; break;
-							case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); return; break;
-						}
-						// 验证密码复杂度参考这个
-						switch(pwd.validatepwd()) {
-							case 1: error.html(msgtemp('<strong>密码不能为空</strong> 请输入密码',    'alert-warning')); return; break;
-							case 2: error.html(msgtemp('<strong>密码过短</strong> 请输入6位以上的密码','alert-warning')); return; break;
-							case 3: error.html(msgtemp('<strong>密码过于简单</strong><br>密码需为字母、数字或特殊字符组合',  'alert-warning')); return; break;
-						}
-						form.ajaxForm(options);
-						// 请求成功执行类似这样的事件
-						// form.fadeOut(150,function() {
-						// 	success.fadeIn(150);
-						// });
-					})
+						});
+					});
 				});
 			</script>
 		</div>
