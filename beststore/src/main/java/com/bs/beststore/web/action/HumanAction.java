@@ -28,7 +28,7 @@ public class HumanAction {
 	 */
 	@RequestMapping(value = "login.do")
 	public void login(Human human, String code, PrintWriter out, HttpSession session) {
-		// 判断验证码是否正确
+		/*// 判断验证码是否正确
 		boolean result = false;
 		for (String s : CodeUtil.VerificationCode) {
 			if (s.equals(code)) {// 验证码正确
@@ -36,13 +36,13 @@ public class HumanAction {
 			}
 		}
 		// 进行登录操作
-		if (result) {
+		if (result) {*/
 			Human loginHuman = humanBiz.login(human);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
 			out.println("OK");
-		} else {
+		/*} else {
 			out.print("验证码错误，请重新输入");
-		}
+		}*/
 	}
 
 	/**
