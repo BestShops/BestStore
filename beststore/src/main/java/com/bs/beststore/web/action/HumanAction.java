@@ -1,11 +1,13 @@
 package com.bs.beststore.web.action;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.BizException;
@@ -40,7 +42,8 @@ public class HumanAction {
 		}
 		
 	}
-
+	
+	
 	/**
 	 * 从页面获取到用户名、密码、性别等，验证码，用户等级 验证信息的完整性，必需包含用户名、密码、性别，其他的可以没有（js或java均可）
 	 * 先验证验证码是否正确，然后再开始注册，注意，记得手动添加等级
@@ -50,22 +53,19 @@ public class HumanAction {
 	 * @param out     返回给ajax的数据
 	 * @param session 将登录成功的登陆者的用户名存入session中hname
 	 */
-	@RequestMapping(value = "register.do")
-	public void regist(Human human, String code, PrintWriter out, HttpSession session) {
-		// 判断验证码是否正确
-		boolean result = false;
-		for (String s : CodeUtil.VerificationCode) {
-			if (s.equals(code)) {// 验证码正确
-				result = true;
+	@RequestMapping("register.do")
+	public void register(Human human, String code, PrintWriter out, HttpSession session) {
+		human.setHlimit(0);
+		ArrayList<String> list = CodeUtil.VerificationCode;
+		for (int i = 0; i < list.size(); i++) {
+			if (list.get(i).substring(0, 4).equals(code) 
+					|| list.get(i).endsWith(human.getHemail())) {
+				humanBiz.register(human);
+				session.setAttribute("hname", human.getHname());// 将登录成功的用户信息存入到session中
+				out.print("OK");
+			} else {
+				out.print("验证码错误，请重新输入");
 			}
-		}
-		// 进行登录操作
-		if (result) {
-			humanBiz.register(human);
-			session.setAttribute("hname", human.getHname());// 将登录成功的用户信息存入到session中
-			out.println("OK");
-		} else {
-			out.print("验证码错误，请重新输入");
 		}
 	}
 

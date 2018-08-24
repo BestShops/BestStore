@@ -15,7 +15,7 @@
 							<a href="userInfoPage.do" class="edit"><i class="iconfont icon-edit"></i></a>
 						</div>
 						<p class="name text-nowrap"></p>
-						<p class="name text-nowrap">您好，18759808122！</p>
+						<p class="name text-nowrap">您好，${loginHuman.hname}</p>
 						<p class="level text-nowrap">身份：普通会员 <a href="agent_level.html">去开店</a></p>
 					</div>
 					<div class="pull-right user-nav">

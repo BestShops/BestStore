@@ -217,7 +217,7 @@
 							hpwd:upwd
 						},function(data){
 							if (data == "OK") {
-								window.location.href = "showGoods.do";
+								window.location.href = "welcomePage.do";
 							} else {
 								$("#login_error").html(msgtemp(data, 'alert-warning'));
 							}
@@ -241,7 +241,7 @@
 						},function(date){
 							if(date == "OK") {
 								$("#register_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
-								$(this).rewire(60);
+								$('#code_submit').rewire(60);
 							} else {
 								$("#register_error").html(msgtemp(data, 'alert-warning'));
 							}

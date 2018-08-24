@@ -1,5 +1,6 @@
 package com.bs.beststore.web.action;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -21,9 +22,6 @@ import com.bs.beststore.vo.Human;
 @Controller
 public class IndexAction {
 
-	@Resource
-	private HumanBiz hb;
-
 	@RequestMapping(path = { "/", "index" })
 	// 主页
 	public String index() {
@@ -37,26 +35,26 @@ public class IndexAction {
 		return "login";
 	}
 
-	@PostMapping("register.do")
-	public String register(Human human, String code) {
-		ArrayList<String> list = CodeUtil.VerificationCode;
-		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).substring(0, 4).equals(code) 
-					|| list.get(i).endsWith(human.getHemail())) {
-				hb.register(human);
-				return "OK";
-			}
-		}
-		return "验证码输入错误！";
-	}
-
-	@PostMapping("email.do")
-	public String email(@RequestParam("email") String email) {
+	@RequestMapping("email.do")
+	public void email(String email, PrintWriter out) {
 		CodeUtil cu = new CodeUtil(email);
 		// 生成激活码
 		String code = cu.generateUniqueCode();
 		// 通过线程的方式给用户发送一封邮件
 		new Thread(new MailUtil(email, code)).start();
-		return "OK";
+		out.print("OK"); 
 	}
+	
+	@RequestMapping("welcomePage.do")
+	// 个人主页
+	public String welcomePage() {
+		return "welcome";
+	}
+		
+	@RequestMapping("addressPage.do")
+	//	添加地址
+	public String addressPage() {
+		return "address";
+	}
+	
 }
