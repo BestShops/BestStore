@@ -37,17 +37,44 @@ public class HumanBizImpl implements HumanBiz {
 	}
 
 	@Override
-	public Human login(Human human) {
-		// 将密码修改为MD5(用户名+密码)
-		human.setHpwd(MD5Util.MD5(human.getHname() + human.getHpwd()));
-		
-		// 添加查询条件
+	public Human login(Human human) throws BizException {
+		// 先判断用户名
 		HumanExample humanExample = new HumanExample();
 		Criteria criteria = humanExample.createCriteria();
 		criteria.andHnameEqualTo(human.getHname());
-		criteria.andHpwdEqualTo(human.getHpwd());
-		
-		return humanMapper.selectByExample(humanExample).get(0);
+		if (humanMapper.selectByExample(humanExample).size() == 0) {// 如果用户名不存在
+			// 如果用户名不存在就判断输入的是否是号码
+			HumanExample humanExample1 = new HumanExample();
+			Criteria criteria1 = humanExample1.createCriteria();
+			criteria1.andHphoneEqualTo(Long.parseLong(human.getHname()));
+			List<Human> list1 = humanMapper.selectByExample(humanExample1);
+			if (list1.size() == 1) {// 如果该号码存在
+				human.setHname(list1.get(0).getHname());// 获取该号码对应的用户名
+			} else {
+				// 如果号码也不存在，就判断输入的是否是邮箱
+				HumanExample humanExample2 = new HumanExample();
+				Criteria criteria2 = humanExample2.createCriteria();
+				criteria2.andHemailEqualTo(human.getHname());
+				List<Human> list2 = humanMapper.selectByExample(humanExample2);
+				if (list2.size() == 1) {// 如果该邮箱存在
+					human.setHname(list2.get(0).getHname());// 获取该邮箱对应的用户名
+				} else {// 如果邮箱、电话、用户名皆不存在，返回错误，提醒用户重新输入
+					throw new BizException("账号不存在，请验证后重新输入");
+				}
+			}
+		}
+		// 如果输入的账号存在，则用户名已经获取到了，开始判断密码是否正确
+		HumanExample humanExample3 = new HumanExample();
+		Criteria criteria3 = humanExample3.createCriteria();
+		criteria3.andHnameEqualTo(human.getHname());
+		System.out.println(MD5Util.MD5("root123"));
+		criteria3.andHpwdEqualTo(MD5Util.MD5(human.getHname() + human.getHpwd()));// 密码是加密后存入数据库的，所以查询也要加密
+		List<Human> list3 = humanMapper.selectByExample(humanExample3);
+		if (list3.size() == 1) {// 用户名密码都正确，返回该用户的信息
+			return list3.get(0);
+		} else {// 用户名或密码错误
+			throw new BizException("账号或密码错误，请验证后重新输入");
+		}
 	}
 
 	@Override

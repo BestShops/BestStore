@@ -30,7 +30,9 @@ public class IndexAction {
 		return "index";
 	}
 
+	
 	@RequestMapping("userLogin.do")
+	// 跳转登录
 	public String loginPage() {
 		return "login";
 	}

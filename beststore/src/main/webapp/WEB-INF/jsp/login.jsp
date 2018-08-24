@@ -66,23 +66,6 @@
 	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="login_submit" type="button">登录</button><br>
 	                    <p class="text-center">没有账号？<a href="javascript:;" id="register">免费注册</a></p>
                     </form>
-                    <div class="tabs_div">
-	                    <div class="success-box">
-	                    	<div class="success-msg">
-								<i class="success-icon"></i>
-	                    		<p class="success-text">登录成功</p>
-	                    	</div>
-	                    </div>
-	                    <div class="option-box">
-	                    	<div class="buts-title">
-	                    		现在您可以
-	                    	</div>
-	                    	<div class="buts-box">
-	                    		<a role="button" href="index.html" class="btn btn-block btn-lg btn-default">继续访问商城</a>
-								<a role="button" href="udai_welcome.html" class="btn btn-block btn-lg btn-info">登录会员中心</a>
-	                    	</div>
-	                    </div>
-                    </div>
                 </div>
 			</div>
 			<div class="form-box register">
@@ -296,7 +279,6 @@
 							}
 						});
 					});
-					
 				});
 			</script>
 		</div>

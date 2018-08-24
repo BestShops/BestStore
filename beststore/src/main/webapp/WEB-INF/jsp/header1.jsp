@@ -24,7 +24,7 @@
 		<div class="inner">
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="agent_level.html">网店代销</a>
+				<a href="">申请网店</a>
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
@@ -303,7 +303,7 @@
 				<a href="index.do"><li class="active">首页</li></a>
 				<a href="aboutUsPage.do"><li>企业简介</li></a>
 				<a href="goodsQueryPage.do"><li>商品筛选</li></a>
-				<a href="temp_article/udai_article5.html"><li>我要开店</li></a>
+				<a href=""><li>申请网店</li></a>
 				<a href="classRoomPage.do"><li>U袋学堂</li></a>
 				<a href="udai_contract.html"><li>诚信合约</li></a>
 				<a href="item_remove.html"><li>博客</li></a>
@@ -329,11 +329,11 @@
 				<div class="agent-box">
 					<a href="#" class="agent">
 						<i class="iconfont icon-fushi"></i>
-						<p>申请网店代销</p>
+						<p>申请网店</p>
 					</a>
 					<a href="javascript:;" class="agent">
 						<i class="iconfont icon-agent"></i>
-						<p><span class="cr">9527</span>位代销商</p>
+						<p><span class="cr">9527</span>个网店</p>
 					</a>
 				</div>
 				<div class="verify-qq">

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bs.beststore.biz.BizException;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.util.CodeUtil;
 import com.bs.beststore.vo.Human;
@@ -17,7 +18,7 @@ public class HumanAction {
 
 	@Resource
 	private HumanBiz humanBiz;
-	
+
 	/**
 	 * 从页面获取到用户名、密码、验证码，验证三个信息的完整性（js或java均可） 先验证验证码是否正确，然后再开始验证用户名和密码是否正确
 	 * 
@@ -27,22 +28,17 @@ public class HumanAction {
 	 * @param session 将登录成功的登陆者信息存入到session中的loginHuman(可读取完整数据)
 	 */
 	@RequestMapping(value = "login.do")
-	public void login(Human human, String code, PrintWriter out, HttpSession session) {
-		/*// 判断验证码是否正确
-		boolean result = false;
-		for (String s : CodeUtil.VerificationCode) {
-			if (s.equals(code)) {// 验证码正确
-				result = true;
-			}
-		}
+	public void login(Human human, PrintWriter out, HttpSession session) {
 		// 进行登录操作
-		if (result) {*/
-			Human loginHuman = humanBiz.login(human);
+		Human loginHuman;
+		try {
+			loginHuman = humanBiz.login(human);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
-			out.println("OK");
-		/*} else {
-			out.print("验证码错误，请重新输入");
-		}*/
+			out.print("OK");
+		} catch (BizException e) {
+			out.print(e.getMessage());
+		}
+		
 	}
 
 	/**

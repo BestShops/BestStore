@@ -12,26 +12,26 @@
 					<div class="pull-left clearfix">
 						<div class="port b-r50 pull-left">
 							<img src="images/icons/default_avt.png" alt="用户名" class="cover b-r50">
-							<a href="udai_setting.html" class="edit"><i class="iconfont icon-edit"></i></a>
+							<a href="userInfoPage.do" class="edit"><i class="iconfont icon-edit"></i></a>
 						</div>
+						<p class="name text-nowrap"></p>
 						<p class="name text-nowrap">您好，18759808122！</p>
-						<p class="money text-nowrap">余额：¥88.0</p>
-						<p class="level text-nowrap">身份：普通会员 <a href="agent_level.html">提升</a></p>
+						<p class="level text-nowrap">身份：普通会员 <a href="agent_level.html">去开店</a></p>
 					</div>
 					<div class="pull-right user-nav">
-						<a href="udai_order.html" class="user-nav__but">
+						<a href="userOrderPage.do" class="user-nav__but">
 							<i class="iconfont icon-rmb fz40 cr"></i>
 							<div class="c6">待支付 <span class="cr">1</span></div>
 						</a>
-						<a href="udai_order.html" class="user-nav__but">
+						<a href="userOrderPage.do" class="user-nav__but">
 							<i class="iconfont icon-eval fz40 cr"></i>
 							<div class="c6">待评价 <span class="c3">0</span></div>
 						</a>
-						<a href="udai_collection.html" class="user-nav__but">
+						<a href="userCollectionPage.do" class="user-nav__but">
 							<i class="iconfont icon-star fz40 cr"></i>
 							<div class="c6">收藏 <span class="c3">0</span></div>
 						</a>
-						<a href="udai_coupon.html" class="user-nav__but">
+						<a href="couponPage.do" class="user-nav__but">
 							<i class="iconfont icon-quan fz40 cr"></i>
 							<div class="c6">优惠券 <span class="cr">2</span></div>
 						</a>
@@ -39,9 +39,9 @@
 							<i class="iconfont icon-jifen fz40 cr"></i>
 							<div class="c6">积分 <span class="cr">200</span></div>
 						</a>
-						<a href="udai_message.html" class="user-nav__but">
+						<a href="" class="user-nav__but">
 							<i class="iconfont icon-xiaoxi fz40 cr"></i>
-							<div class="c6">消息 <span class="cr">2</span></div>
+							<div class="c6">博客 <span class="cr">2</span></div>
 						</a>
 					</div>
 				</div>

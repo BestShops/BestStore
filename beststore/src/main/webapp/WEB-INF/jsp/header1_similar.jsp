@@ -24,7 +24,7 @@
 		<div class="inner">
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="agent_level.html">网店代销</a>
+				<a href="">网店代销</a>
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
