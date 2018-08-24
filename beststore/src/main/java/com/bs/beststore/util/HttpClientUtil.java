@@ -22,7 +22,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
   
-  
 public class HttpClientUtil {  
     private RequestConfig requestConfig = RequestConfig.custom()  
             .setSocketTimeout(15000)  

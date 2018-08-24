@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>源辰</title>
 </head>
-<body>
+<body align=center>
 <img alt="404" src="images/404.jpg">
 </body>
 </html>
