@@ -41,4 +41,9 @@ public interface AddressBiz {
 	 */
 	Address findByAid(int aid);
 	
+	/**
+	 * 修改默认
+	 */
+	int upDafault(Address address);
+	
 }

@@ -28,10 +28,4 @@ public class IndexAction {
 		return "welcome";
 	}
 		
-	@RequestMapping("addressPage.do")
-	//	添加地址
-	public String addressPage() {
-		return "address";
-	}
-	
 }

@@ -1,6 +1,8 @@
 package com.bs.beststore.biz.impl;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import com.bs.beststore.vo.HumanExample.Criteria;
 @Service
 /**
  * 还没对此方式进行修改，睡觉了，明天晚上改！
+ * 
  * @author pch
  *
  */
@@ -23,7 +26,7 @@ public class HumanBizImpl implements HumanBiz {
 
 	@Autowired
 	private HumanMapper humanMapper;
-	
+
 	@Override
 	public List<Human> findAll() {
 		return humanMapper.selectByExample(null);
@@ -43,26 +46,49 @@ public class HumanBizImpl implements HumanBiz {
 		Criteria criteria = humanExample.createCriteria();
 		criteria.andHnameEqualTo(human.getHname());
 		if (humanMapper.selectByExample(humanExample).size() == 0) {// 如果用户名不存在
-			// 如果用户名不存在就判断输入的是否是号码
-			HumanExample humanExample1 = new HumanExample();
-			Criteria criteria1 = humanExample1.createCriteria();
-			criteria1.andHphoneEqualTo(Long.parseLong(human.getHname()));
-			List<Human> list1 = humanMapper.selectByExample(humanExample1);
-			if (list1.size() == 1) {// 如果该号码存在
-				human.setHname(list1.get(0).getHname());// 获取该号码对应的用户名
+			// 如果用户名不存在就判断输入的是否是邮箱
+			String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
+			// 正则表达式的模式
+			Pattern p = Pattern.compile(RULE_EMAIL);
+			// 正则表达式的匹配器
+			Matcher m = p.matcher(human.getHname());
+			// 邮箱匹配成功，就获取到用户名
+			if (m.matches()) {
+				HumanExample humanExample1 = new HumanExample();
+				Criteria criteria1 = humanExample1.createCriteria();
+				criteria1.andHemailEqualTo(human.getHname());
+				List<Human> list1 = humanMapper.selectByExample(humanExample1);
+				if (list1.size() == 1) {// 如果该号码存在
+					human.setHname(list1.get(0).getHname());// 获取该号码对应的用户名
+				} else {
+					// 邮箱匹配失败，则表示用户名输入错误
+					throw new BizException("邮箱输入错误<br>请验证后重新输入");
+				}
 			} else {
-				// 如果号码也不存在，就判断输入的是否是邮箱
-				HumanExample humanExample2 = new HumanExample();
-				Criteria criteria2 = humanExample2.createCriteria();
-				criteria2.andHemailEqualTo(human.getHname());
-				List<Human> list2 = humanMapper.selectByExample(humanExample2);
-				if (list2.size() == 1) {// 如果该邮箱存在
-					human.setHname(list2.get(0).getHname());// 获取该邮箱对应的用户名
-				} else {// 如果邮箱、电话、用户名皆不存在，返回错误，提醒用户重新输入
-					throw new BizException("账号不存在，请验证后重新输入");
+				// 如果号码也不存在，就判断输入的是否是号码
+				String RULE_EMAIL1 = "^[1][3,4,5,8][0-9]{9}$";
+				// 正则表达式的模式
+				Pattern p1 = Pattern.compile(RULE_EMAIL1);
+				// 正则表达式的匹配器
+				Matcher m1 = p1.matcher(human.getHname());
+				if (m1.matches()) {
+					HumanExample humanExample2 = new HumanExample();
+					Criteria criteria2 = humanExample2.createCriteria();
+					criteria2.andHphoneEqualTo(Long.parseLong(human.getHname()));
+					List<Human> list2 = humanMapper.selectByExample(humanExample2);
+					if (list2.size() == 1) {// 如果该邮箱存在
+						human.setHname(list2.get(0).getHname());// 获取该邮箱对应的用户名
+					} else {
+						// 如果邮箱、电话、用户名皆不存在，返回错误，提醒用户重新输入
+						throw new BizException("手机号码输入错误<br>请验证后重新输入");
+					}
+				} else {
+					// 电话匹配失败，则表示用户名输入错误
+					throw new BizException("用户名输入<br>请验证后重新输入");
 				}
 			}
 		}
+
 		// 如果输入的账号存在，则用户名已经获取到了，开始判断密码是否正确
 		HumanExample humanExample3 = new HumanExample();
 		Criteria criteria3 = humanExample3.createCriteria();
@@ -110,5 +136,5 @@ public class HumanBizImpl implements HumanBiz {
 		// 相当于：update human set password='xxx' where username='xxx'
 		return humanMapper.updateByExampleSelective(hm, example);
 	}
-	
+
 }
