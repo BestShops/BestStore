@@ -78,7 +78,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required placeholder="邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机/邮箱" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -217,6 +217,7 @@
 							hpwd:upwd
 						},function(data){
 							if (data == "OK") {
+								$("#register_error").html(msgtemp('<strong>登录成功！</strong>', 'alert-success'));
 								window.location.href = "welcomePage.do";
 							} else {
 								$("#login_error").html(msgtemp(data, 'alert-warning'));
@@ -228,20 +229,39 @@
 					$('#code_submit').click(function() {
 						var email = $("#register_phone").val();
 						var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+						var ph = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
 						if( email == null || email == ""){
-							$("#register_error").html(msgtemp('<strong>邮箱地址为空</strong> 请输入邮箱地址','alert-warning')); 
+							$("#register_error").html(msgtemp('<strong>手机/邮箱为空</strong> 请输入手机/邮箱','alert-warning')); 
 							return;
 						} 
-						if( !re.test(email) ){
-							$("#register_error").html(msgtemp('<strong>邮箱地址错误</strong> 请输入正确的邮箱地址','alert-warning')); 
+						if( !re.test(email) && !ph.test(email) ){
+							$("#register_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
 							return;
-						}
-						$.post("email.do",{
+						} 
+						$.post("code.do",{
 							email:email
 						},function(date){
 							if(date == "OK") {
 								$("#register_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
 								$('#code_submit').rewire(60);
+							} else {
+								$("#register_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+					
+					// 验证用户名是否存在的失焦事件
+					$("#register_name").blur(function(){
+						var uname = $("#register_name").val();
+						if (uname == null || uname == "") {
+							$("#register_error").html(msgtemp('<strong>用户名不能</strong> 请输入用户名', 'alert-warning'));
+							return;
+						}
+						$.post("checkname.do",{
+							hname:uname
+						},function(data){
+							if (data == "OK") {
+								$("#register_error").html(msgtemp('<strong>该用户名可以使用！</strong>', 'alert-success'));
 							} else {
 								$("#register_error").html(msgtemp(data, 'alert-warning'));
 							}
@@ -265,14 +285,15 @@
 						if (upwd == null || upwd == "") {
 							$("#register_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
 							return;
-						}
+						} 
 						$.post("register.do",{
-							hemail:uemail,
+							emailorphone:uemail,
 							hname:uname,
 							hpwd:upwd,
 							code:code
 						},function(data){
 							if (data == "OK") {
+								$("#register_error").html(msgtemp('<strong>注册成功！正跳转至登录界面</strong>', 'alert-success'));
 								window.location.href = "userLogin.do";
 							} else {
 								$("#register_error").html(msgtemp(data, 'alert-warning'));

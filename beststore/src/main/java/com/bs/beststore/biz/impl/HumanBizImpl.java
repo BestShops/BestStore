@@ -110,5 +110,14 @@ public class HumanBizImpl implements HumanBiz {
 		// 相当于：update human set password='xxx' where username='xxx'
 		return humanMapper.updateByExampleSelective(hm, example);
 	}
+
+	@Override
+	public List<Human> findByName(Human human) {
+		// 通过验证后由用户名为查找条件，修改新密码
+		HumanExample example = new HumanExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andHnameEqualTo(human.getHname());
+		return humanMapper.selectByExample(example);
+	}
 	
 }

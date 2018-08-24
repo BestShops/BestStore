@@ -48,6 +48,12 @@ public interface HumanBiz {
 	 * @return	成功返回1，否则判定为失败
 	 */
 	int findPwd(Human human);
-	
+
+	/**
+	 * 通过用户名来查找是否已经存在用户，主要用来验证用户名重复
+	 * @param human 只需要传入Hname就行，即human.setHname
+	 * @return
+	 */
+	List<Human> findByName(Human human);
 
 }
