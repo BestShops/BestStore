@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -44,7 +45,7 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-6">
-								<button type="submit" class="but">保存</button>
+								<button type="submit" class="but" id="submit">保存</button>
 							</div>
 						</div>
 						<script src="js/jquery.citys.js"></script>
@@ -82,9 +83,9 @@
 									spareUrl: 'js/data_location/list.json',
 									dataType: 'json',
 									valueType: 'name',
-									province: '福建省',
-									city:'福州市',
-									area: '鼓楼区',
+									province: '湖南省',
+									city:'衡阳市',
+									area: '珠晖区',
 									onChange: function(data) {
 										townFormat(data)
 									},
@@ -107,58 +108,26 @@
 						<div class="tdf1"></div>
 					</div>
 					<div class="addr-list">
-						<div class="addr-item">
-							<div class="tdf1">喵喵喵</div>
-							<div class="tdf2 tdt-a_l">福建省 福州市 晋安区</div>
-							<div class="tdf3 tdt-a_l">浦下村74号</div>
-							<!-- <div class="tdf1">350111</div> -->
-							<div class="tdf1">153****7649</div>
-							<div class="tdf1 order">
-								<a href="udai_address_edit.html">修改</a><a href="">删除</a>
+						<c:forEach items="addresslist" var="a">
+							<div class="addr-item">
+								<div class="tdf1">${a.aconsignee}</div>
+								<div class="tdf2 tdt-a_l">${a.acity}</div>
+								<div class="tdf3 tdt-a_l">${a.alocation}</div>
+								<!-- <div class="tdf1">350111</div> -->
+								<div class="tdf1">${a.aphone}</div>
+								<div class="tdf1 order">
+									<a href="udai_address_edit.html">修改</a><a href="">删除</a>
+								</div>
+								<div class="tdf1">
+									<c:if test="${a.astatus}==1">
+										<a href="" class="default active">默认地址</a>
+									</c:if>
+									<c:if test="${a.astatus}==0">
+										<a href="" class="default" onclick="addressDefault.do">设为默认</a>
+									</c:if>
+								</div>
 							</div>
-							<div class="tdf1">
-								<a href="" class="default active">默认地址</a>
-							</div>
-						</div>
-						<div class="addr-item">
-							<div class="tdf1">喵污喵⑤</div>
-							<div class="tdf2 tdt-a_l">福建省 福州市 仓山区 建新镇</div>
-							<div class="tdf3 tdt-a_l">建新中心小学</div>
-							<!-- <div class="tdf1">350104</div> -->
-							<div class="tdf1">153****7649</div>
-							<div class="tdf1 order">
-								<a href="udai_address_edit.html">修改</a><a href="">删除</a>
-							</div>
-							<div class="tdf1">
-								<a href="" class="default">设为默认</a>
-							</div>
-						</div>
-						<div class="addr-item">
-							<div class="tdf1">taroxd</div>
-							<div class="tdf2 tdt-a_l">福建省 福州市 鼓楼区 鼓东街道</div>
-							<div class="tdf3 tdt-a_l">世界金龙大厦20层B北 福州腾讯企点运营中心</div>
-							<!-- <div class="tdf1">350104</div> -->
-							<div class="tdf1">153****7649</div>
-							<div class="tdf1 order">
-								<a href="udai_address_edit.html">修改</a><a href="">删除</a>
-							</div>
-							<div class="tdf1">
-								<a href="" class="default">设为默认</a>
-							</div>
-						</div>
-						<div class="addr-item">
-							<div class="tdf1">VIPArcher</div>
-							<div class="tdf2 tdt-a_l">福建省 福州市 仓山区 建新镇</div>
-							<div class="tdf3 tdt-a_l">详细地址</div>
-							<!-- <div class="tdf1">350104</div> -->
-							<div class="tdf1">153****7649</div>
-							<div class="tdf1 order">
-								<a href="udai_address_edit.html">修改</a><a href="">删除</a>
-							</div>
-							<div class="tdf1">
-								<a href="" class="default">设为默认</a>
-							</div>
-						</div>
+						</c:forEach>
 					</div>
 				</div>
 			</div>

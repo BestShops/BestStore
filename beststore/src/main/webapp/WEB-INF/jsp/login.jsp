@@ -218,7 +218,7 @@
 							hpwd:upwd
 						},function(data){
 							if (data == "OK") {
-								window.location.href = "showGoods.do";
+								window.location.href = "welcomePage.do";
 							} else {
 								$("#login_error").html(msgtemp(data, 'alert-warning'));
 							}

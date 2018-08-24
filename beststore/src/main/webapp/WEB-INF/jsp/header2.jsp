@@ -28,8 +28,7 @@
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
-				<a href="userLogin.do"><span class="cr">登录</span></a>
-				<a href="userLogin.do">注册</a>
+				<a href="userInfoPage.do"><span class="cr">${loginHuman.hname}</span></a>
 				<a href="welcomePage.do">我的U袋</a>
 				<a href="userOrderPage.do">我的订单</a>
 			</div>

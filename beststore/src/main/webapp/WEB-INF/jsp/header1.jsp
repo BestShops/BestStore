@@ -17,6 +17,40 @@
 	<script src="js/global.js" charset="UTF-8"></script>
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
 	<title>U袋网</title>
+	<script type="text/javascript">
+		// 我的U袋
+		function welcome() {
+			// 判断是否已经登录
+			if ('${loginHuman}'.length == 0) {
+				alert("您还没有登录，请先登录");
+				window.location.href = "userLogin.do";
+			} else {
+				window.location.href = "welcomePage.do";
+			}
+		}
+		
+		// 我的订单
+		function userOrder() {
+			// 判断是否已经登录
+			if ('${loginHuman}'.length == 0) {
+				alert("您还没有登录，请先登录");
+				window.location.href = "userLogin.do";
+			} else {
+				window.location.href = "userOrder.do";
+			}
+		}
+		
+		// 我的购物车
+		function shopcart() {
+			// 判断是否已经登录
+			if ('${loginHuman}'.length == 0) {
+				alert("您还没有登录，请先登录");
+				window.location.href = "userLogin.do";
+			} else {
+				window.location.href = "shopcarPage.do";
+			}
+		}
+	</script>
 </head>
 <body>
 	<!-- 顶部tab -->
@@ -30,8 +64,8 @@
 			<div class="pull-right">
 				<a href="userLogin.do"><span class="cr">登录</span></a>
 				<a href="userLogin.do?p=register">注册</a>
-				<a href="welcomePage.do">我的U袋</a>
-				<a href="userOrderPage.do">我的订单</a>
+				<a onclick="welcome()">我的U袋</a>
+				<a onclick="userOrder()">我的订单</a>
 			</div>
 		</div>
 	</div>
@@ -59,7 +93,7 @@
 				</p>
 			</div>
 			<div class="cart-box">
-				<a href="shopcartPage.do" class="cart-but">
+				<a onclick="shopcart()" class="cart-but">
 					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
 				</a>
 			</div>

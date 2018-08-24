@@ -21,5 +21,17 @@ public class IndexAction {
 	public String loginPage() {
 		return "login";
 	}
-
+	
+	@RequestMapping("welcomePage.do")
+	// 个人主页
+	public String welcomePage() {
+		return "welcome";
+	}
+		
+	@RequestMapping("addressPage.do")
+	//	添加地址
+	public String addressPage() {
+		return "address";
+	}
+	
 }
