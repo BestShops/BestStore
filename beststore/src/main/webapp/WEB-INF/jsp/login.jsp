@@ -5,21 +5,21 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="favicon.ico">
-	<link rel="stylesheet" href="/css/iconfont.css">
-	<link rel="stylesheet" href="/css/global.css">
-	<link rel="stylesheet" href="/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-	<link rel="stylesheet" href="/css/login.css">
-	<script src="/js/jquery.1.12.4.min.js" charset="UTF-8"></script>
-	<script src="/js/bootstrap.min.js" charset="UTF-8"></script>
-	<script src="/js/jquery.form.js" charset="UTF-8"></script>
-	<script src="/js/global.js" charset="UTF-8"></script>
-	<script src="/js/login.js" charset="UTF-8"></script>
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/global.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/login.css">
+	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
+	<script src="js/jquery.form.js" charset="UTF-8"></script>
+	<script src="js/global.js" charset="UTF-8"></script>
+	<script src="js/login.js" charset="UTF-8"></script>
 	<title>U袋网 - 登录 / 注册</title>
 </head>
 <body>
 	<div class="public-head-layout container">
-		<a class="logo" href="index.html"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+		<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 	</div>
 	<div style="background:url(images/login_bg.jpg) no-repeat center center; ">
 		<div class="login-layout container">
@@ -90,13 +90,12 @@
   					<h2>欢迎注册<a href="javascript:;" class="pull-right fz16" id="reglogin">返回登录</a></h2>
   				</div>
   				<div class="tabs_container">
-					<form class="tabs_form" action="index.html" method="post" id="register_form">
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="邮箱" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -104,14 +103,14 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required placeholder="用户名" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_name" required placeholder="用户名" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
 							<div class="input-group">
 								<input class="form-control" name="smscode" id="register_sms" placeholder="输入验证码" type="text">
 								<span class="input-group-btn">
-									<button class="btn btn-primary getsms" type="button">发送验证码</button>
+									<button class="btn btn-primary getsms" id="code_submit" type="button" >发送验证码</button>
 								</span>
 							</div>
 						</div>
@@ -134,7 +133,6 @@
 							<div class="error_msg" id="register_error"></div>
 						</div>
 	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="register_submit" type="button">注册</button>
-                    </form>
                     <div class="tabs_div">
 	                    <div class="success-box">
 	                    	<div class="success-msg">
@@ -165,7 +163,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="邮箱" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -218,54 +216,87 @@
 						case 'resetpwd': $('.resetpwd').show(); break;
 						default: $('.login').show();
 					};
-					// 发送验证码事件
-					$('.getsms').click(function() {
-						var phone = $(this).parents('form').find('input.phone');
-						var error = $(this).parents('form').find('.error_msg');
-						switch(phone.validatemobile()) {
-							case 0:
-								// 短信验证码的php请求
-								error.html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
-								$(this).rewire(60);
-							break;
-							case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); break;
-							case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); break;
-							case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); break;
+					
+					// 登录
+					$('#login_submit').click(function() {
+						var uname = $("#login_phone").val();
+						var upwd = $("#login_pwd").val();
+						if (uname == null || uname == "") {
+							$("#login_error").html(msgtemp('<strong>用户名为空</strong> 请输入用户名', 'alert-warning'));
+							return;
 						}
-					});
-					// 以下确定按钮仅供参考
-					$('.submit').click(function() {
-						var form = $(this).parents('form')
-						var phone = form.find('input.phone');
-						var pwd = form.find('input.password');
-						var error = form.find('.error_msg');
-						var success = form.siblings('.tabs_div');
-						var options = {
-							beforeSubmit: function () {
-								console.log('喵喵喵')
-							},
-							success: function (data) {
-								console.log(data)
+						if (upwd == null || upwd == "") {
+							$("#login_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
+							return;
+						}
+						$.post("login.do",{
+							hname:uname,
+							hpwd:upwd
+						},function(data){
+							if (data == "OK") {
+								window.location.href = "showGoods.do";
+							} else {
+								$("#login_error").html(msgtemp(data, 'alert-warning'));
 							}
+						});
+					});
+
+					// 发送验证码事件
+					$('#code_submit').click(function() {
+						var email = $("#register_phone").val();
+						var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+						if( email == null || email == ""){
+							$("#register_error").html(msgtemp('<strong>邮箱地址为空</strong> 请输入邮箱地址','alert-warning')); 
+							return;
+						} 
+						if( !re.test(email) ){
+							$("#register_error").html(msgtemp('<strong>邮箱地址错误</strong> 请输入正确的邮箱地址','alert-warning')); 
+							return;
 						}
-						// 验证手机号参考这个
-						switch(phone.validatemobile()) {
-							case 1: error.html(msgtemp('<strong>手机号码为空</strong> 请输入手机号码',    'alert-warning')); return; break;
-							case 2: error.html(msgtemp('<strong>手机号码错误</strong> 请输入11位数的号码','alert-warning')); return; break;
-							case 3: error.html(msgtemp('<strong>手机号码错误</strong> 请输入正确的号码',  'alert-warning')); return; break;
+						$.post("email.do",{
+							email:email
+						},function(date){
+							if(date == "OK") {
+								$("#register_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
+								$(this).rewire(60);
+							} else {
+								$("#register_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+					
+					// 注册
+					$('#register_submit').click(function() {
+						var uemail = $("#register_phone").val();
+						var uname = $("#register_name").val();
+						var code = $("#register_sms").val();
+						var upwd = $("#register_pwd").val();
+						if (uname == null || uname == "") {
+							$("#register_error").html(msgtemp('<strong>用户名为空</strong> 请输入用户名', 'alert-warning'));
+							return;
 						}
-						// 验证密码复杂度参考这个
-						switch(pwd.validatepwd()) {
-							case 1: error.html(msgtemp('<strong>密码不能为空</strong> 请输入密码',    'alert-warning')); return; break;
-							case 2: error.html(msgtemp('<strong>密码过短</strong> 请输入6位以上的密码','alert-warning')); return; break;
-							case 3: error.html(msgtemp('<strong>密码过于简单</strong><br>密码需为字母、数字或特殊字符组合',  'alert-warning')); return; break;
+						if (code == null || code == "") {
+							$("#register_error").html(msgtemp('<strong>验证码为空</strong> 请输入验证码', 'alert-warning'));
+							return;
 						}
-						form.ajaxForm(options);
-						// 请求成功执行类似这样的事件
-						// form.fadeOut(150,function() {
-						// 	success.fadeIn(150);
-						// });
-					})
+						if (upwd == null || upwd == "") {
+							$("#register_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
+							return;
+						}
+						$.post("register.do",{
+							hemail:uemail,
+							hname:uname,
+							hpwd:upwd,
+							code:code
+						},function(data){
+							if (data == "OK") {
+								window.location.href = "userLogin.do";
+							} else {
+								$("#register_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+					
 				});
 			</script>
 		</div>
