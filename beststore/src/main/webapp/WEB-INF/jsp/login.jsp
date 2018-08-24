@@ -19,7 +19,7 @@
 </head>
 <body>
 	<div class="public-head-layout container">
-		<a class="logo" href="index.html"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+		<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 	</div>
 	<div style="background:url(images/login_bg.jpg) no-repeat center center; ">
 		<div class="login-layout container">
@@ -73,13 +73,12 @@
   					<h2>欢迎注册<a href="javascript:;" class="pull-right fz16" id="reglogin">返回登录</a></h2>
   				</div>
   				<div class="tabs_container">
-					<form class="tabs_form" action="index.html" method="post" id="register_form">
 						<div class="form-group">
 							<div class="input-group">
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机/邮箱" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -94,7 +93,7 @@
 							<div class="input-group">
 								<input class="form-control" name="smscode" id="register_sms" placeholder="输入验证码" type="text">
 								<span class="input-group-btn">
-									<button class="btn btn-primary getsms" type="button">发送验证码</button>
+									<button class="btn btn-primary getsms" id="code_submit" type="button" >发送验证码</button>
 								</span>
 							</div>
 						</div>
@@ -117,7 +116,6 @@
 							<div class="error_msg" id="register_error"></div>
 						</div>
 	                    <button class="btn btn-large btn-primary btn-lg btn-block submit" id="register_submit" type="button">注册</button>
-                    </form>
                     <div class="tabs_div">
 	                    <div class="success-box">
 	                    	<div class="success-msg">
@@ -148,7 +146,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="手机号/邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="邮箱" autocomplete="off" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -201,7 +199,8 @@
 						case 'resetpwd': $('.resetpwd').show(); break;
 						default: $('.login').show();
 					};
-					// 以下确定按钮仅供参考
+					
+					// 登录
 					$('#login_submit').click(function() {
 						var uname = $("#login_phone").val();
 						var upwd = $("#login_pwd").val();
@@ -218,9 +217,86 @@
 							hpwd:upwd
 						},function(data){
 							if (data == "OK") {
+								$("#register_error").html(msgtemp('<strong>登录成功！</strong>', 'alert-success'));
 								window.location.href = "welcomePage.do";
 							} else {
 								$("#login_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+
+					// 发送验证码事件
+					$('#code_submit').click(function() {
+						var email = $("#register_phone").val();
+						var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+						var ph = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+						if( email == null || email == ""){
+							$("#register_error").html(msgtemp('<strong>手机/邮箱为空</strong> 请输入手机/邮箱','alert-warning')); 
+							return;
+						} 
+						if( !re.test(email) && !ph.test(email) ){
+							$("#register_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
+							return;
+						} 
+						$.post("code.do",{
+							email:email
+						},function(date){
+							if(date == "OK") {
+								$("#register_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
+								$('#code_submit').rewire(60);
+							} else {
+								$("#register_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+					
+					// 验证用户名是否存在的失焦事件
+					$("#register_name").blur(function(){
+						var uname = $("#register_name").val();
+						if (uname == null || uname == "") {
+							$("#register_error").html(msgtemp('<strong>用户名不能</strong> 请输入用户名', 'alert-warning'));
+							return;
+						}
+						$.post("checkname.do",{
+							hname:uname
+						},function(data){
+							if (data == "OK") {
+								$("#register_error").html(msgtemp('<strong>该用户名可以使用！</strong>', 'alert-success'));
+							} else {
+								$("#register_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+					
+					// 注册
+					$('#register_submit').click(function() {
+						var uemail = $("#register_phone").val();
+						var uname = $("#register_name").val();
+						var code = $("#register_sms").val();
+						var upwd = $("#register_pwd").val();
+						if (uname == null || uname == "") {
+							$("#register_error").html(msgtemp('<strong>用户名为空</strong> 请输入用户名', 'alert-warning'));
+							return;
+						}
+						if (code == null || code == "") {
+							$("#register_error").html(msgtemp('<strong>验证码为空</strong> 请输入验证码', 'alert-warning'));
+							return;
+						}
+						if (upwd == null || upwd == "") {
+							$("#register_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
+							return;
+						} 
+						$.post("register.do",{
+							emailorphone:uemail,
+							hname:uname,
+							hpwd:upwd,
+							code:code
+						},function(data){
+							if (data == "OK") {
+								$("#register_error").html(msgtemp('<strong>注册成功！正跳转至登录界面</strong>', 'alert-success'));
+								window.location.href = "userLogin.do";
+							} else {
+								$("#register_error").html(msgtemp(data, 'alert-warning'));
 							}
 						});
 					});

@@ -8,14 +8,19 @@ import java.util.Random;
 public class CodeUtil {
 	public static ArrayList<String> VerificationCode = new ArrayList<String>();
 	
+	private String email;
+	
+	public CodeUtil(String email) {
+        this.email = email;
+    }
+	
 	/**
 	 * 生成邮箱验证码
 	 * @return
 	 */
-	public static String generateUniqueCode() {
+	public String generateUniqueCode() {
 		// 清理过时的验证码
-		CodeUtil codeUtil = new CodeUtil();
-		codeUtil.clearCode();
+		clearCode();
 		
 		// 验证码的数组
 		String codes = "0123456789AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz";
@@ -31,9 +36,12 @@ public class CodeUtil {
 		
 		// 添加时间戳
 		code += new Date().getTime();
-		
+		code += email;
 		// 将验证码存入到静态变量中
 		VerificationCode.add(code);
+		
+		System.out.println(code.substring(0, 4)+"--------------"+code.substring(4, 17)+"--------------"+code.substring(17, code.length()));
+		
 		return code;
 	}
 	
@@ -47,7 +55,7 @@ public class CodeUtil {
 			while(it.hasNext()) {
 				String x = it.next();
 				long nowTime = new Date().getTime();// 获取现在的时间戳
-				long codeTime = Long.parseLong(x.substring(4, x.length() - 1));// 获取验证码中的时间戳
+				long codeTime = Long.parseLong(x.substring(4, 17));// 获取验证码中的时间戳
 				long difference = nowTime - codeTime;// 获取两个时间戳之间的差值
 				if (difference > 15 * 60 * 1000) {// 将15分钟转换为时间戳的值：15分钟 * 60秒 * 1000毫秒
 					System.out.println(x);
