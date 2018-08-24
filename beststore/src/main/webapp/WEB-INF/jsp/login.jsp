@@ -153,7 +153,7 @@
 							<div class="input-group">
 								<input class="form-control" name="sms" id="resetpwd_sms" placeholder="输入验证码" type="text">
 								<span class="input-group-btn">
-									<button class="btn btn-primary getsms" type="button">发送验证码</button>
+									<button class="btn btn-primary getsms" id="resetcode_submit" type="button">发送验证码</button>
 								</span>
 							</div>
 						</div>
@@ -225,7 +225,7 @@
 						});
 					});
 
-					// 发送验证码事件
+					// 注册发送验证码事件
 					$('#code_submit').click(function() {
 						var email = $("#register_phone").val();
 						var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
@@ -297,6 +297,58 @@
 								window.location.href = "userLogin.do";
 							} else {
 								$("#register_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+					
+					// 忘记密码发送验证码事件
+					$('#resetcode_submit').click(function() {
+						var email = $("#resetpwd_phone").val();
+						var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
+						var ph = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+						if( email == null || email == ""){
+							$("#resetpwd_error").html(msgtemp('<strong>手机/邮箱为空</strong> 请输入手机/邮箱','alert-warning')); 
+							return;
+						} 
+						if( !re.test(email) && !ph.test(email) ){
+							$("#resetpwd_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
+							return;
+						} 
+						$.post("code.do",{
+							email:email
+						},function(date){
+							if(date == "OK") {
+								$("#resetpwd_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
+								$('#resetcode_submit').rewire(60);
+							} else {
+								$("#resetpwd_error").html(msgtemp(data, 'alert-warning'));
+							}
+						});
+					});
+					
+					// 忘记密码
+					$('#resetpwd_submit').click(function() {
+						var uemail = $("#resetpwd_phone").val();
+						var code = $("#resetpwd_sms").val();
+						var upwd = $("#resetpwd_pwd").val();
+						if (code == null || code == "") {
+							$("#resetpwd_error").html(msgtemp('<strong>验证码为空</strong> 请输入验证码', 'alert-warning'));
+							return;
+						}
+						if (upwd == null || upwd == "") {
+							$("#resetpwd_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
+							return;
+						} 
+						$.post("findPwd.do",{
+							emailorphone:uemail,
+							hpwd:upwd,
+							code:code
+						},function(data){
+							if (data == "OK") {
+								$("#resetpwd_error").html(msgtemp('<strong>密码修改成功！正跳转至登录界面</strong>', 'alert-success'));
+								window.location.href = "userLogin.do";
+							} else {
+								$("#resetpwd_error").html(msgtemp(data, 'alert-warning'));
 							}
 						});
 					});

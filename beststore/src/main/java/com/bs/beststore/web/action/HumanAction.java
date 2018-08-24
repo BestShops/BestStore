@@ -40,20 +40,25 @@ public class HumanAction {
 		} catch (BizException e) {
 			out.print(e.getMessage());
 		}
-		
+
 	}
-	
+
+	/**
+	 * 失焦判断用户名是否已经存在
+	 * 
+	 * @param human
+	 * @param out
+	 */
 	@RequestMapping("checkname.do")
 	public void checkname(Human human, PrintWriter out) {
-		
-		if(humanBiz.findByName(human).size() <= 0) {
+
+		if (humanBiz.findByCondition(human).size() <= 0) {
 			out.print("OK");
 		} else {
 			out.print("该用户名已存在！");
 		}
-		
 	}
-	
+
 	/**
 	 * 从页面获取到用户名、密码、性别等，验证码，用户等级 验证信息的完整性，必需包含用户名、密码、性别，其他的可以没有（js或java均可）
 	 * 先验证验证码是否正确，然后再开始注册，注意，记得手动添加等级
@@ -65,9 +70,9 @@ public class HumanAction {
 	 */
 	@RequestMapping("register.do")
 	public void register(Human human, String emailorphone, String code, PrintWriter out, HttpSession session) {
-		if(AccountValidatorUtil.isMobile(emailorphone + "")) {
+		if (AccountValidatorUtil.isMobile(emailorphone + "")) {
 			human.setHphone(Long.valueOf(emailorphone));
-		} else if(AccountValidatorUtil.isEmail(emailorphone +"")) {
+		} else if (AccountValidatorUtil.isEmail(emailorphone + "")) {
 			human.setHemail(emailorphone);
 		} else {
 			out.print("手机/邮箱格式错误，请重新输入");
@@ -75,12 +80,11 @@ public class HumanAction {
 		human.setHlimit(0);
 		ArrayList<String> list = CodeUtil.VerificationCode;
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).startsWith(code)
-					&& list.get(i).endsWith(emailorphone)) {
+			if (list.get(i).startsWith(code) && list.get(i).endsWith(emailorphone)) {
 				humanBiz.register(human);
 				session.setAttribute("hname", human.getHname());// 将登录成功的用户信息存入到session中
 				out.print("OK");
-			} 
+			}
 		}
 	}
 
@@ -92,26 +96,38 @@ public class HumanAction {
 	 * @param out     返回给ajax的数据
 	 * @param session 将登录成功的登陆者的用户名存入session中hname
 	 */
-	@RequestMapping(value = "findPwd.do")
-	public void findPwd(Human human, String code, PrintWriter out, HttpSession session) {
-		// 判断验证码是否正确
-		boolean result = false;
-		for (String s : CodeUtil.VerificationCode) {
-			if (s.equals(code)) {// 验证码正确
-				result = true;
-			}
-		}
-		// 进行登录操作
-		if (result) {
-			int ret = humanBiz.findPwd(human);
-			if (ret <= 0) {
-				out.print("用户名错误");
-			} else {
-				session.setAttribute("hname", human.getHname());// 将用户名存入到session中
-				out.println("OK");
-			}
+	@RequestMapping("findPwd.do")
+	public void findPwd(Human human, String emailorphone, String code, PrintWriter out, HttpSession session) {
+		if (AccountValidatorUtil.isMobile(emailorphone + "")) {
+			human.setHphone(Long.valueOf(emailorphone));
+		} else if (AccountValidatorUtil.isEmail(emailorphone + "")) {
+			human.setHemail(emailorphone);
 		} else {
-			out.print("验证码错误，请重新输入");
+			out.print("手机/邮箱格式错误，请重新输入");
+		}
+		ArrayList<String> list = CodeUtil.VerificationCode;
+		for (int i = 0; i < list.size(); i++) {
+			// 判断验证码是否存在，对应的手机号或者邮箱是否正确
+			if (list.get(i).startsWith(code) 
+					&& list.get(i).endsWith(emailorphone)
+					// 判断用户是否存在，用手机号或者邮箱查找，因为邮箱和手机号都是唯一的，所以查出的结果只会是一条
+					&& humanBiz.findByCondition(human).size() == 1) {
+				// 遍历出唯一的一条记录，由名字查找，
+				for (Human hm : humanBiz.findByCondition(human)) {
+					// 将传进来的新密码设置到hm上，再进行更新
+					hm.setHpwd(human.getHpwd());
+					
+					System.out.println("-------------------------" + hm.getHpwd());
+					
+					if (humanBiz.forgetPwd(hm) == 1) {
+						out.print("OK");
+					} else {
+						out.print("修改失败，请重试！");
+					}
+				}
+			} else {
+				out.print("该手机/邮箱未注册，请返回注册页面进行注册之后再进行修改！");
+			}
 		}
 	}
 

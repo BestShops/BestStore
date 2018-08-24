@@ -100,7 +100,7 @@ public class HumanBizImpl implements HumanBiz {
 	}
 
 	@Override
-	public int findPwd(Human human) {
+	public int forgetPwd(Human human) {
 		// 通过验证后由用户名为查找条件，修改新密码
 		HumanExample example = new HumanExample();
 		Criteria criteria = example.createCriteria();
@@ -112,12 +112,19 @@ public class HumanBizImpl implements HumanBiz {
 	}
 
 	@Override
-	public List<Human> findByName(Human human) {
+	public List<Human> findByCondition(Human human) {
 		// 通过验证后由用户名为查找条件，修改新密码
 		HumanExample example = new HumanExample();
 		Criteria criteria = example.createCriteria();
-		criteria.andHnameEqualTo(human.getHname());
+		if(human.getHname() != null) {
+			criteria.andHnameEqualTo(human.getHname());
+		} 
+		if(human.getHemail() != null) {
+			criteria.andHemailEqualTo(human.getHemail());
+		} 
+		if(human.getHphone() != null) {
+			criteria.andHphoneEqualTo(human.getHphone());
+		}
 		return humanMapper.selectByExample(example);
 	}
-	
 }
