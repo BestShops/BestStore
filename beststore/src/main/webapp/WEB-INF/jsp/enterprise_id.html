@@ -1,66 +1,114 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="stylesheet" href="css/iconfont.css">
+	<link rel="stylesheet" href="css/global.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="css/swiper.min.css">
+	<link rel="stylesheet" href="css/styles.css">
+	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
+	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
+	<script src="js/swiper.min.js" charset="UTF-8"></script>
+	<script src="js/global.js" charset="UTF-8"></script>
+	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
+	<title>U袋网</title>
 </head>
 <body>
-	<%@ include file="header2.jsp" %>
+	<!-- 顶部tab -->
+	<div class="tab-header">
+		<div class="inner">
+			<div class="pull-left">
+				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
+				<a href="agent_level.html">网店代销</a>
+				<a href="temp_article/udai_article4.html">帮助中心</a>
+			</div>
 			<div class="pull-right">
-				<div class="user-content__box clearfix bgf">
-					<div class="title">账户信息-修改登陆密码</div>
-					<div class="step-flow-box">
-						<div class="step-flow__bd">
-							<div class="step-flow__li step-flow__li_done">
-							  <div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
-							  <p class="step-flow__title-top">输入旧密码</p>
-							</div>
-							<div class="step-flow__line step-flow__line_ing">
-							  <div class="step-flow__process"></div>
-							</div>
-							<div class="step-flow__li">
-							  <div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
-							  <p  class="step-flow__title-top">重置登陆密码</p>
-							</div>
-							<div class="step-flow__line">
-							  <div class="step-flow__process"></div>
-							</div>
-							<div class="step-flow__li">
-							  <div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
-							  <p class="step-flow__title-top">完成</p>
-							</div>
-						</div>
-					</div>
-					<form action="userModifyPwdStep2.do" class="user-setting__form" role="form">
-						<div class="form-group">
-							<input class="form-control" name="phone" required="" maxlength="11" autocomplete="off" type="password">
-							<span class="tip-text">请输入原密码</span>
-							<span class="see-pwd pwd-toggle" title="显示密码"><i class="glyphicon glyphicon-eye-open"></i></span>
-							<span class="error_tip"></span>
-						</div>
-						<div class="user-form-group tags-box">
-							<button type="submit" class="btn ">提交</button>
-						</div>
-						<script src="js/login.js"></script>
-						<script>
-							$(document).ready(function(){
-								$('.form-control').on('blur focus',function() {
-									$(this).addClass('focus');
-									$('.error_tip').empty();
-									if ($(this).val() == ''){$(this).removeClass('focus')}
-								});
-							});
-						</script>
-					</form>
-				</div>
+				<a href="login.html"><span class="cr">登录</span></a>
+				<a href="login.html?p=register">注册</a>
+				<a href="udai_welcome.html">我的U袋</a>
+				<a href="udai_order.html">我的订单</a>
+				<a href="udai_integral.html">积分平台</a>
+			</div>
+		</div>
+	</div>
+	<!-- 搜索栏 -->
+	<div class="top-search">
+		<div class="inner">
+			<a class="logo" href="index.html"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+			<div class="search-box">
+				<form class="input-group">
+					<input placeholder="Ta们都在搜U袋网" type="text">
+					<span class="input-group-btn">
+						<button type="button">
+							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						</button>
+					</span>
+				</form>
+				<p class="help-block text-nowrap">
+					<a href="">连衣裙</a>
+					<a href="">裤</a>
+					<a href="">衬衫</a>
+					<a href="">T恤</a>
+					<a href="">女包</a>
+					<a href="">家居服</a>
+					<a href="">2017新款</a>
+				</p>
+			</div>
+			<div class="cart-box">
+				<a href="udai_shopcart.html" class="cart-but">
+					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- 内页导航栏 -->
+	<div class="top-nav bg3">
+		<div class="nav-box inner">
+			<div class="all-cat">
+				<div class="title"><i class="iconfont icon-menu"></i> 全部分类</div>
+			</div>
+			<ul class="nva-list">
+				<a href="index.html"><li>首页</li></a>
+				<a href="temp_article/udai_article10.html"><li>企业简介</li></a>
+				<a href="temp_article/udai_article5.html"><li>新手上路</li></a>
+				<a href="class_room.html"><li>U袋学堂</li></a>
+				<a href="enterprise_id.html"><li class="active">企业账号</li></a>
+				<a href="udai_contract.html"><li>诚信合约</li></a>
+				<a href="item_remove.html"><li>实时下架</li></a>
+			</ul>
+		</div>
+	</div>
+	<div class="content inner">
+		<section class="panel__div clearfix">
+			<div class="filter-value">
+				<div class="filter-title">企业账号</div>
+			</div>
+			<div class="html-code">
+				<p>
+					<b>平台指定企业账号：</b><br>
+					<table border="0">
+						<tr>
+							<td><p>fzxinghuiwlkj@163.com</p></td>
+							<td><p style="text-indent: 3em">用户名：福州星辉网络科技有限公司</p></td>
+						</tr>
+						<tr>
+							<td><p>fzxinghui@163.com</p></td>
+							<td><p style="text-indent: 3em">用户名：福州星辉网络科技有限公司</p></td>
+						</tr>
+						<tr>
+							<td><p>fzxhwangluo@126.com</p></td>
+							<td><p style="text-indent: 3em">用户名：福州星辉网络科技有限公司</p></td>
+						</tr>
+					</table>
+				</p>
+				<p><br></p>
+				<p>如有遇到到别的账号，请致电 0591-26163340 核实或前往首页验证。<br>否则，公司概不负责。</p>
 			</div>
 		</section>
 	</div>
-<<<<<<< HEAD
-	<%@ include file="rightMenu.jsp" %>
-	<%@ include file="bottom.jsp" %>
-=======
 	<!-- 右侧菜单 -->
 	<div class="right-nav">
 		<ul class="r-with-gotop">
@@ -158,6 +206,5 @@
 			</p>
 		</div>
 	</div>
->>>>>>> branch 'master' of https://github.com/BestShops/BestStore.git
 </body>
 </html>

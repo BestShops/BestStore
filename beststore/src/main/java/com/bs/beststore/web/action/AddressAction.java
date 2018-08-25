@@ -1,5 +1,6 @@
 package com.bs.beststore.web.action;
 
+<<<<<<< HEAD
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
@@ -52,6 +53,16 @@ public class AddressAction {
 		Human human = (Human) session.getAttribute("loginHuman");
 		System.out.println(human.getHid());
 		model.addAttribute("addresslist", addressBiz.findAllAddress(human.getHid()));
+=======
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class AddressAction {
+	
+	@RequestMapping(value="addressPage.do")
+	public String addressPage() {
+>>>>>>> branch 'master' of https://github.com/BestShops/BestStore.git
 		return "address";
 	}
 }
