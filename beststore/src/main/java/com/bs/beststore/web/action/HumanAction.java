@@ -40,7 +40,6 @@ public class HumanAction {
 		} catch (BizException e) {
 			out.print(e.getMessage());
 		}
-
 	}
 
 	/**
@@ -50,14 +49,20 @@ public class HumanAction {
 	 * @param out
 	 */
 	@RequestMapping("checkname.do")
-	public void checkname(Human human, PrintWriter out) {
-
+	public void checkname(Human human, String emailorphone, PrintWriter out) {
+		if (AccountValidatorUtil.isMobile(emailorphone + "")) {
+			human.setHphone(Long.valueOf(emailorphone));
+		} else if (AccountValidatorUtil.isEmail(emailorphone + "")) {
+			human.setHemail(emailorphone);
+		} else if(human.getHname() == null) {
+			out.print("error：no data");
+		}
 		if (humanBiz.findByCondition(human).size() <= 0) {
 			out.print("OK");
 		} else {
 			out.print("该用户名已存在！");
 		}
-	}
+	}		
 
 	/**
 	 * 从页面获取到用户名、密码、性别等，验证码，用户等级 验证信息的完整性，必需包含用户名、密码、性别，其他的可以没有（js或java均可）
@@ -125,8 +130,6 @@ public class HumanAction {
 						out.print("修改失败，请重试！");
 					}
 				}
-			} else {
-				out.print("该手机/邮箱未注册，请返回注册页面进行注册之后再进行修改！");
 			}
 		}
 	}
