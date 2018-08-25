@@ -28,12 +28,23 @@ public class AddressBizImpl implements AddressBiz {
 
 	@Override
 	public int updateAddress(Address address) {
+		if (address.getAstatus() == 1) {
+			changeStatus();
+		}
 		return addressMapper.updateByPrimaryKeySelective(address);
 	}
 
 	@Override
-	public int removeAddress(Address address) {
-		return addressMapper.deleteByPrimaryKey(address.getAid());
+	public void removeAddress(Address address, int hid) {
+		address = findByAid(address.getAid());
+		// 先删除地址
+		addressMapper.deleteByPrimaryKey(address.getAid());
+		// 如果要删除的是默认地址，就重新设置一个默认地址地址
+		if (address.getAstatus() == 1) {
+			Address a = findAllAddress(hid).get(0);
+			// 修改默认的地址
+			upDafault(a);
+		}
 	}
 
 	@Override

@@ -46,8 +46,8 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-6">
-						<button type="submit" class="but" id="submit" onclick="commit()">保存</button>
+					<div class="col-sm-offset-2 col-sm-6" id="divsubmit">
+						<button type="submit" class="but" id="submit" onclick="commit(0, 0)">保存</button>
 					</div>
 				</div>
 				<script src="js/jquery.citys.js"></script>
@@ -119,7 +119,7 @@
 						<div class="tdf3">${a.acity}</div>
 						<div class="tdf3 tdt-a_l" style="text-align:center;">${a.alocation}</div>
 						<div class="tdf1">${fn:substring(a.aphone, 0, 3)}****${fn:substring(a.aphone, 7, 11)}</div>
-						<div class="tdf1 order"><a onclick="change()">修改</a><a href="">删除</a></div>
+						<div class="tdf1 order"><a onclick="change(this)">修改</a><a onclick="del(${a.aid})">删除</a></div>
 						<div class="tdf1">
 							<c:if test="${a.astatus==1}">
 								<a href="" class="default active">默认地址</a>
@@ -138,28 +138,106 @@
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
 	<script type="text/javascript">
-		function change() {
-			var phone = $(this);
-			console.log(phone);
-			// 修改保存的点击事件
-			$("#submit").click(function(){
-				alert(1);
-			});
-		}
-	
 		// 设为默认
 		function addressDefault(aid) {
-			$.post("addressDefault.do",{
-				aid:aid
-			},function(data){
-				if (data != "OK")  {
-					alert(data);
-				}
-			});
+			if (confirm("您确定要将该地址设置为默认吗？")) {
+				$.post("addressDefault.do",{
+					aid:aid
+				},function(data){
+					if ("OK" == data) {
+						alert("设置成功");
+					}
+				});
+			}
 		}
 		
+		// 删除
+		function del(aid) {
+			if (confirm("您确定要删除这个地址吗？")) {
+				$.post("delAddress.do",{
+					aid:aid
+				},function(data){
+					if (data == "OK") {
+						alert("删除成功");
+						window.location.href = "addressPage.do";
+					}
+				});
+			}
+		}
+	
+		// 修改
+		function change(e) {
+			// 设值
+			var aphone = $(e).parent().prev();
+			$("#mobile").val(aphone.text());
+			var alocation = aphone.prev();
+			$("#details").val(alocation.text());
+			var acity = alocation.prev();
+			var citys = acity.text().split(" ");
+			// 设置城市的值
+			$('.addr-linkage').citys({
+				// 如果某天这个仓库地址失效了dataUrl请使用本地 2017.10 的数据 'js/data_location/list.json'
+				dataUrl: 'http://passer-by.com/data_location/list.json',
+				spareUrl: 'js/data_location/list.json',
+				dataType: 'json',
+				valueType: 'name',
+				province: citys[0],
+				city:citys[1],
+				area: citys[2],
+				onChange: function(data) {
+					townFormat(data)
+				},
+			},function(api){
+				var info = api.getInfo();
+				townFormat(info);
+			});
+			// 街道的位置选中会出错，修改不了
+			$("#town").attr("autocomplete","off");
+			$("#town").val(citys[3]);
+			// 设置名字
+			var aconsignee = acity.prev();
+			$("#name").val(aconsignee.text());
+			var aid = aconsignee.prev().text();
+			// 修改保存的点击事件
+			$("#divsubmit").html("<button type='submit' class='but' id='submit' onclick='commit(1, " 
+					+ aid + ")'>确认修改</button>");
+		}
+		
+		// 添加街道/乡镇
+		function townFormat(info){
+			$('.addr-linkage select[name="town"]').hide().empty();
+			if (info['code'] % 1e4 && info['code'] < 7e6){	//是否为“区”且不是港澳台地区
+				var ajaxConfig = {
+					url: 'http://passer-by.com/data_location/town/' + info['code'] + '.json',
+					scriptCharset:'UTF-8',
+					dataType: "json",
+					timeout: 4000,
+					success: function(data) {
+						$('.addr-linkage select[name="town"]').show();
+						// $('#code').val(info['code']) // 填地区编码
+						for (i in data) {
+							$('.addr-linkage select[name="town"]').append(
+								'<option value="' + data[i] + '">' + data[i] + '</option>'
+							);
+						};
+						$('.addr-linkage select[name="town"]').find('option[value="洪山镇"]').prop("selected", "selected");
+					},
+				};
+				$.ajax(ajaxConfig).fail(function(p1,p2,p3){
+					ajaxConfig.url = 'js/data_location/town/' + info['code'] + '.json';
+					$.ajax(ajaxConfig)
+				});
+			}
+		};
+	
 		// 添加一个地址
-		function commit() {
+		function commit(a, aid) {
+			var url;
+			if (a == 0) {
+				url = "addAddress.do";
+			} else {
+				url = "modifyAddress.do";
+			}
 			var name = $("#name").val();
 			var option = $("#province option:selected").text() + " "
 				+ $("#city option:selected").text() + " "
@@ -174,14 +252,19 @@
 			} else {
 				status = 0;
 			}
+			var isPhone = /^[1][3,4,5,8][0-9]{9}$/;//手机号码
 			if (name == null || name == "") {
 				$("#error").html("收货人姓名不能为空");
 			} else if (details == null || details == "") {
 				$("#error").html("收货人地址不能为空");
 			} else if (mobile == null || mobile == "") {
 				$("#error").html("收货人手机号码不能为空");
-			} else {
-				$.post("addAddress.do",{
+			} else if (!isPhone.test(mobile)) {
+				$("#error").html("请填写真实的号码");
+			}else {
+				console.log(aid + "," + name + "," + mobile + "," + option + "," + details + "," + status );
+				$.post(url,{
+					aid:aid,
 					aphone:mobile,
 					acity:option,
 					alocation:details,
@@ -189,7 +272,11 @@
 					astatus:status
 				},function(data){
 					if (data == "OK") {
-						alert("地址添加成功");
+						if (a == 0) {
+							alert("地址添加成功");
+						} else {
+							alert("地址修改成功");
+						}
 						window.location.href = "addressPage.do";
 					} else {
 						$("#error").html(data);
