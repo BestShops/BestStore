@@ -34,21 +34,21 @@
 					</div>
 					<form action="userModifyPwdStep3.do" class="user-setting__form" role="form">
 						<div class="form-group">
-							<input class="form-control" name="phone" required="" maxlength="11" autocomplete="off" type="password">
+							<input class="form-control" id="pwd" name="pwd" required="" maxlength="11" autocomplete="off" type="password">
 							<span class="tip-text">新的密码</span>
 							<span class="see-pwd pwd-toggle" title="显示密码"><i class="glyphicon glyphicon-eye-open"></i></span>
 							<span class="error_tip"></span>
 						</div>
 						<div class="form-group">
 						<div class="form-group">
-							<input class="form-control" name="phone" required="" maxlength="11" autocomplete="off" type="password">
+							<input class="form-control" id="repwd" name="repwd" required="" maxlength="11" autocomplete="off" type="password">
 							<span class="tip-text">再次确认新的密码</span>
 							<span class="see-pwd pwd-toggle" title="显示密码"><i class="glyphicon glyphicon-eye-open"></i></span>
 							<span class="error_tip"></span>
 						</div>
 						</div>
 						<div class="user-form-group tags-box">
-							<button type="submit" class="btn ">提交</button>
+							<button type="submit" id="step1_submit" class="btn ">提交</button>
 						</div>
 						<script src="js/login.js"></script>
 						<script>
@@ -57,6 +57,26 @@
 									$(this).addClass('focus')
 									if ($(this).val() == ''){$(this).removeClass('focus')}
 								});
+								
+								// 修改新密码
+								$('#step1_submit').click(function() {
+									var pwd = $("#pwd").val();
+									var repwd = $("#repwd").val();
+									if (pwd !== repwd) {
+										$('.error_tip').html(msgtemp('两次输入密码不一致', 'alert-warning'));
+										return;
+									}
+									$.post("changePwd.do",{
+										hpwd:repwd
+									},function(data){
+										if (data == "OK") {
+											window.location.href = "userModifyPwdStep3.do";
+										} else {
+											$('.error_tip').html(msgtemp(data, 'alert-warning'));
+										}
+									});
+								});
+								
 							});
 						</script>
 					</form>

@@ -29,7 +29,7 @@ public class HumanAction {
 	 * @param out     返回给ajax的数据
 	 * @param session 将登录成功的登陆者信息存入到session中的loginHuman(可读取完整数据)
 	 */
-	@RequestMapping(value = "login.do")
+	@RequestMapping(value = "login.todo")
 	public void login(Human human, PrintWriter out, HttpSession session) {
 		// 进行登录操作
 		Human loginHuman;
@@ -55,7 +55,7 @@ public class HumanAction {
 		} else if (AccountValidatorUtil.isEmail(emailorphone + "")) {
 			human.setHemail(emailorphone);
 		} else if(human.getHname() == null) {
-			out.print("error：no data");
+			out.print("用户名为空，请重新输入！");
 		}
 		if (humanBiz.findByCondition(human).size() <= 0) {
 			out.print("OK");

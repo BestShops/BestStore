@@ -219,7 +219,7 @@
 							$("#login_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
 							return;
 						}
-						$.post("login.do",{
+						$.post("login.todo",{
 							hname:uname,
 							hpwd:upwd
 						},function(data){
