@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class CategoryAction {
+public class UserOrderAction {
 
-	@RequestMapping(value="categoryPage.do")
-	public String categoryPage(int page){
-		return "category-v"+page;
+	@RequestMapping(value="userOrderPage.do")
+	public String userOrderPage() {
+		return "userOrder";
 	}
 }

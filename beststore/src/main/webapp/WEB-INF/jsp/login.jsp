@@ -301,6 +301,24 @@
 						});
 					});
 					
+					// 忘记密码用户名失焦事件
+					$("#resetpwd_phone").blur(function(){
+						var uphone = $("#resetpwd_phone").val();
+						if (uphone == null || uphone == "") {
+							$("#resetpwd_error").html(msgtemp('<strong>手机/邮箱不能为空</strong> 请输入手机/邮箱', 'alert-warning'));
+							return;
+						}
+						$.post("checkname.do",{
+							emailorphone:uphone
+						},function(data){
+							if (data == "OK") {
+								$("#resetpwd_error").html(msgtemp('<strong>该手机/邮箱未注册，请注册后再执行此操作！</strong>', 'alert-warning'));
+							} else {
+								$("#resetpwd_error").html(msgtemp('<strong>该手机/邮箱是注册用户，请获取验证码修改密码！</strong>', 'alert-success'));
+							}
+						});
+					});
+					
 					// 忘记密码发送验证码事件
 					$('#resetcode_submit').click(function() {
 						var email = $("#resetpwd_phone").val();

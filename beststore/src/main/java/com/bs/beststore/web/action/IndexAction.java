@@ -12,7 +12,6 @@ import com.bs.beststore.util.SmsUtil;
 
 /**
  * jsp页面的静态跳转
- *
  */
 @Controller
 public class IndexAction {
@@ -23,12 +22,12 @@ public class IndexAction {
 		return "index";
 	}
 
-	
 	@RequestMapping("userLogin.do")
 	// 跳转登录
 	public String loginPage() {
 		return "login";
 	}
+	
 
 	@RequestMapping("code.do")
 	public void code(String email, PrintWriter out) {

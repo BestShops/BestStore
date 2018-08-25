@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class SiteMapAction {
+public class FavoriteAction {
 
-	@RequestMapping(value="siteMapPage.do")
-	public String siteMapPage(){
-		return "sitemap";
+	@RequestMapping(value="userCollectionPage.do")
+	public String userCollectionPage() {
+		return "userCollection";
 	}
 }
