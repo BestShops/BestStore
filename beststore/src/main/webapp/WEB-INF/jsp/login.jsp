@@ -192,6 +192,13 @@
                 </div>
 			</div>
 			<script>
+				// 设置在密码的文本框中回车登录
+				$('#login_pwd').bind('keydown',function(event){
+				    if(event.keyCode == "13") {
+				    	$('#login_submit').click();
+				    }
+				}); 
+				
 				$(document).ready(function() {
 					// 判断直接进入哪个页面 例如 login.php?p=register
 					switch($.getUrlParam('p')) {
