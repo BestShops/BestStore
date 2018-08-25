@@ -22,17 +22,10 @@ public class IndexAction {
 		return "index";
 	}
 
-	
-<<<<<<< HEAD
 	@RequestMapping("userLogin.do")
 	// 跳转登录
 	public String loginPage() {
 		return "login";
-=======
-	@RequestMapping(path = "classRoomPage.do")
-	public String classRoomPage() {
-		return "classRoom";
->>>>>>> branch 'master' of https://github.com/BestShops/BestStore.git
 	}
 	
 
