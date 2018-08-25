@@ -66,7 +66,7 @@ public class HumanBizImpl implements HumanBiz {
 				}
 			} else {
 				// 如果号码也不存在，就判断输入的是否是号码
-				String RULE_EMAIL1 = "^[1][3,4,5,8][0-9]{9}$";
+				String RULE_EMAIL1 = "^[1][3-9][0-9]{9}$";
 				// 正则表达式的模式
 				Pattern p1 = Pattern.compile(RULE_EMAIL1);
 				// 正则表达式的匹配器
@@ -84,7 +84,7 @@ public class HumanBizImpl implements HumanBiz {
 					}
 				} else {
 					// 电话匹配失败，则表示用户名输入错误
-					throw new BizException("用户名输入<br>请验证后重新输入");
+					throw new BizException("用户名输入错误<br>请验证后重新输入");
 				}
 			}
 		}

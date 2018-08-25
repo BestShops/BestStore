@@ -236,7 +236,7 @@
 					$('#code_submit').click(function() {
 						var email = $("#register_phone").val();
 						var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
-						var ph = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+						var ph = /^((1[3-9][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
 						if( email == null || email == ""){
 							$("#register_error").html(msgtemp('<strong>手机/邮箱为空</strong> 请输入手机/邮箱','alert-warning')); 
 							return;

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -28,8 +29,14 @@
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
-				<a href="userLogin.do"><span class="cr">登录</span></a>
-				<a href="userLogin.do">注册</a>
+				<c:if test="${sessionScope.loginHuman==null }">
+					<a href="userLogin.do"><span class="cr">登录</span></a>
+					<a href="userLogin.do">注册</a>
+				</c:if>
+				<c:if test="${sessionScope.loginHuman!=null }">
+					<a href="userLogin.do">您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
+					<a href="userLogout.do" style="color:blue">退出</a>
+				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
 				<a href="userOrderPage.do">我的订单</a>
 			</div>

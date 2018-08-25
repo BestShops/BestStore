@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -57,14 +58,20 @@ public class HumanAction {
 	}
 	
 	@RequestMapping(value="welcomePage.do")
-	public String welcomePage() {
+	public String welcomePage(HttpServletRequest request) {
+		request.setAttribute("status", 0);
 		return "welcome";
+	}
+	
+	@RequestMapping(value="userLogout.do")
+	public String userLogout(HttpSession session) {
+		session.removeAttribute("loginHuman");
+		return "login";
 	}
 	
 	
 	/**
 	 * 从页面获取到用户名、密码、验证码，验证三个信息的完整性（js或java均可） 先验证验证码是否正确，然后再开始验证用户名和密码是否正确
-	 * 
 	 * @param human   用户名和密码
 	 * @param code    验证码
 	 * @param out     返回给ajax的数据
@@ -76,6 +83,7 @@ public class HumanAction {
 		Human loginHuman;
 		try {
 			loginHuman = humanBiz.login(human);
+			System.out.println(loginHuman);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
 			out.print("OK");
 		} catch (BizException e) {
