@@ -23,9 +23,9 @@ public interface AddressBiz {
 	/**
 	 * 删除地址信息
 	 * @param address	地址id
-	 * @return	成功返回1，否则为失败
+	 * @param hid 用户id
 	 */
-	int removeAddress(Address address);
+	void removeAddress(Address address, int hid);
 	
 	/**
 	 * 查看账户的所有地址
@@ -40,5 +40,10 @@ public interface AddressBiz {
 	 * @return
 	 */
 	Address findByAid(int aid);
+	
+	/**
+	 * 修改默认
+	 */
+	int upDafault(Address address);
 	
 }

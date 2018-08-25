@@ -44,25 +44,24 @@ public class TypeBizImpl implements TypeBiz {
 
 	@Override
 	public int modifyType(Type type) throws BizException {
-		String tpriname = type.getTpriname();
-		String tsecname = type.getTsecname();
-		if (tpriname != null && tsecname != null && tpriname.equals(tsecname)) {
-			throw new BizException("主类型名不能和父类型名一致");
-		}
-		// 主类别不为空，就对主类别进行判断，防止类别名冲突
-		if (tpriname != null) {
-			List<Type> list = typeMapper.findByName(tpriname);
-			if (list != null && list.size() != 0) {
-				throw new BizException("该类型名已经存在，请输入新的主类别");
-			}
-		}
-		// 副类别不为空，就对副类别进行判断，防止类别名冲突
-		if (tsecname != null) {
-			List<Type> list = typeMapper.findByName(tsecname);
-			if (list != null && list.size() != 0) {
-				throw new BizException("该类型名已经存在，请输入新的副类别");
-			}
-		}
+//		String tpriname = type.getTpriname();
+//		if (tpriname != null && tsecname != null && tpriname.equals(tsecname)) {
+//			throw new BizException("主类型名不能和父类型名一致");
+//		}
+//		// 主类别不为空，就对主类别进行判断，防止类别名冲突
+//		if (tpriname != null) {
+//			List<Type> list = typeMapper.findByName(tpriname);
+//			if (list != null && list.size() != 0) {
+//				throw new BizException("该类型名已经存在，请输入新的主类别");
+//			}
+//		}
+//		// 副类别不为空，就对副类别进行判断，防止类别名冲突
+//		if (tsecname != null) {
+//			List<Type> list = typeMapper.findByName(tsecname);
+//			if (list != null && list.size() != 0) {
+//				throw new BizException("该类型名已经存在，请输入新的副类别");
+//			}
+//		}
 		// 两个类型名都不存在冲突的情况下，根据id修改
 		return typeMapper.updateByPrimaryKeySelective(type);
 	}

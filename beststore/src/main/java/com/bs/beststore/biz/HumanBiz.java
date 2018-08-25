@@ -24,7 +24,7 @@ public interface HumanBiz {
 	 * @param human 用户名、密码
 	 * @return	成功就返回登录者的具体信息，失败返回为空
 	 */
-	Human login(Human human);
+	Human login(Human human)  throws BizException;
 	
 	/**
 	 * 修改用户信息  用户提供用户id，可以修改除密码外的所有信息，包括用户名
@@ -47,7 +47,13 @@ public interface HumanBiz {
 	 * @param hname 传入名字 human.setHname，新密码
 	 * @return	成功返回1，否则判定为失败
 	 */
-	int findPwd(Human human);
-	
+	int forgetPwd(Human human);
+
+	/**
+	 * 通过用户名来查找是否已经存在用户，主要用来验证用户名重复
+	 * @param human 只需要传入Hname就行，即human.setHname
+	 * @return
+	 */
+	List<Human> findByCondition(Human human);
 
 }

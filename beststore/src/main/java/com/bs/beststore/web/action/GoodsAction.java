@@ -5,16 +5,33 @@ import java.io.PrintWriter;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.vo.Goods;
 import com.bs.beststore.vo.Store;
 
+@Controller
 public class GoodsAction {
 	
 	@Resource
 	private GoodsBiz goodsBiz;
+	
+	@RequestMapping(path = "goodsQueryPage.do")
+	public String goodsQueryPage() {
+		return "goodsQuery";
+	}
+	
+	@RequestMapping(path = "goodsShowPage.do")
+	public String goodsShowPage() {
+		return "goodsShow";
+	}
+	
+	@RequestMapping(value="matchPage.do")
+	public String matchPage() {
+		return "match";
+	}
 	
 	/**
 	 * 添加商品

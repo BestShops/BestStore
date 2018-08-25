@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="css/iconfont.css">
 	<link rel="stylesheet" href="css/global.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -24,7 +24,7 @@
 		<div class="inner">
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="agent_level.html">网店代销</a>
+				<a href="">申请网店</a>
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
@@ -38,7 +38,7 @@
 	<!-- 搜索栏 -->
 	<div class="top-search">
 		<div class="inner">
-			<a class="logo" href="index.do"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+			<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 			<div class="search-box">
 				<form class="input-group">
 					<input placeholder="Ta们都在搜U袋网" type="text">
@@ -59,7 +59,7 @@
 				</p>
 			</div>
 			<div class="cart-box">
-				<a href="shopcartPage.do" class="cart-but">
+				<a href="shopCartPage.do" class="cart-but">
 					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
 				</a>
 			</div>
@@ -70,7 +70,7 @@
 	<div class="top-nav bg3">
 		<div class="nav-box inner">
 			<div class="all-cat">
-				<div class="title"><i class="iconfont icon-menu"></i> 全部分类</div>
+				<div class="title"><i class="iconfont icon-menu">全部分类</i> </div>
 				<div class="cat-list__box">
 					<div class="cat-box">
 						<div class="title">
@@ -300,13 +300,14 @@
 				</div>
 			</div>
 			<ul class="nva-list">
-				<a href="index.do"><li class="active">首页</li></a>
-				<a href="aboutUsPage.do"><li>企业简介</li></a>
-				<a href="temp_article/udai_article5.html"><li>我要开店</li></a>
+				<a href="index"><li class="active">首页</li></a>
+				<a href="goodsQueryPage.do"><li>商品筛选</li></a>
+				<a href="matchPage.do"><li>智能匹配</li></a>
 				<a href="classRoomPage.do"><li>U袋学堂</li></a>
-				<a href="enterprise_id.html"><li>企业账号</li></a>
-				<a href="udai_contract.html"><li>诚信合约</li></a>
-				<a href="item_remove.html"><li>实时下架</li></a>
+				<a href="blogPage.do"><li>博客</li></a>
+				<a href="openStorePage.do"><li>申请网店</li></a>
+				<a href="userInfoPage.do"><li>个人中心</li></a>
+				<!-- <a href="aboutUsPage.do"><li>了解我们</li></a> -->
 			</ul>
 			<div class="user-info__box">
 				<div class="login-box">
@@ -327,13 +328,13 @@
 					</div>
 				</div>
 				<div class="agent-box">
-					<a href="#" class="agent">
+					<a href="openStorePage.do" class="agent">
 						<i class="iconfont icon-fushi"></i>
-						<p>申请网店代销</p>
+						<p>申请网店</p>
 					</a>
 					<a href="javascript:;" class="agent">
 						<i class="iconfont icon-agent"></i>
-						<p><span class="cr">9527</span>位代销商</p>
+						<p><span class="cr">9527</span>个网店</p>
 					</a>
 				</div>
 				<div class="verify-qq">

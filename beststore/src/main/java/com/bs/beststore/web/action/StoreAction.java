@@ -14,6 +14,31 @@ public class StoreAction {
 	@Resource
 	private StoreBiz storeBiz;
 	
+	@RequestMapping(value="openStorePage.do")
+	public String openStorePage(){
+		return "openStore";
+	}
+	
+	@RequestMapping(value="openStoreStep1.do")
+	public String Store(){
+		return "openStoreStep1";
+	}
+	
+	@RequestMapping(value="storeManagePage.do")
+	public String storeManagePage(){
+		return "storeManage";
+	}
+	
+	@RequestMapping(value="storeInfoPage.do")
+	public String storeInfoPage(){
+		return "back/storeInfo";
+	}
+	
+	@RequestMapping(value="goodsManagePage.do")
+	public String goodsManagePage(){
+		return "back/goodsManage";
+	}
+	
 	/**
 	 * 查看所有的店铺信息
 	 * @param store	根据store.sstatus查询店铺
