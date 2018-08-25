@@ -16,18 +16,35 @@ import com.bs.beststore.util.SmsUtil;
 @Controller
 public class IndexAction {
 
-	@RequestMapping(path = { "/", "index" })
+	@RequestMapping(path = { "/", "index.do" })
 	// 主页
 	public String index() {
 		return "index";
 	}
-
+	
+	@RequestMapping("welcomePage.do")
+	// 个人主页
+	public String welcomePage() {
+		return "welcome";
+	}
+	
 	@RequestMapping("userLogin.do")
 	// 跳转登录
 	public String loginPage() {
 		return "login";
 	}
 	
+	@RequestMapping("userInfoPage.do")
+	// 跳转登录
+	public String userInfoPage() {
+		return "userInfo";
+	}
+	
+	@RequestMapping("registerStrore.do")
+	// 开店
+	public String registerStrore() {
+		return "agent_level";
+	}
 
 	@RequestMapping("code.do")
 	public void code(String email, PrintWriter out) {
@@ -45,10 +62,4 @@ public class IndexAction {
 		out.print("OK"); 
 	}
 	
-	@RequestMapping("welcomePage.do")
-	// 个人主页
-	public String welcomePage() {
-		return "welcome";
-	}
-		
 }

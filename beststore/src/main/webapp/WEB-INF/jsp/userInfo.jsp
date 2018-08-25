@@ -4,6 +4,7 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="css/zebra.datepicker.css">
 </head>
 <body>
 	<%@ include file="header2.jsp" %>
@@ -14,48 +15,23 @@
 					<div class="port b-r50" id="crop-avatar">
 						<div class="img"><img name="hphoto" src="images/icons/default_avt.png" class="cover b-r50"></div>
 					</div>
-					<form action="" class="user-setting__form" role="form">
-						<div class="user-form-group">
-							<label for="user-id">用户名：</label>
-							<input id="user-id" value="18759808122" placeholder="请输入您的昵称">
-						</div>
-						<div class="user-form-group">
-							<label>性别：</label>
-							<label><input type="radio" name="sex" ><i class="iconfont icon-radio"></i> 男</label>
-							<label><input type="radio" name="sex" ><i class="iconfont icon-radio"></i> 女</label>
-						</div>
-						<div class="user-form-group">
-							<label>身高(cm)：</label>
-							<label><input name="weight" min="140" max="220"></label>
-						</div>
-						<div class="user-form-group">
-							<label>体重(kg)：</label>
-							<label><input name="weight" min="5" max="190"></label>
-						</div>
-						<div class="user-form-group">
-							<label>生日：</label>
-							<label><input type="text" class="datepicker" value="1993-02-15" placeholder="请选择您的出生日期"></label>
-						</div>
-						<div class="user-form-group">
-							<label>身份证号码：</label>
-							<label><input name="idcard" ></label>
-						</div>
-						<div class="user-form-group">
-							<label>手机号码：</label>
-							<label><input name="phone" ></label>
-						</div>
-						<div class="user-form-group">
-							<label>邮箱：</label>
-							<label><input name="email"></label>
-						</div>
-						<div class="user-form-group">
-							<button type="button" class="btn">确认修改</button>
-						</div>
-					</form>
+					<div style="text-align:right;">
+						<form action="" class="user-setting__form" role="form" onsubmit="return false;">
+							用户名：<input id="name" value="${loginHuman.hname}" placeholder="请输入您的昵称"><br><br>
+							性别：   <input type="radio" name="sex" value="男">男&nbsp;&nbsp;
+							<input type="radio" name="sex" value="女">女<span>（默认为男性）</span><br><br>
+							身高(cm)：<input id="weight" type="number" min="140" max="220" style="height:23px;width:165px;" value="${loginHuman.height}"><br><br>
+							体重(kg)：<input id="hight" type="number" min="5" max="190" style="height:23px;width:165px;" value="${loginHuman.hweight}"><br><br>
+							生日：<input type="text" class="datepicker" id="time" value="${loginHuman.hbirth}"><br><br>
+							身份证号码：<input id="idcard" value="${loginHuman.hidcard}"><br><br>
+							手机号码：<input id="phone" value="${loginHuman.hphone}"><br><br>
+							邮箱：<input id="email" value="${loginHuman.hemail}"><br><br>
+							<div style="width:200px;"><button type="button" class="btn" onclick="submit()">确认修改</button></div>
+						</form>
+					</div>
 					<script src="js/zebra.datepicker.min.js"></script>
-					<link rel="stylesheet" href="css/zebra.datepicker.css">
 					<script>
-						$('input.datepicker').Zebra_DatePicker({
+						$('input.datepicker').Zebra_DatePicker({// 生日的样式
 							default_position: 'below',
 							show_clear_date: false,
 							show_select_today: false,
@@ -117,5 +93,14 @@
 	<div class="loading" aria-label="Loading" role="img" tabindex="-1"></div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script src="js/jquery.1.12.4.min.js"></script>
+	<script type="text/javascript">
+		function submit() {
+			var name = $("#name").val();
+			var sex = $("input[name='sex']:checked").val();
+			var weight = $("#weight")
+		}
+		
+	</script>
 </body>
 </html>

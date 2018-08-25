@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,8 +63,13 @@
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
-				<a href="userLogin.do"><span class="cr">登录</span></a>
-				<a href="userLogin.do?p=register">注册</a>
+				<c:if test="${loginHuman==null}">
+					<a href="userLogin.do"><span class="cr">登录</span></a>
+					<a href="userLogin.do?p=register">注册</a>
+				</c:if>
+				<c:if test="${loginHuman!=null}">
+					<a href="userInfoPage.do">${loginHuman.hname}</a>
+				</c:if>
 				<a onclick="welcome()">我的U袋</a>
 				<a onclick="userOrder()">我的订单</a>
 			</div>
@@ -347,18 +353,23 @@
 					<div class="avt-port">
 						<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 					</div>
-					<!-- 已登录 -->
-					<div class="name c6">Hi~ <span class="cr">18759808122</span></div>
-					<div class="point c6">积分: 30</div>
-
-					<!-- 未登录 -->
-					<!-- <div class="name c6">Hi~ 你好</div>
-					<div class="point c6"><a href="">点此登录</a>，发现更多精彩</div> -->
-					<div class="report-box">
-						<span class="badge">+30</span>
-						<a class="btn btn-info btn-block disabled" href="#" role="button">已签到1天</a>
-						<!-- <a class="btn btn-primary btn-block" href="#" role="button">签到领积分</a> -->
-					</div>
+					<c:if test="${loginHuman==null}">
+						<div class="name c6">Hi~ 你好</div>
+						<div class="point c6"><a href="userLogin.do">点此登录</a>，发现更多精彩</div>
+						<div class="report-box">
+							<a class="btn btn-info btn-block disabled" href="#" role="button">已签到0天</a>
+							<!-- <a class="btn btn-primary btn-block" href="#" role="button">签到领积分</a> -->
+						</div>
+					</c:if>
+					<c:if test="${loginHuman!=null}">
+						<!-- 已登录 -->
+						<div class="name c6">Hi~ <span class="cr">${loginHuman.hname}</span></div>
+						<div class="report-box">
+							<span class="badge">+30</span>
+							<a class="btn btn-info btn-block disabled" href="#" role="button">已签到1天</a>
+							<!-- <a class="btn btn-primary btn-block" href="#" role="button">签到领积分</a> -->
+						</div>
+					</c:if>
 				</div>
 				<div class="agent-box">
 					<a href="#" class="agent">

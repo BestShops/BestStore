@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="shortcut icon" href="favicon.ico">
+<link href="images/favicon.ico" rel="shortcut icon">
 <link rel="stylesheet" href="css/iconfont.css">
 <link rel="stylesheet" href="css/global.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
