@@ -1,11 +1,16 @@
 package com.bs.beststore.web.action;
 
+import java.io.PrintWriter;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.biz.StoreBiz;
+import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Store;
 
 @Controller
@@ -14,9 +19,23 @@ public class StoreAction {
 	@Resource
 	private StoreBiz storeBiz;
 	
+	@Resource
+	private HumanBiz humanBiz;
+	
+	/**
+	 * 开店
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(value="openStorePage.do")
-	public String openStorePage(){
-		return "openStore";
+	public void openStorePage(HttpSession session, PrintWriter out){
+		Human human = (Human) session.getAttribute("loginHuman");
+		if (humanBiz.check(human)) {
+			// 如果用户信息完整，就返回OK
+			out.print("OK");
+		} else {
+			out.print("信息完整度过低，请前往个人中心完善个人信息");
+		}
 	}
 	
 	@RequestMapping(value="openStoreStep1.do")

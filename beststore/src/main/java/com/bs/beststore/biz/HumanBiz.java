@@ -62,5 +62,12 @@ public interface HumanBiz {
 	 * @return
 	 */
 	Human findByHid(Human human);
+	
+	/**
+	 * 根据hid检索当前用户的信息是否完善，包括身份证号、电话号码、邮箱地址
+	 * @param human
+	 * @return
+	 */
+	boolean check(Human human);
 
 }

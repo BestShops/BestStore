@@ -18,6 +18,7 @@ import com.bs.beststore.biz.BizException;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
+import com.bs.beststore.util.MD5Util;
 import com.bs.beststore.vo.Human;
 
 @Controller
@@ -26,6 +27,15 @@ public class HumanAction {
 	@Resource
 	private HumanBiz humanBiz;
 
+	/**
+	 * 个人信息修改
+	 * @param file	头像图片，在展示时需要加上upload/
+	 * @param human	个人信息
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping("humanInfo.do")
 	public String humanInfo(@RequestParam("file") MultipartFile file,
 			Human human, Model model, HttpSession session) throws IOException {
@@ -74,7 +84,6 @@ public class HumanAction {
 
 	/**
 	 * 失焦判断用户名是否已经存在
-	 * 
 	 * @param human
 	 * @param out
 	 */
@@ -160,6 +169,36 @@ public class HumanAction {
 					}
 				}
 			}
+		}
+	}
+	
+	@RequestMapping("changePwd.do")
+	// 修改密码
+	public void changePwd(Human human, PrintWriter out, HttpSession session) {
+		Human loginHuman = (Human) session.getAttribute("loginHuman");
+		try {
+			if(humanBiz.changePwd(loginHuman, human.getHpwd()) == 1) {
+				out.print("OK");
+			} else if(human.getHpwd() == null){
+				out.print("密码不能为空");
+			} else {
+				out.print("密码输入错误");
+			}
+		} catch (BizException e) {
+			out.print(e.getMessage());
+		}
+	}
+	
+	@RequestMapping("checkPwd.do")
+	// 检查原密码是否正确
+	public void checkPwd(Human human, PrintWriter out, HttpSession session) {
+		Human loginHuman = (Human) session.getAttribute("loginHuman");
+		if(loginHuman.getHpwd().equals(MD5Util.MD5(loginHuman.getHname() + human.getHpwd()))) {
+			out.print("OK");
+		} else if(human.getHpwd() == null){
+			out.print("密码不能为空");
+		} else {
+			out.print("密码输入错误");
 		}
 	}
 

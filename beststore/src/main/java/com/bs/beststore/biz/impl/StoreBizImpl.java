@@ -17,7 +17,7 @@ public class StoreBizImpl implements StoreBiz {
 	
 	@Autowired
 	private StoreMapper storeMapper;
-
+	
 	@Override
 	public List<Store> findAll() {
 		return storeMapper.selectByExample(null);
@@ -25,6 +25,9 @@ public class StoreBizImpl implements StoreBiz {
 
 	@Override
 	public int register(Store store) {
+		if (store.getSname() == null || "".equals(store.getSname())) {
+//			throw new BizException("请填写店铺名");
+		}
 		return storeMapper.insertSelective(store);
 	}
 
@@ -62,5 +65,5 @@ public class StoreBizImpl implements StoreBiz {
 	public Store findBySid(int sid) {
 		return storeMapper.selectByPrimaryKey(sid);
 	}
-
+	
 }

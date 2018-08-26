@@ -198,4 +198,19 @@ public class HumanBizImpl implements HumanBiz {
 	public Human findByHid(Human human) {
 		return humanMapper.selectByPrimaryKey(human.getHid());
 	}
+	
+	@Override
+	public boolean check(Human human) {
+		human= findByHid(human);
+		if (human.getHidcard() == null || human.getHidcard() == 0) {
+			return false;
+		}
+		if (human.getHphone() == null || human.getHphone() == 0) {
+			return false;
+		}
+		if (human.getHemail() == null || "".equals(human.getHemail())) {
+			return false;
+		}
+		return true;
+	}
 }
