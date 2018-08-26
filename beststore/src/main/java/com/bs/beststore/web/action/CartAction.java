@@ -6,8 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class CartAction {
 
-	@RequestMapping(value="shopcartPage.do")
-	public String shopcartPage(){
-		return "shopcart";
+	@RequestMapping(value="shopCartPage.do")
+	public String shopCartPage(){
+		return "shopCart";
 	}
+	
+	@RequestMapping(value="shopCartPayPage.do")
+	public String shopCartPayPage(){
+		return "shopCartPay";
+	}
+	
 }

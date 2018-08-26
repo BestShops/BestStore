@@ -23,7 +23,6 @@ public class HumanAction {
 	
 	/**
 	 * 从页面获取到用户名、密码、验证码，验证三个信息的完整性（js或java均可） 先验证验证码是否正确，然后再开始验证用户名和密码是否正确
-	 * 
 	 * @param human   用户名和密码
 	 * @param code    验证码
 	 * @param out     返回给ajax的数据
@@ -35,6 +34,7 @@ public class HumanAction {
 		Human loginHuman;
 		try {
 			loginHuman = humanBiz.login(human);
+			// System.out.println(loginHuman);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
 			out.print("OK");
 		} catch (BizException e) {
@@ -48,15 +48,13 @@ public class HumanAction {
 	 * @param human
 	 * @param out
 	 */
-	@RequestMapping("checkname.do")
+	@RequestMapping("checkname.todo")
 	public void checkname(Human human, String emailorphone, PrintWriter out) {
 		if (AccountValidatorUtil.isMobile(emailorphone + "")) {
 			human.setHphone(Long.valueOf(emailorphone));
 		} else if (AccountValidatorUtil.isEmail(emailorphone + "")) {
 			human.setHemail(emailorphone);
-		} else if(human.getHname() == null) {
-			out.print("用户名为空，请重新输入！");
-		}
+		} 
 		if (humanBiz.findByCondition(human).size() <= 0) {
 			out.print("OK");
 		} else {

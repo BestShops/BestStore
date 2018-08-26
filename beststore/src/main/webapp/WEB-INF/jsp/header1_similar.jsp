@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="css/iconfont.css">
 	<link rel="stylesheet" href="css/global.css">
 	<link rel="stylesheet" href="css/bootstrap.min.css">
@@ -24,12 +26,18 @@
 		<div class="inner">
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="">网店代销</a>
+				<a href="">申请网店</a>
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
-				<a href="userLogin.do"><span class="cr">登录</span></a>
-				<a href="userLogin.do">注册</a>
+				<c:if test="${sessionScope.loginHuman==null }">
+					<a href="userLogin.do"><span class="cr">登录</span></a>
+					<a href="userLogin.do">注册</a>
+				</c:if>
+				<c:if test="${sessionScope.loginHuman!=null }">
+					<a href="userLogin.do">您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
+					<a href="userLogout.do" style="color:blue">退出</a>
+				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
 				<a href="userOrderPage.do">我的订单</a>
 			</div>
@@ -38,7 +46,7 @@
 	<!-- 搜索栏 -->
 	<div class="top-search">
 		<div class="inner">
-			<a class="logo" href="index.do"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+			<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 			<div class="search-box">
 				<form class="input-group">
 					<input placeholder="Ta们都在搜U袋网" type="text">
@@ -59,7 +67,7 @@
 				</p>
 			</div>
 			<div class="cart-box">
-				<a href="shopcartPage.do" class="cart-but">
+				<a href="shopCartPage.do" class="cart-but">
 					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
 				</a>
 			</div>
@@ -73,13 +81,14 @@
 				<div class="title"><i class="iconfont icon-menu">全部分类</i> </div>
 			</div>
 			<ul class="nva-list">
-				<a href="index.do"><li class="active">首页</li></a>
-				<a href="aboutUsPage.do"><li>企业简介</li></a>
+				<a href="index"><li class="active">首页</li></a>
 				<a href="goodsQueryPage.do"><li>商品筛选</li></a>
-				<a href="temp_article/udai_article5.html"><li>我要开店</li></a>
+				<a href="matchPage.do"><li>智能匹配</li></a>
 				<a href="classRoomPage.do"><li>U袋学堂</li></a>
-				<a href="udai_contract.html"><li>诚信合约</li></a>
-				<a href="item_remove.html"><li>实时下架</li></a>
+				<a href="blogPage.do"><li>博客</li></a>
+				<a href="openStorePage.do"><li>申请网店</li></a>
+				<a href="userInfoPage.do"><li>个人中心</li></a>
+				<!-- <a href="aboutUsPage.do"><li>了解我们</li></a> -->
 			</ul>
 		</div>
 	</div>

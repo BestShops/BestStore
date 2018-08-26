@@ -236,7 +236,7 @@
 					$('#code_submit').click(function() {
 						var email = $("#register_phone").val();
 						var re = /^[A-Za-z\d]+([-_.][A-Za-z\d]+)*@([A-Za-z\d]+[-.])+[A-Za-z\d]{2,4}$/;
-						var ph = /^((1[3,5,8][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
+						var ph = /^((1[3-9][0-9])|(14[5,7])|(17[0,6,7,8])|(19[7]))\d{8}$/;
 						if( email == null || email == ""){
 							$("#register_error").html(msgtemp('<strong>手机/邮箱为空</strong> 请输入手机/邮箱','alert-warning')); 
 							return;
@@ -264,7 +264,7 @@
 							$("#register_error").html(msgtemp('<strong>用户名不能</strong> 请输入用户名', 'alert-warning'));
 							return;
 						}
-						$.post("checkname.do",{
+						$.post("checkname.todo",{
 							hname:uname
 						},function(data){
 							if (data == "OK") {
@@ -308,14 +308,14 @@
 						});
 					});
 					
-					// 忘记密码用户名失焦事件
+					// 忘记密码手机/邮箱失焦事件
 					$("#resetpwd_phone").blur(function(){
 						var uphone = $("#resetpwd_phone").val();
 						if (uphone == null || uphone == "") {
 							$("#resetpwd_error").html(msgtemp('<strong>手机/邮箱不能为空</strong> 请输入手机/邮箱', 'alert-warning'));
 							return;
 						}
-						$.post("checkname.do",{
+						$.post("checkname.todo",{
 							emailorphone:uphone
 						},function(data){
 							if (data == "OK") {

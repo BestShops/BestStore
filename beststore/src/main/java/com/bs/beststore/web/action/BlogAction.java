@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BlogAction {
 
-	@RequestMapping(value="blogPage.do")
-	public String blogPage(){
-		return "blog-page";
+	@RequestMapping(path = "blogPage.do")
+	public String blogPage() {
+		return "blog";
 	}
 	
 }

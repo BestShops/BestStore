@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="images/favicon.ico">
 <link rel="stylesheet" href="css/iconfont.css">
 <link rel="stylesheet" href="css/global.css">
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -28,7 +29,14 @@
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
-				<a href="userInfoPage.do"><span class="cr">${loginHuman.hname}</span></a>
+				<c:if test="${sessionScope.loginHuman==null }">
+					<a href="userLogin.do"><span class="cr">登录</span></a>
+					<a href="userLogin.do">注册</a>
+				</c:if>
+				<c:if test="${sessionScope.loginHuman!=null }">
+					<a href="userLogin.do">您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
+					<a href="userLogout.do" style="color:blue">退出</a>
+				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
 				<a href="userOrderPage.do">我的订单</a>
 			</div>
@@ -38,7 +46,7 @@
 	<div class="bgf5 clearfix">
 		<div class="top-user">
 			<div class="inner">
-				<a class="logo" href="index.do"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+				<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 				<div class="title">个人中心</div>
 			</div>
 		</div>
@@ -58,7 +66,12 @@
 					<dt>订单中心</dt>
 					<a href="userOrderPage.do"><dd>我的订单</dd></a>
 					<a href="userCollectionPage.do"><dd>我的收藏</dd></a>
-					<a href="udai_refund.html"><dd>退款/退货</dd></a>
+					<a href="userOrderRefundPage.do"><dd>退款/退货</dd></a>
+				</dl>
+				<dl class="user-center__nav">
+					<dt>我的店铺</dt>
+					<a href="openStorePage.do"><dd>开店流程</dd></a>
+					<a href="storeManagePage.do"><dd>店铺管理</dd></a>
 				</dl>
 				<dl class="user-center__nav">
 					<dt>我的店铺</dt>
@@ -69,16 +82,8 @@
 				</dl>
 				<dl class="user-center__nav">
 					<dt>服务中心</dt>
-					<a href="temp_article/udai_article1.html"><dd>售后服务</dd></a>
-					<a href="temp_article/udai_article2.html"><dd>配送服务</dd></a>
-					<a href="temp_article/udai_article3.html"><dd>用户协议</dd></a>
-					<a href="temp_article/udai_article4.html"><dd>常见问题</dd></a>
-				</dl>
-				<dl class="user-center__nav">
-					<dt>U袋网</dt>
-					<a href="temp_article/udai_article10.html"><dd>企业简介</dd></a>
-					<a href="temp_article/udai_article11.html"><dd>加入U袋</dd></a>
-					<a href="temp_article/udai_article12.html"><dd>隐私说明</dd></a>
+					<a href=""><dd>在线客服</dd></a>
+					<a href=""><dd>商品反馈</dd></a>
 				</dl>
 			</div>
 </body>

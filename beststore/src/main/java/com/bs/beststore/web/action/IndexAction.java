@@ -3,9 +3,11 @@ package com.bs.beststore.web.action;
 import java.io.PrintWriter;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.BizException;
@@ -32,12 +34,33 @@ public class IndexAction {
 		return "index";
 	}
 
-	@RequestMapping("userLogin.do")
 	// 跳转登录
+	@RequestMapping("userLogin.do")
 	public String loginPage() {
 		return "login";
 	}
 	
+	@RequestMapping(path = "backPage.do")
+	public String backPage() {
+		return "back/storeManage";
+	}
+	
+	@RequestMapping(value="userInfoPage.do")
+	public String userInfoPage() {
+		return "userInfo";
+	}
+	
+	@RequestMapping(value="couponPage.do")
+	public String couponPage() {
+		return "coupon";
+	}
+	
+	
+	@RequestMapping(value="userLogout.do")
+	public String userLogout(HttpSession session) {
+		session.removeAttribute("loginHuman");
+		return "login";
+	}
 
 	@RequestMapping("code.do")
 	public void code(String email, PrintWriter out) {
@@ -57,12 +80,19 @@ public class IndexAction {
 	
 	@RequestMapping("welcomePage.do")
 	// 个人主页
-	public String welcomePage(HttpSession session) {
+	public String welcomePage(HttpSession session, Model model) {
 		if(session.getAttribute("loginHuman") == null) {
 			return "login";
 		}
+		model.addAttribute("status", 0);
 		return "welcome";
 	}
+	
+	/*@RequestMapping(value="welcomePage.do")
+	public String welcomePage(HttpServletRequest request) {
+		request.setAttribute("status", 0);
+		return "welcome";
+	}*/
 	
 	@RequestMapping("userModifyPwdPage.do")
 	// 修改密码页面

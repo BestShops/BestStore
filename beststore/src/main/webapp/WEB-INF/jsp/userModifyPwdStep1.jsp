@@ -39,8 +39,19 @@
 							<span class="see-pwd pwd-toggle" title="显示密码"><i class="glyphicon glyphicon-eye-open"></i></span>
 							<span class="error_tip"></span>
 						</div>
+						<!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="error_msg">
+								<!-- 错误信息 范例html
+								<div class="alert alert-warning alert-dismissible fade in" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<strong>密码错误</strong> 请重新输入密码
+								</div>
+								 -->
+							</div>
+						</div>
 						<div class="user-form-group tags-box">
-							<button id="step1_submit" type="submit" class="btn">提交</button>
+							<button id="step1_submit" type="button" class="btn">提交</button>
 						</div>
 						<script src="js/login.js"></script>
 						<script>
@@ -60,7 +71,7 @@
 										if (data == "OK") {
 											window.location.href = "userModifyPwdStep2.do";
 										} else {
-											$('.error_tip').html(msgtemp(data, 'alert-warning'));
+											$('#error_msg').html(msgtemp(data, 'alert-warning'));
 										}
 									});
 								});

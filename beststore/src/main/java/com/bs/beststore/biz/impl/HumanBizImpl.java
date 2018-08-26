@@ -17,6 +17,10 @@ import com.bs.beststore.vo.HumanExample.Criteria;
 
 @Service
 /**
+<<<<<<< HEAD
+=======
+ * 还没对此方式进行修改，睡觉了，明天晚上改！
+>>>>>>> branch 'master' of https://github.com/BestShops/BestStore.git
  * 
  * @author pch
  *
@@ -83,7 +87,7 @@ public class HumanBizImpl implements HumanBiz {
 					}
 				} else {
 					// 电话匹配失败，则表示用户名输入错误
-					throw new BizException("用户名输入<br>请验证后重新输入");
+					throw new BizException("用户名输入错误<br>请验证后重新输入");
 				}
 			}
 		}
