@@ -1,14 +1,21 @@
 package com.bs.beststore.web.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
 import com.bs.beststore.util.MailUtil;
 import com.bs.beststore.util.SmsUtil;
+import com.bs.beststore.vo.Human;
 
 /**
  * jsp页面的静态跳转

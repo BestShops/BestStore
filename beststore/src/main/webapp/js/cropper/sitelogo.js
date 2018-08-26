@@ -308,9 +308,9 @@
       this.$avatarUpload.after($alert);
     }
   };
-
+  
   $(function () {
     return new CropAvatar($('#crop-avatar'));
   });
-
+  
 });

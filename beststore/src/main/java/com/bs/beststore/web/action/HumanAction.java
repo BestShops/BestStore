@@ -1,5 +1,7 @@
 package com.bs.beststore.web.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -7,7 +9,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bs.beststore.biz.BizException;
 import com.bs.beststore.biz.HumanBiz;
@@ -20,6 +25,32 @@ public class HumanAction {
 
 	@Resource
 	private HumanBiz humanBiz;
+
+	@RequestMapping("humanInfo.do")
+	public String humanInfo(@RequestParam("file") MultipartFile file,
+			Human human, Model model, HttpSession session) throws IOException {
+		Human h = (Human) session.getAttribute("loginHuman");
+        String fileName = file.getOriginalFilename();
+		String diskPath = session.getServletContext().getRealPath("/upload");
+        File f = new File(diskPath + File.separator + fileName);
+        if(!f.exists()){  
+            f.mkdirs();  
+        } 
+        file.transferTo(f);
+        System.out.println(fileName);
+        human.setHphoto(fileName);
+		human.setHid(h.getHid());
+		try {
+			humanBiz.upload(human);
+			// 更新loginHuman
+			session.setAttribute("loginHuman", humanBiz.findByHid(human));
+			return "userInfo";
+		} catch (BizException e) {
+			model.addAttribute("error", e.getMessage());
+			session.setAttribute("loginHuman", humanBiz.findByHid(human));
+			return "userInfo";
+		}
+	}
 	
 	/**
 	 * 从页面获取到用户名、密码、验证码，验证三个信息的完整性（js或java均可） 先验证验证码是否正确，然后再开始验证用户名和密码是否正确
@@ -34,7 +65,7 @@ public class HumanAction {
 		// 进行登录操作
 		Human loginHuman;
 		try {
-			loginHuman = humanBiz.login(human);
+			loginHuman = humanBiz.login(human, 0);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
 			out.print("OK");
 		} catch (BizException e) {
@@ -83,6 +114,7 @@ public class HumanAction {
 			out.print("手机/邮箱格式错误，请重新输入");
 		}
 		human.setHlimit(0);
+		human.setHsex(1);// 默认为男性
 		ArrayList<String> list = CodeUtil.VerificationCode;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).startsWith(code) && list.get(i).endsWith(emailorphone)) {
