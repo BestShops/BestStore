@@ -170,6 +170,7 @@
 			}
 		});
 	}
+	
 	$(function(){
 		$("#loadCourse").combobox({
 			url:"${basePath }/GradeServlet?op=selectCourse",
@@ -190,7 +191,7 @@
 </script>
 <body>
 	<div id="tb" style="padding: 3px">
-		<span>商品状态:</span> <select id="loadCourse" onchange="selectCourse()"
+		<span>课程名:</span> <select id="loadCourse" onchange="selectCourse()"
 			class="combobox" style="width: 128px;"></select> <a
 			class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
 	</div>

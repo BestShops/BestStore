@@ -56,7 +56,7 @@ public class HumanBizImpl implements HumanBiz {
 					throw new BizException("邮箱输入错误<br>请验证后重新输入");
 				}
 			} else {
-				// 如果号码也不存在，就判断输入的是否是号码
+				// 如果邮箱也不存在，就判断输入的是否是号码
 				String RULE_EMAIL1 = "^[1][3-9][0-9]{9}$";
 				if (matches(human.getHname(), RULE_EMAIL1)) {
 					HumanExample humanExample2 = new HumanExample();
@@ -75,7 +75,6 @@ public class HumanBizImpl implements HumanBiz {
 				}
 			}
 		}
-
 		// 如果输入的账号存在，则用户名已经获取到了，开始判断密码是否正确
 		HumanExample humanExample3 = new HumanExample();
 		Criteria criteria3 = humanExample3.createCriteria();

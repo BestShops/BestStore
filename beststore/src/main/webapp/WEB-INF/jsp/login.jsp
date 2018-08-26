@@ -201,9 +201,16 @@
 				
 				$(document).ready(function() {
 					// 判断直接进入哪个页面 例如 login.php?p=register
-					switch($.getUrlParam('p')) {
+					/* switch($.getUrlParam('p')) {
 						case 'register': $('.register').show(); break;
 						case 'resetpwd': $('.resetpwd').show(); break;
+						default: $('.login').show();
+					}; */
+					
+					switch(document.URL.split("/")[document.URL.split("/").length-1]) {
+						case 'userLoginPage.do': $('.login').show(); break;
+						case 'userRegisterPage.do': $('.register').show(); break;
+						case 'resetpwdPage.do': $('.resetpwd').show(); break;
 						default: $('.login').show();
 					};
 					
@@ -301,7 +308,7 @@
 						},function(data){
 							if (data == "OK") {
 								$("#register_error").html(msgtemp('<strong>注册成功！正跳转至登录界面</strong>', 'alert-success'));
-								window.location.href = "userLogin.do";
+								window.location.href = "userLoginPage.do";
 							} else {
 								$("#register_error").html(msgtemp(data, 'alert-warning'));
 							}
@@ -371,7 +378,7 @@
 						},function(data){
 							if (data == "OK") {
 								$("#resetpwd_error").html(msgtemp('<strong>密码修改成功！正跳转至登录界面</strong>', 'alert-success'));
-								window.location.href = "userLogin.do";
+								window.location.href = "userLoginPage.do";
 							} else {
 								$("#resetpwd_error").html(msgtemp(data, 'alert-warning'));
 							}

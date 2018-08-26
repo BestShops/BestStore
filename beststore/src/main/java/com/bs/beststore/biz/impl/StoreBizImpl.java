@@ -47,15 +47,17 @@ public class StoreBizImpl implements StoreBiz {
 
 	@Override
 	public int changeInfo(Store store) throws BizException {
-		// 判断sname不重复，这个sname是新输入的商铺名字
-		String sname = store.getSname();
-		if (sname != null && "".equals(sname)) {
-			StoreExample storeExample = new StoreExample();
-			Criteria criteria = storeExample.createCriteria();
-			criteria.andSnameEqualTo(sname);
-			List<Store> list = storeMapper.selectByExample(storeExample);
-			if (list != null && list.size() != 0) {
-				throw new BizException("该店铺名已经存在，请重新输入");
+		Store storeInfo=storeMapper.selectByPrimaryKey(store.getSid());
+		if(!store.getSname().equals(storeInfo.getSname())) {
+			String sname = store.getSname();
+			if (!sname.isEmpty()) {
+				StoreExample storeExample = new StoreExample();
+				Criteria criteria = storeExample.createCriteria();
+				criteria.andSnameEqualTo(sname);
+				List<Store> list = storeMapper.selectByExample(storeExample);
+				if (list!=null && list.size()>0) {
+					throw new BizException("该店铺名已经存在，请重新输入");
+				}
 			}
 		}
 		return storeMapper.updateByPrimaryKeySelective(store);

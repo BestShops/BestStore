@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -60,6 +61,48 @@ public class HumanAction {
 			session.setAttribute("loginHuman", humanBiz.findByHid(human));
 			return "userInfo";
 		}
+	}
+	
+	@RequestMapping(value="userInfoPage.do")
+	public String userInfoPage() {
+		return "userInfo";
+	}
+	
+	@RequestMapping(value="couponPage.do")
+	public String couponPage() {
+		return "coupon";
+	}
+	
+	@RequestMapping(value="userModifyPwdPage.do")
+	public String userModifyPwdPage() {
+		return "userModifyPwd";
+	}
+	
+	@RequestMapping(value="userModifyPwdStep1.do")
+	public String userModifyPwdStep1() {
+		return "userModifyPwdStep1";
+	}
+	
+	@RequestMapping(value="userModifyPwdStep2.do")
+	public String userModifyPwdStep2() {
+		return "userModifyPwdStep2";
+	}
+	
+	@RequestMapping(value="userModifyPwdStep3.do")
+	public String userModifyPwdStep3() {
+		return "userModifyPwdStep3";
+	}
+	
+	@RequestMapping(value="welcomePage.do")
+	public String welcomePage(HttpServletRequest request) {
+		request.setAttribute("status", 0);
+		return "welcome";
+	}
+	
+	@RequestMapping(value="userLogout.do")
+	public String userLogout(HttpSession session) {
+		session.removeAttribute("loginHuman");
+		return "login";
 	}
 	
 	/**
