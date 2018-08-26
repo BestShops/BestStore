@@ -16,7 +16,7 @@ public class SmsUtil implements Runnable{
     	// System.out.println("----------"+code);
     	code = code.substring(0,4);
     	// 用户名
-    	String Uid = "koko_pe";
+    	String Uid = "故事讲到了哪儿";
     	// 接口安全秘钥
     	String Key = "d41d8cd98f00b204e980";
     	// 手机号码，多个号码如13800000000,13800000001,13800000002

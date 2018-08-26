@@ -398,4 +398,11 @@ public class Human {
     public void setHlimit(Integer hlimit) {
         this.hlimit = hlimit;
     }
+
+	@Override
+	public String toString() {
+		return "Human [hid=" + hid + ", hname=" + hname + ", hpwd=" + hpwd + ", hsex=" + hsex + ", height=" + height
+				+ ", hweight=" + hweight + ", hbirth=" + hbirth + ", hidcard=" + hidcard + ", hphone=" + hphone
+				+ ", hemail=" + hemail + ", hphoto=" + hphoto + ", hlimit=" + hlimit + "]";
+	}
 }

@@ -17,9 +17,6 @@ import com.bs.beststore.vo.HumanExample;
 import com.bs.beststore.vo.HumanExample.Criteria;
 
 @Service
-/**
- *
- */
 public class HumanBizImpl implements HumanBiz {
 
 	@Autowired
@@ -157,18 +154,14 @@ public class HumanBizImpl implements HumanBiz {
 	}
 
 	@Override
-	public int changePwd(Human human, String oldPwd, String newPwd) throws BizException {
-		if (!oldPwd.equals(newPwd)) {// 如果两次输入的密码不一致，再开始进行修改
-			if (MD5Util.MD5(human.getHname() + oldPwd).equals(human.getHpwd())) {// 旧密码正确，验证是本人操作，予以修改密码
-				Human h = new Human();
-				h.setHid(human.getHid());
-				h.setHpwd(MD5Util.MD5(human.getHname() + newPwd));
-				return humanMapper.updateByPrimaryKeySelective(h);
-			} else {
-				throw new BizException("原密码输入错误，请重试");
-			}
+	public int changePwd(Human human, String newPwd) throws BizException {
+		if (!human.getHpwd().equals(MD5Util.MD5(human.getHname() + newPwd))) {// 如果两次输入的密码不一致，再开始进行修改
+			Human h = new Human();
+			h.setHid(human.getHid());
+			h.setHpwd(MD5Util.MD5(human.getHname() + newPwd));
+			return humanMapper.updateByPrimaryKeySelective(h);
 		} else {// 两次输入的密码一致，直接抛出异常
-			throw new BizException("两次输入的密码相同，请验证后重新输入");
+			throw new BizException("新密码与旧密码相同，请验证后重新输入");
 		}
 	}
 

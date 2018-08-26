@@ -9,10 +9,10 @@
 	<!-- 顶部轮播 -->
     <div class="swiper-container banner-box">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="item_show.html"><img src="images/temp/banner_1.jpg" class="cover"></a></div>
-            <div class="swiper-slide"><a href="item_show.html"><img src="images/temp/banner_2.jpg" class="cover"></a></div>
+            <div class="swiper-slide"><a href=""><img src="images/temp/banner_1.jpg" class="cover"></a></div>
+            <div class="swiper-slide"><a href=""><img src="images/temp/banner_2.jpg" class="cover"></a></div>
             <div class="swiper-slide"><a href="item_category.html"><img src="images/temp/banner_3.jpg" class="cover"></a></div>
-            <div class="swiper-slide"><a href="item_show.html"><img src="images/temp/banner_4.jpg" class="cover"></a></div>
+            <div class="swiper-slide"><a href=""><img src="images/temp/banner_4.jpg" class="cover"></a></div>
             <div class="swiper-slide"><a href="item_sale_page.html"><img src="images/temp/banner_5.jpg" class="cover"></a></div>
         </div>
         <div class="swiper-pagination"></div>
@@ -39,7 +39,7 @@
 						<img src="images/floor_1.jpg" alt="" class="cover">
 					</a>
 					<div class="right-box hot-box">
-						<a href="item_show.html" class="floor-item">
+						<a href="" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="images/temp/S-001.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 							</div>
@@ -49,7 +49,7 @@
 							</div>
 							<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 						</a>
-						<a href="item_show.html" class="floor-item">
+						<a href="" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="images/temp/S-002.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 							</div>
@@ -59,7 +59,7 @@
 							</div>
 							<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 						</a>
-						<a href="item_show.html" class="floor-item">
+						<a href="" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="images/temp/S-003.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 							</div>
@@ -69,7 +69,7 @@
 							</div>
 							<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 						</a>
-						<a href="item_show.html" class="floor-item">
+						<a href="" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="images/temp/S-004.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 							</div>
@@ -79,7 +79,7 @@
 							</div>
 							<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 						</a>
-						<a href="item_show.html" class="floor-item">
+						<a href="" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="images/temp/S-005.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 							</div>
@@ -89,7 +89,7 @@
 							</div>
 							<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 						</a>
-						<a href="item_show.html" class="floor-item">
+						<a href="" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="images/temp/S-006.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 							</div>
@@ -131,25 +131,25 @@
 					</div>
 					<div class="buts-box bgf5">
 						<div class="but-div">
-							<a href="">
+							<a href="userOrderPage.do">
 								<i class="but-icon"></i>
-								<p>物流查询</p>
+								<p>订单查看</p>
 							</a>
 						</div>
 						<div class="but-div">
-							<a href="item_sale_page.html">
+							<a href="goodsQueryPage.do">
 								<i class="but-icon"></i>
 								<p>热卖专区</p>
 							</a>
 						</div>
 						<div class="but-div">
-							<a href="item_sale_page.html">
+							<a href="matchPage.do">
 								<i class="but-icon"></i>
-								<p>满减专区</p>
+								<p>智能匹配</p>
 							</a>
 						</div>
 						<div class="but-div">
-							<a href="item_sale_page.html">
+							<a href="goodsQueryPage.do">
 								<i class="but-icon"></i>
 								<p>折扣专区</p>
 							</a>
@@ -175,7 +175,7 @@
 					<img src="images/floor_2.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-001.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -185,7 +185,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-002.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -195,7 +195,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-003.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -205,7 +205,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-004.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -215,7 +215,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-005.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -225,7 +225,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-006.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -235,7 +235,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-007.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -245,7 +245,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-008.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -275,7 +275,7 @@
 					<img src="images/floor_3.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-001.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -285,7 +285,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-002.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -295,7 +295,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-003.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -305,7 +305,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-004.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -315,7 +315,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-005.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -325,7 +325,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-006.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -335,7 +335,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-007.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -345,7 +345,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-008.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -375,7 +375,7 @@
 					<img src="images/floor_4.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-011.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -385,7 +385,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-012.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -395,7 +395,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-013.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -405,7 +405,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-014.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -415,7 +415,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-015.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -425,7 +425,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-016.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -435,7 +435,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-017.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -445,7 +445,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-018.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -475,7 +475,7 @@
 					<img src="images/floor_5.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-011.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -485,7 +485,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-012.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -495,7 +495,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-013.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -505,7 +505,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-014.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -515,7 +515,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-015.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -525,7 +525,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-016.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -535,7 +535,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-017.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -545,7 +545,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-018.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -575,7 +575,7 @@
 					<img src="images/floor_6.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-009.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -585,7 +585,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-009.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -595,7 +595,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-010.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -605,7 +605,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-010.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -615,7 +615,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-019.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -625,7 +625,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-019.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -635,7 +635,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/S-020.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>
@@ -645,7 +645,7 @@
 						</div>
 						<div class="name ep" title="纯色圆领短袖T恤活a动衫弹力柔软">纯色圆领短袖T恤活a动衫弹力柔软</div>
 					</a>
-					<a href="item_show.html" class="floor-item">
+					<a href="" class="floor-item">
 						<div class="item-img hot-img">
 							<img src="images/temp/M-020.jpg" alt="纯色圆领短袖T恤活a动衫弹" class="cover">
 						</div>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -15,8 +16,13 @@
 							<a href="userInfoPage.do" class="edit"><i class="iconfont icon-edit"></i></a>
 						</div>
 						<p class="name text-nowrap"></p>
-						<p class="name text-nowrap">您好，${loginHuman.hname}</p>
-						<p class="level text-nowrap">身份：普通会员 <a href="registerStrore.do">去开店</a></p>
+						<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }！</p>
+						<c:if test="${status==1 }">
+							<p class="level text-nowrap">身份：普通会员 <a href="openStorePage.do">去开店</a></p>
+						</c:if>
+						<c:if test="${status==0 }">
+							<p class="level text-nowrap">身份：小店店主 <a href="storeManagePage.do">管理店铺</a></p>
+						</c:if>
 					</div>
 					<div class="pull-right user-nav">
 						<a href="userOrderPage.do" class="user-nav__but">
@@ -39,7 +45,7 @@
 							<i class="iconfont icon-jifen fz40 cr"></i>
 							<div class="c6">积分 <span class="cr">200</span></div>
 						</a>
-						<a href="" class="user-nav__but">
+						<a href="blogPage.do" class="user-nav__but">
 							<i class="iconfont icon-xiaoxi fz40 cr"></i>
 							<div class="c6">博客 <span class="cr">2</span></div>
 						</a>

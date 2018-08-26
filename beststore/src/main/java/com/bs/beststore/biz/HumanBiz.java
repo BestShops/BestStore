@@ -40,7 +40,7 @@ public interface HumanBiz {
 	 * @param newPwd	输入的新密码
 	 * @return	成功返回1，否则判定为失败
 	 */
-	int changePwd(Human human, String oldPwd, String newPwd) throws BizException;
+	int changePwd(Human human, String newPwd) throws BizException;
 	
 	/**
 	 * 找回密码，验证过后，根据用户名修改新的密码

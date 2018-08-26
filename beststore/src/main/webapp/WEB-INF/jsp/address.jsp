@@ -231,7 +231,7 @@
 			} else {
 				status = 0;
 			}
-			var isPhone = /^[1][3,4,5,8][0-9]{9}$/;//手机号码
+			var isPhone = /^[1][3-9][0-9]{9}$/;//手机号码
 			if (name == null || name == "") {
 				$("#error").html("收货人姓名不能为空");
 			} else if (details == null || details == "") {

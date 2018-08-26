@@ -54,13 +54,12 @@ public class HumanAction {
 	
 	/**
 	 * 从页面获取到用户名、密码、验证码，验证三个信息的完整性（js或java均可） 先验证验证码是否正确，然后再开始验证用户名和密码是否正确
-	 * 
 	 * @param human   用户名和密码
 	 * @param code    验证码
 	 * @param out     返回给ajax的数据
 	 * @param session 将登录成功的登陆者信息存入到session中的loginHuman(可读取完整数据)
 	 */
-	@RequestMapping(value = "login.do")
+	@RequestMapping(value = "login.todo")
 	public void login(Human human, PrintWriter out, HttpSession session) {
 		// 进行登录操作
 		Human loginHuman;
@@ -79,15 +78,13 @@ public class HumanAction {
 	 * @param human
 	 * @param out
 	 */
-	@RequestMapping("checkname.do")
+	@RequestMapping("checkname.todo")
 	public void checkname(Human human, String emailorphone, PrintWriter out) {
 		if (AccountValidatorUtil.isMobile(emailorphone + "")) {
 			human.setHphone(Long.valueOf(emailorphone));
 		} else if (AccountValidatorUtil.isEmail(emailorphone + "")) {
 			human.setHemail(emailorphone);
-		} else if(human.getHname() == null) {
-			out.print("error：no data");
-		}
+		} 
 		if (humanBiz.findByCondition(human).size() <= 0) {
 			out.print("OK");
 		} else {

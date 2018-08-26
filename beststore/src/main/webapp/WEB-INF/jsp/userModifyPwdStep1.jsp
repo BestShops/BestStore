@@ -32,15 +32,26 @@
 							</div>
 						</div>
 					</div>
-					<form action="userModifyPwdStep2.do" class="user-setting__form" role="form">
+					<form class="user-setting__form" role="form">
 						<div class="form-group">
-							<input class="form-control" name="phone" required="" maxlength="11" autocomplete="off" type="password">
+							<input class="form-control" id="upwd" name="pwd" required="" maxlength="11" autocomplete="off" type="password">
 							<span class="tip-text">请输入原密码</span>
 							<span class="see-pwd pwd-toggle" title="显示密码"><i class="glyphicon glyphicon-eye-open"></i></span>
 							<span class="error_tip"></span>
 						</div>
+						<!-- 错误信息 -->
+						<div class="form-group">
+							<div class="error_msg" id="error_msg">
+								<!-- 错误信息 范例html
+								<div class="alert alert-warning alert-dismissible fade in" role="alert">
+									<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									<strong>密码错误</strong> 请重新输入密码
+								</div>
+								 -->
+							</div>
+						</div>
 						<div class="user-form-group tags-box">
-							<button type="submit" class="btn ">提交</button>
+							<button id="step1_submit" type="button" class="btn">提交</button>
 						</div>
 						<script src="js/login.js"></script>
 						<script>
@@ -49,6 +60,20 @@
 									$(this).addClass('focus');
 									$('.error_tip').empty();
 									if ($(this).val() == ''){$(this).removeClass('focus')}
+								});
+								
+								// 输入原密码并确认
+								$('#step1_submit').click(function() {
+									var upwd = $("#upwd").val();
+									$.post("checkPwd.do",{
+										hpwd:upwd
+									},function(data){
+										if (data == "OK") {
+											window.location.href = "userModifyPwdStep2.do";
+										} else {
+											$('#error_msg').html(msgtemp(data, 'alert-warning'));
+										}
+									});
 								});
 							});
 						</script>
