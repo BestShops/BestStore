@@ -1,12 +1,20 @@
 package com.bs.beststore.web.action;
 
+import java.io.PrintWriter;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bs.beststore.biz.BizException;
+import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.biz.StoreBiz;
+import com.bs.beststore.util.Result;
+import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Store;
+import com.google.gson.Gson;
 
 @Controller
 public class StoreAction {
@@ -14,14 +22,27 @@ public class StoreAction {
 	@Resource
 	private StoreBiz storeBiz;
 	
+	@Resource
+	private HumanBiz humanBiz;
+	
 	@RequestMapping(value="openStorePage.do")
 	public String openStorePage(){
 		return "openStore";
 	}
 	
-	@RequestMapping(value="openStoreStep1.do")
-	public String Store(){
+	@RequestMapping(value="openStoreStep1Page.do")
+	public String openStoreStep1Page(){
 		return "openStoreStep1";
+	}
+	
+	@RequestMapping(value="openStoreStep2Page.do")
+	public String openStoreStep2Page(){
+		return "openStoreStep2";
+	}
+	
+	@RequestMapping(value="openStoreStep3Page.do")
+	public String openStoreStep3Page(){
+		return "openStoreStep3";
 	}
 	
 	@RequestMapping(value="storeManagePage.do")
@@ -29,14 +50,42 @@ public class StoreAction {
 		return "storeManage";
 	}
 	
-	@RequestMapping(value="storeInfoPage.do")
-	public String storeInfoPage(){
-		return "back/storeInfo";
+	@RequestMapping(value="storeLogout.do")
+	public String storeLogout(HttpSession session) {
+		session.removeAttribute("storeHuman");
+		return "back/backIndex";
 	}
 	
-	@RequestMapping(value="goodsManagePage.do")
-	public String goodsManagePage(){
-		return "back/goodsManage";
+	/**
+	 * 后台店铺通过用户名/邮箱/手机号 和密码 登录
+	 * @param human
+	 * @param out
+	 * @param session	
+	 */
+	@RequestMapping(value = "storeLogin.do")
+	public void storeLogin(Human human, PrintWriter out, HttpSession session,String code) {
+		// 进行登录操作
+		Human userHuman = null;
+		Store storeHuman;
+		if(code.equalsIgnoreCase((String) session.getAttribute("vscode"))) {
+			try {
+				userHuman = humanBiz.login(human,1);
+			} catch (BizException e) {
+				out.print(e.getMessage());
+			}
+			if(userHuman!=null) {
+				try {
+					storeHuman=storeBiz.findByHid(userHuman.getHid());
+					out.print("OK");
+					session.setAttribute("storeHuman", storeHuman);// 将登录成功的用户信息存入到session中
+				} catch (BizException e) {
+					out.print(e.getMessage());
+				}
+			}
+		}else {
+			out.print("验证码错误");
+		}
+		
 	}
 	
 	/**
@@ -53,8 +102,18 @@ public class StoreAction {
 	 * @param store	店铺信息
 	 */
 	@RequestMapping(value="modifyStoreInfo.do")
-	public void modifyStoreInfo(Store store){
-		
+	public void modifyStoreInfo(Store store,PrintWriter out,HttpSession session){
+		String data;
+		try {
+			storeBiz.changeInfo(store);
+			data=new Gson().toJson(Result.getSuccess("修改成功!"));
+			session.removeAttribute("storeHuman");
+			session.setAttribute("storeHuman", storeBiz.findBySid(store.getSid()));
+		} catch (BizException e) {
+			data=new Gson().toJson(Result.getFailure(e.getMessage()));
+		}
+		out.print(data);
 	}
+	
 	
 }

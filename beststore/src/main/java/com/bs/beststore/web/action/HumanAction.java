@@ -22,11 +22,6 @@ public class HumanAction {
 	@Resource
 	private HumanBiz humanBiz;
 	
-	@RequestMapping(value="userLogin.do")
-	public String userLogin() {
-		return "login";
-	}
-	
 	@RequestMapping(value="userInfoPage.do")
 	public String userInfoPage() {
 		return "userInfo";
@@ -82,7 +77,7 @@ public class HumanAction {
 		// 进行登录操作
 		Human loginHuman;
 		try {
-			loginHuman = humanBiz.login(human);
+			loginHuman = humanBiz.login(human,0);
 			System.out.println(loginHuman);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
 			out.print("OK");

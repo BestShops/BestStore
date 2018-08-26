@@ -37,7 +37,6 @@
 </script>
 </head>
 <body class="easyui-layout">
-
 	<div data-options="region:'north'" style="overflow: hidden;">
 		<table style="width:100%">
 			<tr>
@@ -47,9 +46,9 @@
 				<td>
 					<h2 style="margin: 1px;color:#333">Best Store</h2>
 				</td>
-				<td align="right" style="padding:5px 11px">
-					欢迎:${applicationScope.manager.mname }
-					<a href="${basePath }/ManagerLogoutServlet">退出</a>
+				<td align="right" style="padding:5px 50px;margin-left: -10px;">
+					小店:<span style="color:blue">${sessionScope.storeHuman.sname }</span>&nbsp;&nbsp;
+					<a href="storeLogout.do">退出</a>
 				</td>
 			</tr>
 		</table>
@@ -59,9 +58,9 @@
 		<div title="系统管理" style="text-align: center">
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'storeInfoPage.do')" data-options="iconCls:'icon-search'" >店铺资料</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsManagePage.do')" data-options="iconCls:'icon-search'" >商品管理</a>
-			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'${basePath}/back/courseInfoManage.jsp')" data-options="iconCls:'icon-search'" >商品审核情况</a>  
+			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsVerifyPage.do')" data-options="iconCls:'icon-search'" >商品审核情况</a>  
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'${basePath}/back/takeCourse.jsp')" data-options="iconCls:'icon-search'" >商品评价</a>
-			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'${basePath}/back/takeCourse.jsp')" data-options="iconCls:'icon-search'" >博客管理</a>  
+			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'blogManagePage.do')" data-options="iconCls:'icon-search'" >博客管理</a>  
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'${basePath}/back/takeCourse.jsp')" data-options="iconCls:'icon-search'" >销量图表</a>    
 		</div>
 	</div>

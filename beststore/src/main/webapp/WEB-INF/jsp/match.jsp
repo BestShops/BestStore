@@ -46,8 +46,6 @@
 	</fieldset>
 	<input type="submit" name="search" id="search" value="智能匹配" />
 </form>
-
-
 <script type="text/javascript" src="js/match/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="js/match/jquery-ui-1.8.4.custom.min.js"></script>
 <script type="text/javascript" src="js/match/jQuery.peSlider.js"></script>

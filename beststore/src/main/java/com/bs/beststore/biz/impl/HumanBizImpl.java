@@ -40,7 +40,7 @@ public class HumanBizImpl implements HumanBiz {
 	}
 
 	@Override
-	public Human login(Human human) throws BizException {
+	public Human login(Human human,int status) throws BizException {
 		// 先判断用户名
 		HumanExample humanExample = new HumanExample();
 		Criteria criteria = humanExample.createCriteria();
@@ -65,7 +65,7 @@ public class HumanBizImpl implements HumanBiz {
 					throw new BizException("邮箱输入错误<br>请验证后重新输入");
 				}
 			} else {
-				// 如果号码也不存在，就判断输入的是否是号码
+				// 如果邮箱也不存在，就判断输入的是否是号码
 				String RULE_EMAIL1 = "^[1][3-9][0-9]{9}$";
 				// 正则表达式的模式
 				Pattern p1 = Pattern.compile(RULE_EMAIL1);
@@ -88,7 +88,6 @@ public class HumanBizImpl implements HumanBiz {
 				}
 			}
 		}
-
 		// 如果输入的账号存在，则用户名已经获取到了，开始判断密码是否正确
 		HumanExample humanExample3 = new HumanExample();
 		Criteria criteria3 = humanExample3.createCriteria();
@@ -97,10 +96,16 @@ public class HumanBizImpl implements HumanBiz {
 		criteria3.andHpwdEqualTo(MD5Util.MD5(human.getHname() + human.getHpwd()));// 密码是加密后存入数据库的，所以查询也要加密
 		List<Human> list3 = humanMapper.selectByExample(humanExample3);
 		if (list3.size() == 1) {// 用户名密码都正确，返回该用户的信息
-			return list3.get(0);
+			Human h = list3.get(0);
+			if (h.getHlimit() >= status && h.getHlimit() < 2) {
+				return h;
+			} else {
+				throw new BizException("该账户无访问权限");
+			}
 		} else {// 用户名或密码错误
 			throw new BizException("账号或密码错误，请验证后重新输入");
 		}
+
 	}
 
 	@Override
