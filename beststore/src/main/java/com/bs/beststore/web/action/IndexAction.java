@@ -67,7 +67,6 @@ public class IndexAction {
 
 	//后台店铺管理主界面
 	@RequestMapping(path = "backPage.do")
-	// 后台商铺
 	public String backPage() {
 		return "back/backIndex";
 	}
@@ -113,29 +112,9 @@ public class IndexAction {
 		return "back/blogManage";
 	}
 
-	@RequestMapping("code.do")
-	// 发送邮件
-	public void code(String email, PrintWriter out) {
-		CodeUtil cu = new CodeUtil(email);
-		// 生成激活码
-		String code = cu.generateUniqueCode();
-		// 通过线程的方式给用户发送一封邮件或短信
-		if(AccountValidatorUtil.isEmail(email)) {
-			new Thread(new MailUtil(email, code)).start();
-		} else if(AccountValidatorUtil.isMobile(email)){
-			new Thread(new SmsUtil(email, code)).start();
-		} else {
-			out.print("手机/邮箱输入错误，请重新输入！");
-		}
-		out.print("OK"); 
-	}
-	
 	@RequestMapping("welcomePage.do")
 	// 个人主页
 	public String welcomePage(HttpSession session, Model model) {
-		if(session.getAttribute("loginHuman") == null) {
-			return "login";
-		}
 		model.addAttribute("status", 0);
 		return "welcome";
 	}
@@ -183,4 +162,21 @@ public class IndexAction {
 		VerifyCodeUtil.outputImage(w, h, response.getOutputStream(),verifyCode);
 	}
 
+	@RequestMapping("code.do")
+	// 发送邮件
+	public void code(String email, PrintWriter out) {
+		CodeUtil cu = new CodeUtil(email);
+		// 生成激活码
+		String code = cu.generateUniqueCode();
+		// 通过线程的方式给用户发送一封邮件或短信
+		if(AccountValidatorUtil.isEmail(email)) {
+			new Thread(new MailUtil(email, code)).start();
+		} else if(AccountValidatorUtil.isMobile(email)){
+			new Thread(new SmsUtil(email, code)).start();
+		} else {
+			out.print("手机/邮箱输入错误，请重新输入！");
+		}
+		out.print("OK"); 
+	}
+	
 }
