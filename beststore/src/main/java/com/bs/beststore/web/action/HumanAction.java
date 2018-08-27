@@ -54,7 +54,9 @@ public class HumanAction {
 			human.setHphone(Long.valueOf(emailorphone));
 		} else if (AccountValidatorUtil.isEmail(emailorphone + "")) {
 			human.setHemail(emailorphone);
-		} 
+		} else if(human.getHname() == null) {
+			human.setHname("--------为了防止查找--------假名字--------后期调优替换其他方法--------");
+		}
 		if (humanBiz.findByCondition(human).size() <= 0) {
 			out.print("OK");
 		} else {

@@ -1,5 +1,7 @@
 package com.bs.beststore.web.action;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -7,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class UserOrderAction {
 
 	@RequestMapping(value="userOrderPage.do")
-	public String userOrderPage() {
+	public String userOrderPage(HttpSession session) {
 		return "userOrder";
 	}
 	

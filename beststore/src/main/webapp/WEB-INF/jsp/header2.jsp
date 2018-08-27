@@ -74,13 +74,6 @@
 					<a href="storeManagePage.do"><dd>店铺管理</dd></a>
 				</dl>
 				<dl class="user-center__nav">
-					<dt>我的店铺</dt>
-					<a href="openStorePage.do"><dd>开店流程</dd></a>
-					<a href="temp_article/udai_article6.html"><dd>代销商上架教程</dd></a>
-					<a href="temp_article/udai_article7.html"><dd>分销商常见问题</dd></a>
-					<a href="temp_article/udai_article8.html"><dd>付款账户</dd></a>
-				</dl>
-				<dl class="user-center__nav">
 					<dt>服务中心</dt>
 					<a href=""><dd>在线客服</dd></a>
 					<a href=""><dd>商品反馈</dd></a>

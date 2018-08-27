@@ -149,7 +149,8 @@ public class IndexAction {
 	
 	@RequestMapping("userModifyPwdStep3.do")
 	// 修改密码页面
-	public String userModifyPwdStep3() {
+	public String userModifyPwdStep3(HttpSession session) {
+		session.removeAttribute("loginHuman");
 		return "userModifyPwdStep3";
 	}
 	
