@@ -13,11 +13,7 @@ import com.bs.beststore.vo.Goods;
 
 @Service
 /**
- * 
- * 功能还没完善好，但大致功能已经实现，还没经过测试
- * 
  * @author pch
- *
  */
 public class GoodsBizImpl implements GoodsBiz {
 

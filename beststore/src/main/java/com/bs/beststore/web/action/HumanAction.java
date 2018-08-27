@@ -114,7 +114,7 @@ public class HumanAction {
 	 * @param out     返回给ajax的数据
 	 * @param session 将登录成功的登陆者的用户名存入session中hname
 	 */
-	@RequestMapping("register.do")
+	@RequestMapping("register.todo")
 	public void register(Human human, String emailorphone, String code, PrintWriter out, HttpSession session) {
 		if (AccountValidatorUtil.isMobile(emailorphone + "")) {
 			human.setHphone(Long.valueOf(emailorphone));
@@ -143,7 +143,7 @@ public class HumanAction {
 	 * @param out     返回给ajax的数据
 	 * @param session 将登录成功的登陆者的用户名存入session中hname
 	 */
-	@RequestMapping("findPwd.do")
+	@RequestMapping("findPwd.todo")
 	public void findPwd(Human human, String emailorphone, String code, PrintWriter out, HttpSession session) {
 		if (AccountValidatorUtil.isMobile(emailorphone + "")) {
 			human.setHphone(Long.valueOf(emailorphone));

@@ -23,7 +23,7 @@ public class AccountValidatorUtil {
     /**
      * 正则表达式：验证邮箱
      */
-    public static final String REGEX_EMAIL = "^\\\\w+((-\\\\w+)|(\\\\.\\\\w+))*\\\\@[A-Za-z0-9]+((\\\\.|-)[A-Za-z0-9]+)*\\\\.[A-Za-z0-9]+$";
+    public static final String REGEX_EMAIL = "^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[a-zA-Z0-9]{2,6}$";
  
     /**
      * 正则表达式：验证汉字

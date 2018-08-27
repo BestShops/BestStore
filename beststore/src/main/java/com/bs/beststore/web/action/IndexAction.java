@@ -194,7 +194,7 @@ public class IndexAction {
 		VerifyCodeUtil.outputImage(w, h, response.getOutputStream(), verifyCode);
 	}
 
-	@RequestMapping("code.do")
+	@RequestMapping("code.todo")
 	// 发送邮件
 	public void code(String email, PrintWriter out) {
 		CodeUtil cu = new CodeUtil(email);

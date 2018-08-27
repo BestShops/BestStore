@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -12,17 +14,20 @@
 					<div class="title">订单中心-我的收藏</div>
 					<div class="collection-list__area clearfix">
 					
-					<c:forEach items="${list}" var="list">
-						<div class="item-card">
-							<a href="goodsShowPage.do" class="photo">
-								<img src="images/temp/M-001.jpg" alt="锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款" class="cover">
-								<div class="name">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
+					<c:forEach items="${list}" var="v">
+						<c:if test="${v.FSTATUS == 1 }">
+						<div class="item-card" id="${v.FID }">
+							<a href="goodsShowPage.do?gid=${v.GID }" class="photo">
+								<img src="upload/${v.GPHOTOPIC }" alt="${v.GNAME }" class="cover">
+								<div class="name">${v.GNAME }</div>
 							</a>
 							<div class="middle">
-								<div class="price"><small>￥</small>18.0</div>
-								<div class="sale"><a href="">取消收藏</a></div>
+								<div class="price"><small>￥</small>${v.GNOWPRICE }</div>
+								<div class="sale"><a onclick="remove(${v.FID })" >取消收藏</a></div>
 							</div>
 						</div>
+						</c:if>
+						
 					</c:forEach>
 						
 					</div>
@@ -36,6 +41,26 @@
 					</div>
 				</div>
 			</div>
+			<script>
+				
+				function remove(fid){
+					$.post("removeFavorite.do",{
+						fid:fid
+					},function(data){
+						if (data == "OK") {
+							alert("取消收藏成功！");
+							window.location.href = "userCollectionPage.do";
+						} else {
+							alert(data);
+						}
+					});
+				}
+					
+				</script>
+			
+			
+			
+			
 		</section>
 	</div>
 	<%@ include file="rightMenu.jsp" %>

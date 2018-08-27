@@ -252,7 +252,7 @@
 							$("#register_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
 							return;
 						} 
-						$.post("code.do",{
+						$.post("code.todo",{
 							email:email
 						},function(date){
 							if(date == "OK") {
@@ -300,7 +300,7 @@
 							$("#register_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
 							return;
 						} 
-						$.post("register.do",{
+						$.post("register.todo",{
 							emailorphone:uemail,
 							hname:uname,
 							hpwd:upwd,
@@ -346,7 +346,7 @@
 							$("#resetpwd_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
 							return;
 						} 
-						$.post("code.do",{
+						$.post("code.todo",{
 							email:email
 						},function(date){
 							if(date == "OK") {
@@ -371,7 +371,7 @@
 							$("#resetpwd_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
 							return;
 						} 
-						$.post("findPwd.do",{
+						$.post("findPwd.todo",{
 							emailorphone:uemail,
 							hpwd:upwd,
 							code:code

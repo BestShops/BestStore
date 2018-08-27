@@ -17,7 +17,7 @@
 				<div class="form-group">
 					<label for="name" class="col-sm-2 control-label">收货人姓名：</label>
 					<div class="col-sm-6">
-						<input class="form-control" id="name" placeholder="请输入姓名" type="text" value="${address.aconsignee}"/>
+						<input class="form-control" id="name" placeholder="请输入姓名" type="text">
 					</div>
 				</div>
 				<div class="form-group">
@@ -29,14 +29,13 @@
 							<select id="area" name="area"></select>
 							<select id="town" name="town"></select>
 						</div>
-						<input class="form-control" id="details" placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码等信息" 
-							maxlength="30" type="text" value="${address.alocation}">
+						<input class="form-control" id="details" placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码等信息" maxlength="30" type="text">
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="mobile" class="col-sm-2 control-label">手机号码：</label>
 					<div class="col-sm-6">
-						<input class="form-control" id="mobile" placeholder="请输入手机号码" type="text" value="${address.aphone}">
+						<input class="form-control" id="mobile" placeholder="请输入手机号码" type="text">
 					</div>
 				</div>
 				<div class="form-group">
@@ -47,13 +46,8 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-6">
-						<c:if test="${address!=null}">
-							<button type='submit' class='but' id='submit' onclick='commit(1, ${address.aid})'>确认修改</button>
-						</c:if>
-						<c:if test="${address==null}">
-							<button type="submit" class="but" id="submit" onclick="commit(0, 0)">保存</button>
-						</c:if>
+					<div class="col-sm-offset-2 col-sm-6" id="divsubmit">
+						<button type="submit" class="but" id="submit" onclick="commit(0, 0)">保存</button>
 					</div>
 				</div>
 				<script src="js/jquery.citys.js"></script>
@@ -85,17 +79,6 @@
 								});
 							}
 						};
-						if ('${address}' == null) {
-							var province = '湖南省';
-							var city = '衡阳市';
-							var area = '珠晖区';
-						} else {
-							var acity = '${address.acity}';
-							var citys = acity.split(" ");
-							var province = citys[0];
-							var city = citys[1];
-							var area = citys[2];
-						}
 						$('.addr-linkage').citys({
 							// 如果某天这个仓库地址失效了dataUrl请使用本地 2017.10 的数据 'js/data_location/list.json'
 							dataUrl: 'http://passer-by.com/data_location/list.json',
@@ -136,7 +119,7 @@
 						<div class="tdf3">${a.acity}</div>
 						<div class="tdf3 tdt-a_l" style="text-align:center;">${a.alocation}</div>
 						<div class="tdf1">${fn:substring(a.aphone, 0, 3)}****${fn:substring(a.aphone, 7, 11)}</div>
-						<div class="tdf1 order"><a href="addressById.do?aid=${a.aid}">修改</a><a onclick="del(${a.aid})">删除</a></div>
+						<div class="tdf1 order"><a onclick="change(this)">修改</a><a onclick="del(${a.aid})">删除</a></div>
 						<div class="tdf1">
 							<c:if test="${a.astatus==1}">
 								<a href="" class="default active">默认地址</a>
@@ -182,6 +165,44 @@
 			}
 		}
 	
+		// 修改
+		function change(e) {
+			// 设值
+			var aphone = $(e).parent().prev();
+			$("#mobile").val(aphone.text());
+			var alocation = aphone.prev();
+			$("#details").val(alocation.text());
+			var acity = alocation.prev();
+			var citys = acity.text().split(" ");
+			// 设置城市的值
+			$('.addr-linkage').citys({
+				// 如果某天这个仓库地址失效了dataUrl请使用本地 2017.10 的数据 'js/data_location/list.json'
+				dataUrl: 'http://passer-by.com/data_location/list.json',
+				spareUrl: 'js/data_location/list.json',
+				dataType: 'json',
+				valueType: 'name',
+				province: citys[0],
+				city:citys[1],
+				area: citys[2],
+				onChange: function(data) {
+					townFormat(data)
+				},
+			},function(api){
+				var info = api.getInfo();
+				townFormat(info);
+			});
+			// 街道的位置选中会出错，修改不了
+			$("#town").attr("autocomplete","off");
+			$("#town").val(citys[3]);
+			// 设置名字
+			var aconsignee = acity.prev();
+			$("#name").val(aconsignee.text());
+			var aid = aconsignee.prev().text();
+			// 修改保存的点击事件
+			$("#divsubmit").html("<button type='submit' class='but' id='submit' onclick='commit(1, " 
+					+ aid + ")'>确认修改</button>");
+		}
+		
 		// 添加街道/乡镇
 		function townFormat(info){
 			$('.addr-linkage select[name="town"]').hide().empty();
@@ -231,7 +252,7 @@
 			} else {
 				status = 0;
 			}
-			var isPhone = /^[1][3-9][0-9]{9}$/;//手机号码
+			var isPhone = /^[1][3,4,5,8][0-9]{9}$/;//手机号码
 			if (name == null || name == "") {
 				$("#error").html("收货人姓名不能为空");
 			} else if (details == null || details == "") {
@@ -264,6 +285,5 @@
 			}
 		}
 	</script>
-
 </body>
 </html>

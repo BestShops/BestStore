@@ -1,11 +1,14 @@
 package com.bs.beststore.web.action;
 
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.GoodsBiz;
@@ -24,7 +27,9 @@ public class GoodsAction {
 	}
 	
 	@RequestMapping(path = "goodsShowPage.do")
-	public String goodsShowPage() {
+	public String goodsShowPage(Goods goods, Model model) {
+		List<Map<String, Object>> list = goodsBiz.findAll(goods);
+		model.addAttribute("list", list);
 		return "goodsShow";
 	}
 	
