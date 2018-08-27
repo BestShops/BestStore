@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>商品管理</title>
+<title>博客管理</title>
 <%@ include file="easyuiLink.jsp"%>
 </head>
 <script>
@@ -190,7 +190,7 @@
 </script>
 <body>
 	<div id="tb" style="padding: 3px">
-		<span>商品状态:</span> <select id="loadCourse" onchange="selectCourse()"
+		<span>博客状态:</span> <select id="loadCourse" onchange="selectCourse()"
 			class="combobox" style="width: 128px;"></select> <a
 			class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
 	</div>
@@ -208,17 +208,12 @@
 			">
 		<thead>
 			<tr style="text-align: center">
-				<th data-options="field:'gid',width:80,align:'center'">商品号</th>
-				<th data-options="field:'gname',width:100,align:'center'">商品名</th>
+				<th data-options="field:'gid',width:80,align:'center'">博客号</th>
+				<th data-options="field:'gname',width:200,align:'center'">博客标题</th>
 				<th data-options="field:'photopic',width:120,align:'center',formatter:imgFormatter">图片路径</th>
-				<th data-options="field:'glastprice',width:80,align:'center'">原价</th>
-				<th data-options="field:'gnowprice',width:80,align:'center'">现价</th>
-				<th data-options="field:'gstatus',width:80,align:'center',formatter:statusFmt">商品状态</th>
-				<th data-options="field:'gnumber',width:80,align:'center'">库存数</th>
-				<th data-options="field:'tid',width:120,align:'center'">类别</th>
-				<th data-options="field:'grade',width:80,align:'center'">评分</th>
-				<th data-options="field:'gpublish',width:100,align:'center',formatter:dataFormat">上架时间</th>
-				<th data-options="field:'gdesc',width:220,align:'center'">描述</th>
+				<th data-options="field:'glastprice',width:300,align:'center'">博客描述</th>
+				<th data-options="field:'gstatus',width:90,align:'center',formatter:statusFmt">博客状态</th>
+				<th data-options="field:'gpublish',width:150,align:'center',formatter:dataFormat">发布时间</th>
 				<th data-options="field:'dogid',width:180,align:'center',formatter:fmtDo">操作</th>
 			</tr>
 		</thead>
@@ -227,7 +222,7 @@
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
 			onclick="openEdit()">添加</a>
 	</div>
-	<div id="editAdd" class="easyui-dialog" title="注册新生"
+	<div id="editAdd" class="easyui-dialog" title="添加博客"
 		data-options="iconCls:'icon-save',closed:true,modal:true"
 		style="width: 400px; height: 450px; padding: 10px">
 		<form action="${basePath }/StudentServlet" id="form1">

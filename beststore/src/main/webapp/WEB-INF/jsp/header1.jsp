@@ -18,40 +18,6 @@
 	<script src="js/global.js" charset="UTF-8"></script>
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
 	<title>U袋网</title>
-	<script type="text/javascript">
-		// 我的U袋
-		function welcome() {
-			// 判断是否已经登录
-			if ('${loginHuman}'.length == 0) {
-				alert("您还没有登录，请先登录");
-				window.location.href = "userLogin.do";
-			} else {
-				window.location.href = "welcomePage.do";
-			}
-		}
-		
-		// 我的订单
-		function userOrder() {
-			// 判断是否已经登录
-			if ('${loginHuman}'.length == 0) {
-				alert("您还没有登录，请先登录");
-				window.location.href = "userLogin.do";
-			} else {
-				window.location.href = "userOrder.do";
-			}
-		}
-		
-		// 我的购物车
-		function shopcart() {
-			// 判断是否已经登录
-			if ('${loginHuman}'.length == 0) {
-				alert("您还没有登录，请先登录");
-				window.location.href = "userLogin.do";
-			} else {
-				window.location.href = "shopcarPage.do";
-			}
-		}
-	</script>
 </head>
 <body>
 	<!-- 顶部tab -->
@@ -63,13 +29,12 @@
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
-
 				<c:if test="${sessionScope.loginHuman==null }">
-					<a href="userLogin.do"><span class="cr">登录</span></a>
-					<a href="userLogin.do">注册</a>
+					<a href="userLoginPage.do"><span class="cr">登录</span></a>
+					<a href="userRegisterPage.do">注册</a>
 				</c:if>
 				<c:if test="${sessionScope.loginHuman!=null }">
-					<a href="userLogin.do">您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
+					<a>您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
 					<a href="userLogout.do" style="color:blue">退出</a>
 				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
@@ -357,18 +322,19 @@
 					<div class="avt-port">
 						<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 					</div>
-					<!-- 已登录 -->
-					<div class="name c6">Hi~ <span class="cr">18759808122</span></div>
-					<div class="point c6">积分: 30</div>
-
-					<!-- 未登录 -->
-					<!-- <div class="name c6">Hi~ 你好</div>
-					<div class="point c6"><a href="">点此登录</a>，发现更多精彩</div> -->
-					<div class="report-box">
+					<c:if test="${sessionScope.loginHuman!=null }">
+						<div class="name c6">Hi~ <span class="cr">${sessionScope.loginHuman.hname }</span></div>
+						<div class="point c6">积分: 30</div>
+						<div class="report-box">
 						<span class="badge">+30</span>
-						<a class="btn btn-info btn-block disabled" href="#" role="button">已签到1天</a>
-						<!-- <a class="btn btn-primary btn-block" href="#" role="button">签到领积分</a> -->
+						<a class="btn btn-info btn-block disabled" href="#" role="button" style="width:140px;">已签到1天</a>
 					</div>
+					</c:if>
+
+					<c:if test="${sessionScope.loginHuman==null }">
+						<div class="point c6"><a href="userLoginPage.do">点此登录</a>，发现更多精彩</div>
+						<a class="btn btn-primary btn-block" href="userLoginPage.do" role="button" style="width:140px;margin-left: 25px;">签到领积分</a>
+					</c:if>
 				</div>
 				<div class="agent-box">
 					<a href="openStorePage.do" class="agent">

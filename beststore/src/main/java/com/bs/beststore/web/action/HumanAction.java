@@ -1,5 +1,7 @@
 package com.bs.beststore.web.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -7,12 +9,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bs.beststore.biz.BizException;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
+import com.bs.beststore.util.MD5Util;
 import com.bs.beststore.vo.Human;
 
 @Controller
@@ -20,6 +26,43 @@ public class HumanAction {
 
 	@Resource
 	private HumanBiz humanBiz;
+
+	/**
+	 * 个人信息修改
+	 * @param file	头像图片，在展示时需要加上upload/
+	 * @param human	个人信息
+	 * @param model
+	 * @param session
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping("humanInfo.do")
+	public String humanInfo(@RequestParam("file") MultipartFile file,
+			Human human, Model model, HttpSession session) throws IOException {
+		if (!file.isEmpty()) {
+	        String fileName = file.getOriginalFilename();
+			String diskPath = session.getServletContext().getRealPath("/upload");
+	        File f = new File(diskPath + File.separator + fileName);
+	        if(!f.exists()){  
+	            f.mkdirs();  
+	        } 
+	        file.transferTo(f);
+	        human.setHphoto(fileName);
+		}
+		Human h = (Human) session.getAttribute("loginHuman");
+		human.setHid(h.getHid());
+		try {
+			humanBiz.upload(human);
+			// 更新loginHuman
+			session.setAttribute("loginHuman", humanBiz.findByHid(human));
+			return "userInfo";
+		} catch (BizException e) {
+			model.addAttribute("error", e.getMessage());
+			session.setAttribute("loginHuman", humanBiz.findByHid(human));
+			return "userInfo";
+		}
+	}
+	
 	
 	/**
 	 * 从页面获取到用户名、密码、验证码，验证三个信息的完整性（js或java均可） 先验证验证码是否正确，然后再开始验证用户名和密码是否正确
@@ -33,8 +76,7 @@ public class HumanAction {
 		// 进行登录操作
 		Human loginHuman;
 		try {
-			loginHuman = humanBiz.login(human);
-			// System.out.println(loginHuman);
+			loginHuman = humanBiz.login(human, 0);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
 			out.print("OK");
 		} catch (BizException e) {
@@ -44,7 +86,6 @@ public class HumanAction {
 
 	/**
 	 * 失焦判断用户名是否已经存在
-	 * 
 	 * @param human
 	 * @param out
 	 */
@@ -83,6 +124,7 @@ public class HumanAction {
 			out.print("手机/邮箱格式错误，请重新输入");
 		}
 		human.setHlimit(0);
+		human.setHsex(1);// 默认为男性
 		ArrayList<String> list = CodeUtil.VerificationCode;
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).startsWith(code) && list.get(i).endsWith(emailorphone)) {
@@ -131,6 +173,36 @@ public class HumanAction {
 					}
 				}
 			}
+		}
+	}
+	
+	@RequestMapping("changePwd.do")
+	// 修改密码
+	public void changePwd(Human human, PrintWriter out, HttpSession session) {
+		Human loginHuman = (Human) session.getAttribute("loginHuman");
+		try {
+			if(humanBiz.changePwd(loginHuman, human.getHpwd()) == 1) {
+				out.print("OK");
+			} else if(human.getHpwd() == null){
+				out.print("密码不能为空");
+			} else {
+				out.print("密码输入错误");
+			}
+		} catch (BizException e) {
+			out.print(e.getMessage());
+		}
+	}
+	
+	@RequestMapping("checkPwd.do")
+	// 检查原密码是否正确
+	public void checkPwd(Human human, PrintWriter out, HttpSession session) {
+		Human loginHuman = (Human) session.getAttribute("loginHuman");
+		if(loginHuman.getHpwd().equals(MD5Util.MD5(loginHuman.getHname() + human.getHpwd()))) {
+			out.print("OK");
+		} else if(human.getHpwd() == null){
+			out.print("密码不能为空");
+		} else {
+			out.print("密码输入错误");
 		}
 	}
 

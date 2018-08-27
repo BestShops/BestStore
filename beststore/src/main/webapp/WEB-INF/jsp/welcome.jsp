@@ -16,12 +16,17 @@
 							<a href="userInfoPage.do" class="edit"><i class="iconfont icon-edit"></i></a>
 						</div>
 						<p class="name text-nowrap"></p>
-						<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }！</p>
-						<c:if test="${status==1 }">
-							<p class="level text-nowrap">身份：普通会员 <a href="openStorePage.do">去开店</a></p>
+						<c:if test="${sessionScope.loginHuman==null }">
+							<p class="name text-nowrap"> <a href="userLoginPage.do">去登录</a></p>
 						</c:if>
-						<c:if test="${status==0 }">
-							<p class="level text-nowrap">身份：小店店主 <a href="storeManagePage.do">管理店铺</a></p>
+						<c:if test="${sessionScope.loginHuman!=null }">
+							<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }！</p>
+						</c:if>
+						<c:if test="${status==0}">
+							<p class="level text-nowrap">身份：普通用户 <a href="openStorePage.do">去开店</a></p>
+						</c:if>
+						<c:if test="${status==1}">
+							<p class="level text-nowrap">身份：店主 <a href="storeManagePage.do">管理店铺</a></p>
 						</c:if>
 					</div>
 					<div class="pull-right user-nav">

@@ -31,11 +31,11 @@
 			</div>
 			<div class="pull-right">
 				<c:if test="${sessionScope.loginHuman==null }">
-					<a href="userLogin.do"><span class="cr">登录</span></a>
-					<a href="userLogin.do">注册</a>
+					<a href="userLoginPage.do"><span class="cr">登录</span></a>
+					<a href="userRegisterPage.do">注册</a>
 				</c:if>
 				<c:if test="${sessionScope.loginHuman!=null }">
-					<a href="userLogin.do">您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
+					<a>您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
 					<a href="userLogout.do" style="color:blue">退出</a>
 				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
