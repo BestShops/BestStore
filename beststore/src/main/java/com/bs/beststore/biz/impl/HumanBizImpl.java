@@ -1,7 +1,6 @@
 package com.bs.beststore.biz.impl;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ public class HumanBizImpl implements HumanBiz {
 			// 如果用户名不存在就判断输入的是否是邮箱
 			String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
 			// 邮箱匹配成功，就获取到用户名
-			if (matches(human.getHname(),RULE_EMAIL)) {
+			if (Pattern.matches(RULE_EMAIL, human.getHname())) {
 				HumanExample humanExample1 = new HumanExample();
 				Criteria criteria1 = humanExample1.createCriteria();
 				criteria1.andHemailEqualTo(human.getHname());
@@ -58,7 +57,7 @@ public class HumanBizImpl implements HumanBiz {
 			} else {
 				// 如果邮箱也不存在，就判断输入的是否是号码
 				String RULE_EMAIL1 = "^[1][3-9][0-9]{9}$";
-				if (matches(human.getHname(), RULE_EMAIL1)) {
+				if (Pattern.matches(RULE_EMAIL1, human.getHname())) {
 					HumanExample humanExample2 = new HumanExample();
 					Criteria criteria2 = humanExample2.createCriteria();
 					criteria2.andHphoneEqualTo(Long.parseLong(human.getHname()));
@@ -107,11 +106,11 @@ public class HumanBizImpl implements HumanBiz {
 			throw new BizException("电话号码不能为空");
 		} else if (human.getHemail() == null || "".equals(human.getHemail())) {
 			throw new BizException("邮箱地址不能为空");
-		} else if (matches(human.getHidcard(), AccountValidatorUtil.REGEX_ID_CARD)) {
+		} else if (Pattern.matches(AccountValidatorUtil.REGEX_ID_CARD, human.getHidcard() + "")) {
 			throw new BizException("身份证号格式错误");
-		} else if (matches(human.getHphone(), AccountValidatorUtil.REGEX_MOBILE)) {
+		} else if (Pattern.matches(AccountValidatorUtil.REGEX_MOBILE, human.getHphone() + "")) {
 			throw new BizException("电话号码格式错误");
-		} else if (matches(human.getHemail(), AccountValidatorUtil.REGEX_EMAIL)) {
+		} else if (Pattern.matches(AccountValidatorUtil.REGEX_EMAIL, human.getHemail())) {
 			throw new BizException("邮箱地址格式错误");
 		}
 
@@ -123,7 +122,8 @@ public class HumanBizImpl implements HumanBiz {
 		List<Human> list = humanMapper.selectByExample(null);
 		for (Human h : list) {
 			// 该信息不能与其他用户的信息重复
-			if (h.getHid() != human.getHid()) {
+			if (h.getHid() != human.getHid() && !h.getHid().equals(human.getHid())) {
+				System.out.println("h.getHid()" + h.getHid() + "\t" + "human.getHid()" + human.getHid());
 				if (human.getHname().equals(h.getHname())) {
 					throw new BizException("用户名不能重复");
 				} else if (human.getHidcard() == h.getHidcard()) {
@@ -136,20 +136,6 @@ public class HumanBizImpl implements HumanBiz {
 			}
 		}
 		return humanMapper.updateByPrimaryKeySelective(human);
-	}
-
-	/**
-	 * 正则表达式的判别式
-	 * @param obj	验证的内容
-	 * @param str	正则表达式
-	 * @return
-	 */
-	private boolean matches(Object obj, String str) {
-		// 正则表达式的模式
-		Pattern p = Pattern.compile(str);
-		// 正则表达式的匹配器
-		Matcher m = p.matcher((CharSequence) obj);
-		return m.matches();
 	}
 
 	@Override

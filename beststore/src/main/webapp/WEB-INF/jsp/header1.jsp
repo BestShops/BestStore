@@ -18,40 +18,6 @@
 	<script src="js/global.js" charset="UTF-8"></script>
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
 	<title>U袋网</title>
-	<script type="text/javascript">
-		// 我的U袋
-		function welcome() {
-			// 判断是否已经登录
-			if ('${loginHuman}'.length == 0) {
-				alert("您还没有登录，请先登录");
-				window.location.href = "userLogin.do";
-			} else {
-				window.location.href = "welcomePage.do";
-			}
-		}
-		
-		// 我的订单
-		function userOrder() {
-			// 判断是否已经登录
-			if ('${loginHuman}'.length == 0) {
-				alert("您还没有登录，请先登录");
-				window.location.href = "userLogin.do";
-			} else {
-				window.location.href = "userOrder.do";
-			}
-		}
-		
-		// 我的购物车
-		function shopcart() {
-			// 判断是否已经登录
-			if ('${loginHuman}'.length == 0) {
-				alert("您还没有登录，请先登录");
-				window.location.href = "userLogin.do";
-			} else {
-				window.location.href = "shopcarPage.do";
-			}
-		}
-	</script>
 </head>
 <body>
 	<!-- 顶部tab -->

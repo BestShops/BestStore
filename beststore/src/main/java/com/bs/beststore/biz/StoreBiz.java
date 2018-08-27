@@ -13,6 +13,13 @@ public interface StoreBiz {
 	List<Store> findAll();
 	
 	/**
+	 * 根据商铺名查找
+	 * @param store
+	 * @return
+	 */
+	List<Store> findByName(Store store);
+	
+	/**
 	 * 注册，用户提供信息进行注册
 	 * @param store 	必填信息(店铺名)，选填(店铺说明)
 	 * @return	成功返回1，否则为失败
@@ -24,7 +31,7 @@ public interface StoreBiz {
 	 * @param hid
 	 * @return	成功就返回店铺的具体信息，失败返回为null
 	 */
-	Store findByHid(int hid) throws BizException;
+	Store findByHid(int hid);
 	
 	/**
 	 * 修改店铺信息，根据主键sid修改，需要判断店铺名是否冲突

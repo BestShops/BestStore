@@ -74,7 +74,7 @@
 							身份证号码：<input name="hidcard" value="${loginHuman.hidcard}"><br><br>
 							手机号码：<input name="hphone" value="${loginHuman.hphone}"><br><br>
 							邮箱地址：<input name="hemail" value="${loginHuman.hemail}"><br><br>
-							<span id="error" style="color:red;margin-right:40px">$(error)</span><br><br>
+							<span id="error" style="color:red;margin-right:40px">${error}</span><br><br>
 							<div style="width:200px;">
 								<input type="submit" class="cn" value="确认修改"/>
 							</div>
@@ -125,6 +125,7 @@
 					      		$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",false);
 					      	}  
 					      
+					      	// 预览
 					      	var reader = new FileReader();
 					        reader.readAsDataURL(target.files[0]);
 					        reader.onload = function(e){

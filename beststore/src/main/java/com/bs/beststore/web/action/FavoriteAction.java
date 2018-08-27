@@ -6,8 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class FavoriteAction {
 
-	@RequestMapping(value="userCollectionPage.do")
+	// 收藏夹页面
+	@RequestMapping(value = "userCollectionPage.do")
 	public String userCollectionPage() {
 		return "userCollection";
 	}
+
 }

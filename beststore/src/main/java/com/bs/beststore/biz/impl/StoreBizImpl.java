@@ -1,5 +1,8 @@
 package com.bs.beststore.biz.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,14 +28,18 @@ public class StoreBizImpl implements StoreBiz {
 
 	@Override
 	public int register(Store store) {
-		if (store.getSname() == null || "".equals(store.getSname())) {
-//			throw new BizException("请填写店铺名");
+		SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+		try {
+			store.setStime(dateFormat.parse(dateFormat.format(new Date())));
+		} catch (ParseException e) {
+			e.printStackTrace();
 		}
+		store.setSstatus(1);
 		return storeMapper.insertSelective(store);
 	}
 
 	@Override
-	public Store findByHid(int hid) throws BizException {
+	public Store findByHid(int hid) {
 		// 根据hid获取到店铺的详细信息
 		StoreExample storeExample = new StoreExample();
 		Criteria criteria = storeExample.createCriteria();
@@ -40,7 +47,7 @@ public class StoreBizImpl implements StoreBiz {
 		criteria.andSstatusEqualTo(1);// 状态为正常
 		List<Store> list = storeMapper.selectByExample(storeExample);
 		if (list == null || list.size() == 0) {
-			throw new BizException("该商铺不存在或已被下架，请联系超级管理员");
+			return null;
 		}
 		return list.get(0);
 	}
@@ -66,6 +73,14 @@ public class StoreBizImpl implements StoreBiz {
 	@Override
 	public Store findBySid(int sid) {
 		return storeMapper.selectByPrimaryKey(sid);
+	}
+
+	@Override
+	public List<Store> findByName(Store store) {
+		StoreExample storeExample = new StoreExample();
+		Criteria criteria = storeExample.createCriteria();
+		criteria.andSnameEqualTo(store.getSname());
+		return storeMapper.selectByExample(storeExample);
 	}
 	
 }

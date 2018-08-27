@@ -39,16 +39,17 @@ public class HumanAction {
 	@RequestMapping("humanInfo.do")
 	public String humanInfo(@RequestParam("file") MultipartFile file,
 			Human human, Model model, HttpSession session) throws IOException {
+		if (!file.isEmpty()) {
+	        String fileName = file.getOriginalFilename();
+			String diskPath = session.getServletContext().getRealPath("/upload");
+	        File f = new File(diskPath + File.separator + fileName);
+	        if(!f.exists()){  
+	            f.mkdirs();  
+	        } 
+	        file.transferTo(f);
+	        human.setHphoto(fileName);
+		}
 		Human h = (Human) session.getAttribute("loginHuman");
-        String fileName = file.getOriginalFilename();
-		String diskPath = session.getServletContext().getRealPath("/upload");
-        File f = new File(diskPath + File.separator + fileName);
-        if(!f.exists()){  
-            f.mkdirs();  
-        } 
-        file.transferTo(f);
-        System.out.println(fileName);
-        human.setHphoto(fileName);
 		human.setHid(h.getHid());
 		try {
 			humanBiz.upload(human);
