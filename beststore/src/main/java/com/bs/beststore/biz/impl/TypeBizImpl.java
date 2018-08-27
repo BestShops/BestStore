@@ -12,6 +12,8 @@ import com.bs.beststore.dao.TypeMapper;
 import com.bs.beststore.vo.Goods;
 import com.bs.beststore.vo.GoodsExample;
 import com.bs.beststore.vo.Type;
+import com.bs.beststore.vo.TypeExample;
+import com.bs.beststore.vo.TypeExample.Criteria;
 
 @Service
 public class TypeBizImpl implements TypeBiz {
@@ -91,6 +93,24 @@ public class TypeBizImpl implements TypeBiz {
 	@Override
 	public Type findByTid(int tid) {
 		return typeMapper.selectByPrimaryKey(tid);
+	}
+
+	@Override
+	public List<Type> selectParentInfo() {
+		TypeExample typeExample=new TypeExample();
+		Criteria typeCriteria=typeExample.createCriteria();
+		typeCriteria.andTparentidIsNull();
+		List<Type> list=typeMapper.selectByExample(typeExample);
+		return list;
+	}
+
+	@Override
+	public List<Type> selectSonInfoByParent(Type type) {
+		TypeExample typeExample=new TypeExample();
+		Criteria typeCriteria=typeExample.createCriteria();
+		typeCriteria.andTparentidEqualTo(type.getTparentid());
+		List<Type> list=typeMapper.selectByExample(typeExample);
+		return list;
 	}
 
 }

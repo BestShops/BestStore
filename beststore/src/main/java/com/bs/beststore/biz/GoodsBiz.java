@@ -26,7 +26,9 @@ public interface GoodsBiz {
 	 * @param goods  可以根据商品id、商品类型、店铺id、商品状态
 	 * @return
 	 */
-	List<Map<String,Object>> findAll(Goods goods);
+	List<Map<String,Object>> findAll(Goods goods,int page,int rows);
+	
+	long findAllTotal(Goods goods);
 	
 	/**
 	 * 通过关键字查找商品 

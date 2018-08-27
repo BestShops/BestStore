@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +59,10 @@ public class IndexAction {
 	}
 
 	@RequestMapping(path = "backStoreManagePage.do")
-	public String backStoreManagePage() {
+	public String backStoreManagePage(HttpSession session) {
+		if(session.getAttribute("storeHuman")==null) {
+			return "redirect:/backPage.do";
+		}
 		return "back/backStoreManage";
 	}
 

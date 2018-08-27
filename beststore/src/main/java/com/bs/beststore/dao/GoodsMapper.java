@@ -5,28 +5,39 @@ import com.bs.beststore.vo.GoodsExample;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 public interface GoodsMapper {
+	
+	@Insert("insert into goods values(null,#{gname},#{glastprice},#{gnowprice},#{gdesc},10,current_timestamp(6),#{gnumber},#{gphotopic},#{tid},#{sid},0);")
+	int insertGoods(Goods record);
+	
+	@Update("update goods set gname=#{gname},glastprice=#{glastprice},gnowprice=#{gnowprice},gnumber=#{gnumber},tid=#{tid},gdesc=#{gdesc},gphotopic=#{gphotopic} where gid=#{gid}")
+	int updateGoods(Goods record);
 
 	// 商品id
-	@Select("select * form goods g" + "left join photo p on g.gid=p.gid " + "left join type t on g.tid=t.tid "
+	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g" + " left join type t on g.tid=t.tid "
 			+ "where g.gid=#{gid};")
 	List<Map<String, Object>> findByGid(@Param("gid") int gid);
 
 	// 商品类型id
-	@Select("select * form goods g on a.gid=b.gid " + "left join photo p on g.gid=p.gid "
-			+ "left join type t on g.tid=t.tid " + "where t.tid=#{tid};")
+	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g"+ " left join type t on g.tid=t.tid " + "where t.tid=#{tid};")
 	List<Map<String, Object>> findByTid(@Param("tid") int tid);
 
 	// 店铺id
-	@Select("select * form goods g" + "left join photo p on g.gid=p.gid " + "left join type t on g.tid=t.tid "
-			+ "where g.sid=#{sid};")
-	List<Map<String, Object>> findBySid(@Param("sid") int sid);
+	@Select("select g.gid,g.gname,g.gphotopic,g.glastprice,g.gnowprice,g.gstatus,g.gnumber,t.tpriname,g.grade,g.gpublish,g.gdesc from goods g"+ " left join type t on g.tid=t.tid "
+			+ "where g.sid=#{sid} limit #{page},#{rows};")
+	List<Map<String, Object>> findBySid(@Param("sid") int sid,@Param("page")int page,@Param("rows")int rows);
 
+	@Select("select count(*) from goods g"+ " left join type t on g.tid=t.tid "
+			+ "where g.sid=#{sid};")
+	long findBySidCount(@Param("sid") int sid);
+	
 	// 商品状态
-	@Select("select * form goods g " + "left join photo p on g.gid=p.gid " + "left join type t on g.tid=t.tid "
+	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g " + "left join type t on g.tid=t.tid "
 			+ "where g.gstatus=#{gstatus};")
 	List<Map<String, Object>> findByGstatus(@Param("gstatus") int gstatus);
 
@@ -35,17 +46,17 @@ public interface GoodsMapper {
 	// public List<Shop> selectByName(String name_text);
 
 	// 按商品名模糊查找
-	@Select("select * form goods g" + "left join photo p on g.gid=p.gid " + "left join type t on g.tid=t.tid "
+	@Select("select * from goods g" + "left join photo p on g.gid=p.gid " + "left join type t on g.tid=t.tid "
 			+ "where g.gname like concat('%',#{gname},'%');")
 	List<Map<String, Object>> findByGname(@Param("gname") String key);
 
 	// 按商品描述模糊查找
-	@Select("select * form goods g on a.gid=b.gid " + "left join photo p on g.gid=p.gid "
+	@Select("select * from goods g on a.gid=b.gid " + "left join photo p on g.gid=p.gid "
 			+ "left join type t on g.tid=t.tid " + "where g.gdesc like concat('%',#{gdesc},'%');")
 	List<Map<String, Object>> findByGdesc(@Param("gdesc") String gdesc);
 
 	// 按商品名以及价格区间查找
-	@Select("select * form goods g on a.gid=b.gid " + "left join photo p on g.gid=p.gid "
+	@Select("select * from goods g on a.gid=b.gid " + "left join photo p on g.gid=p.gid "
 			+ "left join type t on g.tid=t.tid "
 			+ "where g.gname like concat('%',#{likeName},'%') and gnowprice >= #{minPrice} and gnowprice <= #{maxPrice};")
 	List<Map<String, Object>> findByPrice(@Param("likeName") String likeName, @Param("minPrice") Double minPrice,
