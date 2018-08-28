@@ -95,6 +95,7 @@ public class GoodsAction {
 	public void findAll(Goods goods,HttpServletRequest request,PrintWriter out){
 		Store storeHuman=(Store) request.getSession().getAttribute("storeHuman");
 		goods.setSid(storeHuman.getSid());
+		System.out.println(goods);
 		String page=request.getParameter("page");
 		String rows=request.getParameter("rows");
 		int intPage;
@@ -116,7 +117,22 @@ public class GoodsAction {
 		data.put("total", total);
 		out.print(new Gson().toJson(data));
 	}
-
+	
+	/**
+	 * 下架、删除、上架
+	 */
+	@RequestMapping(value="operateGoods.do")
+	public void operateGoods(Goods goods,PrintWriter out) {
+		String data;
+		int result=goodsBiz.updateGstatus(goods);
+		if(result>0) {
+			data=new Gson().toJson(Result.getSuccess("操作成功!"));
+		}else {
+			data=new Gson().toJson(Result.getFailure("操作失败!"));
+		}
+		out.print(data);
+	}
+	
 	/**
 	 * 通过关键字查找商品(模糊查询)
 	 * @param goods	商品名、价格

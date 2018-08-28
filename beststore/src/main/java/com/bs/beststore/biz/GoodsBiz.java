@@ -46,4 +46,11 @@ public interface GoodsBiz {
 	 */
 	List<Map<String,Object>> findByPrice(String likeName, Double minPrice, Double maxPrice);
 	
+	/**
+	 * 修改商品状态(下架、上架、删除)
+	 * @param goods
+	 * @return
+	 */
+	int updateGstatus(Goods goods);
+	
 }

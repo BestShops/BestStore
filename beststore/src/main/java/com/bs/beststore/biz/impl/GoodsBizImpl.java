@@ -45,12 +45,12 @@ public class GoodsBizImpl implements GoodsBiz {
 				list = gm.findByGid(goods.getGid());
 			} else if (goods.getTid() != null) {
 				list = gm.findByTid(goods.getTid());
+			} else if (goods.getGstatus() != null && goods.getSid()!=null) {
+				list = gm.findByGstatus(goods.getGstatus(),goods.getSid(),(page-1)*rows,rows);
 			} else if (goods.getSid() != null) {
 				if(page!=0 && rows!=0) {
 					list = gm.findBySid(goods.getSid(),(page-1)*rows,rows);
 				}
-			} else if (goods.getGstatus() != null) {
-				list = gm.findByGstatus(goods.getGstatus());
 			}
 			return list;
 		} else {
@@ -85,6 +85,11 @@ public class GoodsBizImpl implements GoodsBiz {
 	@Override
 	public List<Map<String,Object>> findByPrice(String likeName, Double minPrice, Double maxPrice) {
 		return gm.findByPrice(likeName, minPrice, maxPrice);
+	}
+
+	@Override
+	public int updateGstatus(Goods goods) {
+		return gm.updateGoodGstatus(goods);
 	}
 
 	

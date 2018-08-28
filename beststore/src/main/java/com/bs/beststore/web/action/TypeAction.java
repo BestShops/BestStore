@@ -66,7 +66,6 @@ public class TypeAction {
 	@RequestMapping(value="findSonInfoByParent.do")
 	public void findSonInfoByParent(String tparentid,HttpServletResponse response) throws IOException {
 		Type type=new Type();
-		System.out.println(type);
 		if(!tparentid.isEmpty()) {
 			type.setTparentid(Integer.valueOf(tparentid));
 		}else {

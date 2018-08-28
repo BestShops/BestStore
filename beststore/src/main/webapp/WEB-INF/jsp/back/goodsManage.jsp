@@ -46,9 +46,9 @@
 		var data = $("#foodGrid").datagrid('getData');
 		var row = data.rows[index];
 		if (row.gstatus == "3") {
-			var s = '<a href="#" onclick="openEdit(' + index + ')">修改</a>';
+			var s = '<a href="#" onclick="shelfGoods(' + index + ')">上架</a>';
 			s += "&nbsp;&nbsp;";
-			s += '<a href="#" onclick="delInfo(' + index + ')">删除</a>';
+			s += '<a href="#" onclick="delGoods(' + index + ')">删除</a>';
 			return s;
 		} else if (row.gstatus == "4") {
 			return "";
@@ -60,19 +60,65 @@
 			return s;
 		}
 	}
-
-	//删除
-	function delInfo(index) {
-		flag = confirm("确定删除该学生吗?");
+	//上架
+	function shelfGoods(index) {
+		flag = confirm("确定上架该商品吗?");
+		var data = $("#foodGrid").datagrid('getData');
+		var row = data.rows[index];
 		if (flag) {
-			$.post("${basePath}/StudentServlet", {
-				op : "del",
-				sid : row.sid
+			$.post("operateGoods.do", {
+				gid : row.gid,
+				gstatus:0
 			}, function(data) {
 				eval("var d=" + data);
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
+					alert(d.data);
+				} else {
+					alert(d.data);
+				}
+			});
+		}
+	}
+	
+	//删除
+	function delGoods(index) {
+		flag = confirm("确定删除该商品吗?");
+		var data = $("#foodGrid").datagrid('getData');
+		var row = data.rows[index];
+		if (flag) {
+			$.post("operateGoods.do", {
+				gid : row.gid,
+				gstatus:4
+			}, function(data) {
+				eval("var d=" + data);
+				if (d.code == "1") {
+					//成功
+					$("#foodGrid").datagrid('reload');
+					alert(d.data);
+				} else {
+					alert(d.data);
+				}
+			});
+		}
+	}
+
+	//下架
+	function removeGoods(index) {
+		flag = confirm("确定下架该商品吗?");
+		var data = $("#foodGrid").datagrid('getData');
+		var row = data.rows[index];
+		if (flag) {
+			$.post("operateGoods.do", {
+				gid : row.gid,
+				gstatus:3
+			}, function(data) {
+				eval("var d=" + data);
+				if (d.code == "1") {
+					//成功
+					$("#foodGrid").datagrid('reload');
+					alert(d.data);
 				} else {
 					alert(d.data);
 				}
@@ -217,13 +263,12 @@
 	});
 	
 	function doSearch() {
-		var cid = $('.textbox-value').val();
-		var url = encodeURI('${basePath }/GradeServlet?op=queryByCid');
-		$('#userGrid').datagrid('options').url = "${basePath }/GradeServlet?op=queryByCid&cid="
-				+ cid;
-		$("#userGrid").datagrid('reload');
+		var gstatus = $('#cc').val();
+		//var url = encodeURI('goodsFindAll.do');
+		$('#foodGrid').datagrid('options').url = "goodsFindAll.do&gstatus="
+				+ gstatus;
+		$("#foodGrid").datagrid('reload');
 	}
-	
 	
 </script>
 <body>
@@ -262,10 +307,16 @@
 	</table>
 	<div id="tb" style="padding: 5px; height: auto">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
-			onclick="openEdit()">添加</a>&nbsp;&nbsp;&nbsp; <span>商品状态:</span> <select
-			id="loadCourse" onchange="selectCourse()" class="combobox"
-			style="width: 128px;"></select> <a class="easyui-linkbutton"
-			plain="true" onclick="doSearch()">搜索</a>
+			onclick="openEdit()">添加</a>&nbsp;&nbsp;&nbsp;  
+			<span>商品状态:</span>
+			<select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
+			    <option value="0">审核中</option>
+			    <option value="1">上架中</option>
+			    <option value="2">审核未通过</option>
+			    <option value="3">已下架</option>
+			    <option value="4">已删除</option>
+			</select>
+			<a class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
 	</div>
 
 	<div id="editAdd" class="easyui-dialog" title="编辑商品信息"

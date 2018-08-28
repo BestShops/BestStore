@@ -34,7 +34,7 @@
 							</div>
 						</li>
 						<li class="con_r_right" style="display: block;">
-							<form name="form1" method="post" action="" onsubmit="return false"
+							<form name="form1" onsubmit="return false"
 								autocomplete="off">
 								<div class="user">
 									<div>
@@ -55,7 +55,7 @@
 									<span id="errorMessage" style="color: red"></span>
 								</div>
 								<br>
-								<button id="btn_Login" type="submit">登 录</button>
+								<input style="margin: 0 0 0 75pt; width: 250px; height: 44px; background: #2e558e; color: #fff; font-size: 1pc;" id="btn_Login" type="submit" value="登 录">
 							</form>
 						</li>
 					</ul>

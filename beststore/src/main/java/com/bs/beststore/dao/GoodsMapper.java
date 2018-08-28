@@ -17,6 +17,9 @@ public interface GoodsMapper {
 	
 	@Update("update goods set gname=#{gname},glastprice=#{glastprice},gnowprice=#{gnowprice},gnumber=#{gnumber},tid=#{tid},gdesc=#{gdesc},gphotopic=#{gphotopic} where gid=#{gid}")
 	int updateGoods(Goods record);
+	
+	@Update("update goods set gstatus=#{gstatus} where gid=#{gid}")
+	int updateGoodGstatus(Goods record);
 
 	// 商品id
 	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g" + " left join type t on g.tid=t.tid "
@@ -37,9 +40,9 @@ public interface GoodsMapper {
 	long findBySidCount(@Param("sid") int sid);
 	
 	// 商品状态
-	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g " + "left join type t on g.tid=t.tid "
-			+ "where g.gstatus=#{gstatus};")
-	List<Map<String, Object>> findByGstatus(@Param("gstatus") int gstatus);
+	@Select("select g.gid,g.gname,g.gphotopic,g.glastprice,g.gnowprice,g.gstatus,g.gnumber,t.tpriname,g.grade,g.gpublish,g.gdesc from goods g " + "left join type t on g.tid=t.tid "
+			+ "where g.gstatus=#{gstatus} and g.sid=#{sid} limit #{page},#{rows};")
+	List<Map<String, Object>> findByGstatus(@Param("gstatus") int gstatus,@Param("sid") int sid,@Param("page")int page,@Param("rows")int rows);
 
 	// 模糊查询示例
 	// @Select("SELECT * FROM shop WHERE shop.name_text LIKE CONCAT('%',#{0},'%') ")
