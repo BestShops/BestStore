@@ -72,7 +72,7 @@ public class IndexAction {
 	}
 
 	// 后台店铺管理主界面
-	@RequestMapping(path = "backPage.do")
+	@RequestMapping(path = "backPage.todo")
 	public String backPage() {
 		return "back/backIndex";
 	}
@@ -180,7 +180,7 @@ public class IndexAction {
 	}
 
 	// 验证码
-	@RequestMapping(value = "verifyCode.do")
+	@RequestMapping(value = "verifyCode.todo")
 	public void verifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 定义图片大小
 		int w = 200, h = 80;

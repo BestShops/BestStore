@@ -29,7 +29,7 @@
             $("#errorMessage").html("请输入密码");
             return false;
         } else {
-        	$.post("storeLogin.do",{
+        	$.post("storeLogin.todo",{
     			hname:uname,
     			hpwd:upwd,
     			code:code
