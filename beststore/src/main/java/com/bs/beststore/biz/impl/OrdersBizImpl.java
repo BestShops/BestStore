@@ -15,11 +15,11 @@ import com.bs.beststore.vo.Orders;
 public class OrdersBizImpl implements OrdersBiz{
 
 	@Autowired
-	private OrdersMapper om;
+	private OrdersMapper OrdersMapper;
 	
 	@Override
 	public int addOrders(Orders orders) {
-		return om.insert(orders);
+		return OrdersMapper.insert(orders);
 	}
 
 	@Override
@@ -36,30 +36,48 @@ public class OrdersBizImpl implements OrdersBiz{
 		 */
 		orders.setOstatus(1);
 		orders.setOtime(new Date());
-		return om.updateByPrimaryKeySelective(orders);
+		return OrdersMapper.updateByPrimaryKeySelective(orders);
 	}
 
 	@Override
 	public int removeOrders(Orders orders) {
 		orders.setOstatus(4);
-		return om.updateByPrimaryKeySelective(orders);
+		return OrdersMapper.updateByPrimaryKeySelective(orders);
 	}
 
 	@Override
 	public int deleteOrders(Orders orders) {
 		// 状态为5的时候是删除
 		orders.setOstatus(5);
-		return om.updateByPrimaryKeySelective(orders);
+		return OrdersMapper.updateByPrimaryKeySelective(orders);
 	}
 
 	@Override
-	public List<Map<String, Object>> findOrderByHid(Orders orders) {
-		return om.findByHid(orders.getHid());
+	public List<Map<String, Object>> findOrderByHid(int hid, int pageNo, int status) {
+		int pageSize = 3;// 每一页展示的订单条数
+		pageNo = (pageNo - 1) * pageSize;
+		if (status == 10) {
+			return OrdersMapper.findByHid(hid, pageNo, pageSize);
+		} else {
+			return OrdersMapper.findByStatus(hid, status, pageNo, pageSize);
+		}
 	}
-
+	
 	@Override
 	public List<Map<String, Object>> findOrderBySid(Orders orders, int sid) {
-		return om.findBySid(orders.getOstatus(), sid);	
+		return OrdersMapper.findBySid(orders.getOstatus(), sid);	
+	}
+	
+	@Override
+	public int getCount(int hid, int type) {
+		String count = "";
+		if (type == 10) {// 统计总行数
+			count += OrdersMapper.getCountByHid(hid).get(0).get("count");
+		} else {
+			count += OrdersMapper.getCountByStatus(hid, type).get(0).get("count");
+		}
+		int pageCount = Integer.parseInt(count);
+		return pageCount % 3 == 0 ? pageCount / 3 : (pageCount / 3) + 1;
 	}
 
 }

@@ -14,16 +14,21 @@ import com.bs.beststore.vo.Ordersdetail;
 public class OrdersdetailBizImpl implements OrdersdetailBiz{
 
 	@Autowired
-	private OrdersdetailMapper odm;
+	private OrdersdetailMapper ordersdetailMapper;
 	
 	@Override
 	public int addOrdersDetail(Ordersdetail ordersdetail) {
-		return odm.insert(ordersdetail);
+		return ordersdetailMapper.insert(ordersdetail);
 	}
 
 	@Override
 	public List<Map<String, Object>> findOrdersDetail(Ordersdetail ordersdetail) {
-		return odm.findOrdersDetail(ordersdetail.getOid());
+		return ordersdetailMapper.findOrdersDetail(ordersdetail.getOid());
+	}
+
+	@Override
+	public List<Map<String, Object>> findOrderByOid(int oid) {
+		return ordersdetailMapper.findByOid(oid);
 	}
 
 }

@@ -36,11 +36,11 @@ public interface OrdersBiz {
 	int deleteOrders(Orders orders);
 	
 	/**
-	 * 查询用户下的所有订单详情
+	 * 查询用户下的所有订单（不包括详情，只展示订单的第一件商品的信息）,状态为10查询全部，否则按状态查找
 	 * @param orders	用户id、订单状态、付款发货状态
 	 * @return	订单详情集合
 	 */
-	List<Map<String,Object>> findOrderByHid(Orders orders);
+	List<Map<String,Object>> findOrderByHid(int hid, int pageNo, int status);
 	
 	/**
 	 * 查询店铺下所有交易的订单详情
@@ -49,4 +49,11 @@ public interface OrdersBiz {
 	 * @return	订单详情集合
 	 */
 	List<Map<String,Object>> findOrderBySid(Orders orders,int sid);
+	
+	/**
+	 * 获取信息的总条数
+	 * @param hid
+	 * @return
+	 */
+	int getCount(int hid, int type);
 }

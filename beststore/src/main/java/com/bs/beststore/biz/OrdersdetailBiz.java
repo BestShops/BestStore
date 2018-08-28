@@ -21,4 +21,11 @@ public interface OrdersdetailBiz {
 	 * @return	成功返回1，否则为失败
 	 */
 	List<Map<String, Object>> findOrdersDetail(Ordersdetail ordersdetail);
+	
+	/**
+	 * 根据oid查询订单详情
+	 * @param orders	用户id、订单状态、付款发货状态
+	 * @return	订单详情集合
+	 */
+	List<Map<String,Object>> findOrderByOid(int oid);
 }
