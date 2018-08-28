@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bs.beststore.vo.Human;
+import com.bs.beststore.vo.Store;
 
 /**
  * 
@@ -39,7 +40,7 @@ public class OnlineFilter implements Filter {
 		// System.out.println(((HttpServletRequest) request).getRequestURI());
 		// 从session里取的用户名信息
 		Human human = (Human) session.getAttribute("loginHuman");// 这里获取session，为了检查session里有没有保存用户信息，没有的话回转发到登陆页面
-		Human storeHuman = (Human) session.getAttribute("storeHuman");
+		Store storeHuman = (Store) session.getAttribute("storeHuman");
 		// 判断如果没有取到用户信息,就跳转到登陆页面
 		if (human == null && storeHuman == null) {
 			// 跳转到登陆页面

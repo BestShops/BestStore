@@ -89,10 +89,10 @@ public class IndexAction {
 		return "login";
 	}
 
-	@RequestMapping(path = "backStoreManagePage.do")
+	@RequestMapping(path = "backStoreManagePage.todo")
 	public String backStoreManagePage(HttpSession session) {
 		if(session.getAttribute("storeHuman")==null) {
-			return "redirect:/backPage.do";
+			return "redirect:/backPage.todo";
 		}
 		return "back/backStoreManage";
 	}

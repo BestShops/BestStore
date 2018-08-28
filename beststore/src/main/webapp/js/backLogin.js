@@ -35,7 +35,7 @@
     			code:code
     		},function(data){
     			if (data=="OK") {
-    				window.location.href="backStoreManagePage.do";
+    				window.location.href="backStoreManagePage.todo";
     			} else {
     				 $("#errorMessage").html(data);
     			}
