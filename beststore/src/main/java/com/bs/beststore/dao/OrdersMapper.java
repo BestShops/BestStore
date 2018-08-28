@@ -17,7 +17,7 @@ public interface OrdersMapper {
 	
 	@Select("select a.*,b.num ,c.gname,c.gnowprice,c.gphotopic from orders a\r\n"
 			+ "left join ordersdetail b on a.oid=b.oid\r\n" + "left join goods c on b.gid=c.gid\r\n"
-			+ "where a.hid=#{hid} and ostatus<>4 group by oid  order by oid desc limit #{pageNo},#{pageSize}")
+			+ "where a.hid=#{hid} and ostatus<>5 group by oid  order by oid desc limit #{pageNo},#{pageSize}")
 	List<Map<String, Object>> findByHid(@Param("hid") int hid, @Param("pageNo")int pageNo, @Param("pageSize")int pageSize);
 	
 	@Select("select a.*,b.num ,c.gname,c.gnowprice,c.gphotopic from orders a\r\n"

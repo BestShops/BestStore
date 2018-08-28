@@ -28,4 +28,11 @@ public interface OrdersdetailBiz {
 	 * @return	订单详情集合
 	 */
 	List<Map<String,Object>> findOrderByOid(int oid);
+	
+	/**
+	 * 根据oid查找订单下的商品详情
+	 * @param oid
+	 * @return
+	 */
+	List<Map<String, Object>> findDetailByOid(int oid);
 }

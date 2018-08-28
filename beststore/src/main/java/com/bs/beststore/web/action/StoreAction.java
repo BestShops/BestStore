@@ -47,7 +47,7 @@ public class StoreAction {
 
 	// 开店4
 	@RequestMapping(value="openStoreStep3Page.do")
-	public String openStoreStep3Page(Store store, Model model){
+	public String openStoreStep3Page(HttpSession session, Store store, Model model){
 		if (storeBiz.findByName(store).size() != 0) {
 			model.addAttribute("error1", "该店铺名已被使用");
 			model.addAttribute("errorStore", store);
@@ -61,6 +61,8 @@ public class StoreAction {
 			return "openStoreStep2";
 		}
 		storeBiz.register(store);
+		Human human = (Human) session.getAttribute("loginHuman");
+		humanBiz.changeStatus(human.getHid(), 1);
 		return "openStoreStep3";
 	}
 	

@@ -22,10 +22,10 @@
 						<c:if test="${sessionScope.loginHuman!=null }">
 							<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }！</p>
 						</c:if>
-						<c:if test="${status==0}">
+						<c:if test="${sessionScope.loginHuman.hlimit==0}">
 							<p class="level text-nowrap">身份：普通用户 <a href="openStorePage.do">去开店</a></p>
 						</c:if>
-						<c:if test="${status==1}">
+						<c:if test="${sessionScope.loginHuman.hlimit==1}">
 							<p class="level text-nowrap">身份：店主 <a href="storeManagePage.do">管理店铺</a></p>
 						</c:if>
 					</div>

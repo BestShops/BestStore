@@ -9,6 +9,11 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 public interface OrdersdetailMapper {
+	@Select("select num,sname,gname,gphotopic,gnowprice,gdesc from ordersdetail a\r\n" + 
+			"left join goods b on a.gid=b.gid\r\n" + 
+			"left join store c on b.sid=c.sid\r\n" + 
+			"where a.oid=#{oid}")
+	List<Map<String, Object>> findDetailByOid(@Param("oid")int oid);
 	
 	@Select("select * from orders o\r\n" + 
 			"left join address a on o.aid=a.aid\r\n" + 

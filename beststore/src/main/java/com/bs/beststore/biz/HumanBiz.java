@@ -69,5 +69,12 @@ public interface HumanBiz {
 	 * @return
 	 */
 	boolean check(Human human);
+	
+	/**
+	 * 根据hid修改状态
+	 * @param hid
+	 * @param limit	状态
+	 */
+	void changeStatus(int hid, int limit);
 
 }

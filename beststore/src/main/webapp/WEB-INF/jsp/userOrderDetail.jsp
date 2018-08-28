@@ -19,13 +19,17 @@
 						<tr>
 							<td>订单编号：${info.OID}</td>
 							<c:if test="${info.OSTATUS==0}"><td>未支付</td></c:if>
-							<c:if test="${info.OSTATUS!=0}"><td><td>支付宝交易号：20175215464616164616</td></td></c:if>
+							<c:if test="${info.OSTATUS!=0}"><td>支付宝交易号：20175215464616164616</td></td></c:if>
 							<td>创建时间：${info.OTIME}</td>
 						</tr>
 						<tr>
-							<td>付款时间：<c:if test="${info.OSTATUS>0}">${info.OPEYTIME}</c:if></td>
-							<td>成交时间：<c:if test="${info.OSTATUS==2}">${info.OPEYTIME}</c:if></td>
-							<td></td>
+						<c:if test="${info.OSTATUS==1 || info.OSTATUS==2}">
+							<td>付款时间：${info.OPAYTIME}</td>
+						</c:if>
+						<c:if test="${info.OSTATUS==3 || info.OSTATUS==4}">
+							<td>付款时间：${info.OPAYTIME}</td>
+							<td>成交时间：${info.ODEALTIME}</td>
+						</c:if>
 						</tr>
 					</table>
 				</div>
@@ -38,19 +42,17 @@
 					<div class="tdf1">运费</div>
 				</div>
 				<div class="order-item__list">
-					<c:forEach items="odlist" var="od">
+					<c:forEach items="${odlist}" var="od">
 					<div class="item">
 						<div class="tdf3">
 							<a href="item_show.html"><div class="img"><img src="upload/${od.gphotopic}" alt="" class="cover"></div>
 							<div class="ep2 c6">${od.sname} ${od.gname}</div></a>
 							<div class="attr ep">颜色分类：深棕色  尺码：均码</div>
 						</div>
-						<div class="tdf3">
-							<div class="ep2">${od.gdesc}</div>
-						</div>
+						<div class="tdf3">${od.gdesc}</div>
 						<div class="tdf1">${od.num}</div>
-						<div class="tdf1">${od.gnowprice}</div>
-						<div class="tdf1">¥18.0</div>
+						<div class="tdf1">￥${od.gnowprice}</div>
+						<div class="tdf1">￥${od.num*od.gnowprice}</div>
 						<div class="tdf1">
 							<div class="ep2">快递<br>¥0.00</div>
 						</div>
@@ -58,8 +60,9 @@
 					</c:forEach>
 				</div>
 				<div class="price-total">
-					<div class="fz12 c6">优惠￥${info.OLASTPRICE-info.ONOWPRICE}元<br>快递运费 ￥0.0</div>
-					<div class="fz18 c6">实付款：<b class="cr">¥${info.ONOWPRICE}</b></div>
+					<div class="fz12 c9">优惠￥${info.OLASTPRICE-info.ONOWPRICE}元<br>快递运费 ￥0.0</div>
+					<div class="fz18 c6">实付款：<b class="cr">¥${info.ONOWPRICE}</b></div><br>
+					<div class="fz18 c9"><a href="userOrderPage.do?pageNo=1&type=10"><button style="width:150px;height:30px">返回订单中心</button></a></div>
 				</div>
 			</div>
 		</div>

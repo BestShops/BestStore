@@ -198,4 +198,12 @@ public class HumanBizImpl implements HumanBiz {
 		}
 		return true;
 	}
+
+	@Override
+	public void changeStatus(int hid, int limit) {
+		Human human = new Human();
+		human.setHid(hid);
+		human.setHlimit(limit);
+		humanMapper.updateByPrimaryKeySelective(human);
+	}
 }

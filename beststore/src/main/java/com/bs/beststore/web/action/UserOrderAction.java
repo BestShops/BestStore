@@ -1,5 +1,8 @@
 package com.bs.beststore.web.action;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
@@ -8,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.OrdersBiz;
+import com.bs.beststore.biz.OrdersdetailBiz;
 import com.bs.beststore.vo.Human;
 
 @Controller
@@ -15,6 +19,9 @@ public class UserOrderAction {
 	
 	@Resource
 	private OrdersBiz ordersBiz;
+	
+	@Resource
+	private OrdersdetailBiz ordersdetailBiz;
 
 	// 展示当前用户所有的订单 type=10为所有
 	@RequestMapping(value="userOrderPage.do")
@@ -33,8 +40,15 @@ public class UserOrderAction {
 		return "userOrder";
 	}
 	
+	// 展示订单的详情
 	@RequestMapping(path = "userOrderDetailPage.do")
-	public String userOrderDetailPage() {
+	public String userOrderDetailPage(int oid, Model model) {
+		// 订单信息
+		List<Map<String, Object>> list = ordersdetailBiz.findOrderByOid(oid);
+		model.addAttribute("info", list.get(0));
+		// 订单中商品的信息
+		List<Map<String, Object>> list1 = ordersdetailBiz.findDetailByOid(oid);
+		model.addAttribute("odlist", list1);
 		return "userOrderDetail";
 	}
 	

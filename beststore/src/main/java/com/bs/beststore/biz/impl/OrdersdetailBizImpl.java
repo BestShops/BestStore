@@ -31,4 +31,9 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 		return ordersdetailMapper.findByOid(oid);
 	}
 
+	@Override
+	public List<Map<String, Object>> findDetailByOid(int oid) {
+		return ordersdetailMapper.findDetailByOid(oid);
+	}
+
 }
