@@ -8,11 +8,22 @@
 <%@ include file="easyuiLink.jsp"%>
 </head>
 <script>
+	//时间格式化
+	function dataFormat(value) {
+		if (value != null && value != "") {
+			var d = new Date(value);
+			value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-"
+					+ d.getDate() + " " + d.getHours() + ":" + d.getMinutes()
+					+ ":" + d.getSeconds();
+			return value;
+		}
+		return "";
+	}
 	//添加保存按钮
 	function save() {
 		//添加
-		flag=confirm("确定修改信息吗?");
-		if(flag){
+		flag = confirm("确定修改信息吗?");
+		if (flag) {
 			$("#form1").form("submit", {
 				success : function(data) {
 					//使用eval函数将json字符串转为对象d 
@@ -20,10 +31,10 @@
 					if (d.code == "1") {
 						//成功
 						alert(d.data);
-						
+
 					} else {
 						alert(d.data);
-					}	 	
+					}
 				}
 			});
 		}
@@ -51,13 +62,14 @@
 			</tr>
 			<tr>
 				<td>创立时间：</td>
-				<td><input class="easyui-textbox" name="stime" readonly
+				<td><input class="easyui-textbox" name="stime" readonly data-options="formatter:dataFormat"
 					style="width: 100%" value="${sessionScope.storeHuman.stime }"></td>
 			</tr>
 			<tr id="creditTr">
 				<td>店铺评分：</td>
-				<td><input class="easyui-textbox" name="sgrade" style="width: 100%;"
-					readonly value="${sessionScope.storeHuman.sgrade }"></td>
+				<td><input class="easyui-textbox" name="sgrade"
+					style="width: 100%;" readonly
+					value="${sessionScope.storeHuman.sgrade }"></td>
 			</tr>
 			<tr>
 				<td align="right" colspan="3"><a class="easyui-linkbutton"

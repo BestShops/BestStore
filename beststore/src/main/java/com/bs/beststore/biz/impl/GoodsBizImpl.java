@@ -22,25 +22,17 @@ public class GoodsBizImpl implements GoodsBiz {
 
 	@Override
 	public int addGoods(Goods goods) {
-		// goods 必填(商品名，现价，描述，类别)，选填(原价)
-		if (goods.getGname() != null 
-				&& goods.getGnowprice() != null 
-				&& goods.getGdesc() != null
-				&& goods.getTid() != null) {
-			return gm.insertSelective(goods);
-		} else {
-			return 0;
-		}
+		return gm.insertGoods(goods);
 	}
 
 	@Override
 	public int modifyGoods(Goods goods) {
 		// 可修改(商品名，原价，现价，描述，类别，商品状态)
-		return gm.updateByPrimaryKey(goods);
+		return gm.updateGoods(goods);
 	}
 
 	@Override
-	public List<Map<String,Object>> findAll(Goods goods) {
+	public List<Map<String,Object>> findAll(Goods goods,int page,int rows) {
 		// 可以根据商品id、商品类型、店铺id、商品状态
 		List<Map<String,Object>> list = new ArrayList<Map<String, Object>>();
 		if (goods != null) {
@@ -50,7 +42,9 @@ public class GoodsBizImpl implements GoodsBiz {
 			} else if (goods.getTid() != null) {
 				list = gm.findByTid(goods.getTid());
 			} else if (goods.getSid() != null) {
-				list = gm.findBySid(goods.getSid());
+				if(page!=0 && rows!=0) {
+					list = gm.findBySid(goods.getSid(),(page-1)*rows,rows);
+				}
 			} else if (goods.getGstatus() != null) {
 				list = gm.findByGstatus(goods.getGstatus());
 			}
@@ -58,6 +52,17 @@ public class GoodsBizImpl implements GoodsBiz {
 		} else {
 			return null;
 		}
+	}
+	
+	@Override
+	public long findAllTotal(Goods goods) {
+		long count = 0;
+		if(goods.getTid()!=null) {
+			
+		}else if(goods.getSid()!=null) {
+			count=gm.findBySidCount(goods.getSid());
+		}
+		return count;
 	}
 
 	@Override
@@ -77,4 +82,5 @@ public class GoodsBizImpl implements GoodsBiz {
 	public List<Map<String,Object>> findByPrice(String likeName, Double minPrice, Double maxPrice) {
 		return gm.findByPrice(likeName, minPrice, maxPrice);
 	}
+	
 }

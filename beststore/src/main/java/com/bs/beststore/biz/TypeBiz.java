@@ -39,4 +39,17 @@ public interface TypeBiz {
 	 */
 	Type findByTid(int tid);
 	
+	/**
+	 * 查看所有父类
+	 * @return
+	 */
+	List<Type> selectParentInfo();
+	
+	/**
+	 * 通过父类id找子类信息
+	 * @return
+	 */
+	List<Type> selectSonInfoByParent(Type type);
+	
+	
 }
