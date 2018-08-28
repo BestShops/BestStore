@@ -49,8 +49,8 @@
 										<span class="yzmz-icon"></span> <input id="back_code" type="text"
 											name="code" placeholder="验证码" 
 											style="width: 150px;">
-										<img style="cursor: pointer; margin-top: 0px;width:90px;margin-left: 20px;" onclick='src="verifyCode.do?d="+Math.random()'
-											src="verifyCode.do">
+										<img style="cursor: pointer; margin-top: 0px;width:90px;margin-left: 20px;" onclick='src="verifyCode.todo?d="+Math.random()'
+											src="verifyCode.todo">
 									</div>
 									<span id="errorMessage" style="color: red"></span>
 								</div>

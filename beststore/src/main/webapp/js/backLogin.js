@@ -29,13 +29,13 @@
             $("#errorMessage").html("请输入密码");
             return false;
         } else {
-        	$.post("storeLogin.do",{
+        	$.post("storeLogin.todo",{
     			hname:uname,
     			hpwd:upwd,
     			code:code
     		},function(data){
     			if (data=="OK") {
-    				window.location.href="backStoreManagePage.do";
+    				window.location.href="backStoreManagePage.todo";
     			} else {
     				 $("#errorMessage").html(data);
     			}

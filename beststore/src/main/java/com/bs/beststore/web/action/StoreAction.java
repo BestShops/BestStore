@@ -45,7 +45,7 @@ public class StoreAction {
 	}
 	
 
-	// 开店4
+	// 开店
 	@RequestMapping(value="openStoreStep3Page.do")
 	public String openStoreStep3Page(HttpSession session, Store store, Model model){
 		if (storeBiz.findByName(store).size() != 0) {
@@ -72,7 +72,7 @@ public class StoreAction {
 	 * @param out
 	 * @param session	
 	 */
-	@RequestMapping(value = "storeLogin.do")
+	@RequestMapping(value = "storeLogin.todo")
 	public void storeLogin(Human human, PrintWriter out, HttpSession session,String code) {
 		// 进行登录操作
 		Human userHuman = null;

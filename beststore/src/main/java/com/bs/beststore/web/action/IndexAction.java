@@ -71,7 +71,7 @@ public class IndexAction {
 	}
 
 	// 后台店铺管理主界面
-	@RequestMapping(path = "backPage.do")
+	@RequestMapping(path = "backPage.todo")
 	public String backPage() {
 		return "back/backIndex";
 	}
@@ -88,10 +88,10 @@ public class IndexAction {
 		return "login";
 	}
 
-	@RequestMapping(path = "backStoreManagePage.do")
+	@RequestMapping(path = "backStoreManagePage.todo")
 	public String backStoreManagePage(HttpSession session) {
 		if(session.getAttribute("storeHuman")==null) {
-			return "redirect:/backPage.do";
+			return "redirect:/backPage.todo";
 		}
 		return "back/backStoreManage";
 	}
@@ -179,7 +179,7 @@ public class IndexAction {
 	}
 
 	// 验证码
-	@RequestMapping(value = "verifyCode.do")
+	@RequestMapping(value = "verifyCode.todo")
 	public void verifyCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// 定义图片大小
 		int w = 200, h = 80;
