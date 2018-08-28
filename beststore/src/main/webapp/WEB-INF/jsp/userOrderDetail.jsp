@@ -101,6 +101,5 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
-	
 </body>
 </html>

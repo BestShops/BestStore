@@ -35,7 +35,7 @@
 				</c:if>
 				<c:if test="${sessionScope.loginHuman!=null }">
 					<a>您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
-					<a href="userLogout.do" style="color:blue">退出</a>
+					<a href="userLogout.todo" style="color:blue">退出</a>
 				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
 				<a href="userOrderPage.do">我的订单</a>
@@ -307,6 +307,7 @@
 				</div>
 			</div>
 			<ul class="nva-list">
+
 				<a href="index"><li class="active">首页</li></a>
 				<a href="goodsQueryPage.do"><li>商品筛选</li></a>
 				<a href="matchPage.do"><li>智能匹配</li></a>
@@ -321,7 +322,6 @@
 					<div class="avt-port">
 						<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 					</div>
-					
 					<c:if test="${sessionScope.loginHuman!=null }">
 						<div class="name c6">Hi~ <span class="cr">${sessionScope.loginHuman.hname }</span></div>
 						<div class="point c6">积分: 30</div>
@@ -335,7 +335,6 @@
 						<div class="point c6"><a href="userLoginPage.do">点此登录</a>，发现更多精彩</div>
 						<a class="btn btn-primary btn-block" href="userLoginPage.do" role="button" style="width:140px;margin-left: 25px;">签到领积分</a>
 					</c:if>
-					
 				</div>
 				<div class="agent-box">
 					<a href="openStorePage.do" class="agent">

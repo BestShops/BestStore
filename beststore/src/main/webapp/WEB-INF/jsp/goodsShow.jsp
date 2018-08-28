@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -9,22 +11,25 @@
 	<%@ include file="header1_similar.jsp" %>
 	<div class="content inner">
 		<section class="item-show__div item-show__head clearfix">
+		
+			
+			<c:forEach items="${list}" var="v">
 			<div class="pull-left">
 				<ol class="breadcrumb">
 					<li><a href="index.html">首页</a></li>
 					<li><a href="item_sale_page.html">爆款推荐</a></li>
-					<li class="active">原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏</li>
+					<li class="active">${v.GNAME }</li>
 				</ol>
 				<div class="item-pic__box" id="magnifier">
 					<div class="small-box">
-						<img class="cover" src="images/temp/S-001-1_s.jpg" alt="重回汉唐 旧忆 原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏">
+						<img class="cover" src="upload/${v.GPHOTOPIC }" alt="${v.GDESC }">
 						<span class="hover"></span>
 					</div>
 					<div class="thumbnail-box">
 						<a href="javascript:;" class="btn btn-default btn-prev"></a>
 						<div class="thumb-list">
 							<ul class="wrapper clearfix">
-								<li class="item active" data-src="images/temp/S-001-1_b.jpg"><img class="cover" src="images/temp/S-001-1_s.jpg" alt="商品预览图"></li>
+								<li class="item active" data-src="upload/${v.GPHOTOPIC }"><img class="cover" src="upload/${v.GPHOTOPIC }" alt="商品预览图"></li>
 								<li class="item" data-src="images/temp/S-001-2_b.jpg"><img class="cover" src="images/temp/S-001-2_s.jpg" alt="商品预览图"></li>
 								<li class="item" data-src="images/temp/S-001-3_b.jpg"><img class="cover" src="images/temp/S-001-3_s.jpg" alt="商品预览图"></li>
 								<li class="item" data-src="images/temp/S-001-4_b.jpg"><img class="cover" src="images/temp/S-001-4_s.jpg" alt="商品预览图"></li>
@@ -38,7 +43,7 @@
 						</div>
 						<a href="javascript:;" class="btn btn-default btn-next"></a>
 					</div>
-					<div class="big-box"><img src="images/temp/S-001-1_b.jpg" alt="重回汉唐 旧忆 原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏"></div>
+					<div class="big-box"><img src="upload/${v.GPHOTOPIC }" alt="${v.GDESC }"></div>
 				</div>
 				<script src="js/jquery.magnifier.js"></script>
 				<script>
@@ -46,15 +51,21 @@
 						$('#magnifier').magnifier();
 					});
 				</script>
+				
+				
+				
+				
+				
+				
 				<div class="item-info__box">
 					<div class="item-title">
-						<div class="name ep2">原创设计日常汉服女款绣花长褙子吊带改良宋裤春夏</div>
+						<div class="name ep2">${v.GNAME }</div>
 						<div class="sale cr">优惠活动：该商品享受8折优惠</div>
 					</div>
 					<div class="item-price bgf5">
 						<div class="price-box clearfix">
 							<div class="price-panel pull-left">
-								售价：<span class="price">￥19.20 <s class="fz16 c9">￥24.00</s></span>
+								售价：<span class="price">￥${v.GNOWPRICE }<s class="fz16 c9">￥${v.GLASTPRICE }</s></span>
 							</div>
 							<div class="vip-price-panel pull-right">
 								会员等级价格 <i class="iconfont icon-down"></i>
@@ -185,7 +196,16 @@
 						</div>
 					</div>
 				</div>
+				
+				</c:forEach>
+				
+				
 			</div>
+			
+			
+			
+			
+			
 			<div class="pull-right picked-div">
 				<div class="lace-title">
 					<span class="c6">爆款推荐</span>

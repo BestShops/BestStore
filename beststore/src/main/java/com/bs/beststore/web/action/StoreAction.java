@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.BizException;
@@ -25,35 +26,42 @@ public class StoreAction {
 	@Resource
 	private HumanBiz humanBiz;
 	
-	@RequestMapping(value="openStorePage.do")
-	public String openStorePage(){
-		return "openStore";
-	}
-	
+	// 开店用户的信息判断
 	@RequestMapping(value="openStoreStep1Page.do")
-	public String openStoreStep1Page(){
-		return "openStoreStep1";
+	public String openStoreStep1Page(HttpSession session, Model model){
+		Human human = (Human) session.getAttribute("loginHuman");
+		if (humanBiz.check(human)) {
+			// 如果用户信息完整
+			if (storeBiz.findByHid(human.getHid()) == null) {
+				return "openStoreStep1"; 
+			} else {
+				model.addAttribute("error", "您已经创建过店铺了，可以在<Strong>我的U袋</Strong>中进入店铺管理");
+				return "openStore";
+			}
+		} else {
+			model.addAttribute("error", "用户信息不完整，请完善信息后再继续创建店铺");
+			return "openStore";
+		}
 	}
 	
-	@RequestMapping(value="openStoreStep2Page.do")
-	public String openStoreStep2Page(){
-		return "openStoreStep2";
-	}
-	
+
+	// 开店4
 	@RequestMapping(value="openStoreStep3Page.do")
-	public String openStoreStep3Page(){
+	public String openStoreStep3Page(Store store, Model model){
+		if (storeBiz.findByName(store).size() != 0) {
+			model.addAttribute("error1", "该店铺名已被使用");
+			model.addAttribute("errorStore", store);
+			return "openStoreStep2";
+		}
+		String desc = store.getSdesc();
+		System.out.println(desc + desc.length());
+		if (store.getSdesc().length() > 50 || store.getSdesc().length() < 8) {
+			model.addAttribute("error2", "店铺描述应该在8-50个字之间");
+			model.addAttribute("errorStore", store);
+			return "openStoreStep2";
+		}
+		storeBiz.register(store);
 		return "openStoreStep3";
-	}
-	
-	@RequestMapping(value="storeManagePage.do")
-	public String storeManagePage(){
-		return "storeManage";
-	}
-	
-	@RequestMapping(value="storeLogout.do")
-	public String storeLogout(HttpSession session) {
-		session.removeAttribute("storeHuman");
-		return "back/backIndex";
 	}
 	
 	/**
@@ -66,7 +74,6 @@ public class StoreAction {
 	public void storeLogin(Human human, PrintWriter out, HttpSession session,String code) {
 		// 进行登录操作
 		Human userHuman = null;
-		Store storeHuman;
 		if(code.equalsIgnoreCase((String) session.getAttribute("vscode"))) {
 			try {
 				userHuman = humanBiz.login(human,1);
@@ -74,12 +81,12 @@ public class StoreAction {
 				out.print(e.getMessage());
 			}
 			if(userHuman!=null) {
-				try {
-					storeHuman=storeBiz.findByHid(userHuman.getHid());
+				Store storeHuman=storeBiz.findByHid(userHuman.getHid());
+				if (storeHuman != null) {
 					out.print("OK");
 					session.setAttribute("storeHuman", storeHuman);// 将登录成功的用户信息存入到session中
-				} catch (BizException e) {
-					out.print(e.getMessage());
+				} else {
+					out.print("您的店铺不存在已经被下架");
 				}
 			}
 		}else {

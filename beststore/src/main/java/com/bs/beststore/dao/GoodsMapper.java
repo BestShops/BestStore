@@ -22,7 +22,9 @@ public interface GoodsMapper {
 	int updateGoodGstatus(Goods record);
 
 	// 商品id
-	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g" + " left join type t on g.tid=t.tid "
+
+	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g" 
+			+ " left join type t on g.tid=t.tid "
 			+ "where g.gid=#{gid};")
 	List<Map<String, Object>> findByGid(@Param("gid") int gid);
 
@@ -49,19 +51,22 @@ public interface GoodsMapper {
 	// public List<Shop> selectByName(String name_text);
 
 	// 按商品名模糊查找
-	@Select("select * from goods g" + "left join photo p on g.gid=p.gid " + "left join type t on g.tid=t.tid "
+	@Select("select * from goods g " 
+			+ "left join type t on g.tid=t.tid "
 			+ "where g.gname like concat('%',#{gname},'%');")
 	List<Map<String, Object>> findByGname(@Param("gname") String key);
 
 	// 按商品描述模糊查找
-	@Select("select * from goods g on a.gid=b.gid " + "left join photo p on g.gid=p.gid "
-			+ "left join type t on g.tid=t.tid " + "where g.gdesc like concat('%',#{gdesc},'%');")
+	@Select("select * from goods g on a.gid=b.gid " 
+			+ "left join type t on g.tid=t.tid " 
+			+ "where g.gdesc like concat('%',#{gdesc},'%');")
 	List<Map<String, Object>> findByGdesc(@Param("gdesc") String gdesc);
 
 	// 按商品名以及价格区间查找
-	@Select("select * from goods g on a.gid=b.gid " + "left join photo p on g.gid=p.gid "
+	@Select("select * from goods g on a.gid=b.gid " 
 			+ "left join type t on g.tid=t.tid "
-			+ "where g.gname like concat('%',#{likeName},'%') and gnowprice >= #{minPrice} and gnowprice <= #{maxPrice};")
+			+ "where g.gname like concat('%',#{likeName},'%') "
+			+ "and gnowprice >= #{minPrice} and gnowprice <= #{maxPrice};")
 	List<Map<String, Object>> findByPrice(@Param("likeName") String likeName, @Param("minPrice") Double minPrice,
 			@Param("maxPrice") Double maxPrice);
 

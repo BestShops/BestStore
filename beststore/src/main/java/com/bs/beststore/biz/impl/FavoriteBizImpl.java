@@ -25,6 +25,7 @@ public class FavoriteBizImpl implements FavoriteBiz {
 
 	@Override
 	public int removeFavoriteGoods(Favorite favorite) {
+		// 设置状态为0
 		favorite.setFstatus(0);
 		return favoriteMapper.updateByPrimaryKeySelective(favorite);
 	}

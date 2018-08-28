@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Select;
 
 public interface OrdersdetailMapper {
 	
-	@Select("select * form ordersdetail os "
+	@Select("select * from ordersdetail os "
 			+ "left join order o on os.oid=o.oid "
 			+ "left join goods g on os.gid=g.gid "
 			+ "left join photo p on os.pid=p.pid "

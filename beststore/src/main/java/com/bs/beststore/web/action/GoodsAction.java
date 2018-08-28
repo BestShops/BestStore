@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +35,9 @@ public class GoodsAction {
 	}
 
 	@RequestMapping(path = "goodsShowPage.do")
-	public String goodsShowPage() {
+	public String goodsShowPage(Goods goods, Model model) {
+		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
+		model.addAttribute("list", list);
 		return "goodsShow";
 	}
 

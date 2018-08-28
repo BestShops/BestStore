@@ -34,18 +34,24 @@
 					</div>
 					<form action="openStoreStep3Page.do" class="user-setting__form" role="form">
 						<div class="form-group">
-							<input class="form-control" name="phone" required="" maxlength="11" autocomplete="off" type="password">
+							<c:if test="${requestScope.errorStore!=null}">
+								<input class="form-control focus" name="sname" required maxlength="11" autocomplete="off" type="text" value="${requestScope.errorStore.sname}">
+							</c:if>
+							<c:if test="${requestScope.errorStore==null}">
+								<input class="form-control" name="sname" required maxlength="11" autocomplete="off" type="text">
+							</c:if>
 							<span class="tip-text">店铺名</span>
-							<span class="see-pwd pwd-toggle" title="显示密码"><i class="glyphicon glyphicon-eye-open"></i></span>
-							<span class="error_tip"></span>
+							<span class="error_tip" style="color:red;">${requestScope.error1}</span>
 						</div>
 						<div class="form-group">
-						<div class="form-group">
-							<input class="form-control" name="phone" required="" maxlength="11" autocomplete="off" type="password">
+							<c:if test="${requestScope.errorStore!=null}">
+								<input class="form-control focus" name="sdesc" required maxlength="50" autocomplete="off" type="text" value="${requestScope.errorStore.sdesc}">
+							</c:if>
+							<c:if test="${requestScope.errorStore==null}">
+								<input class="form-control" name="sdesc" required maxlength="50" autocomplete="off" type="text">
+							</c:if>
 							<span class="tip-text">店铺描述</span>
-							<span class="see-pwd pwd-toggle" title="显示密码"><i class="glyphicon glyphicon-eye-open"></i></span>
-							<span class="error_tip"></span>
-						</div>
+							<span class="error_tip" style="color:red;">${requestScope.error2}</span>
 						</div>
 						<div class="user-form-group tags-box">
 							<button type="submit" class="btn ">提交</button>

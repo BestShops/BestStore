@@ -1,7 +1,6 @@
 package com.bs.beststore.biz.impl;
 
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,18 +9,13 @@ import org.springframework.stereotype.Service;
 import com.bs.beststore.biz.BizException;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.dao.HumanMapper;
+import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.MD5Util;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.HumanExample;
 import com.bs.beststore.vo.HumanExample.Criteria;
 
 @Service
-/**
- * 还没对此方式进行修改，睡觉了，明天晚上改！
- * 
- * @author pch
- *
- */
 public class HumanBizImpl implements HumanBiz {
 
 	@Autowired
@@ -40,7 +34,7 @@ public class HumanBizImpl implements HumanBiz {
 	}
 
 	@Override
-	public Human login(Human human,int status) throws BizException {
+	public Human login(Human human, int status) throws BizException {
 		// 先判断用户名
 		HumanExample humanExample = new HumanExample();
 		Criteria criteria = humanExample.createCriteria();
@@ -48,12 +42,8 @@ public class HumanBizImpl implements HumanBiz {
 		if (humanMapper.selectByExample(humanExample).size() == 0) {// 如果用户名不存在
 			// 如果用户名不存在就判断输入的是否是邮箱
 			String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
-			// 正则表达式的模式
-			Pattern p = Pattern.compile(RULE_EMAIL);
-			// 正则表达式的匹配器
-			Matcher m = p.matcher(human.getHname());
 			// 邮箱匹配成功，就获取到用户名
-			if (m.matches()) {
+			if (Pattern.matches(RULE_EMAIL, human.getHname())) {
 				HumanExample humanExample1 = new HumanExample();
 				Criteria criteria1 = humanExample1.createCriteria();
 				criteria1.andHemailEqualTo(human.getHname());
@@ -67,11 +57,7 @@ public class HumanBizImpl implements HumanBiz {
 			} else {
 				// 如果邮箱也不存在，就判断输入的是否是号码
 				String RULE_EMAIL1 = "^[1][3-9][0-9]{9}$";
-				// 正则表达式的模式
-				Pattern p1 = Pattern.compile(RULE_EMAIL1);
-				// 正则表达式的匹配器
-				Matcher m1 = p1.matcher(human.getHname());
-				if (m1.matches()) {
+				if (Pattern.matches(RULE_EMAIL1, human.getHname())) {
 					HumanExample humanExample2 = new HumanExample();
 					Criteria criteria2 = humanExample2.createCriteria();
 					criteria2.andHphoneEqualTo(Long.parseLong(human.getHname()));
@@ -100,33 +86,67 @@ public class HumanBizImpl implements HumanBiz {
 			if (h.getHlimit() >= status && h.getHlimit() < 2) {
 				return h;
 			} else {
-				throw new BizException("该账户无访问权限");
+				throw new BizException("账号或密码错误，请验证后重新输入");
 			}
 		} else {// 用户名或密码错误
 			throw new BizException("账号或密码错误，请验证后重新输入");
 		}
-
 	}
 
 	@Override
-	public int upload(Human human) {
+	public int upload(Human human) throws BizException {
+		// 密码不允许修改
 		human.setHpwd(null);
+		// 用户名、身份证号、电话号码、邮箱地址不能为空
+		if (human.getHname() == null || "".equals(human.getHname())) {
+			throw new BizException("用户名不能为空");
+		} else if (human.getHidcard() == null || human.getHidcard() == 0) {
+			throw new BizException("身份证号不能为空");
+		} else if (human.getHphone() == null || human.getHphone() == 0) {
+			throw new BizException("电话号码不能为空");
+		} else if (human.getHemail() == null || "".equals(human.getHemail())) {
+			throw new BizException("邮箱地址不能为空");
+		} else if (Pattern.matches(AccountValidatorUtil.REGEX_ID_CARD, human.getHidcard() + "")) {
+			throw new BizException("身份证号格式错误");
+		} else if (Pattern.matches(AccountValidatorUtil.REGEX_MOBILE, human.getHphone() + "")) {
+			throw new BizException("电话号码格式错误");
+		} else if (Pattern.matches(AccountValidatorUtil.REGEX_EMAIL, human.getHemail())) {
+			throw new BizException("邮箱地址格式错误");
+		}
+
+		// 用户名、身份证号、电话号码、邮箱地址不能重复
+		if (human.getHphoto() == null || "".equals(human.getHphoto())) {
+			human.setHphoto(null);
+		}
+		// 除重
+		List<Human> list = humanMapper.selectByExample(null);
+		for (Human h : list) {
+			// 该信息不能与其他用户的信息重复
+			if (h.getHid() != human.getHid() && !h.getHid().equals(human.getHid())) {
+				System.out.println("h.getHid()" + h.getHid() + "\t" + "human.getHid()" + human.getHid());
+				if (human.getHname().equals(h.getHname())) {
+					throw new BizException("用户名不能重复");
+				} else if (human.getHidcard() == h.getHidcard()) {
+					throw new BizException("身份证号不能重复");
+				} else if (human.getHphone() == h.getHphone()) {
+					throw new BizException("电话号码不能重复");
+				} else if (human.getHemail() == h.getHemail()) {
+					throw new BizException("邮箱地址不能重复");
+				} 
+			}
+		}
 		return humanMapper.updateByPrimaryKeySelective(human);
 	}
 
 	@Override
-	public int changePwd(Human human, String oldPwd, String newPwd) throws BizException {
-		if (!oldPwd.equals(newPwd)) {// 如果两次输入的密码不一致，再开始进行修改
-			if (MD5Util.MD5(human.getHname() + oldPwd).equals(human.getHpwd())) {// 旧密码正确，验证是本人操作，予以修改密码
-				Human h = new Human();
-				h.setHid(human.getHid());
-				h.setHpwd(MD5Util.MD5(human.getHname() + newPwd));
-				return humanMapper.updateByPrimaryKeySelective(h);
-			} else {
-				throw new BizException("原密码输入错误，请重试");
-			}
+	public int changePwd(Human human, String newPwd) throws BizException {
+		if (!human.getHpwd().equals(MD5Util.MD5(human.getHname() + newPwd))) {// 如果两次输入的密码不一致，再开始进行修改
+			Human h = new Human();
+			h.setHid(human.getHid());
+			h.setHpwd(MD5Util.MD5(human.getHname() + newPwd));
+			return humanMapper.updateByPrimaryKeySelective(h);
 		} else {// 两次输入的密码一致，直接抛出异常
-			throw new BizException("两次输入的密码相同，请验证后重新输入");
+			throw new BizException("新密码与旧密码相同，请验证后重新输入");
 		}
 	}
 
@@ -157,5 +177,25 @@ public class HumanBizImpl implements HumanBiz {
 			criteria.andHphoneEqualTo(human.getHphone());
 		}
 		return humanMapper.selectByExample(example);
+	}
+
+	@Override
+	public Human findByHid(Human human) {
+		return humanMapper.selectByPrimaryKey(human.getHid());
+	}
+	
+	@Override
+	public boolean check(Human human) {
+		human= findByHid(human);
+		if (human.getHidcard() == null || human.getHidcard() == 0) {
+			return false;
+		}
+		if (human.getHphone() == null || human.getHphone() == 0) {
+			return false;
+		}
+		if (human.getHemail() == null || "".equals(human.getHemail())) {
+			return false;
+		}
+		return true;
 	}
 }

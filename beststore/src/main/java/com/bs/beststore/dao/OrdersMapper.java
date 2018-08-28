@@ -10,14 +10,14 @@ import org.apache.ibatis.annotations.Select;
 
 public interface OrdersMapper {
 	
-	@Select("select * form order o"
+	@Select("select * from order o"
 			+ "left join address a on o.aid=a.aid "
 			+ "left join human h on o.hid=h.hid "
 			+ "left join store s on o.hid=s.hid"
 			+ "where o.hid=#{hid};")
 	List<Map<String, Object>> findByHid(@Param("hid")int hid);
 	
-	@Select("select * form order o"
+	@Select("select * from order o"
 			+ "left join address a on o.aid=a.aid "
 			+ "left join human h on o.hid=h.hid "
 			+ "left join store s on o.hid=s.hid"

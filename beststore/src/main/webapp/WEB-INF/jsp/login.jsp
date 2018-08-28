@@ -226,7 +226,7 @@
 							$("#login_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
 							return;
 						}
-						$.post("login.do",{
+						$.post("login.todo",{
 							hname:uname,
 							hpwd:upwd
 						},function(data){
@@ -252,7 +252,7 @@
 							$("#register_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
 							return;
 						} 
-						$.post("code.do",{
+						$.post("code.todo",{
 							email:email
 						},function(date){
 							if(date == "OK") {
@@ -271,7 +271,7 @@
 							$("#register_error").html(msgtemp('<strong>用户名不能</strong> 请输入用户名', 'alert-warning'));
 							return;
 						}
-						$.post("checkname.do",{
+						$.post("checkname.todo",{
 							hname:uname
 						},function(data){
 							if (data == "OK") {
@@ -300,7 +300,7 @@
 							$("#register_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
 							return;
 						} 
-						$.post("register.do",{
+						$.post("register.todo",{
 							emailorphone:uemail,
 							hname:uname,
 							hpwd:upwd,
@@ -315,14 +315,14 @@
 						});
 					});
 					
-					// 忘记密码用户名失焦事件
+					// 忘记密码手机/邮箱失焦事件
 					$("#resetpwd_phone").blur(function(){
 						var uphone = $("#resetpwd_phone").val();
 						if (uphone == null || uphone == "") {
 							$("#resetpwd_error").html(msgtemp('<strong>手机/邮箱不能为空</strong> 请输入手机/邮箱', 'alert-warning'));
 							return;
 						}
-						$.post("checkname.do",{
+						$.post("checkname.todo",{
 							emailorphone:uphone
 						},function(data){
 							if (data == "OK") {
@@ -346,7 +346,7 @@
 							$("#resetpwd_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
 							return;
 						} 
-						$.post("code.do",{
+						$.post("code.todo",{
 							email:email
 						},function(date){
 							if(date == "OK") {
@@ -371,7 +371,7 @@
 							$("#resetpwd_error").html(msgtemp('<strong>密码为空</strong> 请输入密码', 'alert-warning'));
 							return;
 						} 
-						$.post("findPwd.do",{
+						$.post("findPwd.todo",{
 							emailorphone:uemail,
 							hpwd:upwd,
 							code:code

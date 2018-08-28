@@ -24,14 +24,14 @@ public interface HumanBiz {
 	 * @param human 用户名、密码
 	 * @return	成功就返回登录者的具体信息，失败返回为空
 	 */
-	Human login(Human human,int status)  throws BizException;
+	Human login(Human human, int status)  throws BizException;
 	
 	/**
 	 * 修改用户信息  用户提供用户id，可以修改除密码外的所有信息，包括用户名
 	 * @param human
 	 * @return	成功返回1，否则判定为失败
 	 */
-	int upload(Human human);    
+	int upload(Human human) throws BizException;    
 	
 	/**
 	 * 修改密码，因为是在用户界面，系统直接提供用户id、用户名，用户输入旧密码和新密码，根据用户id进行修改
@@ -40,7 +40,7 @@ public interface HumanBiz {
 	 * @param newPwd	输入的新密码
 	 * @return	成功返回1，否则判定为失败
 	 */
-	int changePwd(Human human, String oldPwd, String newPwd) throws BizException;
+	int changePwd(Human human, String newPwd) throws BizException;
 	
 	/**
 	 * 找回密码，验证过后，根据用户名修改新的密码
@@ -55,5 +55,19 @@ public interface HumanBiz {
 	 * @return
 	 */
 	List<Human> findByCondition(Human human);
+	
+	/**
+	 * 根据id查看用户信息
+	 * @param human
+	 * @return
+	 */
+	Human findByHid(Human human);
+	
+	/**
+	 * 根据hid检索当前用户的信息是否完善，包括身份证号、电话号码、邮箱地址
+	 * @param human
+	 * @return
+	 */
+	boolean check(Human human);
 
 }

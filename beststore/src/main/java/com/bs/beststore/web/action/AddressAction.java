@@ -70,4 +70,14 @@ public class AddressAction {
 			out.print("信息填写错误，请验证后重新输入");
 		}
 	}
+	
+	@RequestMapping("addressById.do")
+	// 返回具体的地址信息
+	public String addressById(int aid, Model model, HttpSession session, PrintWriter out) {
+		model.addAttribute("address", addressBiz.findByAid(aid));
+		Human human = (Human) session.getAttribute("loginHuman");
+		System.out.println(human.getHid());
+		model.addAttribute("addresslist", addressBiz.findAllAddress(human.getHid()));
+		return "address";
+	}
 }
