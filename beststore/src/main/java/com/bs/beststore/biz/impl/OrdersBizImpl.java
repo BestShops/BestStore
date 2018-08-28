@@ -1,5 +1,7 @@
 package com.bs.beststore.biz.impl;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,13 @@ public class OrdersBizImpl implements OrdersBiz{
 	
 	@Override
 	public int addOrders(Orders orders) {
+		orders.setOstatus(0);
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			orders.setOtime(df.parse(df.format(new Date())));
+		} catch (ParseException e) {
+			orders.setOtime(new Date());
+		}
 		return OrdersMapper.insert(orders);
 	}
 
@@ -29,19 +38,6 @@ public class OrdersBizImpl implements OrdersBiz{
 	 * 而且，一般的购物网站都提供两个时间，一个是下单时间，一个是付款时间
 	 */
 	public int updateOrders(Orders orders) {
-		/**
-		 *  格式化时间
-		 *  SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		 *  df.format(new Date())
-		 */
-		orders.setOstatus(1);
-		orders.setOtime(new Date());
-		return OrdersMapper.updateByPrimaryKeySelective(orders);
-	}
-
-	@Override
-	public int removeOrders(Orders orders) {
-		orders.setOstatus(4);
 		return OrdersMapper.updateByPrimaryKeySelective(orders);
 	}
 

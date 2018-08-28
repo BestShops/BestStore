@@ -22,13 +22,6 @@ public interface OrdersBiz {
 	int updateOrders(Orders orders);
 	
 	/**
-	 * 超过十五分钟未支付的订单进行删除
-	 * @param orders	订单状态为0、订单id
-	 * @return	成功返回1，否则为失败
-	 */
-	int removeOrders(Orders orders);
-	
-	/**
 	 * 用户删除自己的订单
 	 * @param orders	根据订单id将订单状态设为0
 	 * @return	成功返回1，否则为失败

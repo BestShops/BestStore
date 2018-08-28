@@ -72,9 +72,9 @@
 										<a href="userOrderDetailPage.do?oid=${o.OID}" class="but c9">订单详情</a>
 									</td>
 									<td class="order">
-										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
+										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
 										<a href="shopCartPayPage.do?oid=${o.OID}" class="but but-primary">立即付款</a>
-										<a href="delOrder.do?oid=${o.OID}" class="but c3">取消订单</a>
+										<a href="" onclick="del(${o.OID},${o.OSTATUS})" class="but c3">取消订单</a>
 									</td>
 									</c:if>
 									
@@ -85,12 +85,12 @@
 										<a href="userOrderDetailPage.do?oid=${o.OID}" class="but c9">订单详情</a>
 									</td>
 									<td class="order">
-										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
-										<a href="udai_order_receipted.html" class="but but-primary">确认收货</a>
+										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
+										<c:if test="${o.OSTATUS==1}"><a href="" class="but but-primary" onclick="alert('您的订单还未发货，不能确认收货');">确认收货</a></c:if>
+										<c:if test="${o.OSTATUS==2}"><a href="receiptedOrder.do?oid=${o.OID}" class="but but-primary">确认收货</a></c:if>
 										<a href="udai_apply_return.html" class="but c3">退款/退货</a>
 									</td>
 									</c:if>
-									
 									<c:if test="${o.OSTATUS==3}">
 									<td class="state">
 										<a class="but c6">交易成功</a>
@@ -98,9 +98,9 @@
 										<a href="userOrderDetailPage.do?oid=${o.OID}" class="but c9">订单详情</a>
 									</td>
 									<td class="order">
-										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
+										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
 										<a href="" class="but but-link">评价</a>
-										<a href="" class="but c3">取消订单</a>
+										<a href="" class="but c3" onclick="del(${o.OID},${o.OSTATUS})">删除订单</a>
 									</td>
 									</c:if>
 									<c:if test="${o.OSTATUS==4}">
@@ -110,9 +110,9 @@
 										<a href="userOrderDetailPage.do?oid=${o.OID}" class="but c9">订单详情</a>
 									</td>
 									<td class="order">
-										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
+										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
 										<a href="" class="but but-link">查看评价</a>
-										<a href="" class="but c3">取消订单</a>
+										<a href="" class="but c3" onclick="del(${o.OID},${o.OSTATUS})">删除订单</a>
 									</td>
 									</c:if>
 								</tr>
@@ -128,7 +128,7 @@
 							</c:if>
 								<c:forEach var="i" begin="1" end="${requestScope.count}">
 									<c:if test="${i == requestScope.pageNo}">
-										<a class="select" href="userOrderPage.do?pageNo=${i}&type=${requestScope.type}">${i}</a>
+										<a class="select">${i}</a>
 									</c:if>
 									<c:if test="${requestScope.pageNo!=i}">
 										<a class="" href="userOrderPage.do?pageNo=${i}&type=${requestScope.type}">${i}</a>
@@ -153,5 +153,32 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script type="text/javascript">
+		function del(oid, ostatus) {
+			var index = 0;// 标志符，1为删除
+			if (ostatus==0) {
+				if(confirm("该订单还未支付，如果删除的话订单就会取消，您确定删除吗？")){
+					index = 1;
+				}
+			} else if (ostatus==1 || ostatus==2) {
+				alert("该订单未完成，不能删除");
+			} else if (ostatus==3 || ostatus==4) {
+				if(confirm("该订单删除后，将不能再查看到该订单的具体信息，您确定删除吗？")){
+					index = 1;
+				}
+			}
+			if (index==1) {
+				// 执行删除操作
+				$.post("delOrder.do",{
+					oid:oid
+				},function(data){
+					alert(data);
+					var i = '${requestScope.pageNo}';
+					var type = '${requestScope.type}';
+					window.location.href="userOrderPage.do?pageNo=" + i + "&type=" + type;
+				});
+			}
+		}
+	</script>
 </body>
 </html>

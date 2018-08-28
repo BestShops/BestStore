@@ -12,7 +12,7 @@
 		<div class="user-content__box clearfix bgf">
 			<div class="title">订单中心-订单${info.OID}</div>
 			<div class="order-info__box">
-				<div class="order-addr">收货地址：<span class="c6">${info.ACONSIGNEE}，${info.APHONE}，${info.ACITY}${info.ALOCATION}</span></div>
+				<div class="order-addr">收货地址：<span class="c6">${info.ACONSIGNEE}，${fn:substring(info.APHONE,0,3)}****${fn:substring(info.APHONE,7,11)}，${info.ACITY}${info.ALOCATION}</span></div>
 				<div class="order-info">
 					订单信息
 					<table>
@@ -51,8 +51,8 @@
 						</div>
 						<div class="tdf3">${od.gdesc}</div>
 						<div class="tdf1">${od.num}</div>
-						<div class="tdf1">￥${od.gnowprice}</div>
-						<div class="tdf1">￥${od.num*od.gnowprice}</div>
+						<div class="tdf1">¥${od.gnowprice}</div>
+						<div class="tdf1">¥${od.num*od.gnowprice}</div>
 						<div class="tdf1">
 							<div class="ep2">快递<br>¥0.00</div>
 						</div>
@@ -60,7 +60,7 @@
 					</c:forEach>
 				</div>
 				<div class="price-total">
-					<div class="fz12 c9">优惠￥${info.OLASTPRICE-info.ONOWPRICE}元<br>快递运费 ￥0.0</div>
+					<div class="fz12 c9">优惠¥${info.OLASTPRICE-info.ONOWPRICE}元<br>快递运费 ¥0.0</div>
 					<div class="fz18 c6">实付款：<b class="cr">¥${info.ONOWPRICE}</b></div><br>
 					<div class="fz18 c9"><a href="userOrderPage.do?pageNo=1&type=10"><button style="width:150px;height:30px">返回订单中心</button></a></div>
 				</div>
