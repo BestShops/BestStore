@@ -88,7 +88,7 @@
 										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
 										<c:if test="${o.OSTATUS==1}"><a href="" class="but but-primary" onclick="alert('您的订单还未发货，不能确认收货');">确认收货</a></c:if>
 										<c:if test="${o.OSTATUS==2}"><a href="receiptedOrder.do?oid=${o.OID}" class="but but-primary">确认收货</a></c:if>
-										<a href="udai_apply_return.html" class="but c3">退款/退货</a>
+										<a href="userOrderReturn.do?oid=${o.OID}" class="but c3">退款/退货</a>
 									</td>
 									</c:if>
 									<c:if test="${o.OSTATUS==3}">

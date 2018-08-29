@@ -28,6 +28,13 @@ public class UserOrderAction {
 	@Resource
 	private OrdersdetailBiz ordersdetailBiz;
 	
+	// 申请退货页面
+	@RequestMapping("userOrderReturn.do")
+	public String userOrderReturn(int oid, Model model) {
+		model.addAttribute("order", ordersBiz.findInfoByOid(oid).get(0));
+		return "userOrderReturn";
+	}
+	
 	// 确认收货按钮
 	@RequestMapping("confirm.do")
 	public void confirm(int oid, PrintWriter out) {
@@ -44,7 +51,7 @@ public class UserOrderAction {
 		orders.setOdealtime(date);// 修改交易完成时间
 		int index = ordersBiz.updateOrders(orders);
 		if (index == 1) {
-			out.print("订单完成");
+			out.print("OK");
 		} else {
 			out.print("订单修改失败");
 		}
@@ -114,11 +121,7 @@ public class UserOrderAction {
 		return "userOrderEvaluate";
 	}
 	
-	@RequestMapping(path = "userOrderReceiptedPage.do")
-	public String userOrderReceiptedPage() {
-		return "userOrderReceipted";
-	}
-	
+	// 退货退款
 	@RequestMapping(path = "userOrderRefundPage.do")
 	public String userOrderRefundPage() {
 		return "userOrderRefund";

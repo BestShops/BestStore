@@ -137,7 +137,12 @@
 				$.post("confirm.do",{
 					oid:oid
 				},function(data){
-					alert(data);
+					if (data == "OK") {
+						alert("订单确认完成");
+						window.location.href="userOrderPage.do?pageNo=1&type=10";
+					} else {
+						alert(data);
+					}
 				});
 			}
 		});

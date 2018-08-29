@@ -49,4 +49,19 @@ public interface OrdersBiz {
 	 * @return
 	 */
 	int getCount(int hid, int type);
+
+	
+	/**
+	 * 根据oid获取信息
+	 * @param oid
+	 * @return
+	 */
+	Orders findByOid(int oid);
+
+	/**
+	 * 根据oid查询订单的头信息
+	 * @param oid
+	 * @return
+	 */
+	List<Map<String, Object>> findInfoByOid(int oid);
 }

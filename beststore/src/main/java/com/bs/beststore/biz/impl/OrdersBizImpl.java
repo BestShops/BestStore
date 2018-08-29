@@ -76,4 +76,14 @@ public class OrdersBizImpl implements OrdersBiz{
 		return pageCount % 3 == 0 ? pageCount / 3 : (pageCount / 3) + 1;
 	}
 
+	@Override
+	public Orders findByOid(int oid) {
+		return OrdersMapper.selectByPrimaryKey(oid);
+	}
+
+	@Override
+	public List<Map<String, Object>> findInfoByOid(int oid) {
+		return OrdersMapper.findInfoByOid(oid);
+	}
+
 }
