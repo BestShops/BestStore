@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -50,69 +51,36 @@
 							<div class="tdf1">运费</div>
 						</div>
 						<div class="order-item__list">
+							<c:forEach items="${odlist}" var="od">
 							<div class="item">
 								<div class="tdf3">
-									<a href="item_show.html"><div class="img"><img src="images/temp/M-003.jpg" alt="" class="cover"></div>
-									<div class="ep2 c6">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div></a>
+									<a href="item_show.html"><div class="img"><img src="upload/${od.gphotopic}" alt="" class="cover"></div>
+									<div class="ep2 c6">${od.sname} ${od.gname}</div></a>
 									<div class="attr ep">颜色分类：深棕色  尺码：均码</div>
 								</div>
-								<div class="tdf1">1</div>
-								<div class="tdf1">¥22.0</div>
-								<div class="tdf2">
-									<div class="ep2">活动8折优惠<br>优惠：¥4.0</div>
-								</div>
-								<div class="tdf1">¥18.0</div>
+								<div class="tdf3">${od.gdesc}</div>
+								<div class="tdf1">${od.num}</div>
+								<div class="tdf1">¥${od.gnowprice}</div>
+								<div class="tdf1">¥${od.num*od.gnowprice}</div>
 								<div class="tdf1">
 									<div class="ep2">快递<br>¥0.00</div>
 								</div>
 							</div>
-							<div class="item">
-								<div class="tdf3">
-									<a href="item_show.html"><div class="img"><img src="images/temp/M-007.jpg" alt="" class="cover"></div>
-									<div class="ep2 c6">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div></a>
-									<div class="attr ep">颜色分类：深棕色  尺码：均码</div>
-								</div>
-								<div class="tdf1">2</div>
-								<div class="tdf1">¥20.0</div>
-								<div class="tdf2">
-									<div class="ep2">会员等级优惠<br>优惠：¥2.0</div>
-								</div>
-								<div class="tdf1">¥38.0</div>
-								<div class="tdf1">
-									<div class="ep2">快递<br>¥0.00</div>
-								</div>
-							</div>
-							<div class="item">
-								<div class="tdf3">
-									<a href="item_show.html"><div class="img"><img src="images/temp/M-005.jpg" alt="" class="cover"></div>
-									<div class="ep2 c6">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div></a>
-									<div class="attr ep">颜色分类：深棕色  尺码：均码</div>
-								</div>
-								<div class="tdf1">1</div>
-								<div class="tdf1">¥20.0</div>
-								<div class="tdf2">
-									无
-								</div>
-								<div class="tdf1">¥20.0</div>
-								<div class="tdf1">
-									<div class="ep2">快递<br>¥0.00</div>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 						<div class="price-total">
-							<div class="fz12 c9">使用优惠券【满￥20.0减￥2.0】优惠￥2.0元<br>快递运费 ￥0.0</div>
-							<div class="fz18 c6">实付款：<b class="cr">¥76.0</b></div>
-							<div class="fz12 c9">（本单可获 <span class="c6">380</span> 积分）</div>
+							<div class="fz12 c9">优惠¥${info.OLASTPRICE-info.ONOWPRICE}元<br>快递运费 ￥0.0</div>
+							<div class="fz18 c6">实付款：<b class="cr">¥${info.ONOWPRICE}</b></div><br>
 						</div>
 						<hr>
 						<div class="order-info">
-							订单编号：<span class="c6">121324165465465465</span><br>
+							订单编号：<span class="c6">${info.OID}</span><br>
 							支付宝交易号：<span class="c6">165454564564165164654654</span><br>
-							收货地址：<span class="c6">福建省 福州市 鼓楼区 温泉街道 温泉街道五四路159号世界金龙大厦20层B北 福州喵喵喵网络，林设计，187***8122</span><br>
-							成交时间：<span class="c6">2017-09-07 16:03:07</span>
+							收货地址：<span class="c6">${info.ACONSIGNEE}，${info.ACITY}${info.ALOCATION}，${fn:substring(info.APHONE,0,3)}****${fn:substring(info.APHONE,7,11)}</span><br>
+							成交时间：<span class="c6">${requestScope.time}</span>
 						</div>
 						<div class="modify_div clearfix">
-							<form action="" class="user-setting__form" role="form">
+							<form action="" class="user-setting__form" role="form" onsubmit="return false;">
 								<ul class="fz12 text-nowrap">
 									<li class="cr">◆ 请收到货后，再确认收货！否则我们可能无法为您保障权益！</li>
 								</ul>
@@ -126,7 +94,7 @@
 								</div> -->
 								<div class="form-group" style="line-height: 1em">
 									<div class="col-sm-offset-2 col-sm-10">
-										<button type="submit" class="but">确认已收货</button>
+										<button type="submit" class="but" id="submit">确认已收货</button>
 									</div>
 								</div>
 								<script>
@@ -162,5 +130,22 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script type="text/javascript">
+		$("#submit").click(function(){
+			if (confirm("确认收货后将不能退货，请确认是否确认收货")) {
+				var oid = '${info.OID}';
+				$.post("confirm.do",{
+					oid:oid
+				},function(data){
+					if (data == "OK") {
+						alert("订单确认完成");
+						window.location.href="userOrderPage.do?pageNo=1&type=10";
+					} else {
+						alert(data);
+					}
+				});
+			}
+		});
+	</script>
 </body>
 </html>

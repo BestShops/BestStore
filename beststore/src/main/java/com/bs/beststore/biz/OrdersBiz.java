@@ -22,13 +22,6 @@ public interface OrdersBiz {
 	int updateOrders(Orders orders);
 	
 	/**
-	 * 超过十五分钟未支付的订单进行删除
-	 * @param orders	订单状态为0、订单id
-	 * @return	成功返回1，否则为失败
-	 */
-	int removeOrders(Orders orders);
-	
-	/**
 	 * 用户删除自己的订单
 	 * @param orders	根据订单id将订单状态设为0
 	 * @return	成功返回1，否则为失败
@@ -36,11 +29,11 @@ public interface OrdersBiz {
 	int deleteOrders(Orders orders);
 	
 	/**
-	 * 查询用户下的所有订单详情
+	 * 查询用户下的所有订单（不包括详情，只展示订单的第一件商品的信息）,状态为10查询全部，否则按状态查找
 	 * @param orders	用户id、订单状态、付款发货状态
 	 * @return	订单详情集合
 	 */
-	List<Map<String,Object>> findOrderByHid(Orders orders);
+	List<Map<String,Object>> findOrderByHid(int hid, int pageNo, int status);
 	
 	/**
 	 * 查询店铺下所有交易的订单详情
@@ -49,4 +42,26 @@ public interface OrdersBiz {
 	 * @return	订单详情集合
 	 */
 	List<Map<String,Object>> findOrderBySid(Orders orders,int sid);
+	
+	/**
+	 * 获取信息的总条数
+	 * @param hid
+	 * @return
+	 */
+	int getCount(int hid, int type);
+
+	
+	/**
+	 * 根据oid获取信息
+	 * @param oid
+	 * @return
+	 */
+	Orders findByOid(int oid);
+
+	/**
+	 * 根据oid查询订单的头信息
+	 * @param oid
+	 * @return
+	 */
+	List<Map<String, Object>> findInfoByOid(int oid);
 }

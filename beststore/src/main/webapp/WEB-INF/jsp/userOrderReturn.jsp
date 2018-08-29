@@ -35,10 +35,9 @@
 						</div>
 						<hr>
 						<div class="return-item__info">
-							<div class="img"><img src="images/temp/M-001.jpg" alt="" class="cover"></div>
-							<div class="name ep2">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
-							<div class="type">颜色分类：深棕色 尺码：均码</div>
-							<div class="num">订单编号：156465416412132</div>
+							<div class="img"><img src="upload/${order.gphotopic}" alt="" class="cover"></div>
+							<div class="name ep2">${order.sname} &nbsp;&nbsp;${order.gname}</div>
+							<div class="num">订单编号：${order.oid}</div>
 						</div>
 						<form action="" class="user-addr__form form-horizontal" role="form">
 							<div class="form-group">
@@ -72,7 +71,8 @@
 										<option value="0">请选择</option>
 										<option value="1">质量问题</option>
 										<option value="2">发错货物</option>
-										<option value="3">七天无理由退换</option>
+										<option value="3">多拍重拍</option>
+										<option value="4">七天无理由退换</option>
 									</select>
 								</div>
 							</div>
