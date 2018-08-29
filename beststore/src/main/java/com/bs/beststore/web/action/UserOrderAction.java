@@ -1,5 +1,7 @@
 package com.bs.beststore.web.action;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,11 +15,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.bs.beststore.biz.BizException;
 import com.bs.beststore.biz.OrdersBiz;
+import com.bs.beststore.biz.OrdersReturnBiz;
 import com.bs.beststore.biz.OrdersdetailBiz;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Orders;
+import com.bs.beststore.vo.Ordersreturn;
 
 @Controller
 public class UserOrderAction {
@@ -27,6 +34,57 @@ public class UserOrderAction {
 	
 	@Resource
 	private OrdersdetailBiz ordersdetailBiz;
+	
+	@Resource
+	private OrdersReturnBiz ordersReturnBiz;
+	
+	// 添加一条退款记录
+	@RequestMapping("addOrdersReturn.do")
+	public String addOrdersReturn(@RequestParam("file") MultipartFile file, 
+			HttpSession session, Ordersreturn ordersreturn) throws IOException {
+		// 上传图片
+		if (!file.isEmpty()) {
+			// 图片路径长度过长就处理成32位的
+	        String fileName = file.getOriginalFilename();
+	        if (fileName.length()>32) {
+	        	fileName = fileName.substring(fileName.length()-32, fileName.length());
+	        }
+			String diskPath = session.getServletContext().getRealPath("/upload");
+	        File f = new File(diskPath + File.separator + fileName);
+	        if(!f.exists()){  
+	            f.mkdirs();  
+	        } 
+	        file.transferTo(f);
+	        ordersreturn.setOrphoto(fileName);
+		}
+		try {
+			// 添加一条退货记录
+			int index = ordersReturnBiz.addOrderReturn(ordersreturn);
+			// 修改订单的成交时间，设置为退货的时间，同时，将该订单设置为移除状态
+			Orders orders = new Orders();
+			orders.setOid(ordersreturn.getOid());
+			orders.setOstatus(5);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			orders.setOdealtime(format.parse(format.format(new Date())));
+			ordersBiz.updateOrders(orders);
+			if (index == 1) {
+				// 清空错误信息
+				session.setAttribute("errorInfo", new Ordersreturn());
+				session.setAttribute("errorOrderReturn", "");
+				return "redirect:/userOrderRefundPage.do?pageNo=1";
+			} else {
+				// 添加失败
+				session.setAttribute("errorInfo", ordersreturn);
+				session.setAttribute("errorOrderReturn", "申请退款失败，请重试");
+				return "redirect:/userOrderReturn.do?oid=" + ordersreturn.getOid();
+			}
+		} catch (BizException | ParseException e) {
+			// 信息不完整
+			session.setAttribute("errorInfo", ordersreturn);
+			session.setAttribute("errorOrderReturn", e.getMessage());
+			return "redirect:/userOrderReturn.do?oid=" + ordersreturn.getOid();
+		}
+	}
 	
 	// 申请退货页面
 	@RequestMapping("userOrderReturn.do")
@@ -88,7 +146,7 @@ public class UserOrderAction {
 		// 从session中获取用户id
 		Human human = (Human) session.getAttribute("loginHuman");
 		int count = ordersBiz.getCount(human.getHid(), type);
-		// 如果最大的页面数
+		// 如果最大的页面数小于当前页面数
 		if (count < pageNo) {
 			pageNo --;
 		}
@@ -123,7 +181,15 @@ public class UserOrderAction {
 	
 	// 退货退款
 	@RequestMapping(path = "userOrderRefundPage.do")
-	public String userOrderRefundPage() {
+	public String userOrderRefundPage(int pageNo, Model model) {
+		int count = ordersReturnBiz.getCount();
+		// 如果最大的页面数小于当前页面数
+		if (count < pageNo) {
+			pageNo --;
+		}
+		model.addAttribute("orderlist", ordersReturnBiz.findAll(pageNo));
+		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("count", count);
 		return "userOrderRefund";
 	}
 	

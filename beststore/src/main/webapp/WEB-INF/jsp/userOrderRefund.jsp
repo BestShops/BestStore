@@ -4,6 +4,11 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
+<style>
+	table{
+		 text-align:center;
+	}
+</style>
 </head>
 <body>
 	<%@ include file="header2.jsp" %>
@@ -29,24 +34,41 @@
 											<th width="90">订单状态</th>
 											<th width="90">操作</th>
 										</tr>
-										<tr>
-											<td>2669901385864042</td>
-											<td>2669901385864042</td>
-											<td class="text-left">
-												<div class="name ep" style="width: 180px">纯色圆领短袖T恤活动衫弹</div>
-											</td>
-											<td>2017-03-30</td>
-											<td>¥18.0</td>
-											<td class="refund-state">退款中<br><a href="">联系客服</a></td>
-											<td class="refund-state"><a href="">取消退款</a></td>
-										</tr>
+										<c:forEach items="${orderlist}" var="ol">
+											<tr>
+												<td>${ol.orid}</td>
+												<td>${ol.oid}</td>
+												<td class="text-left">
+													<div class="name ep" style="width: 180px">${ol.gname}</div>
+												</td>
+												<td>${ol.odealtime}</td>
+												<td>¥${ol.onowprice}</td>
+												<td class="refund-state">${ol.ortype}<br><a href="">联系客服</a></td>
+												<td class="refund-state"><a href="">取消退款</a></td>
+											</tr>
+										</c:forEach>
 									</table>
 									<div class="page text-right clearfix" style="margin-top: 40px">
-										<a class="disabled">上一页</a>
-										<a class="select">1</a>
-										<a href="">2</a>
-										<a href="">3</a>
-										<a class="" href="">下一页</a>
+										<c:if test="${requestScope.pageNo==1}">
+											<a>上一页</a>
+										</c:if>
+										<c:if test="${requestScope.pageNo!=1}">
+											<a href="userOrderPage.do?pageNo=${requestScope.pageNo-1}&type=${requestScope.type}">上一页</a>
+										</c:if>
+											<c:forEach var="i" begin="1" end="${requestScope.count}">
+												<c:if test="${i == requestScope.pageNo}">
+													<a class="select">${i}</a>
+												</c:if>
+												<c:if test="${requestScope.pageNo!=i}">
+													<a class="" href="userOrderPage.do?pageNo=${i}&type=${requestScope.type}">${i}</a>
+												</c:if>
+											</c:forEach>
+										<c:if test="${requestScope.pageNo==requestScope.count}">
+											<a>下一页</a>
+										</c:if>
+										<c:if test="${requestScope.pageNo!=requestScope.count}">
+											<a href="userOrderPage.do?pageNo=${requestScope.pageNo+1}&type=${requestScope.type}">下一页</a>
+										</c:if>
 									</div>
 								</div>
 								<div role="tabpanel" class="tab-pane fade" id="money">
