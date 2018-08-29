@@ -2,6 +2,7 @@ package com.bs.beststore.web.action;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -50,30 +51,24 @@ public class TypeAction {
 	 * 查找父类信息
 	 * @throws IOException 
 	 */
-	@RequestMapping(value="findParentInfo.do")
-	public void findParentInfo(HttpServletResponse response) throws IOException {
-		List<Type> list=typeBiz.selectParentInfo();
-		String s=new Gson().toJson(list);
-		response.getWriter().print(s);
+	@RequestMapping(value="findAllInfo.do")
+	public void findAllInfo(HttpServletResponse response,String tid1,String tid2) throws IOException {
+		List<Map<String,Object>> list = null;
+		if(tid1!=null) {
+			list=typeBiz.selectSecondInfo(Integer.valueOf(tid1));
+			String s=new Gson().toJson(list);
+			response.getWriter().print(s);
+		}else if(tid2!=null) {
+			list=typeBiz.selectThirdInfo(Integer.valueOf(tid2));
+			String s=new Gson().toJson(list);
+			response.getWriter().print(s);
+		}else {
+			List<Type> list1=typeBiz.selectFirstInfo();
+			String s=new Gson().toJson(list1);
+			response.getWriter().print(s);
+		}
 	}
 	
-	/**
-	 * 通过父类id找子类信息
-	 * @param type
-	 * @param response
-	 * @throws IOException
-	 */
-	@RequestMapping(value="findSonInfoByParent.do")
-	public void findSonInfoByParent(String tparentid,HttpServletResponse response) throws IOException {
-		Type type=new Type();
-		if(!tparentid.isEmpty()) {
-			type.setTparentid(Integer.valueOf(tparentid));
-		}else {
-			type.setTparentid(1);
-		}
-		List<Type> list=typeBiz.selectSonInfoByParent(type);
-		String s=new Gson().toJson(list);
-		response.getWriter().print(s);
-	}
+	
 	
 }

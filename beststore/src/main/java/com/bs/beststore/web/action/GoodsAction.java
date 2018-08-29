@@ -18,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bs.beststore.biz.GoodsBiz;
+import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.Result;
 import com.bs.beststore.vo.Goods;
 import com.bs.beststore.vo.Store;
+import com.bs.beststore.vo.Type;
 import com.google.gson.Gson;
 
 @Controller
@@ -28,6 +30,8 @@ public class GoodsAction {
 
 	@Resource
 	private GoodsBiz goodsBiz;
+	@Resource
+	TypeBiz typeBiz;
 
 	@RequestMapping(path = "goodsQueryPage.do")
 	public String goodsQueryPage() {
@@ -54,7 +58,15 @@ public class GoodsAction {
 	 * @throws IllegalStateException 
 	 */
 	@RequestMapping(value="storeAddGoods.do")
-	public void addGoods(@RequestParam("file") MultipartFile file,Goods goods,HttpSession session, PrintWriter out,String op) throws IllegalStateException, IOException{
+	public void addGoods(@RequestParam("file") MultipartFile file,Goods goods,HttpSession session, PrintWriter out,String op,String tid1) throws IllegalStateException, IOException{
+		if(!"".equals(tid1.trim()) && tid1!=null) {
+			if(tid1.matches("^[0-9]*$")) {
+				goods.setTid(Integer.valueOf(tid1));
+			}else {
+				Type typeInfo=typeBiz.findTidByTname(tid1).get(0);
+				goods.setTid(typeInfo.getTid());
+			}
+		}
 		String data = null;
 		if(goods.getTid()!=null) {
 			if(!file.isEmpty()) {
@@ -66,6 +78,9 @@ public class GoodsAction {
 				}
 				file.transferTo(f);
 				goods.setGphotopic(fileName);
+			}
+			if(goods.getGphotopic()==null) {
+				goods.setGphotopic(goodsBiz.findByGid(goods.getGid()).getGphotopic());
 			}
 			Store store = (Store) session.getAttribute("storeHuman");
 			goods.setSid(store.getSid());
@@ -87,7 +102,7 @@ public class GoodsAction {
 		}
 		out.print(data);
 	}
-
+	
 
 	/**
 	 * 查询店铺所有商品或者某个商品(具体查询)
@@ -98,7 +113,6 @@ public class GoodsAction {
 	public void findAll(Goods goods,HttpServletRequest request,PrintWriter out){
 		Store storeHuman=(Store) request.getSession().getAttribute("storeHuman");
 		goods.setSid(storeHuman.getSid());
-		System.out.println(goods);
 		String page=request.getParameter("page");
 		String rows=request.getParameter("rows");
 		int intPage;
@@ -113,6 +127,35 @@ public class GoodsAction {
 		}else{
 			intRows=Integer.valueOf(rows);
 		}
+		List<Map<String,Object>> list=goodsBiz.findAll(goods,intPage,intRows);
+		long total=goodsBiz.findAllTotal(goods);
+		Map<String,Object> data=new HashMap<String,Object>();
+		data.put("rows", list);
+		data.put("total", total);
+		out.print(new Gson().toJson(data));
+	}
+	
+	/**
+	 * 商品审核
+	 * @param goods	可以根据商品id、商品类型、店铺id、商品状态来查询，若为null则查询本店所有商品
+	 */
+	@RequestMapping(value="goodsExamine.do")
+	public void goodsExamine(Goods goods,HttpServletRequest request,PrintWriter out){
+		String page=request.getParameter("page");
+		String rows=request.getParameter("rows");
+		int intPage;
+		int intRows;
+		if(page==null) {
+			intPage=1;
+		}else {
+			intPage=Integer.valueOf(page);
+		}
+		if(rows==null){
+			intRows=1;
+		}else{
+			intRows=Integer.valueOf(rows);
+		}
+		goods.setGstatus(0);
 		List<Map<String,Object>> list=goodsBiz.findAll(goods,intPage,intRows);
 		long total=goodsBiz.findAllTotal(goods);
 		Map<String,Object> data=new HashMap<String,Object>();

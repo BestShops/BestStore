@@ -14,14 +14,13 @@ public interface GoodsMapper {
 	@Insert("insert into goods values(null,#{gname},#{glastprice},#{gnowprice},#{gdesc},10,current_timestamp(6),#{gnumber},#{gphotopic},#{tid},#{sid},0);")
 	int insertGoods(Goods record);
 	
-	@Update("update goods set gname=#{gname},glastprice=#{glastprice},gnowprice=#{gnowprice},gnumber=#{gnumber},tid=#{tid},gdesc=#{gdesc},gphotopic=#{gphotopic} where gid=#{gid}")
+	@Update("update goods set gname=#{gname},glastprice=#{glastprice},gnowprice=#{gnowprice},gnumber=#{gnumber},tid=#{tid},gdesc=#{gdesc},gphotopic=#{gphotopic},gstatus=0 where gid=#{gid}")
 	int updateGoods(Goods record);
 	
 	@Update("update goods set gstatus=#{gstatus} where gid=#{gid}")
 	int updateGoodGstatus(Goods record);
 
 	// 商品id
-
 	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g" 
 			+ " left join type t on g.tid=t.tid "
 			+ "where g.gid=#{gid};")
@@ -32,8 +31,9 @@ public interface GoodsMapper {
 	List<Map<String, Object>> findByTid(@Param("tid") int tid);
 
 	// 店铺id
-	@Select("select g.gid,g.gname,g.gphotopic,g.glastprice,g.gnowprice,g.gstatus,g.gnumber,t.tpriname,g.grade,g.gpublish,g.gdesc from goods g"+ " left join type t on g.tid=t.tid "
-			+ "where g.sid=#{sid} limit #{page},#{rows};")
+	@Select("select g.gid,g.gname,g.gphotopic,g.glastprice,g.gnowprice,g.gstatus,g.gnumber,t1.tid tid,t3.tpriname name1,"
+			+ "t2.tpriname name2,t1.tpriname name3,concat(t3.tpriname,'-',t2.tpriname,'-',t1.tpriname) concatName,g.grade,g.gpublish,g.gdesc from goods g"+ " left join type t1 on g.tid=t1.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid "
+			+ "where g.sid=#{sid} and t1.tparentid is not null and t2.tparentid is not null limit #{page},#{rows};")
 	List<Map<String, Object>> findBySid(@Param("sid") int sid,@Param("page")int page,@Param("rows")int rows);
 
 	@Select("select count(*) from goods g"+ " left join type t on g.tid=t.tid "
@@ -41,10 +41,20 @@ public interface GoodsMapper {
 	long findBySidCount(@Param("sid") int sid);
 	
 	// 商品状态
-	@Select("select g.gid,g.gname,g.gphotopic,g.glastprice,g.gnowprice,g.gstatus,g.gnumber,t.tpriname,g.grade,g.gpublish,g.gdesc from goods g " + "left join type t on g.tid=t.tid "
-			+ "where g.gstatus=#{gstatus} and g.sid=#{sid} limit #{page},#{rows};")
+	@Select("select g.gid,g.gname,g.gphotopic,g.glastprice,g.gnowprice,g.gstatus,g.gnumber,t1.tid tid,t3.tpriname name1,"
+			+ "t2.tpriname name2,t1.tpriname name3,concat(t3.tpriname,'-',t2.tpriname,'-',t1.tpriname) concatName,g.grade,g.gpublish,g.gdesc from goods g " + "left join type t1 on g.tid=t1.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid "
+			+ "where g.gstatus=#{gstatus} and g.sid=#{sid} and t1.tparentid is not null and t2.tparentid is not null limit #{page},#{rows};")
 	List<Map<String, Object>> findByGstatus(@Param("gstatus") int gstatus,@Param("sid") int sid,@Param("page")int page,@Param("rows")int rows);
 
+	//商品审核
+	@Select("select sname,gid,gname,gphotopic,gpublish,gdesc from store s left join goods g on s.sid=g.sid where gstatus=#{gstatus} limit #{page},#{rows};")
+	List<Map<String, Object>> findByExamine(@Param("gstatus") int gstatus,@Param("page")int page,@Param("rows")int rows);
+
+	//审核中的商品数量
+	@Select("select count(*) from store s left join goods g on s.sid=g.sid where gstatus=#{gstatus}")
+	long findByExamineTotal(@Param("gstatus") int gstatus);
+
+	
 	// 模糊查询示例
 	// @Select("SELECT * FROM shop WHERE shop.name_text LIKE CONCAT('%',#{0},'%') ")
 	// public List<Shop> selectByName(String name_text);

@@ -53,4 +53,6 @@ public interface GoodsBiz {
 	 */
 	int updateGstatus(Goods goods);
 	
+	Goods findByGid(int gid);
+	
 }

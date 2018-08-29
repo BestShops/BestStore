@@ -1,6 +1,7 @@
 package com.bs.beststore.biz.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -67,11 +68,6 @@ public class TypeBizImpl implements TypeBiz {
 		// 两个类型名都不存在冲突的情况下，根据id修改
 		return typeMapper.updateByPrimaryKeySelective(type);
 	}
-
-	@Override
-	public List<Type> findAllType() {
-		return typeMapper.selectByExample(null);
-	}
 	
 	/**
 	 * 根据tid查看类别中是否包含值
@@ -96,21 +92,41 @@ public class TypeBizImpl implements TypeBiz {
 	}
 
 	@Override
-	public List<Type> selectParentInfo() {
-		TypeExample typeExample=new TypeExample();
-		Criteria typeCriteria=typeExample.createCriteria();
-		typeCriteria.andTparentidIsNull();
-		List<Type> list=typeMapper.selectByExample(typeExample);
+	public List<Map<String, Object>> findAllType() {
+		return typeMapper.selectAllType();
+	}
+
+	@Override
+	public List<Map<String, Object>> selectSonInfoByParent(Type type) {
+		List<Map<String,Object>> list=typeMapper.selectAllType();
 		return list;
 	}
 
 	@Override
-	public List<Type> selectSonInfoByParent(Type type) {
+	public List<Type> selectFirstInfo() {
 		TypeExample typeExample=new TypeExample();
 		Criteria typeCriteria=typeExample.createCriteria();
-		typeCriteria.andTparentidEqualTo(type.getTparentid());
-		List<Type> list=typeMapper.selectByExample(typeExample);
+		typeCriteria.andTparentidIsNull();
+		return typeMapper.selectByExample(typeExample);
+	}
+
+	@Override
+	public List<Map<String,Object>> selectSecondInfo(int tid) {
+		List<Map<String,Object>> list=typeMapper.selectSecondType(tid);
 		return list;
 	}
 
+	@Override
+	public List<Map<String,Object>> selectThirdInfo(int tid) {
+		return typeMapper.selectThirdType(tid);
+	}
+
+	@Override
+	public List<Type> findTidByTname(String tpriname) {
+		TypeExample typeExample=new TypeExample();
+		Criteria typeCriteria=typeExample.createCriteria();
+		typeCriteria.andTprinameEqualTo(tpriname);
+		return typeMapper.selectByExample(typeExample);
+	}
+	
 }

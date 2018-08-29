@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +22,31 @@ public class StoreBizImpl implements StoreBiz {
 	@Autowired
 	private StoreMapper storeMapper;
 	
-	@Override
-	public List<Store> findAll() {
-		return storeMapper.selectByExample(null);
+	public List<Map<String,Object>> findAll(Store store,int page,int rows) {
+		List<Map<String, Object>> list;
+		if(store.getSstatus()!=null) {
+			list = storeMapper.findAllByStatus(store.getSstatus(),(page-1)*rows,rows);
+		}else {
+			list=storeMapper.findAllStoreInfo((page-1)*rows,rows);
+		}
+		if (list == null || list.size() == 0) {
+			return null;
+		}else {
+			return list;
+		}
 	}
+
+	@Override
+	public long findAllTotal(Store store) {
+		long count=0;
+		if(store.getSstatus()!=null) {
+			count= storeMapper.findAllByStatusTotal(store);
+		}else {
+			count= storeMapper.findAllStoreInfoTotal();
+		}
+		return count;
+	}
+	
 
 	@Override
 	public int register(Store store) {
@@ -82,5 +104,12 @@ public class StoreBizImpl implements StoreBiz {
 		criteria.andSnameEqualTo(store.getSname());
 		return storeMapper.selectByExample(storeExample);
 	}
+
+	@Override
+	public int updateStoreStatus(Store store) {
+		return storeMapper.updateStoreSstatus(store);
+	}
+
+
 	
 }

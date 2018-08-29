@@ -11,9 +11,10 @@
 	//图片格式化
 	function imgFormatter(value, row, index) {
 		if (value != null && value != "") {
-			value = '<img style="width:80px;height:40px" src="${basePath}/img/'+value+'">';
+			value = '<img style="width:80px;height:40px" src="${basePath}/upload/'+value+'">';
 			return value;
 		}
+		return "";
 	}
 	//时间格式化
 	function dataFormat(value){
@@ -28,56 +29,103 @@
 	function statusFmt(value, row, index) {
 		var data = $("#foodGrid").datagrid('getData');
 		var row = data.rows[index];
-		if (row.gstatus == "0") {
-			return "审核中";
-		} else if(row.gstatus=="1"){
-			return "上架中";
-		}else if(row.gstatus=="2"){
-			return "审核未通过";
-		}else if(row.gstatus=="3"){
-			return "已下架";
-		}else if(row.gstatus=="4"){
-			return "已删除";
-		}
+		if (row.bstatus == "0") {
+			return "<span style='color:red'>审核中</span>";
+		} else if (row.bstatus == "1") {
+			return "<span style='color:green'>发布中</span>";
+		} else if (row.bstatus == "2") {
+			return "<span style='color:red'>审核未通过</span>";
+		} else if (row.bstatus == "3") {
+			return "<span style='color:red'>已下架</span>";
+		} else if (row.bstatus == "4") {
+			return "<span style='color:red'>已删除</span>";
+		} 
 	}
 
 	//操作
 	function fmtDo(value, row, index) {
 		var data = $("#foodGrid").datagrid('getData');
 		var row = data.rows[index];
-		if(row.gstatus=="3"){
-			var s = '<a href="#" onclick="openEdit(' + index + ')">修改</a>';
+		if (row.bstatus == "3") {
+			var s = '<a href="#" onclick="shelfGoods(' + index + ')">上架</a>';
 			s += "&nbsp;&nbsp;";
-			s += '<a href="#" onclick="delInfo(' + index + ')">删除</a>';
+			s += '<a href="#" onclick="delGoods(' + index + ')">删除</a>';
 			return s;
-		}else if(row.gstatus=="4"){
+		} else if (row.bstatus == "4") {
 			return "";
-		}else if(row.gstatus == "0" || row.gstatus == "1" || row.gstatus == "2"){
+		} else if (row.bstatus == "0" || row.bstatus == "1"
+				|| row.bstatus == "2") {
 			var s = '<a href="#" onclick="openEdit(' + index + ')">修改</a>';
 			s += "&nbsp;&nbsp;";
 			s += '<a href="#" onclick="removeGoods(' + index + ')">下架</a>';
 			return s;
 		}
 	}
-
-	//删除
-	function delInfo(index) {
-		flag = confirm("确定删除该学生吗?");
+	
+	//上架
+	function shelfGoods(index) {
+		flag = confirm("确定上架该博客吗?");
+		var data = $("#foodGrid").datagrid('getData');
+		var row = data.rows[index];
 		if (flag) {
-			$.post("${basePath}/StudentServlet", {
-				op : "del",
-				sid : row.sid
+			$.post("operateBlog.do", {
+				bid : row.bid,
+				bstatus : 0
 			}, function(data) {
 				eval("var d=" + data);
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
+					alert(d.data);
 				} else {
 					alert(d.data);
 				}
 			});
 		}
+	}
 
+	//删除
+	function delGoods(index) {
+		flag = confirm("确定删除该博客吗?");
+		var data = $("#foodGrid").datagrid('getData');
+		var row = data.rows[index];
+		if (flag) {
+			$.post("operateBlog.do", {
+				bid : row.bid,
+				bstatus : 4
+			}, function(data) {
+				eval("var d=" + data);
+				if (d.code == "1") {
+					//成功
+					$("#foodGrid").datagrid('reload');
+					alert(d.data);
+				} else {
+					alert(d.data);
+				}
+			});
+		}
+	}
+	
+	//下架
+	function removeGoods(index) {
+		flag = confirm("确定下架该博客吗?");
+		var data = $("#foodGrid").datagrid('getData');
+		var row = data.rows[index];
+		if (flag) {
+			$.post("operateBlog.do", {
+				bid : row.bid,
+				bstatus : 3
+			}, function(data) {
+				eval("var d=" + data);
+				if (d.code == "1") {
+					//成功
+					$("#foodGrid").datagrid('reload');
+					alert(d.data);
+				} else {
+					alert(d.data);
+				}
+			});
+		}
 	}
 
 	//添加按钮
@@ -88,51 +136,62 @@
 			//获取表格里的数据
 			var data = $("#foodGrid").datagrid('getData');
 			var row = data.rows[index];
-			$("#creditTr").show();
 			//表单加载数据
 			$("#form1").form('load', row);
-			fimage.src = "${basePath}/img/" + row.photo;
-			Formfid.value = row.sid;
+			bphoto.src = "${basePath}/upload/" + row.bphoto;
+			Formfid.value = row.bid;
 			$("#saveButton").unbind("click").click(modSave);
 			op.value = "modify";
 		} else {
 			$("#saveButton").unbind("click").click(save);
 			op.value = "add";
-			$("#creditTr").hide();
 			$("#form1").form('load', {
-				sname : "",
-				age : "",
-				address : "",
-				tel : "",
-				idcard : "",
-				credit : ""
+				btitle : "",
+				bdesc : ""
 			});
-			fimage.src = "${basePath }/images/noimg.gif";
+			bphoto.src = "${basePath }/images/noimg.gif";
 			Formfid.value = "";
 		}
 	}
 
 	//修改保存
 	function modSave() {
-		$("#form1").form("submit", {
-			success : function(data) {
-				//使用eval函数将json字符串转为对象d 
-				eval("var d=" + data);
-				if (d.code == "1") {
-					//成功
-					$("#editAdd").dialog('close');
-					$("#foodGrid").datagrid('reload');
-					alert(d.data);
-				} else {
-					alert(d.data);
+		flag = confirm("修改之后博客需要去推至审核哦,确定修改吗?");
+		if(flag){
+			if ($("#btitle").val() == "" || $("#btitle").val() == null) {
+				alert("博客标题不能为空");
+				return;
+			} else if ($("#bdesc").val() == "" || $("#bdesc").val() == null) {
+				alert("博客描述不能为空");
+				return;
+			} 
+			$("#form1").form("submit", {
+				success : function(data) {
+					//使用eval函数将json字符串转为对象d 
+					eval("var d=" + data);
+					if (d.code == "1") {
+						//成功
+						$("#editAdd").dialog('close');
+						$("#foodGrid").datagrid('reload');
+						alert(d.data);
+					} else {
+						alert(d.data);
+					}
 				}
-			}
-		});
+			});
+		}
+		
 	}
 
 	//添加保存按钮
 	function save() {
-		//添加
+		if ($("#btitle").val() == "" || $("#btitle").val() == null) {
+			alert("博客标题不能为空");
+			return;
+		} else if ($("#bdesc").val() == "" || $("#bdesc").val() == null) {
+			alert("博客描述不能为空");
+			return;
+		} 
 		$("#form1").form("submit", {
 			success : function(data) {
 				//使用eval函数将json字符串转为对象d 
@@ -149,26 +208,14 @@
 		});
 	}
 
-	function uploadImg() {
-		//创建表单上传对象
-		var fd = new FormData();
-		//添加上传的图片,值是原生的HTML对象
-		fd.append("photo", $("#file")[0].files[0]);
-		$.ajax({
-			url : "${basePath}/ImageUploadServlet",
-			type : "post",
-			data : fd,
-			processData : false, //禁止jquery处理参数
-			success : function(data) {
-				if (data) {
-					fimage.src = "${basePath}" + data;
-					//将上传的路径写到photo名字
-					photo.value = data;
-				} else {
-					alert("图片上传失败!");
-				}
-			}
-		});
+	//图片预览
+	function showPic() {
+		var file = document.getElementById("file");
+		var reader = new FileReader();
+		reader.readAsDataURL(file.files[0]);
+		reader.onload = function(e) {
+			document.getElementById("bphoto").src = e.target.result;
+		}
 	}
 	$(function(){
 		$("#loadCourse").combobox({
@@ -181,20 +228,15 @@
 		});
 	});
 	
-	function doSearch(){
-        var cid=$('.textbox-value').val();
-        var url=encodeURI('${basePath }/GradeServlet?op=queryByCid');
-        $('#userGrid').datagrid('options').url = "${basePath }/GradeServlet?op=queryByCid&cid="+cid;  
-        $("#userGrid").datagrid('reload');
-    } 
+	function doSearch() {
+		var bstatus = $('#cc').val();
+		$('#foodGrid').datagrid('options').url = "blogFindBySid.do?bstatus="
+				+ bstatus;
+		$("#foodGrid").datagrid('reload');
+	}
 </script>
 <body>
-	<div id="tb" style="padding: 3px">
-		<span>博客状态:</span> <select id="loadCourse" onchange="selectCourse()"
-			class="combobox" style="width: 128px;"></select> <a
-			class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
-	</div>
-	<table class="easyui-datagrid" title="商品管理" id="foodGrid"
+	<table class="easyui-datagrid" title="博客管理" id="foodGrid"
 		data-options="fit:true,
 					rownumbers:true,
 					singleSelect:true,
@@ -202,81 +244,60 @@
 					pagination:true,
 					pageList:[5,10,15,20,25],
 					pageSize:5,
-					url:'${basePath}/StudentServlet?op=queryAjax',
+					url:'blogFindBySid.do',
 					method:'post',
 					toolbar:'#tb'
 			">
 		<thead>
 			<tr style="text-align: center">
-				<th data-options="field:'gid',width:80,align:'center'">博客号</th>
-				<th data-options="field:'gname',width:200,align:'center'">博客标题</th>
-				<th data-options="field:'photopic',width:120,align:'center',formatter:imgFormatter">图片路径</th>
-				<th data-options="field:'glastprice',width:300,align:'center'">博客描述</th>
-				<th data-options="field:'gstatus',width:90,align:'center',formatter:statusFmt">博客状态</th>
-				<th data-options="field:'gpublish',width:150,align:'center',formatter:dataFormat">发布时间</th>
+				<th data-options="field:'bid',width:80,align:'center'">博客号</th>
+				<th data-options="field:'btitle',width:200,align:'center'">博客标题</th>
+				<th data-options="field:'bphoto',width:120,align:'center',formatter:imgFormatter">图片路径</th>
+				<th data-options="field:'bdesc',width:300,align:'center'">博客描述</th>
+				<th data-options="field:'bstatus',width:90,align:'center',formatter:statusFmt">博客状态</th>
+				<th data-options="field:'btime',width:150,align:'center',formatter:dataFormat">发布时间</th>
 				<th data-options="field:'dogid',width:180,align:'center',formatter:fmtDo">操作</th>
 			</tr>
 		</thead>
 	</table>
 	<div id="tb" style="padding: 5px; height: auto">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
-			onclick="openEdit()">添加</a>
+			onclick="openEdit()">添加</a>&nbsp;&nbsp;&nbsp;<span>商品状态:</span> <select
+			id="cc" class="easyui-combobox" name="dept" style="width: 200px;">
+			<option value="">全部</option>
+			<option value="0">审核中</option>
+			<option value="1">上架中</option>
+			<option value="2">审核未通过</option>
+			<option value="3">已下架</option>
+			<option value="4">已删除</option>
+		</select> <a class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
 	</div>
 	<div id="editAdd" class="easyui-dialog" title="添加博客"
 		data-options="iconCls:'icon-save',closed:true,modal:true"
 		style="width: 400px; height: 450px; padding: 10px">
-		<form action="${basePath }/StudentServlet" id="form1">
+		<form action="storeAddBlog.do" id="form1" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="op" id="op"> <input type="hidden"
-				id="Formfid" name="sid">
+				id="Formfid" name="bid">
 			<table>
 				<tr>
-					<td>商品号：</td>
-					<td width="250px"><input class="easyui-textbox" name="sname"
+					<td>博客标题：</td>
+					<td><input class="easyui-textbox" name="btitle" id="btitle"
 						style="width: 100%"></td>
 				</tr>
 				<tr>
-					<td>商品名：</td>
-					<td><input class="easyui-numberbox" name="age"
-						style="width: 100%"></td>
-				</tr>
-				<tr>
-					<td>原价：</td>
-					<td width="250px"><input class="easyui-textbox" name="address"
-						style="width: 100%" data-options="min:0,precision:2"></td>
-				</tr>
-				<tr>
-					<td>现价：</td>
-					<td><input class="easyui-numberbox" name="tel"
-						style="width: 100%" data-options="min:0,precision:2"></td>
-				</tr>
-				<tr>
-					<td>商品状态：</td>
-					<td width="250px"><input class="easyui-textbox" name="idcard"
-						style="width: 100%"></td>
-				</tr>
-				<tr id="creditTr">
-					<td>库存数：</td>
-					<td><input class="easyui-numberbox" name="credit"
-						style="width: 100%" data-options="min:0,precision:0"></td>
-				</tr>
-				<tr id="creditTr">
-					<td>类别：</td>
-					<td><input class="easyui-numberbox" name="credit"
-						style="width: 100%"></td>
-				</tr>
-				<tr id="creditTr">
-					<td>描述：</td>
-					<td><input class="easyui-numberbox" name="credit"
+					<td>博客描述：</td>
+					<td width="250px"><input class="easyui-textbox" name="bdesc" id="bdesc"
 						style="width: 100%"></td>
 				</tr>
 				<tr>
 					<td>点击图片<br>上传：
 					</td>
-					<td><input type="hidden" name="photo" id="photo"> <img
-						id="fimage" alt="请上传照片" width="200px" height="150px"
-						src="${basePath }/images/noimg.gif" onclick="file.click()"> <input
-						id="file" type="file" style="display: none" onchange="uploadImg()"></td>
+					<td><img id="bphoto" alt="请上传照片" width="200px"
+						height="150px" src="${basePath }/images/noimg.gif"
+						onclick="file.click()"> <input id="file" name="file"
+						type="file" style="display: none" onchange="showPic()"></td>
 				</tr>
+				<tr></tr>
 				<tr>
 					<td align="right" colspan="3"><a class="easyui-linkbutton"
 						data-options="iconCls:'icon-save'" style="width: 100px"

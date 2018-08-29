@@ -51,6 +51,8 @@ public class GoodsBizImpl implements GoodsBiz {
 				if(page!=0 && rows!=0) {
 					list = gm.findBySid(goods.getSid(),(page-1)*rows,rows);
 				}
+			} else if (goods.getGstatus() != null && goods.getSid()==null) {
+				list = gm.findByExamine(goods.getGstatus(),(page-1)*rows,rows);
 			}
 			return list;
 		} else {
@@ -65,6 +67,8 @@ public class GoodsBizImpl implements GoodsBiz {
 			
 		}else if(goods.getSid()!=null) {
 			count=gm.findBySidCount(goods.getSid());
+		}else if (goods.getGstatus() != null && goods.getSid()==null) {
+			count=gm.findByExamineTotal(goods.getGstatus());
 		}
 		return count;
 	}
@@ -90,6 +94,11 @@ public class GoodsBizImpl implements GoodsBiz {
 	@Override
 	public int updateGstatus(Goods goods) {
 		return gm.updateGoodGstatus(goods);
+	}
+
+	@Override
+	public Goods findByGid(int gid) {
+		return gm.selectByPrimaryKey(gid);
 	}
 
 	

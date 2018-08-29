@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.util.AccountValidatorUtil;
@@ -22,6 +21,39 @@ import com.bs.beststore.util.VerifyCodeUtil;
  */
 @Controller
 public class IndexAction {
+
+	// 超级管理员登录界面
+	@RequestMapping(path = "superLoginPage.todo")
+	public String superLoginPage() {
+		return "superback/backIndex";
+	}
+
+	// 超级管理员主界面
+	@RequestMapping(path = "superManagePage.todo")
+	public String superManagePage(HttpSession session) {
+		if(session.getAttribute("superHuman")==null) {
+			return "redirect:/superLoginPage.todo";
+		}
+		return "superback/superManage";
+	}
+
+	// 超级管理员管理所有店铺信息页面 
+	@RequestMapping(path = "manageStorePage.do")
+	public String manageStorePage() {
+		return "superback/manageStore";
+	}
+
+	// 超级管理员管理所有商品分类
+	@RequestMapping(path = "goodsTypeManagePage.do")
+	public String goodsTypeManagePage() {
+		return "superback/goodsTypeManage";
+	}
+
+	// 超级管理员审核商品
+	@RequestMapping(path = "goodsExaminePage.do")
+	public String goodsExaminePage() {
+		return "superback/goodsExamine";
+	}
 
 	@RequestMapping(path = { "/", "index" })
 	// 主页
@@ -81,12 +113,20 @@ public class IndexAction {
 		return "coupon";
 	}
 
+	//用户退出
 	@RequestMapping(value = "userLogout.do")
-	// 退出
 	public String userLogout(HttpSession session) {
 		session.removeAttribute("loginHuman");
 		return "login";
 	}
+
+	//超级管理员退出
+	@RequestMapping(value = "superLogout.do")
+	public String superLogout(HttpSession session) {
+		session.removeAttribute("superHuman");
+		return "redirect:/superLoginPage.todo";
+	}
+
 
 	@RequestMapping(path = "backStoreManagePage.todo")
 	public String backStoreManagePage(HttpSession session) {
@@ -118,16 +158,6 @@ public class IndexAction {
 	@RequestMapping(value = "blogManagePage.do")
 	public String blogManagePage() {
 		return "back/blogManage";
-	}
-
-	@RequestMapping("welcomePage.do")
-	// 个人主页
-	public String welcomePage(HttpSession session, Model model) {
-		if (session.getAttribute("loginHuman") == null) {
-			return "login";
-		}
-		model.addAttribute("status", 0);
-		return "welcome";
 	}
 
 	@RequestMapping("userModifyPwdPage.do")
