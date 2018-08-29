@@ -27,6 +27,13 @@ public interface HumanBiz {
 	Human login(Human human, int status)  throws BizException;
 	
 	/**
+	 * 超级管理员登录，由用户提供用户名(或手机号或邮箱)和密码进行登录验证
+	 * @param human 用户名、密码
+	 * @return	成功就返回登录者的具体信息，失败返回为空
+	 */
+	Human superLogin(Human human)  throws BizException;
+	
+	/**
 	 * 修改用户信息  用户提供用户id，可以修改除密码外的所有信息，包括用户名
 	 * @param human
 	 * @return	成功返回1，否则判定为失败

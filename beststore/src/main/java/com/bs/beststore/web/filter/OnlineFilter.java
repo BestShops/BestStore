@@ -17,11 +17,8 @@ import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Store;
 
 /**
- * 
  * 过滤未登录的页面
- * 
  * @author Administrator
- *
  */
 @WebFilter("*.do")
 public class OnlineFilter implements Filter {
@@ -41,8 +38,9 @@ public class OnlineFilter implements Filter {
 		// 从session里取的用户名信息
 		Human human = (Human) session.getAttribute("loginHuman");// 这里获取session，为了检查session里有没有保存用户信息，没有的话回转发到登陆页面
 		Store storeHuman = (Store) session.getAttribute("storeHuman");
+		Human superHuman = (Human) session.getAttribute("superHuman");
 		// 判断如果没有取到用户信息,就跳转到登陆页面
-		if (human == null && storeHuman == null) {
+		if (human == null && storeHuman == null && superHuman == null) {
 			// 跳转到登陆页面
 			dispatcher.forward(request, response);
 			System.out.println("用户没有登陆，不允许操作");

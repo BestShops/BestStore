@@ -1,8 +1,12 @@
 package com.bs.beststore.web.action;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -10,9 +14,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.BizException;
+import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.biz.StoreBiz;
 import com.bs.beststore.util.Result;
+import com.bs.beststore.vo.Goods;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Store;
 import com.google.gson.Gson;
@@ -100,8 +106,27 @@ public class StoreAction {
 	 * @param store	根据store.sstatus查询店铺
 	 */
 	@RequestMapping(value="storeFindAllStore.do")
-	public void findAllStore(Store store){
-		
+	public void findAllStore(Store store,PrintWriter out,HttpServletRequest request){
+		String page=request.getParameter("page");
+		String rows=request.getParameter("rows");
+		int intPage;
+		int intRows;
+		if(page==null) {
+			intPage=1;
+		}else {
+			intPage=Integer.valueOf(page);
+		}
+		if(rows==null){
+			intRows=1;
+		}else{
+			intRows=Integer.valueOf(rows);
+		}
+		List<Map<String,Object>> list=storeBiz.findAll(store,intPage,intRows);
+		long total=storeBiz.findAllTotal(store);
+		Map<String,Object> data=new HashMap<String,Object>();
+		data.put("rows", list);
+		data.put("total", total);
+		out.print(new Gson().toJson(data));
 	}
 	
 	/**
@@ -120,6 +145,37 @@ public class StoreAction {
 			data=new Gson().toJson(Result.getFailure(e.getMessage()));
 		}
 		out.print(data);
+	}
+	
+	/**
+	 * 下架、上架店铺
+	 */
+	@RequestMapping(value="operateStoreStatus.do")
+	public void operateStoreStatus(Store store,PrintWriter out) {
+		String data;
+		int result=storeBiz.updateStoreStatus(store);
+		if(result>0) {
+			data=new Gson().toJson(Result.getSuccess("操作成功!"));
+		}else {
+			data=new Gson().toJson(Result.getFailure("操作失败!"));
+		}
+		out.print(data);
+	}
+	
+	// 个人主页
+	@RequestMapping("welcomePage.do")
+	public String welcomePage(HttpSession session, Model model) {
+		Human loginHuman=(Human) session.getAttribute("loginHuman");
+		if(loginHuman==null) {
+			return "login";
+		}
+		Store store=storeBiz.findByHid(loginHuman.getHid());
+		if(store==null) {
+			model.addAttribute("status", 0);
+		}else {
+			model.addAttribute("status", 1);
+		}
+		return "welcome";
 	}
 	
 	

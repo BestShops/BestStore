@@ -86,7 +86,7 @@ public class HumanBizImpl implements HumanBiz {
 			if (h.getHlimit() >= status && h.getHlimit() < 2) {
 				return h;
 			} else {
-				throw new BizException("账号或密码错误，请验证后重新输入");
+				throw new BizException("账号没有访问权限");
 			}
 		} else {// 用户名或密码错误
 			throw new BizException("账号或密码错误，请验证后重新输入");
@@ -107,6 +107,7 @@ public class HumanBizImpl implements HumanBiz {
 		} else if (human.getHemail() == null || "".equals(human.getHemail())) {
 			throw new BizException("邮箱地址不能为空");
 		} else if (Pattern.matches(AccountValidatorUtil.REGEX_ID_CARD, human.getHidcard() + "")) {
+			System.out.println( human.getHidcard() + "");
 			throw new BizException("身份证号格式错误");
 		} else if (Pattern.matches(AccountValidatorUtil.REGEX_MOBILE, human.getHphone() + "")) {
 			throw new BizException("电话号码格式错误");
@@ -183,7 +184,7 @@ public class HumanBizImpl implements HumanBiz {
 	public Human findByHid(Human human) {
 		return humanMapper.selectByPrimaryKey(human.getHid());
 	}
-	
+
 	@Override
 	public boolean check(Human human) {
 		human= findByHid(human);
@@ -197,5 +198,65 @@ public class HumanBizImpl implements HumanBiz {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Human superLogin(Human human) throws BizException {
+		// 先判断用户名
+		HumanExample humanExample = new HumanExample();
+		Criteria criteria = humanExample.createCriteria();
+		criteria.andHnameEqualTo(human.getHname());
+		if (humanMapper.selectByExample(humanExample).size() == 0) {// 如果用户名不存在
+			// 如果用户名不存在就判断输入的是否是邮箱
+			String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
+			// 邮箱匹配成功，就获取到用户名
+			if (Pattern.matches(RULE_EMAIL, human.getHname())) {
+				HumanExample humanExample1 = new HumanExample();
+				Criteria criteria1 = humanExample1.createCriteria();
+				criteria1.andHemailEqualTo(human.getHname());
+				List<Human> list1 = humanMapper.selectByExample(humanExample1);
+				if (list1.size() == 1) {// 如果该号码存在
+					human.setHname(list1.get(0).getHname());// 获取该号码对应的用户名
+				} else {
+					// 邮箱匹配失败，则表示用户名输入错误
+					throw new BizException("邮箱输入错误<br>请验证后重新输入");
+				}
+			} else {
+				// 如果邮箱也不存在，就判断输入的是否是号码
+				String RULE_EMAIL1 = "^[1][3-9][0-9]{9}$";
+				if (Pattern.matches(RULE_EMAIL1, human.getHname())) {
+					HumanExample humanExample2 = new HumanExample();
+					Criteria criteria2 = humanExample2.createCriteria();
+					criteria2.andHphoneEqualTo(Long.parseLong(human.getHname()));
+					List<Human> list2 = humanMapper.selectByExample(humanExample2);
+					if (list2.size() == 1) {// 如果该邮箱存在
+						human.setHname(list2.get(0).getHname());// 获取该邮箱对应的用户名
+					} else {
+						// 如果邮箱、电话、用户名皆不存在，返回错误，提醒用户重新输入
+						throw new BizException("手机号码输入错误<br>请验证后重新输入");
+					}
+				} else {
+					// 电话匹配失败，则表示用户名输入错误
+					throw new BizException("用户名输入错误<br>请验证后重新输入");
+				}
+			}
+		}
+		// 如果输入的账号存在，则用户名已经获取到了，开始判断密码是否正确
+		HumanExample humanExample3 = new HumanExample();
+		Criteria criteria3 = humanExample3.createCriteria();
+		criteria3.andHnameEqualTo(human.getHname());
+		System.out.println(MD5Util.MD5("root123"));
+		criteria3.andHpwdEqualTo(MD5Util.MD5(human.getHname() + human.getHpwd()));// 密码是加密后存入数据库的，所以查询也要加密
+		List<Human> list3 = humanMapper.selectByExample(humanExample3);
+		if (list3.size() == 1) {// 用户名密码都正确，返回该用户的信息
+			Human h = list3.get(0);
+			if (h.getHlimit()==2) {
+				return h;
+			} else {
+				throw new BizException("账号没有访问权限");
+			}
+		} else {// 用户名或密码错误
+			throw new BizException("账号或密码错误，请验证后重新输入");
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.bs.beststore.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bs.beststore.vo.Type;
 
@@ -28,11 +29,6 @@ public interface TypeBiz {
 	int modifyType(Type type)  throws BizException;
 	
 	/**
-	 * 查看商品类别
-	 */
-	List<Type> findAllType();
-	
-	/**
 	 * 根据主键查找
 	 * @param tid
 	 * @return
@@ -40,16 +36,41 @@ public interface TypeBiz {
 	Type findByTid(int tid);
 	
 	/**
-	 * 查看所有父类
+	 * 查看所有类别
 	 * @return
 	 */
-	List<Type> selectParentInfo();
+	List<Map<String, Object>> findAllType();
 	
 	/**
 	 * 通过父类id找子类信息
 	 * @return
 	 */
-	List<Type> selectSonInfoByParent(Type type);
+	List<Map<String,Object>> selectSonInfoByParent(Type type);
+	
+	/**
+	 * 查找一级类型名
+	 * @return
+	 */
+	List<Type> selectFirstInfo();
+	
+	/**
+	 * 查找二级类型名
+	 * @return
+	 */
+	List<Map<String,Object>> selectSecondInfo(int tid);
+	
+	/**
+	 * 查找三级类型名
+	 * @return
+	 */
+	List<Map<String,Object>> selectThirdInfo(int tid);
+	
+	/**
+	 * 通过类别名查找id
+	 * @param tpriname
+	 * @return
+	 */
+	List<Type> findTidByTname(String name);
 	
 	
 }

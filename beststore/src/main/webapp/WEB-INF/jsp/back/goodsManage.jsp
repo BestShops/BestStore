@@ -14,12 +14,15 @@
 			value = '<img style="width:80px;height:40px" src="${basePath}/upload/'+value+'">';
 			return value;
 		}
+		return "";
 	}
 	//时间格式化
 	function dataFormat(value) {
 		if (value != null && value != "") {
 			var d = new Date(value);
-			value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-"+ (d.getDate()) + " " + (d.getHours()) + ":" + d.getMinutes()+ ":" + d.getSeconds();
+			value = d.getFullYear() + "-" + (d.getMonth() + 1) + "-"
+					+ (d.getDate()) + " " + (d.getHours()) + ":"
+					+ d.getMinutes() + ":" + d.getSeconds();
 			return value;
 		}
 		return "";
@@ -35,9 +38,9 @@
 		} else if (row.gstatus == "2") {
 			return "<span style='color:red'>审核未通过</span>";
 		} else if (row.gstatus == "3") {
-			return "已下架";
+			return "<span style='color:red'>已下架</span>";
 		} else if (row.gstatus == "4") {
-			return "已删除";
+			return "<span style='color:red'>已删除</span>";
 		}
 	}
 
@@ -68,7 +71,7 @@
 		if (flag) {
 			$.post("operateGoods.do", {
 				gid : row.gid,
-				gstatus:0
+				gstatus : 0
 			}, function(data) {
 				eval("var d=" + data);
 				if (d.code == "1") {
@@ -81,7 +84,7 @@
 			});
 		}
 	}
-	
+
 	//删除
 	function delGoods(index) {
 		flag = confirm("确定删除该商品吗?");
@@ -90,7 +93,7 @@
 		if (flag) {
 			$.post("operateGoods.do", {
 				gid : row.gid,
-				gstatus:4
+				gstatus : 4
 			}, function(data) {
 				eval("var d=" + data);
 				if (d.code == "1") {
@@ -112,7 +115,7 @@
 		if (flag) {
 			$.post("operateGoods.do", {
 				gid : row.gid,
-				gstatus:3
+				gstatus : 3
 			}, function(data) {
 				eval("var d=" + data);
 				if (d.code == "1") {
@@ -137,21 +140,24 @@
 			//表单加载数据
 			$("#form1").form('load', row);
 			gphotopic.src = "${basePath}/upload/" + row.gphotopic;
+			$('#tid1').combobox('select', row.name1);
+			$('#tid2').combobox('select', row.name2);
+			$('#tid3').combobox('select', row.name3);
 			Formfid.value = row.gid;
 			$("#saveButton").unbind("click").click(modSave);
 			op.value = "modify";
 		} else {
 			$("#saveButton").unbind("click").click(save);
 			op.value = "add";
-			$("#text_gstatus").hide();
 			$("#form1").form('load', {
 				gname : "",
 				glastprice : "",
 				gnowprice : "",
 				gnumber : "",
-				tid1: "",
+				tid1 : "",
 				gdesc : "",
-				tid2:""
+				tid2 : "",
+				tid3:""
 			});
 			gphotopic.src = "${basePath }/images/noimg.gif";
 			Formfid.value = "";
@@ -160,33 +166,34 @@
 
 	//修改保存
 	function modSave() {
-		if ($("#gname").val() == "" || $("#gname").val() == null) {
-			alert("商品名不能为空");
-			return;
-		} else if ($("#gnowprice").val() == "" || $("#gnowprice").val() == null) {
-			alert("商品现价不能为空");
-			return;
-		} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null) {
-			alert("商品库存数不能为空");
-			return;
-		} else if ($('.textbox-value').val() == "" || $('.textbox-value').val() == null) {
-			alert("商品类别不能为空");
-			return;
-		}
-		$("#form1").form("submit", {
-			success : function(data) {
-				//使用eval函数将json字符串转为对象d 
-				eval("var d=" + data);
-				if (d.code == "1") {
-					//成功
-					$("#editAdd").dialog('close');
-					$("#foodGrid").datagrid('reload');
-					alert(d.data);
-				} else {
-					alert(d.data);
+		flag = confirm("修改之后商品需要去推至审核哦,确定修改吗?");
+		if (flag) {
+			if ($("#gname").val() == "" || $("#gname").val() == null) {
+				alert("商品名不能为空");
+				return;
+			} else if ($("#gnowprice").val() == ""
+					|| $("#gnowprice").val() == null) {
+				alert("商品现价不能为空");
+				return;
+			} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null || $("#gnumber").val()<=0) {
+				alert("商品库存数不能为空");
+				return;
+			} 
+			$("#form1").form("submit", {
+				success : function(data) {
+					//使用eval函数将json字符串转为对象d 
+					eval("var d=" + data);
+					if (d.code == "1") {
+						//成功
+						$("#editAdd").dialog('close');
+						$("#foodGrid").datagrid('reload');
+						alert(d.data);
+					} else {
+						alert(d.data);
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	//添加保存按钮
@@ -197,13 +204,10 @@
 		} else if ($("#gnowprice").val() == "" || $("#gnowprice").val() == null) {
 			alert("商品现价不能为空");
 			return;
-		} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null) {
+		} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null || $("#gnumber").val()<=0) {
 			alert("商品库存数不能为空");
 			return;
-		} else if ($('.textbox-value').val() == "" || $('.textbox-value').val() == null) {
-			alert("商品类别不能为空");
-			return;
-		}
+		} 
 		//添加
 		$("#form1").form("submit", {
 			success : function(data) {
@@ -218,7 +222,7 @@
 					alert(d.data);
 				}
 			}
-		}); 
+		});
 	}
 
 	//图片预览
@@ -232,44 +236,68 @@
 	}
 	$(function() {
 		//商品类别
-		var tid1=$("#tid1").combobox({
-			url : "findParentInfo.do",
+		var tid1 = $("#tid1").combobox({
+			url : "findAllInfo.do",
 			editable : false, //不可编辑状态
 			cache : false,
 			panelHeignt : '150', //自动高度适合
 			valueField : 'tid',
 			textField : 'tpriname',
-			onSelect:function(record){
+			onSelect : function(record) {
 				tid2.combobox({
-					url : "findSonInfoByParent.do?tparentid="+record.tid,
+					url : "findAllInfo.do?tid1=" + record.tid,
 					editable : false, //不可编辑状态
 					cache : false,
 					panelHeignt : '150', //自动高度适合
-					valueField : 'tid',
-					textField : 'tpriname'
+					valueField : 'tid2',
+					textField : 'tname2'
+				}).combobox('clear');
+				tid3.combobox({
+					editable : false, //不可编辑状态
+					cache : false,
+					panelHeignt : '150', //自动高度适合
+					valueField : 'tid2',
+					textField : 'tname2'
 				}).combobox('clear');
 			}
 		});
 		$('#tid1').combobox('select', '1');
-		var tid2=$("#tid2").combobox({
-			url : "findSonInfoByParent.do?tparentid="+tid1.val(),
+		var tid2 = $("#tid2").combobox({
+			url : "findAllInfo.do?tid1=" + tid1.val(),
 			editable : false, //不可编辑状态
 			cache : false,
 			panelHeignt : '150', //自动高度适合
-			valueField : 'tid',
-			textField : 'tpriname'
+			valueField : 'tid2',
+			textField : 'tname2',
+			onSelect : function(record) {
+				tid3.combobox({
+					url : "findAllInfo.do?tid2=" + record.tid2,
+					editable : false, //不可编辑状态
+					cache : false,
+					panelHeignt : '150', //自动高度适合
+					valueField : 'tid3',
+					textField : 'tname3'
+				}).combobox('clear');
+			}
+		});
+		
+		var tid3 = $("#tid3").combobox({
+			url : "findAllInfo.do?tid2=" + tid2.val(),
+			editable : false, //不可编辑状态
+			cache : false,
+			panelHeignt : '150', //自动高度适合
+			valueField : 'tid3',
+			textField : 'tname3'
 		});
 		
 	});
-	
+
 	function doSearch() {
 		var gstatus = $('#cc').val();
-		//var url = encodeURI('goodsFindAll.do');
-		$('#foodGrid').datagrid('options').url = "goodsFindAll.do&gstatus="
+		$('#foodGrid').datagrid('options').url = "goodsFindAll.do?gstatus="
 				+ gstatus;
 		$("#foodGrid").datagrid('reload');
 	}
-	
 </script>
 <body>
 	<table class="easyui-datagrid" title="商品管理" id="foodGrid"
@@ -295,7 +323,7 @@
 				<th
 					data-options="field:'gstatus',width:80,align:'center',formatter:statusFmt">商品状态</th>
 				<th data-options="field:'gnumber',width:80,align:'center'">库存数</th>
-				<th data-options="field:'tpriname',width:120,align:'center'">类别</th>
+				<th data-options="field:'concatName',width:120,align:'center'">类别</th>
 				<th data-options="field:'grade',width:80,align:'center'">评分</th>
 				<th
 					data-options="field:'gpublish',width:100,align:'center',formatter:dataFormat">上架时间</th>
@@ -307,16 +335,15 @@
 	</table>
 	<div id="tb" style="padding: 5px; height: auto">
 		<a href="#" class="easyui-linkbutton" iconCls="icon-add" plain="true"
-			onclick="openEdit()">添加</a>&nbsp;&nbsp;&nbsp;  
-			<span>商品状态:</span>
-			<select id="cc" class="easyui-combobox" name="dept" style="width:200px;">
-			    <option value="0">审核中</option>
-			    <option value="1">上架中</option>
-			    <option value="2">审核未通过</option>
-			    <option value="3">已下架</option>
-			    <option value="4">已删除</option>
-			</select>
-			<a class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
+			onclick="openEdit()">添加</a>&nbsp;&nbsp;&nbsp; <span>商品状态:</span> <select
+			id="cc" class="easyui-combobox" name="dept" style="width: 200px;">
+			<option value="">全部</option>
+			<option value="0">审核中</option>
+			<option value="1">上架中</option>
+			<option value="2">审核未通过</option>
+			<option value="3">已下架</option>
+			<option value="4">已删除</option>
+		</select> <a class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
 	</div>
 
 	<div id="editAdd" class="easyui-dialog" title="编辑商品信息"
@@ -351,8 +378,9 @@
 				</tr>
 				<tr>
 					<td>类别：</td>
-					<td><select id="tid1" style="width: 115px;"></select>
-						<select id="tid2" name="tid" style="width: 115px;"></select></td>
+					<td><select id="tid1" style="width: 76px;"></select> <select
+						id="tid2" style="width: 76px;"></select>
+						<select id="tid3" name="tid1" style="width: 76px;"></select></td>
 				</tr>
 				<tr>
 					<td>描述：</td>

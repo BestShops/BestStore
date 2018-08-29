@@ -1,6 +1,7 @@
 package com.bs.beststore.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bs.beststore.vo.Store;
 
@@ -8,9 +9,17 @@ public interface StoreBiz {
 	
 	/**
 	 * 查看所有的店铺信息
+	 * 可以根据店铺状态查询
 	 * @return	返回一个Store类型的集合
 	 */
-	List<Store> findAll();
+	List<Map<String,Object>> findAll(Store store,int page,int rows);
+	
+	/**
+	 * 查询店铺个数
+	 * @param store	店铺状态
+	 * @return
+	 */
+	public long findAllTotal(Store store);
 	
 	/**
 	 * 根据商铺名查找
@@ -46,5 +55,12 @@ public interface StoreBiz {
 	 * @return
 	 */
 	Store findBySid(int sid);
+	
+	/**
+	 * 修改店铺状态
+	 * @param store
+	 * @return
+	 */
+	int updateStoreStatus(Store store);
 	
 }

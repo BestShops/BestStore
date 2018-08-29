@@ -51,5 +51,12 @@ public interface BlogBiz {
 	 * @return
 	 */
 	Blog findByBid(int bid);
+	
+	List<Blog> findAllBySid(Blog blog,int page,int rows);
+	
+	long findAllTotal(Blog blog);
+	
+	int updateBstatus(Blog blog);
+	
 
 }

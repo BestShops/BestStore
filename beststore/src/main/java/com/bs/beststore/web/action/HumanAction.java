@@ -20,6 +20,7 @@ import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
 import com.bs.beststore.util.MD5Util;
 import com.bs.beststore.vo.Human;
+import com.bs.beststore.vo.Store;
 
 @Controller
 public class HumanAction {
@@ -40,14 +41,14 @@ public class HumanAction {
 	public String humanInfo(@RequestParam("file") MultipartFile file,
 			Human human, Model model, HttpSession session) throws IOException {
 		if (!file.isEmpty()) {
-	        String fileName = file.getOriginalFilename();
+			String fileName = file.getOriginalFilename();
 			String diskPath = session.getServletContext().getRealPath("/upload");
-	        File f = new File(diskPath + File.separator + fileName);
-	        if(!f.exists()){  
-	            f.mkdirs();  
-	        } 
-	        file.transferTo(f);
-	        human.setHphoto(fileName);
+			File f = new File(diskPath + File.separator + fileName);
+			if(!f.exists()){  
+				f.mkdirs();  
+			} 
+			file.transferTo(f);
+			human.setHphoto(fileName);
 		}
 		Human h = (Human) session.getAttribute("loginHuman");
 		human.setHid(h.getHid());
@@ -62,8 +63,8 @@ public class HumanAction {
 			return "userInfo";
 		}
 	}
-	
-	
+
+
 	/**
 	 * 从页面获取到用户名、密码、验证码，验证三个信息的完整性（js或java均可） 先验证验证码是否正确，然后再开始验证用户名和密码是否正确
 	 * @param human   用户名和密码
@@ -81,6 +82,29 @@ public class HumanAction {
 			out.print("OK");
 		} catch (BizException e) {
 			out.print(e.getMessage());
+		}
+	}
+
+	/**
+	 * 后台管理员通过用户名/邮箱/手机号 和密码 登录
+	 * @param human
+	 * @param out
+	 * @param session	
+	 */
+	@RequestMapping(value = "superLogin.todo")
+	public void storeLogin(Human human, PrintWriter out, HttpSession session,String code) {
+		// 进行登录操作
+		Human superHuman = null;
+		if(code.equalsIgnoreCase((String) session.getAttribute("vscode"))) {
+			try {
+				superHuman = humanBiz.superLogin(human);
+				session.setAttribute("superHuman", superHuman);// 将登录成功的用户信息存入到session中
+				out.print("OK");
+			} catch (BizException e) {
+				out.print(e.getMessage());
+			}
+		}else {
+			out.print("验证码错误");
 		}
 	}
 
@@ -163,9 +187,9 @@ public class HumanAction {
 				for (Human hm : humanBiz.findByCondition(human)) {
 					// 将传进来的新密码设置到hm上，再进行更新
 					hm.setHpwd(human.getHpwd());
-					
+
 					System.out.println("-------------------------" + hm.getHpwd());
-					
+
 					if (humanBiz.forgetPwd(hm) == 1) {
 						out.print("OK");
 					} else {
@@ -175,7 +199,7 @@ public class HumanAction {
 			}
 		}
 	}
-	
+
 	@RequestMapping("changePwd.do")
 	// 修改密码
 	public void changePwd(Human human, PrintWriter out, HttpSession session) {
@@ -192,7 +216,7 @@ public class HumanAction {
 			out.print(e.getMessage());
 		}
 	}
-	
+
 	@RequestMapping("checkPwd.do")
 	// 检查原密码是否正确
 	public void checkPwd(Human human, PrintWriter out, HttpSession session) {

@@ -18,15 +18,15 @@ public class BlogBizImpl implements BlogBiz {
 
 	@Autowired
 	private BlogMapper blogMapper;
-	
+
 	@Override
 	public int addBlog(Blog blog) {
-		blog.setBstatus(0);
-		return blogMapper.insertSelective(blog);
+		return blogMapper.insertBlog(blog);
 	}
 
 	@Override
 	public int modifyBlog(Blog blog) {
+		blog.setBstatus(0);
 		return blogMapper.updateByPrimaryKeySelective(blog);
 	}
 
@@ -49,9 +49,9 @@ public class BlogBizImpl implements BlogBiz {
 			Date today = blog.getBtime();
 			// 实现天数+1
 			Calendar c = Calendar.getInstance();
-		    c.setTime(today);
-		    c.add(Calendar.DAY_OF_MONTH, 1);
-		    Date tomorrow = c.getTime();
+			c.setTime(today);
+			c.add(Calendar.DAY_OF_MONTH, 1);
+			Date tomorrow = c.getTime();
 			criteria.andBtimeBetween(today, tomorrow);
 		} else if (blog.getBstatus() != null) {// 添加博客状态的查询
 			criteria.andBstatusEqualTo(blog.getBstatus());
@@ -72,5 +72,34 @@ public class BlogBizImpl implements BlogBiz {
 	public Blog findByBid(int bid) {
 		return blogMapper.selectByPrimaryKey(bid);
 	}
-	
+
+	@Override
+	public List<Blog> findAllBySid(Blog blog,int page,int rows) {
+		List<Blog> list;
+		if(blog.getBstatus()!=null) {
+			list=blogMapper.selectBlogByBstatus(blog.getSid(), blog.getBstatus(), (page-1)*rows, rows);
+		}else {
+			list=blogMapper.selectAllBlog(blog.getSid(),(page-1)*rows,rows);
+		}
+		return list;
+	}
+
+	@Override
+	public long findAllTotal(Blog blog) {
+		long count=0;
+		if(blog.getBstatus()!=null && blog.getSid()!=null) {
+			count=blogMapper.selectByBstatusCount(blog.getSid(), blog.getBstatus());
+		}else if(blog.getSid()!=null) {
+			count=blogMapper.selectBlogCount(blog.getSid());
+		}
+		return count;
+	}
+
+	@Override
+	public int updateBstatus(Blog blog) {
+		return blogMapper.updateBstatus(blog);
+	}
+
+
+
 }
