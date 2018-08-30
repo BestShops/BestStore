@@ -10,13 +10,15 @@ import org.apache.ibatis.annotations.Select;
 
 public interface DiscussMapper {
 	
-	@Select("select *,tid form favorite a left join goods b on a.gid=b.gid " + 
-			"left join photo c on b.gid=c.gid left join type t on b.tidwhere a.hid=#{params};")
+	@Select("select *,f.tid from favorite a "
+				+ "left join goods b on a.gid=b.gid " 
+				+ "left join photo c on b.gid=c.gid "
+				+ "left join type t on b.tid where a.hid=#{params};")
 	List<Map<String, Object>> findByHid(@Param("params")int hid);
 	
-	@Select("select *,tid form discuss d "
+	@Select("select * from discuss d "
 			+ "left join goods g on d.gid=g.gid "
-			+ "left join human h on d.hid = h.hid"
+			+ "left join human h on d.hid = h.hid "
 			+ "where d.gid=#{gid};")
 	List<Map<String, Object>> findByGid(@Param("gid")int gid);
 	

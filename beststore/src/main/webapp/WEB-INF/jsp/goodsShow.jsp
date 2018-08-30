@@ -11,188 +11,184 @@
 	<%@ include file="header1_similar.jsp"%>
 	<div class="content inner">
 		<section class="item-show__div item-show__head clearfix">
-
-
-			<c:forEach items="${list}" var="v">
-				<div class="pull-left">
-					<ol class="breadcrumb">
-						<li><a href="index.html">首页</a></li>
-						<li><a href="item_sale_page.html">爆款推荐</a></li>
-						<li class="active">${v.GNAME }</li>
-					</ol>
-					<div class="item-pic__box" id="magnifier">
-						<div class="small-box">
-							<img class="cover" src="upload/${v.GPHOTOPIC }" alt="${v.GDESC }">
-							<span class="hover"></span>
+			<div class="pull-left">
+				<ol class="breadcrumb">
+					<li><a href="index.html">首页</a></li>
+					<li><a href="item_sale_page.html">${list.get(0).TPRINAME }</a></li>
+					<li class="active">${list.get(0).GNAME }</li>
+				</ol>
+				<div class="item-pic__box" id="magnifier">
+					<div class="small-box">
+						<img class="cover" src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
+						<span class="hover"></span>
+					</div>
+	
+					<div ><br><br>
+						<a>商品来源：<strong>${list.get(0).SNAME }</strong></a>
+					</div>
+					
+					<div class="big-box">
+						<img src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
+					</div>
+				</div>
+				<script src="js/jquery.magnifier.js"></script>
+				<script>
+				$(function () {
+					$('#magnifier').magnifier();
+				});
+			</script>
+	
+				<div class="item-info__box">
+					<div class="item-title">
+						<div class="name ep2">${list.get(0).GNAME }</div>
+						<div class="sale cr">优惠活动：该商品享受8折优惠</div>
+					</div>
+					<div class="item-price bgf5">
+						<div class="price-box clearfix">
+							<div class="price-panel pull-left">
+								售价：<span class="price">￥${list.get(0).GNOWPRICE }<s
+									class="fz16 c9">￥${list.get(0).GLASTPRICE }</s></span>
+							</div>
+							<div class="vip-price-panel pull-right">
+								会员等级价格 <i class="iconfont icon-down"></i>
+								<ul class="all-price__box">
+									<!-- 登陆后可见 -->
+									<li><span class="text-justify">普通：</span>40.00元</li>
+									<li><span class="text-justify">银牌：</span>38.00元</li>
+									<li><span class="text-justify">超级：</span>28.00元</li>
+									<li><span class="text-justify">V I P：</span>19.20元</li>
+								</ul>
+							</div>
+							<script>
+							// 会员价格折叠展开
+							$(function () {
+								$('.vip-price-panel').click(function() {
+									if ($(this).hasClass('active')) {
+										$('.all-price__box').stop().slideUp('normal',function() {
+											$('.vip-price-panel').removeClass('active').find('.iconfont').removeClass('icon-up').addClass('icon-down');
+										});
+									} else {
+										$(this).addClass('active').find('.iconfont').removeClass('icon-down').addClass('icon-up');
+										$('.all-price__box').stop().slideDown('normal');
+									}
+								});
+							});
+						</script>
 						</div>
-
-						<div ><br><br>
-							<a>商品来源：<strong>${v.SNAME }</strong></a>
-						</div>
-						
-						<div class="big-box">
-							<img src="upload/${v.GPHOTOPIC }" alt="${v.GDESC }">
+						<div class="c6">
+							普通会员限购 2 件，想要<u class="cr"><a href="">购买更多</a></u>？
 						</div>
 					</div>
-					<script src="js/jquery.magnifier.js"></script>
-					<script>
-					$(function () {
-						$('#magnifier').magnifier();
-					});
-				</script>
-
-					<div class="item-info__box">
-						<div class="item-title">
-							<div class="name ep2">${v.GNAME }</div>
-							<div class="sale cr">优惠活动：该商品享受8折优惠</div>
-						</div>
-						<div class="item-price bgf5">
-							<div class="price-box clearfix">
-								<div class="price-panel pull-left">
-									售价：<span class="price">￥${v.GNOWPRICE }<s
-										class="fz16 c9">￥${v.GLASTPRICE }</s></span>
-								</div>
-								<div class="vip-price-panel pull-right">
-									会员等级价格 <i class="iconfont icon-down"></i>
-									<ul class="all-price__box">
-										<!-- 登陆后可见 -->
-										<li><span class="text-justify">普通：</span>40.00元</li>
-										<li><span class="text-justify">银牌：</span>38.00元</li>
-										<li><span class="text-justify">超级：</span>28.00元</li>
-										<li><span class="text-justify">V I P：</span>19.20元</li>
+					<ul class="item-ind-panel clearfix">
+						<li class="item-ind-item"><span class="ind-label c9">累计销量</span>
+							<span class="ind-count cr">1688</span></li>
+						<li class="item-ind-item"><a href=""><span
+								class="ind-label c9">累计评论</span> <span class="ind-count cr">1314</span></a>
+						</li>
+						<li class="item-ind-item"><a href=""><span
+								class="ind-label c9">商品评分</span> <span class="ind-count cr">${list.get(0).GRADE }</span></a>
+						</li>
+					</ul>
+					<div class="item-key">
+						<div class="item-sku">
+							<dl class="item-prop clearfix">
+								<dt class="item-metatit">颜色：</dt>
+								<dd>
+									<ul data-property="颜色" class="clearfix">
+										<li><a class="on" href="javascript:;" role="button"
+											data-value="白色" aria-disabled="true"> <span>白色</span>
+										</a></li>
+										<li><a href="javascript:;" role="button" data-value="黑色"
+											aria-disabled="true"> <span>黑色</span>
+										</a></li>
+										<li><a href="javascript:;" role="button"
+											data-value="粉红色" aria-disabled="true"> <span>粉红色</span>
+										</a></li>
+										<li><a href="javascript:;" role="button" data-value="黄色"
+											aria-disabled="true"> <span>黄色</span>
+										</a></li>
 									</ul>
+								</dd>
+							</dl>
+							<dl class="item-prop clearfix">
+								<dt class="item-metatit">尺码：</dt>
+								<dd>
+									<ul data-property="尺码" class="clearfix">
+										<li><a href="javascript:;" role="button" data-value="S"
+											aria-disabled="true"> <span>S</span>
+										</a></li>
+										<li><a href="javascript:;" role="button" data-value="M"
+											aria-disabled="true"> <span>M</span>
+										</a></li>
+										<li><a href="javascript:;" role="button" data-value="L"
+											aria-disabled="true"> <span>L</span>
+										</a></li>
+										<li><a href="javascript:;" role="button" data-value="XL"
+											aria-disabled="true"> <span>XL</span>
+										</a></li>
+									</ul>
+								</dd>
+							</dl>
+						</div>
+						<div class="item-amount clearfix bgf5">
+							<div class="item-metatit">数量：</div>
+							<div class="amount-box">
+								<div class="amount-widget">
+									<input class="amount-input" value="1" maxlength="8"
+										title="请输入购买量" type="text">
+									<div class="amount-btn">
+										<a class="amount-but add"></a> <a class="amount-but sub"></a>
+									</div>
+								</div>
+								<div class="item-stock">
+									<span style="margin-left: 10px;">库存 <b id="Stock">1000</b>
+										件
+									</span>
 								</div>
 								<script>
-								// 会员价格折叠展开
 								$(function () {
-									$('.vip-price-panel').click(function() {
-										if ($(this).hasClass('active')) {
-											$('.all-price__box').stop().slideUp('normal',function() {
-												$('.vip-price-panel').removeClass('active').find('.iconfont').removeClass('icon-up').addClass('icon-down');
-											});
-										} else {
-											$(this).addClass('active').find('.iconfont').removeClass('icon-down').addClass('icon-up');
-											$('.all-price__box').stop().slideDown('normal');
+									$('.amount-input').onlyReg({reg: /[^0-9]/g});
+									var stock = parseInt($('#Stock').html());
+									$('.amount-widget').on('click','.amount-but',function() {
+										var num = parseInt($('.amount-input').val());
+										if (!num) num = 0;
+										if ($(this).hasClass('add')) {
+											if (num > stock - 1){
+												return DJMask.open({
+												　　width:"300px",
+												　　height:"100px",
+												　　content:"您输入的数量超过库存上限"
+											　　});
+											}
+											$('.amount-input').val(num + 1);
+										} else if ($(this).hasClass('sub')) {
+											if (num == 1){
+												return DJMask.open({
+												　　width:"300px",
+												　　height:"100px",
+												　　content:"您输入的数量有误"
+											　　});
+											}
+											$('.amount-input').val(num - 1);
 										}
 									});
 								});
 							</script>
 							</div>
-							<div class="c6">
-								普通会员限购 2 件，想要<u class="cr"><a href="">购买更多</a></u>？
-							</div>
 						</div>
-						<ul class="item-ind-panel clearfix">
-							<li class="item-ind-item"><span class="ind-label c9">累计销量</span>
-								<span class="ind-count cr">1688</span></li>
-							<li class="item-ind-item"><a href=""><span
-									class="ind-label c9">累计评论</span> <span class="ind-count cr">1314</span></a>
-							</li>
-							<li class="item-ind-item"><a href=""><span
-									class="ind-label c9">商品评分</span> <span class="ind-count cr">${v.GRADE }</span></a>
-							</li>
-						</ul>
-						<div class="item-key">
-							<div class="item-sku">
-								<dl class="item-prop clearfix">
-									<dt class="item-metatit">颜色：</dt>
-									<dd>
-										<ul data-property="颜色" class="clearfix">
-											<li><a class="on" href="javascript:;" role="button"
-												data-value="白色" aria-disabled="true"> <span>白色</span>
-											</a></li>
-											<li><a href="javascript:;" role="button" data-value="黑色"
-												aria-disabled="true"> <span>黑色</span>
-											</a></li>
-											<li><a href="javascript:;" role="button"
-												data-value="粉红色" aria-disabled="true"> <span>粉红色</span>
-											</a></li>
-											<li><a href="javascript:;" role="button" data-value="黄色"
-												aria-disabled="true"> <span>黄色</span>
-											</a></li>
-										</ul>
-									</dd>
-								</dl>
-								<dl class="item-prop clearfix">
-									<dt class="item-metatit">尺码：</dt>
-									<dd>
-										<ul data-property="尺码" class="clearfix">
-											<li><a href="javascript:;" role="button" data-value="S"
-												aria-disabled="true"> <span>S</span>
-											</a></li>
-											<li><a href="javascript:;" role="button" data-value="M"
-												aria-disabled="true"> <span>M</span>
-											</a></li>
-											<li><a href="javascript:;" role="button" data-value="L"
-												aria-disabled="true"> <span>L</span>
-											</a></li>
-											<li><a href="javascript:;" role="button" data-value="XL"
-												aria-disabled="true"> <span>XL</span>
-											</a></li>
-										</ul>
-									</dd>
-								</dl>
-							</div>
-							<div class="item-amount clearfix bgf5">
-								<div class="item-metatit">数量：</div>
-								<div class="amount-box">
-									<div class="amount-widget">
-										<input class="amount-input" value="1" maxlength="8"
-											title="请输入购买量" type="text">
-										<div class="amount-btn">
-											<a class="amount-but add"></a> <a class="amount-but sub"></a>
-										</div>
-									</div>
-									<div class="item-stock">
-										<span style="margin-left: 10px;">库存 <b id="Stock">1000</b>
-											件
-										</span>
-									</div>
-									<script>
-									$(function () {
-										$('.amount-input').onlyReg({reg: /[^0-9]/g});
-										var stock = parseInt($('#Stock').html());
-										$('.amount-widget').on('click','.amount-but',function() {
-											var num = parseInt($('.amount-input').val());
-											if (!num) num = 0;
-											if ($(this).hasClass('add')) {
-												if (num > stock - 1){
-													return DJMask.open({
-													　　width:"300px",
-													　　height:"100px",
-													　　content:"您输入的数量超过库存上限"
-												　　});
-												}
-												$('.amount-input').val(num + 1);
-											} else if ($(this).hasClass('sub')) {
-												if (num == 1){
-													return DJMask.open({
-													　　width:"300px",
-													　　height:"100px",
-													　　content:"您输入的数量有误"
-												　　});
-												}
-												$('.amount-input').val(num - 1);
-											}
-										});
-									});
-								</script>
-								</div>
-							</div>
-							<div class="item-action clearfix bgf5">
-								<a href="javascript:;" rel="nofollow" data-addfastbuy="true"
-									title="点击此按钮，到下一步确认购买信息。" role="button"
-									class="item-action__buy">立即购买</a> <a href="javascript:;"
-									rel="nofollow" data-addfastbuy="true" role="button"
-									class="item-action__basket"> <i
-									class="iconfont icon-shopcart"></i> 加入购物车
-								</a>
-							</div>
+						<div class="item-action clearfix bgf5">
+							<a href="javascript:;" rel="nofollow" data-addfastbuy="true"
+								title="点击此按钮，到下一步确认购买信息。" role="button"
+								class="item-action__buy">立即购买</a> <a href="javascript:;"
+								rel="nofollow" data-addfastbuy="true" role="button"
+								class="item-action__basket"> <i
+								class="iconfont icon-shopcart"></i> 加入购物车
+							</a>
 						</div>
 					</div>
-			</c:forEach>
+				</div>
 	</div>
-
+	
 
 
 
@@ -294,17 +290,23 @@
 							<div role="tabpanel" class="tab-pane fade in active" id="all"
 								aria-labelledby="all-tab">
 
-								
+								<c:forEach items="${discussList}" var="dl">
 								<div class="eval-box">
 									<div class="eval-author">
 										<div class="port">
-											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
-												class="cover b-r50">
+											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 										</div>
-										<div class="name">高***恒</div>
+										<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
+										<c:if test="${dl.DSTATUS == 1}">
+											<div class="name">${dl.HNAME}</div>
+										</c:if>
+										<c:if test="${dl.DSTATUS == 0}">
+											<div class="name">匿名</div>
+										</c:if>
 									</div>
 									<div class="eval-content">
-										<div class="eval-text">真是特别美_回头穿了晒图</div>
+										<!-- 评价描述 -->
+										<div class="eval-text">${dl.DEPICT }</div>
 										<div class="eval-imgs">
 											<div class="img-temp">
 												<img src="images/temp/S-001-1_s.jpg"
@@ -332,10 +334,11 @@
 													class="cover">
 											</div>
 										</div>
-										<div class="eval-time">2017年08月11日 20:31 颜色分类：深棕色 尺码：均码
+										<div class="eval-time">${dl.DTIME }
 										</div>
 									</div>
 								</div>
+								</c:forEach>
 
 
 								<!-- 分页 -->
@@ -350,17 +353,26 @@
 							<!-- 好评 -->
 							<div role="tabpanel" class="tab-pane fade" id="good"
 								aria-labelledby="good-tab">
-
+								
+								<c:forEach items="${discussList}" var="dl">
+								<!-- 判断好评 -->
+								<c:if test="${dl.DRANK == 0}">
 								<div class="eval-box">
 									<div class="eval-author">
 										<div class="port">
-											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
-												class="cover b-r50">
+											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 										</div>
-										<div class="name">高***恒</div>
+										<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
+										<c:if test="${dl.DSTATUS == 1}">
+											<div class="name">${dl.HNAME}</div>
+										</c:if>
+										<c:if test="${dl.DSTATUS == 0}">
+											<div class="name">匿名</div>
+										</c:if>
 									</div>
 									<div class="eval-content">
-										<div class="eval-text">真是特别美_回头穿了晒图</div>
+										<!-- 评价描述 -->
+										<div class="eval-text">${dl.DEPICT }</div>
 										<div class="eval-imgs">
 											<div class="img-temp">
 												<img src="images/temp/S-001-1_s.jpg"
@@ -388,10 +400,12 @@
 													class="cover">
 											</div>
 										</div>
-										<div class="eval-time">2017年08月11日 20:31 颜色分类：深棕色 尺码：均码
+										<div class="eval-time">${dl.DTIME }
 										</div>
 									</div>
 								</div>
+								</c:if>
+								</c:forEach>
 
 								<!-- 分页 -->
 								<div class="page text-center clearfix">
@@ -407,17 +421,25 @@
 							<div role="tabpanel" class="tab-pane fade" id="normal"
 								aria-labelledby="normal-tab">
 								
-								
+								<c:forEach items="${discussList}" var="dl">
+								<!-- 判断中评 -->
+								<c:if test="${dl.DRANK == 1}">
 								<div class="eval-box">
 									<div class="eval-author">
 										<div class="port">
-											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
-												class="cover b-r50">
+											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 										</div>
-										<div class="name">高***恒</div>
+										<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
+										<c:if test="${dl.DSTATUS == 1}">
+											<div class="name">${dl.HNAME}</div>
+										</c:if>
+										<c:if test="${dl.DSTATUS == 0}">
+											<div class="name">匿名</div>
+										</c:if>
 									</div>
 									<div class="eval-content">
-										<div class="eval-text">真是特别美_回头穿了晒图</div>
+										<!-- 评价描述 -->
+										<div class="eval-text">${dl.DEPICT }</div>
 										<div class="eval-imgs">
 											<div class="img-temp">
 												<img src="images/temp/S-001-1_s.jpg"
@@ -445,10 +467,12 @@
 													class="cover">
 											</div>
 										</div>
-										<div class="eval-time">2017年08月11日 20:31 颜色分类：深棕色 尺码：均码
+										<div class="eval-time">${dl.DTIME }
 										</div>
 									</div>
 								</div>
+								</c:if>
+								</c:forEach>
 
 								<!-- 分页 -->
 								<div class="page text-center clearfix">
@@ -463,16 +487,25 @@
 							<div role="tabpanel" class="tab-pane fade" id="bad"
 								aria-labelledby="bad-tab">
 
+								<c:forEach items="${discussList}" var="dl">
+								<!-- 判断差评 -->
+								<c:if test="${dl.DRANK == 2}">
 								<div class="eval-box">
 									<div class="eval-author">
 										<div class="port">
-											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
-												class="cover b-r50">
+											<img src="images/icons/default_avt.png" alt="欢迎来到U袋网" class="cover b-r50">
 										</div>
-										<div class="name">高***恒</div>
+										<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
+										<c:if test="${dl.DSTATUS == 1}">
+											<div class="name">${dl.HNAME}</div>
+										</c:if>
+										<c:if test="${dl.DSTATUS == 0}">
+											<div class="name">匿名</div>
+										</c:if>
 									</div>
 									<div class="eval-content">
-										<div class="eval-text">真是特别美_回头穿了晒图</div>
+										<!-- 评价描述 -->
+										<div class="eval-text">${dl.DEPICT }</div>
 										<div class="eval-imgs">
 											<div class="img-temp">
 												<img src="images/temp/S-001-1_s.jpg"
@@ -500,19 +533,27 @@
 													class="cover">
 											</div>
 										</div>
-										<div class="eval-time">2017年08月11日 20:31 颜色分类：深棕色 尺码：均码
+										<div class="eval-time">${dl.DTIME }
 										</div>
 									</div>
 								</div>
+								</c:if>
+								</c:forEach>
 
 								<!-- 分页 -->
-								<div class="page text-center clearfix"></div>
+								<!-- 分页 -->
+								<div class="page text-center clearfix">
+									<a class="disabled">上一页</a> <a class="select">1</a> <a href="">2</a>
+									<a href="">3</a> <a href="">4</a> <a href="">5</a> <a href="">6</a>
+									<a href="">7</a> <a href="">8</a> <a class="" href="">下一页</a> <a
+										class="disabled">1/60页</a>
+								</div>
+								
 							</div>
 						</div>
 						<script src="js/jquery.zoom.js"></script>
 					</div>
 				</div>
-				
 				
 				
 				<!-- 售后服务 -->
