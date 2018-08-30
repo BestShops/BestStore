@@ -43,5 +43,26 @@ public interface DiscussBiz {
 	 * @return
 	 */
 	Discuss findByDid(int did);
+
+	/**
+	 * 根据gid查找将要评论的商品的具体信息
+	 * @param gid
+	 * @return
+	 */
+	List<Map<String, Object>> findInfoByGid(int gid);
+	
+	/**
+	 * 根据gid查询商品的评价数
+	 * @param gid
+	 * @return
+	 */
+	int getCountByGid(int gid);
+	
+	/**
+	 * 好评率
+	 * @param gid
+	 * @return
+	 */
+	String getGoodByGid(int gid);
 	
 }

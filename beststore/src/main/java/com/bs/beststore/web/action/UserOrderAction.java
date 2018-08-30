@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bs.beststore.biz.BizException;
+import com.bs.beststore.biz.DiscussBiz;
 import com.bs.beststore.biz.OrdersBiz;
 import com.bs.beststore.biz.OrdersReturnBiz;
 import com.bs.beststore.biz.OrdersdetailBiz;
+import com.bs.beststore.vo.Discuss;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Orders;
 import com.bs.beststore.vo.Ordersreturn;
@@ -37,6 +39,9 @@ public class UserOrderAction {
 	
 	@Resource
 	private OrdersReturnBiz ordersReturnBiz;
+	
+	@Resource
+	private DiscussBiz discussBiz;
 	
 	// 添加一条退款记录
 	@RequestMapping("addOrdersReturn.do")
@@ -181,24 +186,54 @@ public class UserOrderAction {
 	
 	// 退货退款
 	@RequestMapping(path = "userOrderRefundPage.do")
-	public String userOrderRefundPage(int pageNo, Model model) {
-		int count = ordersReturnBiz.getCount();
+	public String userOrderRefundPage(int pageNo,int type, Model model, HttpSession session) {
+		Human human = (Human) session.getAttribute("loginHuman");
+		int count = ordersReturnBiz.getCount(human.getHid(), type);
+		
 		// 如果最大的页面数小于当前页面数
-		if (count < pageNo) {
+		if (count < pageNo && count > 0) {
 			pageNo --;
 		}
-		model.addAttribute("orderlist", ordersReturnBiz.findAll(pageNo));
+		
+		int[] counts = new int[2];
+		for (int i = 0; i < 2; i++) {
+			counts[i] = ordersReturnBiz.getCount(human.getHid(), i);
+			System.out.println(counts[i]);
+		}
+		model.addAttribute("counts", counts);
+		model.addAttribute("orderlist", ordersReturnBiz.findAll(pageNo, human.getHid(), type));
 		model.addAttribute("pageNo", pageNo);
+		model.addAttribute("type", type);
 		model.addAttribute("count", count);
 		return "userOrderRefund";
 	}
 	
-	@RequestMapping(path = "userOrderReturnPage.do")
-	public String userOrderReturnPage() {
-		return "userOrderReturn";
+	// 取消退款
+	@RequestMapping("delReturn.do")
+	public void delReturn(Ordersreturn ordersreturn, PrintWriter out) {
+		// 删除，修改退款进度为2，设为移除
+		ordersReturnBiz.delReturn(ordersreturn);
+		// 修改订单表付款状态为2待收货
+		Orders orders = new Orders();
+		orders.setOid(ordersreturn.getOid());
+		orders.setOstatus(2);
+		ordersBiz.updateOrders(orders);
+		out.print("取消退款成功，已经把该订单放回到您的订单中心");
 	}
 	
+	// 商品评价
+	@RequestMapping("userOrderEvaluate.do")
+	public String  userOrderEvaluate(int gid, Model model) {
+		model.addAttribute("Info", discussBiz.findInfoByGid(gid).get(0));
+		model.addAttribute("count", discussBiz.getCountByGid(gid));
+		model.addAttribute("goodNum", discussBiz.getGoodByGid(gid));
+		return "userOrderEvaluate";
+	}
 	
-	
+	// 添加商品评价
+	@RequestMapping("addDiscuss.do")
+	public void addDiscuss(Discuss discuss) {
+		
+	}
 	
 }
