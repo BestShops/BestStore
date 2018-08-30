@@ -34,10 +34,18 @@ public class OrdersReturnBizImpl implements OrdersReturnBiz {
 	}
 
 	@Override
-	public List<Map<String, Object>> findAll(int pageNo) {
+	public List<Map<String, Object>> findAll(int pageNo, int hid, int type) {
 		int pageSize = 5;// 每一页展示的订单条数
 		pageNo = (pageNo - 1) * pageSize;
-		List<Map<String, Object>>list = ordersReturnMapper.findAllOrdersReturn(pageNo, pageSize);
+		List<Map<String, Object>>list;
+		if (type > 1) {
+			list = ordersReturnMapper.findAllOrdersReturn(hid, pageNo, pageSize);
+		} else {
+			list = ordersReturnMapper.findAllOrdersReturnByType(hid, type, pageNo, pageSize);
+		}
+		
+		
+		// 对获取的数据的优化修改
 		for (Map<String, Object> m : list) {
 			int ortype = (int) m.get("ortype");
 			if (ortype == 0) {
@@ -55,10 +63,21 @@ public class OrdersReturnBizImpl implements OrdersReturnBiz {
 	}
 
 	@Override
-	public int getCount() {
-		return (int) ordersReturnMapper.countByExample(null);
+	public int getCount(int hid, int type) {
+		String count = "";
+		if (type > 1) {
+			count += ordersReturnMapper.getCountByHid(hid).get(0).get("count");
+		} else {
+			count += ordersReturnMapper.getCountByType(hid, type).get(0).get("count");
+		}
+		int num = Integer.parseInt(count);
+		return num%5==0 ? num/5 : num/5 + 1;
 	}
-	
-	
+
+	@Override
+	public void delReturn(Ordersreturn ordersreturn) {
+		ordersreturn.setOrtype(2);
+		ordersReturnMapper.updateByPrimaryKeySelective(ordersreturn);
+	}
 
 }

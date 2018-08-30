@@ -93,5 +93,4 @@
         <aop:pointcut id="txPc" expression="execution(* com.bs.beststore.biz.**.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPc"/>
     </aop:config>
-
 </beans>

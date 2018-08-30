@@ -47,15 +47,15 @@
 						<div class="tdf3">
 							<a href="item_show.html"><div class="img"><img src="upload/${od.gphotopic}" alt="" class="cover"></div>
 							<div class="ep2 c6">${od.sname} ${od.gname}</div></a>
-							<div class="attr ep">颜色分类：深棕色  尺码：均码</div>
 						</div>
-						<div class="tdf3">${od.gdesc}</div>
+						<div class="tdf2">${od.gdesc}</div>
 						<div class="tdf1">${od.num}</div>
 						<div class="tdf1">¥${od.gnowprice}</div>
 						<div class="tdf1">¥${od.num*od.gnowprice}</div>
-						<div class="tdf1">
-							<div class="ep2">快递<br>¥0.00</div>
-						</div>
+						<div class="tdf1"><div class="ep2">快递<br>¥0.00</div></div>
+						<c:if test="${info.OSTATUS==3 || info.OSTATUS==4}">
+						<div class="tdf1"><a href="userOrderEvaluate.do?gid=${od.gid}">评价</a></div>
+						</c:if>
 					</div>
 					</c:forEach>
 				</div>
