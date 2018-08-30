@@ -10,12 +10,9 @@
 			<div class="pull-right">
 				<div class="user-content__box clearfix bgf">
 					<div class="title">我的店铺-店铺管理</div>
-					<form action="" role="form">
-						<div style="width:700px">我们将发送链接到您的邮箱，请通过邮箱去打开链接管理店铺哦</div>                    
-	                        <span>邮箱：</span>    
-	                        <input disabled="disabled" value="15824450934@qq.com" style="width:200px;height:27px;">
-                   	 		<input type="submit" value="发送">
-					</form>
+					<br>
+					<a href="backPage.todo">店铺后台管理，点击此处>>></a>
+					<br>
 				</div>
 			</div>
 		</section>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bs.beststore.biz.DiscussBiz;
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.Result;
@@ -31,7 +32,9 @@ public class GoodsAction {
 	@Resource
 	private GoodsBiz goodsBiz;
 	@Resource
-	TypeBiz typeBiz;
+	private TypeBiz typeBiz;
+	@Resource
+	private DiscussBiz discussBiz;
 
 	@RequestMapping(path = "goodsQueryPage.do")
 	public String goodsQueryPage() {
@@ -40,8 +43,19 @@ public class GoodsAction {
 
 	@RequestMapping(path = "goodsShowPage.do")
 	public String goodsShowPage(Goods goods, Model model) {
+		// 查询商品详情 根据gid查询
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
+		
+		// 查询商品的相关评价
+		List<Map<String, Object>> discussList = discussBiz.findAll(goods.getGid());
+		
+		// 查询相关产品，实现相关推荐 根据tid查询
+		goods.setGid(null);
+		goods.setTid((Integer) list.get(0).get("TID"));
+		List<Map<String, Object>> linkList = goodsBiz.findAll(goods, 0, 0);
 		model.addAttribute("list", list);
+		model.addAttribute("discussList", discussList);
+		model.addAttribute("linkList", linkList);
 		return "goodsShow";
 	}
 

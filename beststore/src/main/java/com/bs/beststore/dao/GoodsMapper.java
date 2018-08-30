@@ -21,13 +21,17 @@ public interface GoodsMapper {
 	int updateGoodGstatus(Goods record);
 
 	// 商品id
-	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g" 
+	@Select("select * from goods g " 
 			+ " left join type t on g.tid=t.tid "
-			+ "where g.gid=#{gid};")
+			+ " left join store s on g.sid=s.sid "
+			+ " left join discuss d on g.gid=d.gid "
+			+ " where g.gid=#{gid}")
 	List<Map<String, Object>> findByGid(@Param("gid") int gid);
 
 	// 商品类型id
-	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g"+ " left join type t on g.tid=t.tid " + "where t.tid=#{tid};")
+	@Select("select g.*,t.TPARENTID,t.TPRINAME from goods g"
+			+ " left join type t on g.tid=t.tid " 
+			+ "where t.tid=#{tid};")
 	List<Map<String, Object>> findByTid(@Param("tid") int tid);
 
 	// 店铺id

@@ -71,7 +71,11 @@
 				<dl class="user-center__nav">
 					<dt>我的店铺</dt>
 					<a href="openStorePage.do"><dd>开店流程</dd></a>
-					<a href="storeManagePage.do"><dd>店铺管理</dd></a>
+					
+					<c:if test="${sessionScope.loginHuman.hlimit==1}">
+						<a href="storeManagePage.do"><dd>店铺管理</dd></a>
+					</c:if>
+					
 				</dl>
 				<dl class="user-center__nav">
 					<dt>服务中心</dt>
