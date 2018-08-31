@@ -26,7 +26,9 @@ public interface FavoriteBiz {
 	 * @param hid
 	 * @return
 	 */
-	List<Map<String, Object>> findAllFavorite(int hid);
+	List<Map<String, Object>> findAllFavorite(int hid,int page,int rows);
+	
+	long findAllTotal(int hid);
 	
 	/**
 	 * 根据主键查找

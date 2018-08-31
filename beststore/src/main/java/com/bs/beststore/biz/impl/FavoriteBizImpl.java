@@ -31,13 +31,20 @@ public class FavoriteBizImpl implements FavoriteBiz {
 	}
 
 	@Override
-	public List<Map<String, Object>> findAllFavorite(int hid) {
-		return favoriteMapper.findByHid(hid);
+	public List<Map<String, Object>> findAllFavorite(int hid,int page,int rows) {
+		return favoriteMapper.findByHid(hid,(page-1)*rows,rows);
+	}
+	
+	@Override
+	public long findAllTotal(int hid) {
+		return favoriteMapper.selectAllTotal(hid);
 	}
 
 	@Override
 	public Favorite findByFid(int fid) {
 		return favoriteMapper.selectByPrimaryKey(fid);
 	}
+
+	
 
 }

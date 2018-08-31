@@ -35,7 +35,7 @@
 				</c:if>
 				<c:if test="${sessionScope.loginHuman!=null }">
 					<a>您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
-					<a href="userLogout.todo" style="color:blue">退出</a>
+					<a href="userLogout.do" style="color:blue">退出</a>
 				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
 				<a href="userOrderPage.do">我的订单</a>
@@ -81,7 +81,7 @@
 				<div class="cat-list__box">
 					<div class="cat-box">
 						<div class="title">
-							<i class="iconfont icon-skirt ce"></i> 女装
+							<i class="iconfont icon-skirt ce"></i> ${FirstList.get(0).tpriname }
 						</div>
 						<ul class="cat-list clearfix">
 							<li>下装</li>

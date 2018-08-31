@@ -73,4 +73,7 @@ public interface TypeBiz {
 	List<Type> findTidByTname(String name);
 	
 	
+	List<Map<String,Object>> findTypeToIndex(int tid);
+	
+	
 }

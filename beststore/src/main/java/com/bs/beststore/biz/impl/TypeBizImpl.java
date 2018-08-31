@@ -112,8 +112,7 @@ public class TypeBizImpl implements TypeBiz {
 
 	@Override
 	public List<Map<String,Object>> selectSecondInfo(int tid) {
-		List<Map<String,Object>> list=typeMapper.selectSecondType(tid);
-		return list;
+		return typeMapper.selectSecondType(tid);
 	}
 
 	@Override
@@ -127,6 +126,11 @@ public class TypeBizImpl implements TypeBiz {
 		Criteria typeCriteria=typeExample.createCriteria();
 		typeCriteria.andTprinameEqualTo(tpriname);
 		return typeMapper.selectByExample(typeExample);
+	}
+
+	@Override
+	public List<Map<String, Object>> findTypeToIndex(int tid) {
+		return typeMapper.selectTypeToIndex(tid);
 	}
 	
 }
