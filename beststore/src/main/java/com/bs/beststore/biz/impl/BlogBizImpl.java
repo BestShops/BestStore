@@ -102,6 +102,12 @@ public class BlogBizImpl implements BlogBiz {
 	}
 
 	@Override
+	public int getCount(int hid) {
+		String count = blogMapper.getCount(hid).get(0).get("count") + "";
+		return Integer.parseInt(count);
+	}
+
+	@Override
 	public List<Map<String, Object>> selectExamineBlog(Blog blog, int page, int rows) {
 		return blogMapper.selectExamineBlog(blog.getBstatus(), (page-1)*rows, rows);
 	}

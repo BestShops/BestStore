@@ -101,5 +101,10 @@ public class GoodsBizImpl implements GoodsBiz {
 		return gm.selectByPrimaryKey(gid);
 	}
 
+	@Override
+	public List<Goods> findGoodsOrderByNum() {
+		return gm.findByNum();
+	}
+
 	
 }

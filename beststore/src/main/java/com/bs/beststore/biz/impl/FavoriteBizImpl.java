@@ -45,6 +45,10 @@ public class FavoriteBizImpl implements FavoriteBiz {
 		return favoriteMapper.selectByPrimaryKey(fid);
 	}
 
-	
+	@Override
+	public int getCount(int hid) {
+		String count = favoriteMapper.getCount(hid).get(0).get("count") + "";
+		return Integer.parseInt(count);
+	}
 
 }

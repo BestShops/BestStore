@@ -65,7 +65,7 @@
 							<a href="javascript:;" class="upload">修改头像
 							    <input class="change" type="file" multiple="multiple" name="file" id="file"/>
 							</a><br><br></div>
-							用户名：<input name="hname" value="${loginHuman.hname}" placeholder="请输入您的昵称"><br><br>
+							用户名：<input name="hname" readonly="readonly" value="${loginHuman.hname}" placeholder="请输入您的昵称"><br><br>
 							性别：   <input type="radio" name="sex" value="1" checked>男&nbsp;&nbsp;
 							<input type="radio" name="sex" value="2">女<span>（默认为男性）</span><br><br>
 							身高(cm)：<input name="height" type="number" min="140" max="220" style="height:23px;width:165px;" value="${loginHuman.height}"><br><br>

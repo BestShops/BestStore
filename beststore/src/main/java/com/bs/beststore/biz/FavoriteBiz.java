@@ -37,4 +37,11 @@ public interface FavoriteBiz {
 	 */
 	Favorite findByFid(int fid);
 	
+	/**
+	 * 根据用户id查询收藏夹的数量
+	 * @param hid
+	 * @return
+	 */
+	int getCount(int hid);
+	
 }

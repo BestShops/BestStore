@@ -37,7 +37,7 @@
 					<a>您好,<span class="cr">${sessionScope.loginHuman.hname }</span></a>
 					<a href="userLogout.do" style="color:blue">退出</a>
 				</c:if>
-				<a href="welcomePage.do">我的U袋</a>
+				<a href="welcomePage.do?type=10">我的U袋</a>
 				<a href="userOrderPage.do">我的订单</a>
 			</div>
 		</div>

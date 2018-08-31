@@ -19,7 +19,6 @@ public class DiscussBizImpl implements DiscussBiz {
 
 	@Override
 	public int addDiscuss(Discuss discuss) {
-		discuss.setDstatus(1);
 		return discussMapper.insertSelective(discuss);
 	}
 

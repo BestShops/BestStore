@@ -3,6 +3,8 @@ package com.bs.beststore.web.action;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.annotation.Resource;
@@ -38,9 +40,12 @@ public class HumanAction {
 	 */
 	@RequestMapping("humanInfo.do")
 	public String humanInfo(@RequestParam("file") MultipartFile file,
-			Human human, Model model, HttpSession session) throws IOException {
+			Human human, String time, Model model, HttpSession session) throws IOException {
 		if (!file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
+			if (fileName.length() > 32) {
+				fileName = fileName.substring(fileName.length() - 32, fileName.length());
+			}
 			String diskPath = session.getServletContext().getRealPath("/upload");
 			File f = new File(diskPath + File.separator + fileName);
 			if(!f.exists()){  
@@ -48,6 +53,13 @@ public class HumanAction {
 			} 
 			file.transferTo(f);
 			human.setHphoto(fileName);
+		}
+		// 设置生日时间
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			human.setHbirth(format.parse(time));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
 		}
 		Human h = (Human) session.getAttribute("loginHuman");
 		human.setHid(h.getHid());

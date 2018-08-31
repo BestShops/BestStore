@@ -13,6 +13,11 @@ import org.apache.ibatis.annotations.Update;
 
 public interface BlogMapper {
 	
+	@Select("select count(*) count from blog\r\n" + 
+			"left join store on blog.sid=store.sid\r\n" + 
+			"where store.hid=#{hid}")
+	List<Map<String, Object>> getCount(@Param("hid") int hid);
+	
 	@Select("select * from blog where sid=#{sid} limit #{page},#{rows}")
 	List<Blog> selectAllBlog(@Param("sid")int sid,@Param("page")int page,@Param("rows")int rows);
 	
