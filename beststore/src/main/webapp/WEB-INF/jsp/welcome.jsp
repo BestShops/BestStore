@@ -176,112 +176,14 @@
 					</div>
 					<div class="swiper-container recommends-swiper">
 						<div class="swiper-wrapper">
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
+							<c:forEach items="${goodsList}" var="g" varStatus="num">
+								<c:if test="${num.index%5==1}"><div class="swiper-slide"></c:if>
+								<a class="picked-item" href="goodsShowPage.do?gid=${g.gid}">
+									<img src="upload/${g.gphotopic}" alt="" class="cover">
+									<div class="look_price">¥${g.gnowprice}</div>
 								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-1_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-2_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
-							<div class="swiper-slide">
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-3_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-4_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-								<a class="picked-item" href="">
-									<img src="images/temp/S-001-5_s.jpg" alt="" class="cover">
-									<div class="look_price">¥134.99</div>
-								</a>
-							</div>
+								<c:if test="${num.index%5==5}"></div></c:if>
+							</c:forEach>
 						</div>
 					</div>
 					<script>

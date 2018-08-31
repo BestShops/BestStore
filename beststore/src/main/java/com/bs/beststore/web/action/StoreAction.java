@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bs.beststore.biz.BizException;
 import com.bs.beststore.biz.BlogBiz;
 import com.bs.beststore.biz.FavoriteBiz;
+import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.biz.OrdersBiz;
 import com.bs.beststore.biz.StoreBiz;
@@ -42,6 +43,9 @@ public class StoreAction {
 	@Resource
 	private BlogBiz blogBiz;
 	
+	@Resource
+	private GoodsBiz goodsBiz;
+	
 	// 开店用户的信息判断
 	@RequestMapping(value="openStoreStep1Page.do")
 	public String openStoreStep1Page(HttpSession session, Model model){
@@ -51,7 +55,7 @@ public class StoreAction {
 			if (storeBiz.findByHid(human.getHid()) == null) {
 				return "openStoreStep1"; 
 			} else {
-				model.addAttribute("error", "您已经创建过店铺了，可以在<Strong>我的U袋</Strong>中进入店铺管理");
+				model.addAttribute("error", "您已经创建过店铺了，可以在<a href='welcomePage.do'><Strong>我的U袋</Strong></a>中进入店铺管理");
 				return "openStore";
 			}
 		} else {
@@ -191,11 +195,11 @@ public class StoreAction {
 		}
 		Store store=storeBiz.findByHid(loginHuman.getHid());
 		model.addAttribute("favorites", favoriteBiz.getCount(loginHuman.getHid()));// 收藏夹数量
-		model.addAttribute("blogs", blogBiz.getCount(loginHuman.getHid()));
-		System.out.println(blogBiz.getCount(loginHuman.getHid()));
+		model.addAttribute("blogs", blogBiz.getCount(loginHuman.getHid()));// 发表的博客数量
 		model.addAttribute("counts", counts);// 各类订单数
 		model.addAttribute("orderlist", ordersBiz.findOrderByHid(loginHuman.getHid(), 1, type));
-		model.addAttribute("type", type);
+		model.addAttribute("type", type);// 订单的类别
+		model.addAttribute("goodsList", goodsBiz.findGoodsOrderByNum());//热销商品的信息
 		if(store==null) {
 			model.addAttribute("status", 0);
 		}else {

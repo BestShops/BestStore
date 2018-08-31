@@ -53,6 +53,17 @@ public interface GoodsBiz {
 	 */
 	int updateGstatus(Goods goods);
 	
+	/**
+	 * 查出销量前20的商品信息
+	 * @return
+	 */
+	List<Goods> findGoodsOrderByNum();
+	
+	/**
+	 * 根据gid查找商品的具体信息
+	 * @param gid
+	 * @return
+	 */
 	Goods findByGid(int gid);
 	
 }
