@@ -22,7 +22,7 @@ public interface DiscussMapper {
 			+ "where d.gid=#{gid};")
 	List<Map<String, Object>> findByGid(@Param("gid")int gid);
 	
-	@Select("select a.gphotopic,b.sname,a.gname,a.glastprice,a.gnowprice,a.gdesc,sum(c.num) num from goods a\r\n" + 
+	@Select("select a.*,b.sname,sum(c.num) num from goods a\r\n" + 
 			"left join store b on a.sid=b.sid\r\n" + 
 			"right join ordersdetail c on c.gid=a.gid\r\n" + 
 			"where a.gid=#{gid} group by a.gid")

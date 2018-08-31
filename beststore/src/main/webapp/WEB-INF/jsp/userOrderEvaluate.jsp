@@ -12,23 +12,23 @@
 					<div class="title">订单中心-商品评价</div>
 					<div class="evaluate_box">
 						<div class="evaluate_info posr clearfix">
-							<div class="img"><img src="upload/${Info.gphotopic}" alt="" class="cover"></div>
-							<div class="name ep2">${Info.sname} &nbsp;${Info.gname}</div>
+							<div class="img"><img src="upload/${Info.GPHOTOPIC}" alt="" class="cover"></div>
+							<div class="name ep2">${Info.sname} &nbsp;${Info.GNAME}</div>
 							<div class="param">
-								<div class="param-row"><span class="param-label">原价</span><span class="c6 fz20">${Info.glastprice}元</span></div>
-								<div class="param-row"><span class="param-label">现价</span><b class="cr fz24">${Info.gnowprice}</b><span class="cr">元</span></div>
+								<div class="param-row"><span class="param-label">原价</span><span class="c6 fz20">${Info.GLASTPRICE}元</span></div>
+								<div class="param-row"><span class="param-label">现价</span><b class="cr fz24">${Info.GNOWPRICE}</b><span class="cr">元</span></div>
 								<div class="param-row"><span class="param-label">销量</span><span class="c6 fz20">${Info.num}</span></div>
 								<div class="param-row"><span class="param-label">评价</span><span class="c6 fz20">${count}</span></div>
 								<div class="param-row"><span class="param-label">好评率</span><span class="c6 fz20">${goodNum}</span></div>
 							</div>
 							<div class="info c6">
-								${Info.gdesc}
+								${Info.GDESC}
 							</div>
 						</div>
 					</div>
 					<p class="fz18 cr">商品评价</p>
 					<div class="modify_div">
-						<form action="" class="evaluate-form__box">
+						<form action="" class="evaluate-form__box" onsubmit="return false;">
 							<span class="help-block">快评论一番，让其他买家开开眼</span>
 							<table class="table table-bordered">
 								<tr>
@@ -57,16 +57,8 @@
 								<button type="submit" class="but pull-right" id="submit">提交评价</button>
 							</div>
 							<script>
-								$("#submit").click(function(){
-									var drank = $("input[name='opinion']:checked").val();
-									var depict = $("#depict").text();
-									
-									$.post("addDiscuss.do",{
-										
-									},function(data){
-										
-									});
-								});
+								// 表单对象
+								var formData = new FormData();
 								
 								$(document).ready(function(){
 									var tmpl = '<li class="uploader__file"><input name="i[]" accept="image/*" type="file"><i>&times;</i></li>',
@@ -87,6 +79,8 @@
 											var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files, that = this;
 											for (var i = 0, len = files.length; i < len; ++i) {
 												var file = files[i];
+												console.log(file);
+												formData.append('file', file);
 												if (url) {
 													src = url.createObjectURL(file);
 												} else {
@@ -97,6 +91,35 @@
 										});
 										$input.find('input').click();
 									})
+								});
+								
+								$("#submit").click(function(){
+									var dstatus = 1;
+									if ($("#status").is(':checked') ) {
+										dstatus = 2;
+									}
+									var gid = '${Info.GID}';
+									var drank = $("input[name='opinion']:checked").val();
+									var depict = $("#depict").val();
+									if (depict.length > 80) {
+										alert("评价描述的长度适合在15~80字之间，请不要超出范围");
+									}
+									formData.append('gid',gid);
+									formData.append('drank',drank);
+									formData.append('depict',depict);
+									formData.append('dstatus',dstatus);
+									console.log(formData.getAll("file"));
+									var xhr = new XMLHttpRequest();
+									xhr.open("POST","addDiscuss.do", true);
+									xhr.send(formData);
+									xhr.onload = function(data) {
+										if (data == "OK") {
+											alert("提交成功");
+											// 返回到订单详情
+											window.location.href="userOrderDetailPage.do?oid=${Info.OID}";
+										}
+										alert(data);
+									}
 								});
 							</script>
 						</form>

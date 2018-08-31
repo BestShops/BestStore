@@ -49,11 +49,12 @@ public class UserOrderAction {
 			HttpSession session, Ordersreturn ordersreturn) throws IOException {
 		// 上传图片
 		if (!file.isEmpty()) {
-			// 图片路径长度过长就处理成32位的
+			// 图片路径长度过长就处理
 	        String fileName = file.getOriginalFilename();
-	        if (fileName.length()>32) {
-	        	fileName = fileName.substring(fileName.length()-32, fileName.length());
+	        if (fileName.length()>15) {
+	        	fileName = fileName.substring(fileName.length()-15, fileName.length());
 	        }
+	        fileName = (new Date()).getTime() + fileName;// 加上随机数，避免覆盖
 			String diskPath = session.getServletContext().getRealPath("/upload");
 	        File f = new File(diskPath + File.separator + fileName);
 	        if(!f.exists()){  
@@ -223,17 +224,47 @@ public class UserOrderAction {
 	
 	// 商品评价
 	@RequestMapping("userOrderEvaluate.do")
-	public String  userOrderEvaluate(int gid, Model model) {
-		model.addAttribute("Info", discussBiz.findInfoByGid(gid).get(0));
-		model.addAttribute("count", discussBiz.getCountByGid(gid));
-		model.addAttribute("goodNum", discussBiz.getGoodByGid(gid));
+	public String  userOrderEvaluate(int gid, int oid, int odid, Model model) {
+		model.addAttribute("Info", discussBiz.findInfoByGid(gid).get(0));// 商品信息
+		model.addAttribute("count", discussBiz.getCountByGid(gid));// 商品销量
+		model.addAttribute("goodNum", discussBiz.getGoodByGid(gid));// 商品好评率
+		model.addAttribute("oid", oid);// 商品当前的订单id，用于添加商品评价时
 		return "userOrderEvaluate";
 	}
 	
 	// 添加商品评价
 	@RequestMapping("addDiscuss.do")
-	public void addDiscuss(Discuss discuss) {
-		
+	public void addDiscuss(@RequestParam("file") MultipartFile[] fileArray, 
+			Discuss discuss, PrintWriter out, HttpSession session) throws IllegalStateException, IOException {
+		String files = "";
+		for(int i=0;i<fileArray.length;i++) {
+			MultipartFile file = fileArray[i];
+			if (!file.isEmpty()) {
+				// 图片路径长度过长就处理
+		        String fileName = file.getOriginalFilename();
+		        if (fileName.length()>6) {
+		        	fileName = fileName.substring(fileName.length()-6, fileName.length());
+		        }
+		        fileName = (new Date()).getTime() + fileName;// 加上随机数，避免覆盖
+				String diskPath = session.getServletContext().getRealPath("/upload");
+		        File f = new File(diskPath + File.separator + fileName);
+		        if(!f.exists()){  
+		            f.mkdirs();  
+		        } 
+		        file.transferTo(f);
+		        files +=  "," + fileName;
+			}
+		}
+		Human human = (Human) session.getAttribute("loginHuman");
+		discuss.setHid(human.getHid());
+		discuss.setDphoto(files);
+		int result = discussBiz.addDiscuss(discuss);
+		if (result == 1) {
+			// TODO：在添加成功后，修改订单详情表的状态，同时判断当前订单下是否所有的商品都已经评价完成，完成后就修改订单状态为评价完成
+			out.print("OK");
+		} else {
+			out.print("图片上传失败，请稍后重试");
+		}
 	}
 	
 }

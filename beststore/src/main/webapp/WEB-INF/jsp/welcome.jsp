@@ -56,7 +56,7 @@
 				<div class="order-list__div bgf">
 					<div class="user-title">
 						我的订单<span class="c6">（显示最新三条）</span>
-						<a href="" class="pull-right">查看所有订单></a>
+						<a href="userOrderPage.do?pageNo=1&type=${type}" class="pull-right">查看所有订单></a>
 					</div>
 					<div class="order-panel">
 						<ul class="nav user-nav__title" role="tablist">
