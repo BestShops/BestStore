@@ -99,7 +99,7 @@
 									</td>
 									<td class="order">
 										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
-										<a href="" class="but but-link">评价</a>
+										<a href="userOrderDetailPage.do?oid=${o.OID}" class="but but-link">评价</a>
 										<a href="" class="but c3" onclick="del(${o.OID},${o.OSTATUS})">删除订单</a>
 									</td>
 									</c:if>
@@ -111,7 +111,7 @@
 									</td>
 									<td class="order">
 										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
-										<a href="" class="but but-link">查看评价</a>
+										<a href="userOrderDetailPage.do?oid=${o.OID}" class="but but-link">查看评价</a>
 										<a href="" class="but c3" onclick="del(${o.OID},${o.OSTATUS})">删除订单</a>
 									</td>
 									</c:if>
@@ -120,25 +120,29 @@
 							</table>
 							<div class="page text-right clearfix" style="margin-top: 40px">
 							<!-- 分页 -->
+							<c:if test="${requestScope.count!=0}">
 							<c:if test="${requestScope.pageNo==1}">
 								<a>上一页</a>
 							</c:if>
 							<c:if test="${requestScope.pageNo!=1}">
 								<a href="userOrderPage.do?pageNo=${requestScope.pageNo-1}&type=${requestScope.type}">上一页</a>
 							</c:if>
-								<c:forEach var="i" begin="1" end="${requestScope.count}">
-									<c:if test="${i == requestScope.pageNo}">
-										<a class="select">${i}</a>
-									</c:if>
-									<c:if test="${requestScope.pageNo!=i}">
-										<a class="" href="userOrderPage.do?pageNo=${i}&type=${requestScope.type}">${i}</a>
-									</c:if>
-								</c:forEach>
+							</c:if>
+							<c:forEach var="i" begin="1" end="${requestScope.count}">
+								<c:if test="${i == requestScope.pageNo}">
+									<a class="select">${i}</a>
+								</c:if>
+								<c:if test="${requestScope.pageNo!=i}">
+									<a class="" href="userOrderPage.do?pageNo=${i}&type=${requestScope.type}">${i}</a>
+								</c:if>
+							</c:forEach>
+							<c:if test="${requestScope.count!=0}">
 							<c:if test="${requestScope.pageNo==requestScope.count}">
 								<a>下一页</a>
 							</c:if>
 							<c:if test="${requestScope.pageNo!=requestScope.count}">
 								<a href="userOrderPage.do?pageNo=${requestScope.pageNo+1}&type=${requestScope.type}">下一页</a>
+							</c:if>
 							</c:if>
 							</div>
 							</c:if>

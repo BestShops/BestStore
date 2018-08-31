@@ -12,18 +12,17 @@
 					<div class="title">订单中心-商品评价</div>
 					<div class="evaluate_box">
 						<div class="evaluate_info posr clearfix">
-							<div class="img"><img src="images/temp/M-001.jpg" alt="" class="cover"></div>
-							<div class="name ep2">峥嵘 原创设计 传统日常汉服男绣花唐制圆领袍春秋非古装 峥嵘 原创设计 传统日常汉服男绣花唐制圆领袍春秋非古装</div>
+							<div class="img"><img src="upload/${Info.gphotopic}" alt="" class="cover"></div>
+							<div class="name ep2">${Info.sname} &nbsp;${Info.gname}</div>
 							<div class="param">
-								<div class="param-row"><span class="param-label">价格</span><b class="cr fz24">18.00</b><span class="cr">元</span></div>
-								<div class="param-row"><span class="param-label">销量</span><span class="c6 fz20">1688</span></div>
-								<div class="param-row"><span class="param-label">评价</span><span class="c6 fz20">1688</span></div>
-								<div class="param-row"><span class="param-label">好评率</span><span class="c6 fz20">95.87%</span></div>
+								<div class="param-row"><span class="param-label">原价</span><span class="c6 fz20">${Info.glastprice}元</span></div>
+								<div class="param-row"><span class="param-label">现价</span><b class="cr fz24">${Info.gnowprice}</b><span class="cr">元</span></div>
+								<div class="param-row"><span class="param-label">销量</span><span class="c6 fz20">${Info.num}</span></div>
+								<div class="param-row"><span class="param-label">评价</span><span class="c6 fz20">${count}</span></div>
+								<div class="param-row"><span class="param-label">好评率</span><span class="c6 fz20">${goodNum}</span></div>
 							</div>
 							<div class="info c6">
-								颜色分类：深棕色<br> 
-								尺码：均码<br>
-								现在查看的是您所购商品的信息 于2017年08月11日 20:31下单购买了此商品
+								${Info.gdesc}
 							</div>
 						</div>
 					</div>
@@ -35,14 +34,14 @@
 								<tr>
 									<th scope="row">评价等级</th>
 									<td class="user-form-group fz0">
-										<label><input name="opinion" value="G" checked="" type="radio"><i class="iconfont icon-radio"></i> <span>好评</span></label>
-										<label><input name="opinion" value="N" type="radio"><i class="iconfont icon-radio"></i> <span>中评</span></label>
-										<label><input name="opinion" value="B" type="radio"><i class="iconfont icon-radio"></i> <span>差评</span></label>
+										<label><input name="opinion" value="0" type="radio" checked><i class="iconfont icon-radio"></i> <span>好评</span></label>
+										<label><input name="opinion" value="1" type="radio"><i class="iconfont icon-radio"></i> <span>中评</span></label>
+										<label><input name="opinion" value="2" type="radio"><i class="iconfont icon-radio"></i> <span>差评</span></label>
 									</td>
 								</tr>
 								<tr>
 									<th scope="row">评价商品</th>
-									<td><textarea rows="5" placeholder="请输入您对该商品的评价~"></textarea></td>
+									<td><textarea rows="5" placeholder="请输入您对该商品的评价~" id="depict"></textarea></td>
 								</tr>
 								<tr valign="middle">
 									<th scope="row">晒图片</th>
@@ -54,10 +53,21 @@
 								</tr>
 							</table>
 							<div class="checkbox">
-								<label><input type="checkbox"><i></i> 匿名评价</a></label>
-								<button type="submit" class="but pull-right">提交评价</button>
+								<label><input type="checkbox" id="status"><i></i> 匿名评价</a></label>
+								<button type="submit" class="but pull-right" id="submit">提交评价</button>
 							</div>
 							<script>
+								$("#submit").click(function(){
+									var drank = $("input[name='opinion']:checked").val();
+									var depict = ${"#depict"}.text();
+									
+									$.post("addDiscuss.do",{
+										
+									},function(data){
+										
+									});
+								});
+								
 								$(document).ready(function(){
 									var tmpl = '<li class="uploader__file"><input name="i[]" accept="image/*" type="file"><i>&times;</i></li>',
 										$uploader_files = $('.uploader__files'),

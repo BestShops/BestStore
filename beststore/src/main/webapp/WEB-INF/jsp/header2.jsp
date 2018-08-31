@@ -66,12 +66,16 @@
 					<dt>订单中心</dt>
 					<a href="userOrderPage.do?pageNo=1&type=10"><dd>我的订单</dd></a>
 					<a href="userCollectionPage.do"><dd>我的收藏</dd></a>
-					<a href="userOrderRefundPage.do"><dd>退款/退货</dd></a>
+					<a href="userOrderRefundPage.do?pageNo=1&type=2"><dd>退款/退货</dd></a>
 				</dl>
 				<dl class="user-center__nav">
 					<dt>我的店铺</dt>
 					<a href="openStorePage.do"><dd>开店流程</dd></a>
-					<a href="storeManagePage.do"><dd>店铺管理</dd></a>
+					
+					<c:if test="${sessionScope.loginHuman.hlimit==1}">
+						<a href="storeManagePage.do"><dd>店铺管理</dd></a>
+					</c:if>
+					
 				</dl>
 				<dl class="user-center__nav">
 					<dt>服务中心</dt>

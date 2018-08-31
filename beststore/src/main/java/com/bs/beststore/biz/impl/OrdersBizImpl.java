@@ -60,11 +60,6 @@ public class OrdersBizImpl implements OrdersBiz{
 	}
 	
 	@Override
-	public List<Map<String, Object>> findOrderBySid(Orders orders, int sid) {
-		return OrdersMapper.findBySid(orders.getOstatus(), sid);	
-	}
-	
-	@Override
 	public int getCount(int hid, int type) {
 		String count = "";
 		if (type == 10) {// 统计总行数
@@ -77,13 +72,21 @@ public class OrdersBizImpl implements OrdersBiz{
 	}
 
 	@Override
+	public List<Map<String, Object>> findOrderBySid(Orders orders, int sid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public Orders findByOid(int oid) {
-		return OrdersMapper.selectByPrimaryKey(oid);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Map<String, Object>> findInfoByOid(int oid) {
-		return OrdersMapper.findInfoByOid(oid);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
