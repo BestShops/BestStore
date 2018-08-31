@@ -58,5 +58,12 @@ public interface BlogBiz {
 	
 	int updateBstatus(Blog blog);
 	
+	/**
+	 * 根据hid获取博客的数量
+	 * @param hid
+	 * @return
+	 */
+	int getCount(int hid);
+	
 
 }

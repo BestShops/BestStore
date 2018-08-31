@@ -128,11 +128,11 @@ public class HumanBizImpl implements HumanBiz {
 				System.out.println("h.getHid()" + h.getHid() + "\t" + "human.getHid()" + human.getHid());
 				if (human.getHname().equals(h.getHname())) {
 					throw new BizException("用户名不能重复");
-				} else if (human.getHidcard() == h.getHidcard()) {
+				} else if (human.getHidcard() == h.getHidcard() || human.getHidcard().equals(h.getHidcard())) {
 					throw new BizException("身份证号不能重复");
-				} else if (human.getHphone() == h.getHphone()) {
+				} else if (human.getHphone() == h.getHphone() || human.getHphone().equals(h.getHphone())) {
 					throw new BizException("电话号码不能重复");
-				} else if (human.getHemail() == h.getHemail()) {
+				} else if (human.getHemail() == h.getHemail() || human.getHemail().equals(h.getHemail())) {
 					throw new BizException("邮箱地址不能重复");
 				} 
 			}

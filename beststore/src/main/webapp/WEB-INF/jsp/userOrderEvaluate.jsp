@@ -59,7 +59,7 @@
 							<script>
 								$("#submit").click(function(){
 									var drank = $("input[name='opinion']:checked").val();
-									var depict = ${"#depict"}.text();
+									var depict = $("#depict").text();
 									
 									$.post("addDiscuss.do",{
 										

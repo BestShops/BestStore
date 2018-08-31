@@ -232,7 +232,7 @@
 						},function(data){
 							if (data == "OK") {
 								$("#register_error").html(msgtemp('<strong>登录成功！</strong>', 'alert-success'));
-								window.location.href = "welcomePage.do";
+								window.location.href = "welcomePage.do?type=10";
 							} else {
 								$("#login_error").html(msgtemp(data, 'alert-warning'));
 							}

@@ -100,6 +100,12 @@ public class BlogBizImpl implements BlogBiz {
 		return blogMapper.updateBstatus(blog);
 	}
 
+	@Override
+	public int getCount(int hid) {
+		String count = blogMapper.getCount(hid).get(0).get("count") + "";
+		return Integer.parseInt(count);
+	}
+
 
 
 }
