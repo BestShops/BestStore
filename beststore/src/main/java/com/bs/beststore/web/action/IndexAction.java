@@ -50,10 +50,17 @@ public class IndexAction {
 	}
 
 	// 超级管理员审核商品
+	@RequestMapping(path = "blogExaminePage.do")
+	public String blogExaminePage() {
+		return "superback/blogExamine";
+	}
+
+	// 超级管理员审核博客
 	@RequestMapping(path = "goodsExaminePage.do")
 	public String goodsExaminePage() {
 		return "superback/goodsExamine";
 	}
+
 
 	@RequestMapping(path = { "/", "index" })
 	// 主页
@@ -96,18 +103,13 @@ public class IndexAction {
 		return "userInfo";
 	}
 
-	@RequestMapping("registerStrore.do")
-	// 开店
-	public String registerStrore() {
-		return "agent_level";
-	}
-
 	// 后台店铺管理主界面
 	@RequestMapping(path = "backPage.todo")
 	public String backPage() {
 		return "back/backIndex";
 	}
 
+	//优惠券
 	@RequestMapping(value = "couponPage.do")
 	public String couponPage() {
 		return "coupon";
@@ -127,7 +129,7 @@ public class IndexAction {
 		return "redirect:/superLoginPage.todo";
 	}
 
-
+	//后台店铺管理主界面
 	@RequestMapping(path = "backStoreManagePage.todo")
 	public String backStoreManagePage(HttpSession session) {
 		if(session.getAttribute("storeHuman")==null) {

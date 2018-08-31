@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>店铺资料</title>
+<title>Best Store店铺管理</title>
 <%@ include file="easyuiLink.jsp"%>
 </head>
 <script>

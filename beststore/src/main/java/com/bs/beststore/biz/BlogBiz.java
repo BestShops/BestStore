@@ -1,6 +1,7 @@
 package com.bs.beststore.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bs.beststore.vo.Blog;
 
@@ -43,7 +44,7 @@ public interface BlogBiz {
 	 * 超级管理员访问所有博客，按博客的状态递增排序
 	 * @return 返回一个Blog类型的集合
 	 */
-	List<Blog> findAllBlog();
+	List<Map<String,Object>> findAllBlog(Blog blog);
 	
 	/**
 	 * 根据主键查找
@@ -57,6 +58,8 @@ public interface BlogBiz {
 	long findAllTotal(Blog blog);
 	
 	int updateBstatus(Blog blog);
+	
+	List<Map<String,Object>> selectExamineBlog(Blog blog,int page,int rows);
 	
 
 }

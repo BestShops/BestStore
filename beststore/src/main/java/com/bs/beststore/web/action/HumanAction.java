@@ -20,7 +20,6 @@ import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
 import com.bs.beststore.util.MD5Util;
 import com.bs.beststore.vo.Human;
-import com.bs.beststore.vo.Store;
 
 @Controller
 public class HumanAction {
@@ -54,6 +53,7 @@ public class HumanAction {
 		human.setHid(h.getHid());
 		try {
 			humanBiz.upload(human);
+			model.addAttribute("success", "信息修改成功!");
 			// 更新loginHuman
 			session.setAttribute("loginHuman", humanBiz.findByHid(human));
 			return "userInfo";

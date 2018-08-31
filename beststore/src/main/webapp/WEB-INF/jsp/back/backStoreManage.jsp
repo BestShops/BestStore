@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Best Store后台管理</title>
+<title>Best Store店铺管理</title>
 <%@ include file="easyuiLink.jsp" %>
 <style type="text/css">
 .easyui-linkbutton{
