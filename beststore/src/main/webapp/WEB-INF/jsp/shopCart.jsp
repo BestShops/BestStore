@@ -70,69 +70,32 @@
 							</tr>
 						</thead>
 						<tbody>
+						
+						<c:forEach items="${listCart }" var="lc">
 							<tr>
 								<th scope="row">
 									<label class="checked-label"><input type="checkbox"><i></i>
-										<div class="img"><img src="images/temp/M-003.jpg" alt="" class="cover"></div>
+										<div class="img"><img src="upload/${lc.GPHOTOPIC }" alt="" class="cover"></div>
 									</label>
 								</th>
 								<td>
-									<div class="name ep3">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
+									<div id="gname" class="name ep3"><a id="gid" >${lc.GID }</a>${lc.GNAME }</div>
 									<div class="type c9">颜色分类：深棕色  尺码：均码</div>
 								</td>
-								<td>¥20.0</td>
+								<td>¥${lc.GNOWPRICE }</td>
 								<td>
 									<div class="cart-num__box">
 										<input type="button" class="sub" value="-">
-										<input type="text" class="val" value="1" maxlength="2">
+										<input type="text" id="val" class="val" value="${lc.CNUM }" maxlength="2">
 										<input type="button" class="add" value="+">
 									</div>
 								</td>
-								<td>¥20.0</td>
-								<td><a href="">删除</a></td>
+								<td>¥${lc.GNOWPRICE * lc.CNUM }</td>
+								<td><a type="button" id="delete">删除</a></td>
 							</tr>
-							<tr>
-								<th scope="row">
-									<label class="checked-label"><input type="checkbox"><i></i>
-										<div class="img"><img src="images/temp/S-005.jpg" alt="" class="cover"></div>
-									</label>
-								</th>
-								<td>
-									<div class="name ep3">霜天月明 原创传统日常汉服男绣花交领衣裳cp春装单品</div>
-									<div class="type c9">颜色分类：深棕色  尺码：均码</div>
-								</td>
-								<td>¥20.0</td>
-								<td>
-									<div class="cart-num__box">
-										<input type="button" class="sub" value="-">
-										<input type="text" class="val" value="1" maxlength="2">
-										<input type="button" class="add" value="+">
-									</div>
-								</td>
-								<td>¥20.0</td>
-								<td><a href="">删除</a></td>
-							</tr>
-							<tr>
-								<th scope="row">
-									<label class="checked-label"><input type="checkbox"><i></i>
-										<div class="img"><img src="images/temp/M-007.jpg" alt="" class="cover"></div>
-									</label>
-								</th>
-								<td>
-									<div class="name ep3">陇上乐 原创传统日常汉服男绣花单大氅大袖衫cp情侣春秋</div>
-									<div class="type c9">颜色分类：深棕色  尺码：均码</div>
-								</td>
-								<td>¥20.0</td>
-								<td>
-									<div class="cart-num__box">
-										<input type="button" class="sub" value="-">
-										<input type="text" class="val" value="1" maxlength="2">
-										<input type="button" class="add" value="+">
-									</div>
-								</td>
-								<td>¥20.0</td>
-								<td><a href="">删除</a></td>
-							</tr>
+							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
+						</c:forEach>
+							
 						</tbody>
 					</table>
 					<div class="user-form-group tags-box shopcart-submit pull-right">
@@ -140,14 +103,15 @@
 					</div>
 					<div class="checkbox shopcart-total">
 						<label><input type="checkbox" class="check-all"><i></i> 全选</label>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="">删除</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a>
 						<div class="pull-right">
 							已选商品 <span>2</span> 件
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-							<b class="cr">¥<span class="fz24">40.00</span></b>
+							<b class="cr">¥<span class="fz24">${money }</span></b>
 						</div>
 					</div>
 					<script>
+					
 						$(document).ready(function(){
 							var $item_checkboxs = $('.shopcart-form__box tbody input[type="checkbox"]'),
 								$check_all = $('.check-all');
@@ -168,13 +132,74 @@
 							$('input.val').onlyReg({reg: /[^0-9.]/g});
 							// 加减个数
 							$('.cart-num__box').on('click', '.sub,.add', function() {
-								var value = parseInt($(this).siblings('.val').val());
+								var value = Number($(this).siblings('.val').val());
+								var gid =  document.getElementById('gid').innerText;
 								if ($(this).hasClass('add')) {
 									$(this).siblings('.val').val(Math.min((value += 1),99));
+									
+									// 加减购物车内商品数量
+									$.post("changeCartNum.do",{
+										cnum:value,
+										gid:gid
+									},function(data){
+										if (data == "OK") {
+											window.location.href = "shopCartPage.do";
+										} else {
+											alert(data);
+										}
+									});
 								} else {
 									$(this).siblings('.val').val(Math.max((value -= 1),1));
+									
+									// 加减购物车内商品数量
+									$.post("changeCartNum.do",{
+										cnum:value,
+										gid:gid
+									},function(data){
+										if (data == "OK") {
+											window.location.href = "shopCartPage.do";
+										} else {
+											alert(data);
+										}
+									});
 								}
 							});
+							
+							// 失焦改变数量
+							$('.cart-num__box').on('blur', '.val', function() {
+								var value = $("#val").val();
+								var gid =  document.getElementById('gid').innerText;
+								if( value == 0 || value == null ){
+									alert("商品数量不能为0或者为空");
+								} 
+								// 改变购物车内商品数量
+								$.post("changeCartNum.do",{
+									cnum:value,
+									gid:gid
+								},function(data){
+									if (data == "OK") {
+										window.location.href = "shopCartPage.do";
+									} else {
+										alert(data);
+									}
+								});
+							});
+							
+							// 删除购物车商品
+							$('#delete').click(function() {
+								var gid =  document.getElementById('gid').innerText;
+								$.post("delete.do",{
+									gid:gid
+								},function(data){
+									if (data == "OK") {
+										alert("删除成功！");
+										window.location.href = "shopCartPage.do";
+									} else {
+										alert(data);
+									}
+								});
+							});
+							
 						});
 					</script>
 				</form>

@@ -134,14 +134,13 @@
 							<div class="item-metatit">数量：</div>
 							<div class="amount-box">
 								<div class="amount-widget">
-									<input class="amount-input" value="1" maxlength="8"
-										title="请输入购买量" type="text">
+									<input class="amount-input" id="buy_goodsNum" value="1" maxlength="8" title="请输入购买量" type="text">
 									<div class="amount-btn">
 										<a class="amount-but add"></a> <a class="amount-but sub"></a>
 									</div>
 								</div>
 								<div class="item-stock">
-									<span style="margin-left: 10px;">库存 <b id="Stock">1000</b>
+									<span style="margin-left: 10px;">库存 <b id="Stock">${list.get(0).GNUMBER }</b>
 										件
 									</span>
 								</div>
@@ -177,20 +176,41 @@
 							</div>
 						</div>
 						<div class="item-action clearfix bgf5">
-							<a href="javascript:;" rel="nofollow" data-addfastbuy="true"
-								title="点击此按钮，到下一步确认购买信息。" role="button"
-								class="item-action__buy">立即购买</a> <a href="javascript:;"
-								rel="nofollow" data-addfastbuy="true" role="button"
-								class="item-action__basket"> <i
-								class="iconfont icon-shopcart"></i> 加入购物车
+							<a href="javascript:;" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button"
+								class="item-action__buy">立即购买</a> 
+								
+							<a id="addCart" rel="nofollow" data-addfastbuy="true" role="button" class="item-action__basket"> 
+							<i class="iconfont icon-shopcart"></i> 加入购物车
 							</a>
 						</div>
 					</div>
 				</div>
 	</div>
 	
-
-
+	
+	<script>
+		// 添加购物车按钮
+		$('#addCart').click(function() {
+			var buynum = $("#buy_goodsNum").val();
+			var gid = ${list.get(0).GID };
+			var maxnum = ${list.get(0).GNUMBER };
+			if (buynum > maxnum ) {
+				alert("超过商品库存!!!");
+				return;
+			}
+			$.post("addCart.do",{
+				cnum:buynum,
+				gid:gid
+			},function(data){
+				if (data == "OK") {
+					alert("添加购物车成功！");
+				} else {
+					alert(data);
+				}
+			});
+		});
+	
+	</script>
 
 
 	<div class="pull-right picked-div">
@@ -214,16 +234,16 @@
 		<div class="picked-button-prev"></div>
 		<div class="picked-button-next"></div>
 		<script>
-					$(document).ready(function(){ 
-						// 顶部banner轮播
-						var picked_swiper = new Swiper('.picked-swiper', {
-							loop : true,
-							direction: 'vertical',
-							prevButton:'.picked-button-prev',
-							nextButton:'.picked-button-next',
-						});
-					});
-				</script>
+			$(document).ready(function(){ 
+				// 顶部banner轮播
+				var picked_swiper = new Swiper('.picked-swiper', {
+					loop : true,
+					direction: 'vertical',
+					prevButton:'.picked-button-prev',
+					nextButton:'.picked-button-next',
+				});
+			});
+		</script>
 	</div>
 	</section>
 	<section class="item-show__div item-show__body posr clearfix">
