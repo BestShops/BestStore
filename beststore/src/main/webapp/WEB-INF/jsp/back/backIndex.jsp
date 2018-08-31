@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Best Store后台管理系统</title>
+<title>Best Store店铺管理</title>
 <link type="text/css" rel="stylesheet" href="${basePath }/css/backLogin.css">
 </head>
 <body style="overflow: hidden">

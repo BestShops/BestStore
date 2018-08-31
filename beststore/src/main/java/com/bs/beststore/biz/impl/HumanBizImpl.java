@@ -85,7 +85,9 @@ public class HumanBizImpl implements HumanBiz {
 			Human h = list3.get(0);
 			if (h.getHlimit() >= status && h.getHlimit() < 2) {
 				return h;
-			} else {
+			} else if(h.getHlimit()==3){
+				throw new BizException("该账户违规已被封禁");
+			}else{
 				throw new BizException("账号没有访问权限");
 			}
 		} else {// 用户名或密码错误
@@ -97,7 +99,6 @@ public class HumanBizImpl implements HumanBiz {
 	public int upload(Human human) throws BizException {
 		// 密码不允许修改
 		human.setHpwd(null);
-		String idcard = human.getHidcard() + "";
 		// 用户名、身份证号、电话号码、邮箱地址不能为空
 		if (human.getHname() == null || "".equals(human.getHname())) {
 			throw new BizException("用户名不能为空");
@@ -107,10 +108,9 @@ public class HumanBizImpl implements HumanBiz {
 			throw new BizException("电话号码不能为空");
 		} else if (human.getHemail() == null || "".equals(human.getHemail())) {
 			throw new BizException("邮箱地址不能为空");
-		} else if (!Pattern.matches(AccountValidatorUtil.REGEX_ID_CARD, idcard.trim())) {
+		} else if (!Pattern.matches(AccountValidatorUtil.REGEX_ID_CARD, human.getHidcard() + "")) {
 			throw new BizException("身份证号格式错误");
 		} else if (!Pattern.matches(AccountValidatorUtil.REGEX_MOBILE, human.getHphone() + "")) {
-			System.out.println(human.getHphone() + "");
 			throw new BizException("电话号码格式错误");
 		} else if (!Pattern.matches(AccountValidatorUtil.REGEX_EMAIL, human.getHemail())) {
 			throw new BizException("邮箱地址格式错误");
@@ -263,9 +263,7 @@ public class HumanBizImpl implements HumanBiz {
 
 	@Override
 	public void changeStatus(int hid, int limit) {
-		Human human = new Human();
-		human.setHid(hid);
-		human.setHlimit(limit);
-		humanMapper.updateByPrimaryKeySelective(human);
+		// TODO Auto-generated method stub
+		
 	}
 }

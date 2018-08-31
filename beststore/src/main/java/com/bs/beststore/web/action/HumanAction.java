@@ -65,6 +65,7 @@ public class HumanAction {
 		human.setHid(h.getHid());
 		try {
 			humanBiz.upload(human);
+			model.addAttribute("success", "信息修改成功!");
 			// 更新loginHuman
 			session.setAttribute("loginHuman", humanBiz.findByHid(human));
 			return "userInfo";

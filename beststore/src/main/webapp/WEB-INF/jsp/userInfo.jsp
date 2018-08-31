@@ -62,7 +62,7 @@
 					<div style="text-align:right;">
 						<form action="humanInfo.do" method="post" style="padding:20px 10px;width:300px;float:left;" enctype="multipart/form-data">
 							<div style="width:200px;margin-left:22px">
-							<a href="javascript:;" class="upload">修改用户头像
+							<a href="javascript:;" class="upload">修改头像
 							    <input class="change" type="file" multiple="multiple" name="file" id="file"/>
 							</a><br><br></div>
 							用户名：<input name="hname" readonly="readonly" value="${loginHuman.hname}" placeholder="请输入您的昵称"><br><br>
@@ -74,7 +74,8 @@
 							身份证号码：<input name="hidcard" value="${loginHuman.hidcard}"><br><br>
 							手机号码：<input name="hphone" value="${loginHuman.hphone}"><br><br>
 							邮箱地址：<input name="hemail" value="${loginHuman.hemail}"><br><br>
-							<span id="error" style="color:red;margin-right:40px">${error}</span><br><br>
+							<span id="error" style="color:red;margin-right:40px">${error}</span>
+							<span id="success" style="color:green;margin-right:40px">${success}</span><br><br>
 							<div style="width:200px;">
 								<input type="submit" class="cn" value="确认修改"/>
 							</div>

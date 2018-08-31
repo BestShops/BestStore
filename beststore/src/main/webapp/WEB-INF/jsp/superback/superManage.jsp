@@ -60,7 +60,7 @@
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'manageStorePage.do')" data-options="iconCls:'icon-search'" >店铺管理</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsTypeManagePage.do')" data-options="iconCls:'icon-edit'" >商品类别管理</a>  
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsExaminePage.do')" data-options="iconCls:'icon-reload'" >商品审核</a>  
-			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'blogShenhe.do')" data-options="iconCls:'icon-reload'" >博客审核</a>
+			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'blogExaminePage.do')" data-options="iconCls:'icon-reload'" >博客审核</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'userfeedback.do')" data-options="iconCls:'icon-man'" >用户反馈</a>
 		</div>
 	</div>

@@ -3,6 +3,7 @@ package com.bs.beststore.biz.impl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,10 +63,8 @@ public class BlogBizImpl implements BlogBiz {
 	}
 
 	@Override
-	public List<Blog> findAllBlog() {
-		BlogExample blogExample = new BlogExample();
-		blogExample.setOrderByClause("bstatus asc");
-		return blogMapper.selectByExample(blogExample);
+	public List<Map<String,Object>> findAllBlog(Blog blog) {
+		return blogMapper.selectBlogShow(blog);
 	}
 
 	@Override
@@ -91,6 +90,8 @@ public class BlogBizImpl implements BlogBiz {
 			count=blogMapper.selectByBstatusCount(blog.getSid(), blog.getBstatus());
 		}else if(blog.getSid()!=null) {
 			count=blogMapper.selectBlogCount(blog.getSid());
+		}else if(blog.getBstatus()!=null) {
+			count=blogMapper.selectExamineBlogCount(blog);
 		}
 		return count;
 	}
@@ -104,6 +105,11 @@ public class BlogBizImpl implements BlogBiz {
 	public int getCount(int hid) {
 		String count = blogMapper.getCount(hid).get(0).get("count") + "";
 		return Integer.parseInt(count);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectExamineBlog(Blog blog, int page, int rows) {
+		return blogMapper.selectExamineBlog(blog.getBstatus(), (page-1)*rows, rows);
 	}
 
 

@@ -35,10 +35,9 @@ public class DiscussBizImpl implements DiscussBiz {
 	}
 
 	@Override
-	public List<Map<String, Object>> findAll(int hid) {
-		return discussMapper.findByHid(hid);
+	public List<Map<String, Object>> findAll(int gid) {
+		return discussMapper.findByGid(gid);
 	}
-
 
 	@Override
 	public Discuss findByDid(int did) {
