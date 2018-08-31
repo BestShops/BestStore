@@ -54,7 +54,7 @@
 						<div class="tdf1">¥${od.num*od.gnowprice}</div>
 						<div class="tdf1"><div class="ep2">快递<br>¥0.00</div></div>
 						<c:if test="${info.OSTATUS==3 || info.OSTATUS==4}">
-						<div class="tdf1"><a href="userOrderEvaluate.do?gid=${od.gid}">评价</a></div>
+						<div class="tdf1"><a href="userOrderEvaluate.do?gid=${od.gid}&oid=${info.OID}&odid=${od.odid}">评价</a></div>
 						</c:if>
 					</div>
 					</c:forEach>

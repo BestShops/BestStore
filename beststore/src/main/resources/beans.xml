@@ -36,10 +36,10 @@
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	<!-- spring mvc 文件上传的解析器 -->
+	<!-- spring mvc 文件上传的解析器 10M -->
 	<bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<property name="maxUploadSize" value="2100000" />
+		<property name="maxUploadSize" value="10000000" />
 	</bean>
 	
 	<!-- ======================以下是 mybatis 集成 spring 的相关配置======================= -->
@@ -47,7 +47,7 @@
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<!-- 192.168.43.209:3306 -->
-		<property name="url" value="jdbc:mysql://127.0.0.1/beststore?useUnicode=true
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/beststore?useUnicode=true
 		&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Shanghai" />
 		<property name="username" value="root" />
 		<property name="password" value="a" />
@@ -93,4 +93,5 @@
         <aop:pointcut id="txPc" expression="execution(* com.bs.beststore.biz.**.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="txPc"/>
     </aop:config>
+
 </beans>
