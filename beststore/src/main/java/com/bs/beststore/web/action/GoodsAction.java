@@ -42,10 +42,9 @@ public class GoodsAction {
 	}
 
 	@RequestMapping(path = "goodsShowPage.do")
-	public String goodsShowPage(Goods goods, Model model) {
+	public String goodsShowPage(Goods goods, Model model){
 		// 查询商品详情 根据gid查询
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
-		
 		// 查询商品的相关评价
 		List<Map<String, Object>> discussList = discussBiz.findAll(goods.getGid());
 		

@@ -66,4 +66,14 @@ public interface GoodsBiz {
 	 */
 	Goods findByGid(int gid);
 	
+	/**
+	 * 热销商品
+	 */
+	List<Map<String,Object>> findHotGoods();
+	
+	/**
+	 * 热销商品不够6个随机找几个凑
+	 */
+	List<Map<String,Object>> reduceHotGoods(int rows);
+	
 }

@@ -154,7 +154,7 @@ public class UserOrderAction {
 		int count = ordersBiz.getCount(human.getHid(), type);
 		// 如果最大的页面数小于当前页面数
 		if (count < pageNo) {
-			pageNo --;
+			pageNo=count;
 		}
 		int[] counts = new int[5];
 		for (int i = 0; i < 5; i++) {

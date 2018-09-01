@@ -106,5 +106,15 @@ public class GoodsBizImpl implements GoodsBiz {
 		return gm.findByNum();
 	}
 
+	@Override
+	public List<Map<String, Object>> findHotGoods() {
+		return gm.findHotGoods();
+	}
+
+	@Override
+	public List<Map<String, Object>> reduceHotGoods(int rows) {
+		return gm.reduceHotGoods(rows);
+	}
+
 	
 }

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
@@ -30,6 +31,8 @@ public class IndexAction {
 
 	@Resource
 	private TypeBiz typeBiz;
+	@Resource
+	private GoodsBiz goodsBiz;
 
 	// 超级管理员登录界面
 	@RequestMapping(path = "superLoginPage.todo")
@@ -73,30 +76,39 @@ public class IndexAction {
 
 	@RequestMapping(path = { "/", "index" })
 	// 主页
-	public String index(Model model) {
+	public String index(Model model){
 		List<Type> firstList=typeBiz.selectFirstInfo();
 		model.addAttribute("firstList", firstList);
 		List<Map<String,Object>> list=typeBiz.findTypeToIndex(firstList.get(0).getTid());
 		List<Map<String,Object>> lists=typeBiz.selectSecondInfo(firstList.get(0).getTid());
-		System.out.println(list);
+		List<Map<String,Object>> thirdList=typeBiz.selectSonInfoByParent();
+		model.addAttribute("thirdList", thirdList);
 		model.addAttribute("goodsIndex", list);
-		model.addAttribute("typeIndex", lists);
+		model.addAttribute("secondType", lists);
 		List<Map<String,Object>> list1=typeBiz.findTypeToIndex(firstList.get(1).getTid());
 		List<Map<String,Object>> lists1=typeBiz.selectSecondInfo(firstList.get(1).getTid());
 		model.addAttribute("goodsIndex1", list1);
-		model.addAttribute("typeIndex1", lists1);
+		model.addAttribute("secondType1", lists1);
 		List<Map<String,Object>> list2=typeBiz.findTypeToIndex(firstList.get(2).getTid());
 		List<Map<String,Object>> lists2=typeBiz.selectSecondInfo(firstList.get(2).getTid());
 		model.addAttribute("goodsIndex2", list2);
-		model.addAttribute("typeIndex2", lists2);
+		model.addAttribute("secondType2", lists2);
 		List<Map<String,Object>> list3=typeBiz.findTypeToIndex(firstList.get(3).getTid());
 		List<Map<String,Object>> lists3=typeBiz.selectSecondInfo(firstList.get(3).getTid());
 		model.addAttribute("goodsIndex3", list3);
-		model.addAttribute("typeIndex3", lists3);
+		model.addAttribute("secondType3", lists3);
 		List<Map<String,Object>> list4=typeBiz.findTypeToIndex(firstList.get(4).getTid());
 		List<Map<String,Object>> lists4=typeBiz.selectSecondInfo(firstList.get(4).getTid());
 		model.addAttribute("goodsIndex4", list4);
-		model.addAttribute("typeIndex4", lists4);
+		model.addAttribute("secondType4", lists4);
+		List<Map<String,Object>> hotGoodsList=goodsBiz.findHotGoods();
+		model.addAttribute("hotGoods",hotGoodsList);	//热销商品
+		if(hotGoodsList.size()<6) {
+			List<Map<String,Object>> reduceGoodsList=goodsBiz.reduceHotGoods(6-hotGoodsList.size());
+			model.addAttribute("reduceGoods",reduceGoodsList);
+		}
+		List<Map<String,Object>> newGoodsList=goodsBiz.reduceHotGoods(5);
+		model.addAttribute("newGoods",newGoodsList);
 		return "index";
 	}
 
@@ -180,12 +192,6 @@ public class IndexAction {
 	@RequestMapping(value = "goodsManagePage.do")
 	public String goodsManagePage() {
 		return "back/goodsManage";
-	}
-
-	// 后台店铺商品核实情况界面
-	@RequestMapping(value = "goodsVerifyPage.do")
-	public String goodsVerifyPage() {
-		return "back/goodsVerify";
 	}
 
 	// 后台店铺商品核实情况界面

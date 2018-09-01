@@ -19,7 +19,7 @@
 				</ol>
 				<div class="item-pic__box" id="magnifier">
 					<div class="small-box">
-						<img class="cover" src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
+						<img style="width: 360px;height:360px;" src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
 						<span class="hover"></span>
 					</div>
 	

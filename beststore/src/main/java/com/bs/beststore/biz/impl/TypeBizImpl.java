@@ -97,7 +97,7 @@ public class TypeBizImpl implements TypeBiz {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectSonInfoByParent(Type type) {
+	public List<Map<String, Object>> selectSonInfoByParent() {
 		List<Map<String,Object>> list=typeMapper.selectAllType();
 		return list;
 	}

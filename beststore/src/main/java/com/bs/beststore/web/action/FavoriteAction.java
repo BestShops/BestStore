@@ -36,7 +36,7 @@ public class FavoriteAction {
 		if(Integer.parseInt(page)<=1) {
 			page="1";
 		}
-		if(Integer.parseInt(page)>=totalPage){
+		if(Integer.parseInt(page)>=totalPage && totalPage>0){
 			page=totalPage+"";
 		}
 		request.setAttribute("page", page);	//当前页数

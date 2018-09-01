@@ -66,7 +66,6 @@ public class StoreBizImpl implements StoreBiz {
 		StoreExample storeExample = new StoreExample();
 		Criteria criteria = storeExample.createCriteria();
 		criteria.andHidEqualTo(hid);
-		criteria.andSstatusEqualTo(1);// 状态为正常
 		List<Store> list = storeMapper.selectByExample(storeExample);
 		if (list == null || list.size() == 0) {
 			return null;

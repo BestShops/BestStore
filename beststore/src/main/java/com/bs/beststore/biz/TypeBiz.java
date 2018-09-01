@@ -45,7 +45,7 @@ public interface TypeBiz {
 	 * 通过父类id找子类信息
 	 * @return
 	 */
-	List<Map<String,Object>> selectSonInfoByParent(Type type);
+	List<Map<String,Object>> selectSonInfoByParent();
 	
 	/**
 	 * 查找一级类型名

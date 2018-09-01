@@ -12,11 +12,16 @@
 				<div class="user-center__info bgf">
 					<div class="pull-left clearfix">
 						<div class="port b-r50 pull-left">
+						<c:if test="${sessionScope.loginHuman.hphoto==null}">
 							<img src="images/icons/default_avt.png" alt="用户名" class="cover b-r50">
+						</c:if>
+						<c:if test="${sessionScope.loginHuman.hphoto!=null}">
+							<img src="${basePath }/upload/${sessionScope.loginHuman.hphoto}" class="cover b-r50">
+						</c:if>	
 							<a href="userInfoPage.do" class="edit"><i class="iconfont icon-edit"></i></a>
 						</div>
 						<p class="name text-nowrap"></p>
-						<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }！</p>
+						<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }</p>
 						<c:if test="${sessionScope.loginHuman.hlimit==0}">
 							<p class="level text-nowrap">身份：普通用户 <a href="openStorePage.do">去开店</a></p>
 						</c:if>

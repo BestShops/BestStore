@@ -26,7 +26,7 @@
 		<div class="inner">
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="">网店代销</a>
+				<a href="openStorePage.do">申请网店</a>
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
@@ -39,7 +39,7 @@
 					<a href="userLogout.do" style="color:blue">退出</a>
 				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
-				<a href="userOrderPage.do">我的订单</a>
+				<a href="userOrderPage.do?pageNo=1&type=10">我的订单</a>
 			</div>
 		</div>
 	</div>
