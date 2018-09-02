@@ -258,6 +258,7 @@ public class UserOrderAction {
 		}
 		Human human = (Human) session.getAttribute("loginHuman");
 		discuss.setHid(human.getHid());
+		discuss.setOdid(odid);
 		discuss.setDphoto(files);
 		int result = discussBiz.addDiscuss(discuss);
 		if (result == 1) {
