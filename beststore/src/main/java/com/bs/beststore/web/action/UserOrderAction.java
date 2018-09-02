@@ -260,6 +260,12 @@ public class UserOrderAction {
 		discuss.setHid(human.getHid());
 		discuss.setOdid(odid);
 		discuss.setDphoto(files);
+		try {// 添加时间
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			discuss.setDtime(format.parse(format.format(new Date())));
+		} catch (ParseException e) {
+			discuss.setDtime(new Date());
+		}
 		int result = discussBiz.addDiscuss(discuss);
 		if (result == 1) {
 			// 在添加成功后，修改订单详情表的状态，同时判断当前订单下是否所有的商品都已经评价完成，完成后就修改订单状态为评价完成
@@ -275,6 +281,13 @@ public class UserOrderAction {
 		} else {
 			out.print("图片上传失败，请稍后重试");
 		}
+	}
+	
+	//  评论页面的展示
+	@RequestMapping("EvaluatePage.do")
+	public String Evaluate(int odid, Model model) {
+		model.addAttribute("info", discussBiz.findByOdid(odid).get(0));
+		return "userEvaluate";
 	}
 	
 }

@@ -43,6 +43,13 @@ public interface DiscussBiz {
 	 * @return
 	 */
 	Discuss findByDid(int did);
+	
+	/**
+	 * 根据商品详情id来获取信息
+	 * @param odid
+	 * @return
+	 */
+	List<Map<String, Object>> findByOdid(int odid);
 
 	/**
 	 * 根据gid查找将要评论的商品的具体信息
