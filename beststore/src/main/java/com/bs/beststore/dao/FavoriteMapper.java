@@ -12,8 +12,11 @@ public interface FavoriteMapper {
 	@Select("select * from favorite f "
 			+ "left join goods g on f.gid=g.gid "
 			+ "left join type t on g.tid=t.tid "
-			+ "where f.hid=#{hid};")
-	List<Map<String, Object>> findByHid(@Param("hid")int hid);
+			+ "where f.hid=#{hid} limit #{page},#{rows};")
+	List<Map<String, Object>> findByHid(@Param("hid")int hid,@Param("page")int page,@Param("rows")int rows);
+	
+	@Select("select count(*) from favorite f left join goods g on f.gid=g.gid left join type t on g.tid=t.tid where f.hid=#{hid}")
+	long selectAllTotal(@Param("hid")int hid);
 	
 	@Select("select count(*) count from favorite where hid=#{hid}")
 	List<Map<String, Object>> getCount(@Param("hid")int hid);

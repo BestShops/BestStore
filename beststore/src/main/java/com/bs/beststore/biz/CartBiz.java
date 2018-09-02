@@ -1,6 +1,7 @@
 package com.bs.beststore.biz;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bs.beststore.vo.Cart;
 
@@ -39,7 +40,7 @@ public interface CartBiz {
 	 * @param cart	根据购物车信息去查找商品信息及商品图片信息
 	 * @return	商品信息和商品图片信息的集合
 	 */
-	List<Cart> findByhid(int hid);
+	List<Map<String, Object>> findByhid(int hid,  long page, int rows);
 	
 	
 	/**
@@ -48,6 +49,20 @@ public interface CartBiz {
 	 * @return
 	 */
 	Cart findByCid(int cid);
+
+	/**
+	 * 根据Hid统计数据条数
+	 * @param hid
+	 * @return
+	 */
+	long countByHid(Integer hid);
+
+	/**
+	 * 根据Hid和Gid查询商品是否已经存在购物车
+	 * @param cart
+	 * @return 返回查询列表结果
+	 */
+	List<Cart> findByGidAndHid(Cart cart);
 	
 	
 }

@@ -1,6 +1,7 @@
 package com.bs.beststore.biz.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,11 +29,8 @@ public class CartBizImpl implements CartBiz{
 	}
 
 	@Override
-	public List<Cart> findByhid(int hid) {
-		CartExample cartExample = new CartExample();
-		Criteria criteria = cartExample.createCriteria();
-		criteria.andHidEqualTo(hid);
-		return cartMapper.selectByExample(cartExample);
+	public List<Map<String, Object>> findByhid(int hid, long page, int rows) {
+		return cartMapper.selectByHid(hid, page, rows);
 	}
 
 	@Override
@@ -51,6 +49,23 @@ public class CartBizImpl implements CartBiz{
 	@Override
 	public int removeByCid(Cart cart) {
 		return cartMapper.deleteByPrimaryKey(cart.getCid());
+	}
+
+	@Override
+	public long countByHid(Integer hid) {
+		CartExample cartExample = new CartExample();
+		Criteria criteria = cartExample.createCriteria();
+		criteria.andHidEqualTo(hid);
+		return cartMapper.countByExample(cartExample);
+	}
+
+	@Override
+	public List<Cart> findByGidAndHid(Cart cart) {
+		CartExample cartExample = new CartExample();
+		Criteria criteria = cartExample.createCriteria();
+		criteria.andHidEqualTo(cart.getHid());
+		criteria.andGidEqualTo(cart.getGid());
+		return cartMapper.selectByExample(cartExample);
 	}
 
 }

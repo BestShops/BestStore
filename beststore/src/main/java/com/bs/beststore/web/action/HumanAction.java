@@ -28,6 +28,8 @@ public class HumanAction {
 
 	@Resource
 	private HumanBiz humanBiz;
+	
+	private static String strPhoto;
 
 	/**
 	 * 个人信息修改
@@ -41,6 +43,14 @@ public class HumanAction {
 	@RequestMapping("humanInfo.do")
 	public String humanInfo(@RequestParam("file") MultipartFile file,
 			Human human, String time, Model model, HttpSession session) throws IOException {
+		Human h = (Human) session.getAttribute("loginHuman");
+		if(strPhoto==null || strPhoto=="") {
+			if(human.getHphoto()==null || human.getHphoto()=="") {
+				human.setHphoto(humanBiz.findByHid(h).getHphoto());
+			}
+		}else {
+			human.setHphoto(strPhoto);
+		}
 		if (!file.isEmpty()) {
 			String fileName = file.getOriginalFilename();
 			if (fileName.length() > 32) {
@@ -53,6 +63,7 @@ public class HumanAction {
 			} 
 			file.transferTo(f);
 			human.setHphoto(fileName);
+			strPhoto=fileName;
 		}
 		// 设置生日时间
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -61,17 +72,20 @@ public class HumanAction {
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
-		Human h = (Human) session.getAttribute("loginHuman");
 		human.setHid(h.getHid());
+		
 		try {
 			humanBiz.upload(human);
 			model.addAttribute("success", "信息修改成功!");
+			strPhoto=null;
 			// 更新loginHuman
 			session.setAttribute("loginHuman", humanBiz.findByHid(human));
 			return "userInfo";
 		} catch (BizException e) {
 			model.addAttribute("error", e.getMessage());
-			session.setAttribute("loginHuman", humanBiz.findByHid(human));
+			//session.setAttribute("loginHuman", humanBiz.findByHid(human));
+			model.addAttribute("loginHuman", human);
+			strPhoto=human.getHphoto();
 			return "userInfo";
 		}
 	}
@@ -163,7 +177,7 @@ public class HumanAction {
 		human.setHsex(1);// 默认为男性
 		ArrayList<String> list = CodeUtil.VerificationCode;
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).startsWith(code) && list.get(i).endsWith(emailorphone)) {
+			if (list.get(i).substring(0, 4).equalsIgnoreCase(code) && list.get(i).endsWith(emailorphone)) {
 				humanBiz.register(human);
 				session.setAttribute("hname", human.getHname());// 将登录成功的用户信息存入到session中
 				out.print("OK");
@@ -199,9 +213,6 @@ public class HumanAction {
 				for (Human hm : humanBiz.findByCondition(human)) {
 					// 将传进来的新密码设置到hm上，再进行更新
 					hm.setHpwd(human.getHpwd());
-
-					System.out.println("-------------------------" + hm.getHpwd());
-
 					if (humanBiz.forgetPwd(hm) == 1) {
 						out.print("OK");
 					} else {

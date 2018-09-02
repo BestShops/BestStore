@@ -98,7 +98,7 @@
 			<tr>
 				<th data-options="field:'sname',width:100,align:'center'">店铺名</th>
 				<th data-options="field:'gid',width:80,align:'center'">商品号</th>
-				<th data-options="field:'gname',width:150,align:'center'">商品名</th>
+				<th data-options="field:'gname',width:250,align:'center'">商品名</th>
 				<th data-options="field:'gphotopic',width:140,align:'center',formatter:imgFormatter">商品图片</th>
 				<th data-options="field:'gpublish',width:150,align:'center',formatter:dataFormat">上架时间</th>
 				<th data-options="field:'gdesc',width:220,align:'center'">描述</th>

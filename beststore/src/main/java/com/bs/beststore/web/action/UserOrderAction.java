@@ -261,7 +261,7 @@ public class UserOrderAction {
 		discuss.setDphoto(files);
 		int result = discussBiz.addDiscuss(discuss);
 		if (result == 1) {
-			// TODO：在添加成功后，修改订单详情表的状态，同时判断当前订单下是否所有的商品都已经评价完成，完成后就修改订单状态为评价完成
+			// 在添加成功后，修改订单详情表的状态，同时判断当前订单下是否所有的商品都已经评价完成，完成后就修改订单状态为评价完成
 			ordersdetailBiz.modefiyStatus(odid);
 			if (ordersdetailBiz.checkOrderStatus(oid)) {
 				// 修改订单状态

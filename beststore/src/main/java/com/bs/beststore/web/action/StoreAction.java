@@ -52,9 +52,13 @@ public class StoreAction {
 		Human human = (Human) session.getAttribute("loginHuman");
 		if (humanBiz.check(human)) {
 			// 如果用户信息完整
-			if (storeBiz.findByHid(human.getHid()) == null) {
+			Store storeInfo=storeBiz.findByHid(human.getHid());
+			if (storeInfo == null) {
 				return "openStoreStep1"; 
-			} else {
+			} else if (storeInfo.getSstatus()==0) {
+				model.addAttribute("error", "您的店铺因违规行为已被封禁，您暂无开店资格!");
+				return "openStore";
+			}else{
 				model.addAttribute("error", "您已经创建过店铺了，可以在<a href='welcomePage.do'><Strong>我的U袋</Strong></a>中进入店铺管理");
 				return "openStore";
 			}
@@ -73,15 +77,15 @@ public class StoreAction {
 			model.addAttribute("errorStore", store);
 			return "openStoreStep2";
 		}
-		String desc = store.getSdesc();
-		System.out.println(desc + desc.length());
 		if (store.getSdesc().length() > 50 || store.getSdesc().length() < 8) {
 			model.addAttribute("error2", "店铺描述应该在8-50个字之间");
 			model.addAttribute("errorStore", store);
 			return "openStoreStep2";
 		}
-		storeBiz.register(store);
 		Human human = (Human) session.getAttribute("loginHuman");
+		store.setHid(human.getHid());
+		store.setSgrade(10.0);
+		storeBiz.register(store);
 		humanBiz.changeStatus(human.getHid(), 1);
 		return "openStoreStep3";
 	}
@@ -188,7 +192,6 @@ public class StoreAction {
 		if(loginHuman==null) {
 			return "login";
 		}
-		
 		int[] counts = new int[5];
 		for (int i = 0; i < 5; i++) {
 			counts[i] = ordersBiz.getCount(loginHuman.getHid(), i);
