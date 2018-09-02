@@ -205,5 +205,32 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script type="text/javascript">
+		function del(oid, ostatus) {
+			var index = 0;// 标志符，1为删除
+			if (ostatus==0) {
+				if(confirm("该订单还未支付，如果删除的话订单就会取消，您确定删除吗？")){
+					index = 1;
+				}
+			} else if (ostatus==1 || ostatus==2) {
+				alert("该订单未完成，不能删除");
+			} else if (ostatus==3 || ostatus==4) {
+				if(confirm("该订单删除后，将不能再查看到该订单的具体信息，您确定删除吗？")){
+					index = 1;
+				}
+			}
+			if (index==1) {
+				// 执行删除操作
+				$.post("delOrder.do",{
+					oid:oid
+				},function(data){
+					alert(data);
+					var i = '${requestScope.pageNo}';
+					var type = '${requestScope.type}';
+					window.location.href="userOrderPage.do?pageNo=" + i + "&type=" + type;
+				});
+			}
+		}
+	</script>
 </body>
 </html>

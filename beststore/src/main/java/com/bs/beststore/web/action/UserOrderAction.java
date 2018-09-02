@@ -153,8 +153,8 @@ public class UserOrderAction {
 		Human human = (Human) session.getAttribute("loginHuman");
 		int count = ordersBiz.getCount(human.getHid(), type);
 		// 如果最大的页面数小于当前页面数
-		if (count < pageNo) {
-			pageNo=count;
+		if (count < pageNo && count != 0) {
+			pageNo --;
 		}
 		int[] counts = new int[5];
 		for (int i = 0; i < 5; i++) {
@@ -228,14 +228,15 @@ public class UserOrderAction {
 		model.addAttribute("Info", discussBiz.findInfoByGid(gid).get(0));// 商品信息
 		model.addAttribute("count", discussBiz.getCountByGid(gid));// 商品销量
 		model.addAttribute("goodNum", discussBiz.getGoodByGid(gid));// 商品好评率
-		model.addAttribute("oid", oid);// 商品当前的订单id，用于添加商品评价时
+		model.addAttribute("oid", oid);// 商品当前的订单id，用于添加商品评价时，检索订单是否已经全部评价完
+		model.addAttribute("odid", odid);// 用于修改订单详情的状态
 		return "userOrderEvaluate";
 	}
 	
 	// 添加商品评价
 	@RequestMapping("addDiscuss.do")
 	public void addDiscuss(@RequestParam("file") MultipartFile[] fileArray, 
-			Discuss discuss, PrintWriter out, HttpSession session) throws IllegalStateException, IOException {
+			Discuss discuss, int oid, int odid, PrintWriter out, HttpSession session) throws IllegalStateException, IOException {
 		String files = "";
 		for(int i=0;i<fileArray.length;i++) {
 			MultipartFile file = fileArray[i];
@@ -257,11 +258,20 @@ public class UserOrderAction {
 		}
 		Human human = (Human) session.getAttribute("loginHuman");
 		discuss.setHid(human.getHid());
+		discuss.setOdid(odid);
 		discuss.setDphoto(files);
 		int result = discussBiz.addDiscuss(discuss);
 		if (result == 1) {
-			// TODO：在添加成功后，修改订单详情表的状态，同时判断当前订单下是否所有的商品都已经评价完成，完成后就修改订单状态为评价完成
-			out.print("OK");
+			// 在添加成功后，修改订单详情表的状态，同时判断当前订单下是否所有的商品都已经评价完成，完成后就修改订单状态为评价完成
+			ordersdetailBiz.modefiyStatus(odid);
+			if (ordersdetailBiz.checkOrderStatus(oid)) {
+				// 修改订单状态
+				Orders orders = new Orders();
+				orders.setOid(oid);
+				orders.setOstatus(4);
+				ordersBiz.updateOrders(orders);
+			}
+			out.print(1);
 		} else {
 			out.print("图片上传失败，请稍后重试");
 		}

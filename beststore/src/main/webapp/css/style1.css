@@ -1,0 +1,108 @@
+ul {
+	padding: 0;
+}
+.transition1 {
+	transition: all 0.2s ease-in;
+}
+.tm-m-photos,  .tm-m-photos-thumb {
+	zoom: 1;
+}
+.tm-m-photos-thumb {
+	margin: 10px 0;
+	list-style-type: none;
+	height: 45px;
+}
+.tm-m-photos-thumb li {
+	float: left;
+	border: 2px solid #f2f2f2;
+	padding: 2px;
+	margin-right: 8px;
+	position: relative;
+	transition: border-color .2s ease-out;
+}
+.tm-m-photos-thumb .tm-current {
+	border: 2px solid #f23d6a;
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	-o-border-radius: 2px;
+	cursor: auto;
+}
+.tm-m-photo-viewer {
+	position: relative;
+	margin: 10px 0;
+	width: 0;
+	height: 0;
+	/* border: 1px solid #ccc; */
+	background: #fff;
+	/* padding: 2px; */
+	float: left;
+	overflow: hidden;
+}
+.tm-m-photo-viewer-navleft,  .tm-m-photo-viewer-navright {
+	bottom: 0;
+	background: url(http://assets.alicdn.com/s.gif);
+	position: absolute;
+}
+.tm-m-photo-viewer-navleft {
+	top: 0;
+	left: 0;
+	width: 10px;
+	cursor: pointer;
+}
+.tm-m-photo-viewer-navright {
+	top: 0;
+	right: 0;
+	width: 40px;
+	cursor: pointer;
+}
+.tm-photos-arrow {
+	width: 0;
+	height: 0;
+	line-height: 0;
+	font-size: 0;
+	border: 6px dashed transparent;
+	border-top: 6px solid #f23d6a;
+	position: absolute;
+	left: 15px;
+	filter: alpha(opacity=0);
+	opacity: 0;
+	bottom: -8px;
+	background: 0 0;
+}
+.tm-current .tm-photos-arrow {
+	filter: alpha(opacity=100);
+	opacity: 1;
+	bottom: -12px;
+}
+.tm-m-photo-viewer-navleft,  .tm-m-photo-viewer-navright {
+	bottom: 0;
+	background: url(http://assets.alicdn.com/s.gif);
+	position: absolute;
+}
+.tm-m-photo-viewer-navicon {
+	display: none;
+	font-size: 40px;
+	font-style: normal;
+	color: #b8b8b8;
+	cursor: pointer;
+}
+.tm-m-photo-viewer-navright .tm-m-photo-viewer-navicon {
+	position: absolute;
+	top: 50%;
+	right: 8px;
+}
+.tm-m-photo-viewer-navleft .tm-m-photo-viewer-navicon {
+	position: absolute;
+	top: 50%;
+	left: 8px;
+}
+.tm-m-photos-thumb img {
+	display: block;
+	width: 40px;
+	height: 40px;
+	cursor: url(images/T1nTBDFCRbXXbzTk_b-25-20.png), url(http://assets.alicdn.com/img/common/zoom_in.cur), auto;
+}
+.tm-m-photo-viewer,  .tm-m-photo-viewer img,  .tm-m-photos-thumb .tm-current img {
+	cursor: url(images/T1oq4AFupvXXcu5FDa-20-20.png), url(http://assets.alicdn.com/img/common/zoom_out.cur), auto;
+}

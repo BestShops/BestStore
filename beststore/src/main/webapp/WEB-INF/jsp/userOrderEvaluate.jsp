@@ -99,12 +99,18 @@
 										dstatus = 2;
 									}
 									var gid = '${Info.GID}';
+									var oid = '${oid}';
+									var odid = '${odid}';
+									console.info(oid);
+									console.info(odid);
 									var drank = $("input[name='opinion']:checked").val();
 									var depict = $("#depict").val();
 									if (depict.length > 80) {
 										alert("评价描述的长度适合在15~80字之间，请不要超出范围");
 									}
 									formData.append('gid',gid);
+									formData.append('oid',oid);
+									formData.append('odid',odid);
 									formData.append('drank',drank);
 									formData.append('depict',depict);
 									formData.append('dstatus',dstatus);
@@ -113,12 +119,27 @@
 									xhr.open("POST","addDiscuss.do", true);
 									xhr.send(formData);
 									xhr.onload = function(data) {
+										/* console.info(data);
 										if (data == "OK") {
 											alert("提交成功");
 											// 返回到订单详情
 											window.location.href="userOrderDetailPage.do?oid=${Info.OID}";
 										}
-										alert(data);
+										alert(data); */
+										if (xhr.readyState==4) {// 4 = "loaded"
+										  if (xhr.status==200) {// 200 = OK
+										    var data = xhr.responseText;
+										    if (data == 1) {// 订单全部评价完成
+												alert("提交成功");
+												// 返回到订单详情
+												window.location.href="userOrderDetailPage.do?oid=" + oid;
+											} else {
+												alert(data); 
+											}
+										  } else {
+										    alert("图片上传失败，请稍后重试");
+										  }
+										}
 									}
 								});
 							</script>
