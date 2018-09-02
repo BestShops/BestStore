@@ -32,8 +32,8 @@ commentMove.prototype = {
             var img = new Image();
             img.src = src;
             img.onload = function () {
-                var imageWidth = img.width;
-                var imageHeight = img.height;
+                var imageWidth = 400;
+                var imageHeight = 250;
                 $(that.boxcontent).css({ "width": imageWidth, "height": imageHeight })
                 $(that.obj.prevButton).css({ "width": imageWidth / 3, "height": imageHeight })
                 $(that.obj.prevButton).children().css({ "top": imageHeight / 2 - 10 + 'px' })
