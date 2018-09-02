@@ -171,6 +171,9 @@
 			if ($("#gname").val() == "" || $("#gname").val() == null) {
 				alert("商品名不能为空");
 				return;
+			}else if ($("#gname").val().length>50) {
+				alert("商品名不能超过50个字符");
+				return;
 			} else if ($("#gnowprice").val() == ""
 					|| $("#gnowprice").val() == null) {
 				alert("商品现价不能为空");
@@ -200,6 +203,9 @@
 	function save() {
 		if ($("#gname").val() == "" || $("#gname").val() == null) {
 			alert("商品名不能为空");
+			return;
+		}else if ($("#gname").val().length>50) {
+			alert("商品名不能超过50个字符");
 			return;
 		} else if ($("#gnowprice").val() == "" || $("#gnowprice").val() == null) {
 			alert("商品现价不能为空");
@@ -357,7 +363,7 @@
 				<tr>
 					<td>商品名：</td>
 					<td><input class="easyui-textbox" name="gname" id="gname"
-						style="width: 100%"></td>
+						style="width: 100%" placeholder="50字以内"></td>
 				</tr>
 				<tr>
 					<td>原价：</td>

@@ -10,20 +10,21 @@
 	<!-- 标签库配置文件 -->
     <tag>
     	<name>page</name>
+    	<!-- PageTag的类路径 -->
     	<tag-class>com.bs.beststore.web.tags.PageTag</tag-class>
     	<body-content>empty</body-content>
     	<attribute>
-    		<name>href</name>
+    		<name>href</name>	<!-- 链接 -->
     		<required>true</required>
     		<rtexprvalue>true</rtexprvalue>
     	</attribute>
     	<attribute>
-    		<name>rows</name>
+    		<name>rows</name>	<!-- 每页行数 -->
     		<required>true</required>
     		<rtexprvalue>true</rtexprvalue>
     	</attribute>
     	<attribute>
-    		<name>total</name>
+    		<name>total</name>	<!-- 总行数 -->
     		<required>true</required>
     		<rtexprvalue>true</rtexprvalue>
     	</attribute>
