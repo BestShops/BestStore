@@ -5,7 +5,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Best Store后台管理系统</title>
-<link type="text/css" rel="stylesheet" href="${basePath }/css/backLogin.css">
+<link type="text/css" rel="stylesheet" href="${basePath }/css/superBackLogin.css">
 </head>
 <body style="overflow: hidden">
 	<div class="pagewrap">

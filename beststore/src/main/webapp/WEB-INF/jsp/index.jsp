@@ -11,7 +11,7 @@
 		<div class="swiper-wrapper">
 			<c:forEach items="${newGoods }" var="c">
 				<div class="swiper-slide">
-					<a href="goodsShowPage.do?gid=${c.GID }"><img
+					<a href="goodsShowPage.todo?gid=${c.GID }"><img
 						src="${basePath }/upload/${c.GPHOTOPIC}" class="cover"></a>
 				</div>
 			</c:forEach>
@@ -39,7 +39,7 @@
 					</a>
 					<div class="right-box hot-box">
 						<c:forEach items="${hotGoods }" var="c">
-							<a href="goodsShowPage.do?gid=${c.GID }" class="floor-item">
+							<a href="goodsShowPage.todo?gid=${c.GID }" class="floor-item">
 								<div class="item-img hot-img">
 									<img src="${basePath }/upload/${c.GPHOTOPIC}" class="cover">
 								</div>
@@ -52,7 +52,7 @@
 							</a>
 						</c:forEach>
 						<c:forEach items="${reduceGoods }" var="c">
-							<a href="goodsShowPage.do?gid=${c.GID }" class="floor-item">
+							<a href="goodsShowPage.todo?gid=${c.GID }" class="floor-item">
 								<div class="item-img hot-img">
 									<img src="${basePath }/upload/${c.GPHOTOPIC}" class="cover">
 								</div>
@@ -105,7 +105,7 @@
 							</a>
 						</div>
 						<div class="but-div">
-							<a href="goodsQueryPage.do"> <i class="but-icon"></i>
+							<a href="goodsQueryPage.todo"> <i class="but-icon"></i>
 								<p>热卖专区</p>
 							</a>
 						</div>
@@ -115,7 +115,7 @@
 							</a>
 						</div>
 						<div class="but-div">
-							<a href="goodsQueryPage.do"> <i class="but-icon"></i>
+							<a href="goodsQueryPage.todo"> <i class="but-icon"></i>
 								<p>折扣专区</p>
 							</a>
 						</div>
@@ -142,7 +142,7 @@
 				</a>
 				<div class="right-box">
 					<c:forEach items="${goodsIndex }" var="c">
-						<a href="goodsShowPage.do?gid=${c.GID }" class="floor-item">
+						<a href="goodsShowPage.todo?gid=${c.GID }" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="${basePath }/upload/${c.GPHOTOPIC}" class="cover">
 							</div>
@@ -176,7 +176,7 @@
 				</a>
 				<div class="right-box">
 					<c:forEach items="${goodsIndex1 }" var="c">
-						<a href="goodsShowPage.do?gid=${c.GID }" class="floor-item">
+						<a href="goodsShowPage.todo?gid=${c.GID }" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="${basePath }/upload/${c.GPHOTOPIC}" class="cover">
 							</div>
@@ -210,7 +210,7 @@
 				</a>
 				<div class="right-box">
 					<c:forEach items="${goodsIndex2 }" var="c">
-						<a href="goodsShowPage.do?gid=${c.GID }" class="floor-item">
+						<a href="goodsShowPage.todo?gid=${c.GID }" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="${basePath }/upload/${c.GPHOTOPIC}" class="cover">
 							</div>
@@ -244,7 +244,7 @@
 				</a>
 				<div class="right-box">
 					<c:forEach items="${goodsIndex3 }" var="c">
-						<a href="goodsShowPage.do?gid=${c.GID }" class="floor-item">
+						<a href="goodsShowPage.todo?gid=${c.GID }" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="${basePath }/upload/${c.GPHOTOPIC}" class="cover">
 							</div>
@@ -278,7 +278,7 @@
 				</a>
 				<div class="right-box">
 					<c:forEach items="${goodsIndex4 }" var="c">
-						<a href="goodsShowPage.do?gid=${c.GID }" class="floor-item">
+						<a href="goodsShowPage.todo?gid=${c.GID }" class="floor-item">
 							<div class="item-img hot-img">
 								<img src="${basePath }/upload/${c.GPHOTOPIC}" class="cover">
 							</div>

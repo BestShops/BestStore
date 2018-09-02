@@ -26,7 +26,7 @@
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
 				<a href="openStorePage.do">申请网店</a>
-				<a href="">帮助中心</a>
+				<a href="superLoginPage.todo" target="_blank">网站维护</a>
 			</div>
 			<div class="pull-right">
 				<c:if test="${sessionScope.loginHuman==null }">

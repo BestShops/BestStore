@@ -16,7 +16,7 @@
 					<c:forEach items="${list}" var="v">
 						<c:if test="${v.FSTATUS == 1 }">
 						<div class="item-card" id="${v.FID }">
-							<a href="goodsShowPage.do?gid=${v.GID }" class="photo">
+							<a href="goodsShowPage.todo?gid=${v.GID }" class="photo">
 								<img src="upload/${v.GPHOTOPIC }" alt="${v.GNAME }" class="cover">
 								<div class="name">${v.GNAME }</div>
 							</a>
