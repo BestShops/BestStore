@@ -235,12 +235,12 @@
 			<div class="user-info__box">
 				<div class="login-box">
 					<div class="avt-port">
-						<c:if test="${sessionScope.loginHuman!=null }">
+						<c:if test="${sessionScope.loginHuman.hphoto!=null }">
 							<img src="${basePath }/upload/${sessionScope.loginHuman.hphoto }" alt="欢迎来到U袋网"
 								class="cover b-r50">
 						</c:if>
-						<c:if test="${sessionScope.loginHuman==null }">
-							<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
+						<c:if test="${sessionScope.loginHuman.hphoto==null }">
+							<img src="${basePath }/images/icons/default_avt.png" alt="欢迎来到U袋网"
 								class="cover b-r50">
 						</c:if>
 					</div>
@@ -251,8 +251,8 @@
 						<div class="point c6">积分: 30</div>
 						<div class="report-box">
 							<!-- <span class="badge">+30</span>  -->
-							<a class="btn btn-info btn-block disabled" role="button"
-								style="width: 140px;">距离生日还剩<span style="color:white;">${birthTime }</span>天</a>
+								<a class="btn btn-info btn-block disabled" role="button"
+									style="width: 140px;">距离生日还剩<span style="color:white;">${birthTime }</span>天</a>
 						</div>
 					</c:if>
 

@@ -285,9 +285,9 @@ public class IndexAction {
 		if (AccountValidatorUtil.isEmail(email)) {
 			new Thread(new MailUtil(email, code)).start();
 		} else if (AccountValidatorUtil.isMobile(email)) {
-			new Thread(new SmsUtil(email, code)).start();
+			new Thread(new SmsUtil(email, code)).start();   
 		} else {
-			out.print("手机/邮箱输入错误，请重新输入！");
+			out.print("手机/邮箱输入错误，请重新输入!");
 		}
 		out.print("OK");
 	}

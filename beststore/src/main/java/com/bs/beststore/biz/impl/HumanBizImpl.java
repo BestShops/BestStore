@@ -126,13 +126,13 @@ public class HumanBizImpl implements HumanBiz {
 			// 该信息不能与其他用户的信息重复
 			if (h.getHid() != human.getHid() && !h.getHid().equals(human.getHid())) {
 				if (human.getHname().equals(h.getHname())) {
-					throw new BizException("用户名不能重复");
+					throw new BizException("用户名已存在");
 				} else if (human.getHidcard() == h.getHidcard() || human.getHidcard().equals(h.getHidcard())) {
-					throw new BizException("身份证号不能重复");
+					throw new BizException("身份证已注册");
 				} else if (human.getHphone() == h.getHphone() || human.getHphone().equals(h.getHphone())) {
-					throw new BizException("电话号码不能重复");
+					throw new BizException("电话号已注册");
 				} else if (human.getHemail() == h.getHemail() || human.getHemail().equals(h.getHemail())) {
-					throw new BizException("邮箱地址不能重复");
+					throw new BizException("邮箱已注册");
 				} 
 			}
 		}
@@ -278,5 +278,21 @@ public class HumanBizImpl implements HumanBiz {
 			day=humanMapper.birthTime1(human.getHid());
 		}
 		return day;
+	}
+
+	@Override
+	public List<Human> findByPhoneOrEmail(Human human) {
+		HumanExample humanExample3 = new HumanExample();
+		Criteria criteria3 = humanExample3.createCriteria();
+		if(human.getHemail()!=null) {
+			String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
+			// 匹配邮箱
+			if (Pattern.matches(RULE_EMAIL, human.getHemail())) {
+				criteria3.andHemailEqualTo(human.getHemail());
+			}else {
+				criteria3.andHphoneEqualTo(Long.valueOf(human.getHemail()));
+			}
+		}
+		return humanMapper.selectByExample(humanExample3);
 	}
 }

@@ -58,8 +58,8 @@ public class StoreAction {
 			} else if (storeInfo.getSstatus()==0) {
 				model.addAttribute("error", "您的店铺因违规行为已被封禁，您暂无开店资格!");
 				return "openStore";
-			}else{
-				model.addAttribute("error", "您已经创建过店铺了，可以在<a href='welcomePage.do'><Strong>我的U袋</Strong></a>中进入店铺管理");
+			}else{													
+				model.addAttribute("error", "您已经创建过店铺了，<a href='backPage.todo' target='_blank'><Strong>去管理我的店铺</Strong></a>");
 				return "openStore";
 			}
 		} else {

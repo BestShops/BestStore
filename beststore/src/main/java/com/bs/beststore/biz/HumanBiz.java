@@ -88,5 +88,11 @@ public interface HumanBiz {
 	 * 计算距离生日多少天
 	 */
 	long birthTime(Human human);
+	
+	/**
+	 * 判断手机号或者邮箱是否被注册
+	 * @param human
+	 */
+	List<Human> findByPhoneOrEmail(Human human);
 
 }
