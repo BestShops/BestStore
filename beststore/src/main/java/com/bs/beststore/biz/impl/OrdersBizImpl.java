@@ -73,19 +73,16 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public List<Map<String, Object>> findOrderBySid(Orders orders, int sid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Orders findByOid(int oid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<Map<String, Object>> findInfoByOid(int oid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
