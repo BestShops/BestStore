@@ -15,12 +15,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.GoodsBiz;
+import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
 import com.bs.beststore.util.MailUtil;
 import com.bs.beststore.util.SmsUtil;
 import com.bs.beststore.util.VerifyCodeUtil;
+import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Type;
 
 /**
@@ -33,6 +35,8 @@ public class IndexAction {
 	private TypeBiz typeBiz;
 	@Resource
 	private GoodsBiz goodsBiz;
+	@Resource
+	private HumanBiz humanBiz;
 
 	// 超级管理员登录界面
 	@RequestMapping(path = "superLoginPage.todo")
@@ -76,7 +80,8 @@ public class IndexAction {
 
 	@RequestMapping(path = { "/", "index" })
 	// 主页
-	public String index(Model model){
+	public String index(Model model,HttpSession session){
+		Human human=(Human) session.getAttribute("loginHuman");
 		List<Type> firstList=typeBiz.selectFirstInfo();
 		model.addAttribute("firstList", firstList);
 		List<Map<String,Object>> list=typeBiz.findTypeToIndex(firstList.get(0).getTid());
@@ -109,6 +114,9 @@ public class IndexAction {
 		}
 		List<Map<String,Object>> newGoodsList=goodsBiz.reduceHotGoods(5);
 		model.addAttribute("newGoods",newGoodsList);
+		if(human!=null) {
+			model.addAttribute("birthTime",humanBiz.birthTime(human));
+		}
 		return "index";
 	}
 

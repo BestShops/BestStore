@@ -11,7 +11,7 @@
 				<div class="user-content__box clearfix bgf">
 					<div class="title">我的店铺-店铺管理</div>
 					<br>
-					<a href="backPage.todo">店铺后台管理，点击此处>>></a>
+					<a href="backPage.todo" target="_blank">店铺后台管理，点击此处>>></a>
 					<br>
 				</div>
 			</div>

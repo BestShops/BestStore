@@ -83,5 +83,10 @@ public interface HumanBiz {
 	 * @param limit	状态
 	 */
 	void changeStatus(int hid, int limit);
+	
+	/**
+	 * 计算距离生日多少天
+	 */
+	long birthTime(Human human);
 
 }

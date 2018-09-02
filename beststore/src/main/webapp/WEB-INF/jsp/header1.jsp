@@ -96,7 +96,7 @@
 										</c:if>
 										<div class="genre-list">
 											<c:forEach items="${thirdList }" var="vv">
-												<c:if test="${secondType.get(abc.index).tname2==vv.name2 }">
+												<c:if test="${(secondType.get(abc.index).tname2==vv.name2) && firstList.get(0).tpriname==vv.name1 }">
 													<a href="">${vv.name3 }</a>
 												</c:if>
 											</c:forEach>
@@ -125,7 +125,7 @@
 										</c:if>
 										<div class="genre-list">
 											<c:forEach items="${thirdList }" var="vv">
-												<c:if test="${secondType1.get(abc.index).tname2==vv.name2 }">
+												<c:if test="${(secondType1.get(abc.index).tname2==vv.name2) && firstList.get(1).tpriname==vv.name1 }">
 													<a href="">${vv.name3 }</a>
 												</c:if>
 											</c:forEach>
@@ -140,8 +140,9 @@
 							<i class="iconfont icon-bao ce"></i> ${firstList.get(2).tpriname }
 						</div>
 						<ul class="cat-list clearfix">
-							<li>女士包包</li>
-							<li>男士包包</li>
+							<c:forEach items="${secondType2 }" var="c">
+								<li>${c.tname2 }</li>
+							</c:forEach>
 						</ul>
 						<div class="cat-list__deploy">
 							<div class="deploy-box">
@@ -152,7 +153,7 @@
 										</c:if>
 										<div class="genre-list">
 											<c:forEach items="${thirdList }" var="vv">
-												<c:if test="${secondType2.get(abc.index).tname2==vv.name2 }">
+												<c:if test="${(secondType2.get(abc.index).tname2==vv.name2) && firstList.get(2).tpriname==vv.name1 }">
 													<a href="">${vv.name3 }</a>
 												</c:if>
 											</c:forEach>
@@ -180,7 +181,7 @@
 										</c:if>
 										<div class="genre-list">
 											<c:forEach items="${thirdList }" var="vv">
-												<c:if test="${secondType3.get(abc.index).tname2==vv.name2 }">
+												<c:if test="${(secondType3.get(abc.index).tname2==vv.name2) && firstList.get(3).tpriname==vv.name1 }">
 													<a href="">${vv.name3 }</a>
 												</c:if>
 											</c:forEach>
@@ -209,7 +210,7 @@
 										</c:if>
 										<div class="genre-list">
 											<c:forEach items="${thirdList }" var="vv">
-												<c:if test="${secondType4.get(abc.index).tname2==vv.name2 }">
+												<c:if test="${(secondType4.get(abc.index).tname2==vv.name2) && firstList.get(4).tpriname==vv.name1 }">
 													<a href="">${vv.name3 }</a>
 												</c:if>
 											</c:forEach>
@@ -230,13 +231,18 @@
 				<a href="blogPage.do"><li>博客</li></a>
 				<a href="openStorePage.do"><li>申请网店</li></a>
 				<a href="userInfoPage.do"><li>个人中心</li></a>
-				<!-- <a href="aboutUsPage.do"><li>了解我们</li></a> -->
 			</ul>
 			<div class="user-info__box">
 				<div class="login-box">
 					<div class="avt-port">
-						<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
-							class="cover b-r50">
+						<c:if test="${sessionScope.loginHuman!=null }">
+							<img src="${basePath }/upload/${sessionScope.loginHuman.hphoto }" alt="欢迎来到U袋网"
+								class="cover b-r50">
+						</c:if>
+						<c:if test="${sessionScope.loginHuman==null }">
+							<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
+								class="cover b-r50">
+						</c:if>
 					</div>
 					<c:if test="${sessionScope.loginHuman!=null }">
 						<div class="name c6">
@@ -244,9 +250,9 @@
 						</div>
 						<div class="point c6">积分: 30</div>
 						<div class="report-box">
-							<span class="badge">+30</span> <a
-								class="btn btn-info btn-block disabled" href="#" role="button"
-								style="width: 140px;">已签到1天</a>
+							<!-- <span class="badge">+30</span>  -->
+							<a class="btn btn-info btn-block disabled" role="button"
+								style="width: 140px;">距离生日还剩<span style="color:white;">${birthTime }</span>天</a>
 						</div>
 					</c:if>
 
@@ -255,7 +261,7 @@
 							<a href="userLoginPage.do">点此登录</a>，发现更多精彩
 						</div>
 						<a class="btn btn-primary btn-block" href="userLoginPage.do"
-							role="button" style="width: 140px; margin-left: 25px;">签到领积分</a>
+							role="button" style="width: 140px; margin-left: 25px;">查看生日</a>
 					</c:if>
 				</div>
 				<div class="agent-box">
