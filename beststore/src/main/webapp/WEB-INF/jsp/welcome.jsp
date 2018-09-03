@@ -183,7 +183,7 @@
 						<div class="swiper-wrapper">
 							<c:forEach items="${goodsList}" var="g" varStatus="num">
 								<c:if test="${num.index%5==1}"><div class="swiper-slide"></c:if>
-								<a class="picked-item" href="goodsShowPage.do?gid=${g.gid}">
+								<a class="picked-item" href="goodsShowPage.todo?gid=${g.gid}">
 									<img src="upload/${g.gphotopic}" alt="" class="cover">
 									<div class="look_price">¥${g.gnowprice}</div>
 								</a>

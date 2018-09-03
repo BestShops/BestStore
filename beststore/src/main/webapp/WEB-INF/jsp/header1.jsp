@@ -27,7 +27,8 @@
 				<div class="pull-left">
 					嗨，欢迎来到<span class="cr">U袋网</span>
 				</div>
-				<a href="openStorePage.do">申请网店</a> <a href="">帮助中心</a>
+				<a href="openStorePage.do">申请网店</a> 
+				<a href="superLoginPage.todo" target="_blank">网站维护</a>
 			</div>
 			<div class="pull-right">
 				<c:if test="${sessionScope.loginHuman==null }">
@@ -225,7 +226,7 @@
 			<ul class="nva-list">
 
 				<a href="index"><li class="active">首页</li></a>
-				<a href="goodsQueryPage.do"><li>商品筛选</li></a>
+				<a href="goodsQueryPage.todo"><li>商品筛选</li></a>
 				<a href="matchPage.do"><li>智能匹配</li></a>
 				<a href="classRoomPage.do"><li>U袋学堂</li></a>
 				<a href="blogPage.do"><li>博客</li></a>
@@ -235,12 +236,12 @@
 			<div class="user-info__box">
 				<div class="login-box">
 					<div class="avt-port">
-						<c:if test="${sessionScope.loginHuman!=null }">
+						<c:if test="${sessionScope.loginHuman.hphoto!=null }">
 							<img src="${basePath }/upload/${sessionScope.loginHuman.hphoto }" alt="欢迎来到U袋网"
 								class="cover b-r50">
 						</c:if>
-						<c:if test="${sessionScope.loginHuman==null }">
-							<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
+						<c:if test="${sessionScope.loginHuman.hphoto==null }">
+							<img src="${basePath }/images/icons/default_avt.png" alt="欢迎来到U袋网"
 								class="cover b-r50">
 						</c:if>
 					</div>
@@ -251,8 +252,8 @@
 						<div class="point c6">积分: 30</div>
 						<div class="report-box">
 							<!-- <span class="badge">+30</span>  -->
-							<a class="btn btn-info btn-block disabled" role="button"
-								style="width: 140px;">距离生日还剩<span style="color:white;">${birthTime }</span>天</a>
+								<a class="btn btn-info btn-block disabled" role="button"
+									style="width: 140px;">距离生日还剩<span style="color:white;">${birthTime }</span>天</a>
 						</div>
 					</c:if>
 

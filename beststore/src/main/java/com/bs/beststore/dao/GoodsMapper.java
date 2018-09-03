@@ -30,7 +30,7 @@ public interface GoodsMapper {
 			+ " left join type t on g.tid=t.tid "
 			+ " left join store s on g.sid=s.sid "
 			+ " left join discuss d on g.gid=d.gid "
-			+ " where g.gid=#{gid}")
+			+ " where g.gid=#{gid} and g.gstatus=1 and s.sstatus=1")
 	List<Map<String, Object>> findByGid(@Param("gid") int gid);
 
 	// 商品类型id
@@ -89,11 +89,11 @@ public interface GoodsMapper {
 			@Param("maxPrice") Double maxPrice);
 	
 	//热销商品
-	@Select("select a.*,sum(b.num) num from goods a left join ordersdetail b on a.gid=b.gid left join orders c on b.oid=c.oid " + 
-			"where c.ostatus>0 and c.ostatus<5 and a.gstatus=1 group by a.gid order by sum(b.num) desc limit 0,6;")
+	@Select("select a.*,sum(b.num) num from goods a left join ordersdetail b on a.gid=b.gid left join orders c on b.oid=c.oid left join store d on d.sid=a.sid " + 
+			"where c.ostatus>0 and c.ostatus<5 and a.gstatus=1 and d.sstatus=1 group by a.gid order by sum(b.num) desc limit 0,6;")
 	List<Map<String, Object>> findHotGoods();
 	
-	@Select("select * from goods where gstatus=1 order by gpublish desc limit 0,#{rows}")
+	@Select("select * from goods g left join store s on g.sid=s.sid where gstatus=1 and s.sstatus=1 order by gpublish desc limit 0,#{rows}")
 	List<Map<String, Object>> reduceHotGoods(@Param("rows")int rows);
 	
     /**

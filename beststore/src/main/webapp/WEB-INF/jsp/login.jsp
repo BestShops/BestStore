@@ -34,7 +34,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="login_phone" required placeholder="用户名/手机号/邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="login_phone" required placeholder="用户名/手机号/邮箱" autocomplete="on" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -78,7 +78,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机/邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_phone" required placeholder="手机/邮箱" autocomplete="on" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -86,7 +86,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="register_name" required placeholder="用户名" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="register_name" required placeholder="用户名" autocomplete="on" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -146,7 +146,7 @@
 								<div class="input-group-addon">
 									<span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
 								</div>
-								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="邮箱" autocomplete="off" type="text">
+								<input class="form-control phone" name="phone" id="resetpwd_phone" required placeholder="邮箱" autocomplete="on" type="text">
 							</div>
 						</div>
 						<div class="form-group">
@@ -251,17 +251,25 @@
 						if( !re.test(email) && !ph.test(email) ){
 							$("#register_error").html(msgtemp('<strong>手机/邮箱错误</strong> 请输入正确的手机/邮箱','alert-warning')); 
 							return;
-						} 
-						$.post("code.todo",{
-							email:email
-						},function(date){
-							if(date == "OK") {
-								$("#register_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
-								$('#code_submit').rewire(60);
-							} else {
+						}
+						$.post("checkPhoneAndEmail.todo",{hemail:email},function(data){
+							if(data!="OK"){
 								$("#register_error").html(msgtemp(data, 'alert-warning'));
+								return;
+							}else{
+								$.post("code.todo",{
+									email:email
+								},function(data){
+									if(data == "OK") {
+										$("#register_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
+										$('#code_submit').rewire(60);
+									} else {
+										$("#register_error").html(msgtemp(data, 'alert-warning'));
+									}
+								});
 							}
 						});
+						
 					});
 					
 					// 验证用户名是否存在的失焦事件
@@ -348,8 +356,8 @@
 						} 
 						$.post("code.todo",{
 							email:email
-						},function(date){
-							if(date == "OK") {
+						},function(data){
+							if(data == "OK") {
 								$("#resetpwd_error").html(msgtemp('验证码 <strong>已发送</strong>','alert-success'));
 								$('#resetcode_submit').rewire(60);
 							} else {
@@ -384,6 +392,7 @@
 							}
 						});
 					});
+					
 				});
 			</script>
 		</div>

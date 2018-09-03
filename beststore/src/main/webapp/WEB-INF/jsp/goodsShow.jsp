@@ -41,7 +41,6 @@
 				<div class="item-info__box">
 					<div class="item-title">
 						<div class="name ep2">${list.get(0).GNAME }</div>
-						<div class="sale cr">优惠活动：该商品享受8折优惠</div>
 					</div>
 					<div class="item-price bgf5">
 						<div class="price-box clearfix">
@@ -52,7 +51,6 @@
 							<div class="vip-price-panel pull-right">
 								会员等级价格 <i class="iconfont icon-down"></i>
 								<ul class="all-price__box">
-									<!-- 登陆后可见 -->
 									<li><span class="text-justify">普通：</span>40.00元</li>
 									<li><span class="text-justify">银牌：</span>38.00元</li>
 									<li><span class="text-justify">超级：</span>28.00元</li>
@@ -74,9 +72,6 @@
 								});
 							});
 						</script>
-						</div>
-						<div class="c6">
-							普通会员限购 2 件，想要<u class="cr"><a href="">购买更多</a></u>？
 						</div>
 					</div>
 					<ul class="item-ind-panel clearfix">

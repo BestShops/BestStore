@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -181,6 +182,8 @@ public class HumanAction {
 				humanBiz.register(human);
 				session.setAttribute("hname", human.getHname());// 将登录成功的用户信息存入到session中
 				out.print("OK");
+			}else {
+				out.print("验证码错误!");
 			}
 		}
 	}
@@ -240,8 +243,9 @@ public class HumanAction {
 		}
 	}
 
-	@RequestMapping("checkPwd.do")
+	
 	// 检查原密码是否正确
+	@RequestMapping("checkPwd.do")
 	public void checkPwd(Human human, PrintWriter out, HttpSession session) {
 		Human loginHuman = (Human) session.getAttribute("loginHuman");
 		if(loginHuman.getHpwd().equals(MD5Util.MD5(loginHuman.getHname() + human.getHpwd()))) {
@@ -250,6 +254,17 @@ public class HumanAction {
 			out.print("密码不能为空");
 		} else {
 			out.print("密码输入错误");
+		}
+	}
+	
+	//检查手机号和邮箱是否已经被注册了
+	@RequestMapping("checkPhoneAndEmail.todo")
+	public void checkPhoneAndEmail(Human human, PrintWriter out) {
+		List<Human> list=humanBiz.findByPhoneOrEmail(human);
+		if(list==null || list.size()<=0) {
+			out.print("OK");
+		}else {
+			out.print("手机号/邮箱已被注册!");
 		}
 	}
 

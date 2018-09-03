@@ -25,11 +25,12 @@ INSERT INTO store VALUES ('1000', 'champion', '冠军', '9.60', '1', '100-20,200
 INSERT INTO store VALUES ('1002', 'adidas', '亚军', '2.60', '1', null, '2018-08-28 15:49:44', '1002');
 INSERT INTO store VALUES ('1006', '国潮', '顾客是上帝喵喵喵', '10.00', '1', null, '2018-09-01 17:40:42', '1007');
 
-INSERT INTO blog VALUES ('1', 'and', '这是个好的博客', 'adzx.jpg', '2018-08-30 16:37:32', '1', '1000');
-INSERT INTO blog VALUES ('2', '好看的', '小IE二姐', 'image-1.jpg', '2018-08-30 16:37:55', '0', '1000');
-INSERT INTO blog VALUES ('3', '故事开始了', '你猜是什么', 'image-5.jpg', '2018-08-30 16:37:28', '1', '1000');
-INSERT INTO blog VALUES ('4', '大学生事件', '十四名大学生坐木桥拍照出事儿了', 'image-3.jpg', '2018-08-30 15:14:41', '1', '1000');
-INSERT INTO blog VALUES ('5', '地铁叭叭叭', '地铁门关不上乘客纷乱', 'image-4.jpg', '2018-08-30 15:14:46', '1', '1000');
+INSERT INTO blog VALUES ('1', '男士钱包', '爆款限量', 'TB2D3gvcwR9252172.jpg', '2018-09-02 08:47:12', '0', '1000');
+INSERT INTO blog VALUES ('2', '女夏装牛仔裤', '限量销售', 'O1CN762.jpg', '2018-09-02 08:47:36', '0', '1000');
+INSERT INTO blog VALUES ('3', '黑了白了配', '你猜是什么', '2018-09-01_163253.jpg', '2018-09-02 08:48:09', '0', '1000');
+INSERT INTO blog VALUES ('4', '大学生事件', '十四名大学生坐木桥拍照出事儿了', 'sdggrhdfffffges.jpg', '2018-09-02 08:48:21', '0', '1000');
+INSERT INTO blog VALUES ('5', '地铁叭叭叭', '地铁门关不上乘客纷乱', 'TB2rmabk21T31005.jpg', '2018-09-02 08:48:36', '0', '1000');
+
 
 INSERT INTO type VALUES ('1', '女装', null);
 INSERT INTO type VALUES ('2', '下装', '1');
