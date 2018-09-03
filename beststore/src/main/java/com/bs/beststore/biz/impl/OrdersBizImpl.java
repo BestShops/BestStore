@@ -43,8 +43,8 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public int deleteOrders(Orders orders) {
-		// 状态为5的时候是删除
-		orders.setOstatus(5);
+		// 状态为6的时候是删除
+		orders.setOstatus(6);
 		return OrdersMapper.updateByPrimaryKeySelective(orders);
 	}
 

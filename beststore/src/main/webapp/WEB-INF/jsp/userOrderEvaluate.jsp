@@ -131,8 +131,8 @@
 										    var data = xhr.responseText;
 										    if (data == 1) {// 订单全部评价完成
 												alert("提交成功");
-												// 返回到订单详情
-												window.location.href="userOrderDetailPage.do?oid=" + oid;
+												// 跳到评论显示页面
+												window.location.href="EvaluatePage.do?odid=" + odid;
 											} else {
 												alert(data); 
 											}

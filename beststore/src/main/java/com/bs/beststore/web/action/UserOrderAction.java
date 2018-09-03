@@ -256,6 +256,8 @@ public class UserOrderAction {
 		        files +=  "," + fileName;
 			}
 		}
+		files  =files.substring(1, files.length());
+		System.out.println(files.length());
 		Human human = (Human) session.getAttribute("loginHuman");
 		discuss.setHid(human.getHid());
 		discuss.setOdid(odid);

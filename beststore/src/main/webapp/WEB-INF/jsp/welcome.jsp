@@ -70,7 +70,7 @@
 							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=1">待发货 <span class="cr">${counts[1]}</span></a></li>
 							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=2">待收货 <span class="cr">${counts[2]}</span></a></li>
 							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=3">待评价 <span class="cr">${counts[3]}</span></a></li>
-							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=4">待评价 <span class="cr">${counts[4]}</span></a></li>
+							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=4">已评价 <span class="cr">${counts[4]}</span></a></li>
 						</ul>
 						<script type="text/javascript">
 						// 判断当前是选中的那一类选项
