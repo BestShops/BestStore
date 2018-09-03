@@ -13,10 +13,12 @@
 		<section class="item-show__div item-show__head clearfix">
 			<div class="pull-left">
 				<ol class="breadcrumb">
+				
 					<li><a href="index.html">首页</a></li>
 					<li><a href="item_sale_page.html">${list.get(0).TPRINAME }</a></li>
 					<li class="active">${list.get(0).GNAME }</li>
 				</ol>
+				<form action="buyNow.do" method="post">
 				<div class="item-pic__box" id="magnifier">
 					<div class="small-box">
 						<img style="width: 360px;height:360px;" src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
@@ -40,13 +42,19 @@
 	
 				<div class="item-info__box">
 					<div class="item-title">
-						<div class="name ep2">${list.get(0).GNAME }</div>
+						<div class="name ep2"><input name="gid" value="${list.get(0).GID}" type="text" readonly="readonly" 
+								style="width:40px; height:20px; border: 0px; outline:none; cursor: pointer;">
+								${list.get(0).GNAME}</div>
+						<!-- <div class="sale cr">优惠活动：该商品享受8折优惠</div> -->
+
 					</div>
 					<div class="item-price bgf5">
 						<div class="price-box clearfix">
 							<div class="price-panel pull-left">
-								售价：<span class="price">￥${list.get(0).GNOWPRICE }<s
-									class="fz16 c9">￥${list.get(0).GLASTPRICE }</s></span>
+								售价：<span class="price">￥<input name="gprice" value="${list.get(0).GNOWPRICE}" type="text" readonly="readonly" 
+								style="width:40px; height:20px; border: 0px; outline:none; cursor: pointer;">
+								
+								<s class="fz16 c9">￥${list.get(0).GLASTPRICE}</s></span>
 							</div>
 							<div class="vip-price-panel pull-right">
 								会员等级价格 <i class="iconfont icon-down"></i>
@@ -129,7 +137,7 @@
 							<div class="item-metatit">数量：</div>
 							<div class="amount-box">
 								<div class="amount-widget">
-									<input class="amount-input" id="buy_goodsNum" value="1" maxlength="8" title="请输入购买量" type="text">
+									<input class="amount-input" id="buy_goodsNum" name="num" value="1" maxlength="8" title="请输入购买量" type="text">
 									<div class="amount-btn">
 										<a class="amount-but add"></a> <a class="amount-but sub"></a>
 									</div>
@@ -171,8 +179,8 @@
 							</div>
 						</div>
 						<div class="item-action clearfix bgf5">
-							<a href="javascript:;" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button"
-								class="item-action__buy">立即购买</a> 
+							<input type="submit" value="立即购买" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button"
+								class="item-action__buy">
 								
 							<a id="addCart" rel="nofollow" data-addfastbuy="true" role="button" class="item-action__basket"> 
 							<i class="iconfont icon-shopcart"></i> 加入购物车
@@ -180,10 +188,12 @@
 						</div>
 					</div>
 				</div>
+				</form>
 	</div>
 	
 	
 	<script>
+	
 		// 添加购物车按钮
 		$('#addCart').click(function() {
 			var buynum = $("#buy_goodsNum").val();

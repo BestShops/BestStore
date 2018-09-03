@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bs.beststore.biz.BizException;
+import com.bs.beststore.biz.CartBiz;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
@@ -30,6 +31,9 @@ public class HumanAction {
 	@Resource
 	private HumanBiz humanBiz;
 	
+	@Resource
+	private CartBiz cartBiz;
+
 	private static String strPhoto;
 
 	/**
@@ -106,6 +110,8 @@ public class HumanAction {
 		try {
 			loginHuman = humanBiz.login(human, 0);
 			session.setAttribute("loginHuman", loginHuman);// 将登录成功的用户信息存入到session中
+			long count = cartBiz.countByHid(loginHuman.getHid()); // 根据Hid统计购物车条数
+			session.setAttribute("cartCount", count); // 将购物车条数添加至session中，用于显示在页面中
 			out.print("OK");
 		} catch (BizException e) {
 			out.print(e.getMessage());

@@ -49,15 +49,13 @@
 			<div class="pull-right">
 				<div class="user-content__box clearfix bgf">
 					<div class="title">账户信息-个人资料</div>
-					<div class="port b-r50" id="crop-avatar">
-						<div class="img">
-							<c:if test="${loginHuman.hphoto == null || loginHuman.hphoto == ''}">
-								<img name="hphoto" src="images/icons/default_avt.png" class="cover b-r50">
-							</c:if>
-							<c:if test="${loginHuman.hphoto != null && loginHuman.hphoto != ''}">
-								<img name="hphoto" src="upload/${loginHuman.hphoto}" class="cover b-r50">
-							</c:if>
-						</div>
+					<div class="port b-r50  pull-left" id="crop-avatar">
+						<c:if test="${loginHuman.hphoto == null || loginHuman.hphoto == ''}">
+							<img name="hphoto" src="images/icons/default_avt.png" class="cover b-r50">
+						</c:if>
+						<c:if test="${loginHuman.hphoto != null && loginHuman.hphoto != ''}">
+							<img name="hphoto" src="upload/${loginHuman.hphoto}" class="cover b-r50">
+						</c:if>
 					</div>
 					<div style="text-align:right;">
 						<form action="humanInfo.do" method="post" style="padding:20px 10px;width:300px;float:left;" enctype="multipart/form-data">

@@ -21,7 +21,7 @@ public class OrdersBizImpl implements OrdersBiz{
 	
 	@Override
 	public int addOrders(Orders orders) {
-		orders.setOstatus(0);
+		orders.setOstatus(-1);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			orders.setOtime(df.parse(df.format(new Date())));
@@ -43,8 +43,8 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public int deleteOrders(Orders orders) {
-		// 状态为5的时候是删除
-		orders.setOstatus(5);
+		// 状态为6的时候是删除
+		orders.setOstatus(6);
 		return OrdersMapper.updateByPrimaryKeySelective(orders);
 	}
 
@@ -78,7 +78,7 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public Orders findByOid(int oid) {
-		return null;
+		return OrdersMapper.selectByPrimaryKey(oid);
 	}
 
 	@Override

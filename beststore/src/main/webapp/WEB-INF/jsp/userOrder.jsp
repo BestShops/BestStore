@@ -74,7 +74,7 @@
 									</td>
 									<td class="order">
 										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
-										<a href="shopCartPayPage.do?oid=${o.OID}" class="but but-primary">立即付款</a>
+										<a href="pay.do?oid=${o.OID}" class="but but-primary">立即付款</a>
 										<a href="" onclick="del(${o.OID},${o.OSTATUS})" class="but c3">取消订单</a>
 									</td>
 									</c:if>

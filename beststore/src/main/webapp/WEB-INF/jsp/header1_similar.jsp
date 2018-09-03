@@ -68,7 +68,7 @@
 			</div>
 			<div class="cart-box">
 				<a href="shopCartPage.do" class="cart-but">
-					<i class="iconfont icon-shopcart cr fz16"></i> 购物车 0 件
+					<i class="iconfont icon-shopcart cr fz16"></i> 购物车${sessionScope.cartCount } 件
 				</a>
 			</div>
 		</div>

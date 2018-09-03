@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bs.beststore.biz.OrdersdetailBiz;
+import com.bs.beststore.dao.CartMapper;
 import com.bs.beststore.dao.OrdersdetailMapper;
 import com.bs.beststore.vo.Ordersdetail;
 import com.bs.beststore.vo.OrdersdetailExample;
@@ -17,6 +18,9 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 
 	@Autowired
 	private OrdersdetailMapper ordersdetailMapper;
+	
+	@Autowired
+	private CartMapper cartMapper;
 	
 	@Override
 	public int addOrdersDetail(Ordersdetail ordersdetail) {
@@ -36,6 +40,21 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 	@Override
 	public List<Map<String, Object>> findDetailByOid(int oid) {
 		return ordersdetailMapper.findDetailByOid(oid);
+	}
+
+	@SuppressWarnings({ "null", "rawtypes" })
+	@Override
+	public int addOrdersDetailByCart(int hid, int oid) {
+		List<Map<String, Object>> list = cartMapper.selectByHid(hid, 0, 1000);
+		Ordersdetail ordersdetail = new Ordersdetail();
+		for (Map m : list) {
+			ordersdetail.setGid((Integer) m.get("GID"));
+			ordersdetail.setNum((Integer) m.get("CNUM"));
+			ordersdetail.setGprice((Double) m.get("GNOWPRICE"));
+			ordersdetail.setOid(oid);
+			ordersdetailMapper.insertSelective(ordersdetail);
+		}
+		return oid;
 	}
 
 	@Override
