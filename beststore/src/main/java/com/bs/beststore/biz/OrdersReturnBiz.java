@@ -30,5 +30,18 @@ public interface OrdersReturnBiz {
 	 * @param orid
 	 */
 	void delReturn(Ordersreturn ordersreturn);
+	
+	/**
+	 * 店铺退货记录
+	 * @param sid
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	List<Map<String,Object>> findAllOrdersReturn(int sid,int pageNo,int pageSize,Ordersreturn ordersreturn);
+	
+	long findAllOrdersReturnTotal(int sid);
+	
+	int updateReturn(Ordersreturn ordereturn);
 
 }

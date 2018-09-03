@@ -34,7 +34,7 @@
 						class="more"><i class="iconfont icon-more"></i></a>
 				</div>
 				<div class="con-box">
-					<a class="left-img hot-img" href=""> <img
+					<a class="left-img hot-img" href="goodsQueryPage.todo"> <img
 						src="images/floor_1.jpg" alt="" class="cover">
 					</a>
 					<div class="right-box hot-box">
@@ -137,7 +137,7 @@
 				</div>
 			</div>
 			<div class="con-box">
-				<a class="left-img hot-img" href=""> <img
+				<a class="left-img hot-img" href="goodsQueryPage.todo?tid=${firstList.get(0).tid }"> <img
 					src="images/floor_2.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
@@ -171,7 +171,7 @@
 				</div>
 			</div>
 			<div class="con-box">
-				<a class="left-img hot-img" href=""> <img
+				<a class="left-img hot-img" href="goodsQueryPage.todo?tid=${firstList.get(1).tid }"> <img
 					src="images/floor_3.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
@@ -205,7 +205,7 @@
 				</div>
 			</div>
 			<div class="con-box">
-				<a class="left-img hot-img" href=""> <img
+				<a class="left-img hot-img" href="goodsQueryPage.todo?tid=${firstList.get(2).tid }"> <img
 					src="images/floor_5.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
@@ -239,7 +239,7 @@
 				</div>
 			</div>
 			<div class="con-box">
-				<a class="left-img hot-img" href=""> <img
+				<a class="left-img hot-img" href="goodsQueryPage.todo?tid=${firstList.get(3).tid }"> <img
 					src="images/floor_4.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">
@@ -273,7 +273,7 @@
 				</div>
 			</div>
 			<div class="con-box">
-				<a class="left-img hot-img" href=""> <img
+				<a class="left-img hot-img" href="goodsQueryPage.todo?tid=${firstList.get(4).tid }"> <img
 					src="images/floor_6.jpg" alt="" class="cover">
 				</a>
 				<div class="right-box">

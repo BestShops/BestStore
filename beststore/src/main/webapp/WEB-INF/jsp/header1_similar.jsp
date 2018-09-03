@@ -48,10 +48,10 @@
 		<div class="inner">
 			<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
 			<div class="search-box">
-				<form class="input-group">
-					<input placeholder="Ta们都在搜U袋网" type="text">
-					<span class="input-group-btn">
-						<button type="button">
+				<form action="goodsQueryPage.todo" class="input-group" method="post">
+					<input placeholder="Ta们都在搜U袋网" type="text" name="gname"> <span
+						class="input-group-btn">
+						<button type="submit">
 							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 						</button>
 					</span>

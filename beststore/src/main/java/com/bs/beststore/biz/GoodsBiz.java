@@ -3,7 +3,10 @@ package com.bs.beststore.biz;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.bs.beststore.vo.Goods;
+import com.bs.beststore.vo.Type;
 
 public interface GoodsBiz {
 	
@@ -75,5 +78,15 @@ public interface GoodsBiz {
 	 * 热销商品不够6个随机找几个凑
 	 */
 	List<Map<String,Object>> reduceHotGoods(int rows);
+	
+	/**
+	 * 商品筛选界面
+	 * @param page
+	 * @param rows
+	 * @return
+	 */
+	List<Map<String, Object>> goodsQuery(Goods goods,Type type,int tid2,int price1,int price2,int page,int rows);
+	
+	long goodsCountByGoods(Goods goods,Type type,int tid2,int price1,int price2);
 	
 }

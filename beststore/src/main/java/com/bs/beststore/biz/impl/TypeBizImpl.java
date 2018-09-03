@@ -38,10 +38,14 @@ public class TypeBizImpl implements TypeBiz {
 	public int removeType(Type type) throws BizException {
 		int tid = type.getTid();
 		boolean index = checkBiTid(tid);
+		boolean index2 = checkType(tid);
 		if (index) {
-			return typeMapper.deleteByPrimaryKey(tid);
+			if(index2) {
+				return typeMapper.deleteByPrimaryKey(tid);
+			}
+			return -1;
 		} else {
-			throw new BizException("类别中包含有商品");
+			return -2;
 		}
 	}
 
@@ -81,6 +85,19 @@ public class TypeBizImpl implements TypeBiz {
 		criteria.andTidEqualTo(tid);
 		List<Goods> list = goodsMapper.selectByExample(goodsExample);
 		if (list == null || list.size() == 0) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * 查询以tid为父类别的类别(即查询该类别下是否有类别)
+	 * @param tid
+	 * @return
+	 */
+	private boolean checkType(int tid) {
+		List<String> list = typeMapper.selectByTparentid(tid);
+		if(list == null || list.size() == 0) {
 			return true;
 		}
 		return false;

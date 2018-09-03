@@ -65,4 +65,9 @@ public interface OrdersBiz {
 	 */
 	List<Map<String, Object>> findInfoByOid(int oid);
 	
+	//店铺下的所有交易订单
+	List<Map<String,Object>> findAllOrderBySid(int sid,Orders orders, int pageNo, int pageSize);
+	
+	long findOrderBySidTotal(int sid);
+	
 }

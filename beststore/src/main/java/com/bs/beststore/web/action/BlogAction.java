@@ -120,7 +120,6 @@ public class BlogAction {
 	 */
 	@RequestMapping(value="operateBlog.do")
 	public void operateBlog(Blog blog,PrintWriter out) {
-		System.out.println(blog);
 		String data;
 		int result=blogBiz.updateBstatus(blog);
 		if(result>0) {
