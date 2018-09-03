@@ -108,7 +108,8 @@ public class CartAction {
 
 	// 跳转到付款界面
 	@RequestMapping(value = "shopCartPayPage.do")
-	public String shopCartPayPage() {
+	public String shopCartPayPage(int oid, Model model) {
+		model.addAttribute("oid", oid);
 		return "shopCartPay";
 	}
 
