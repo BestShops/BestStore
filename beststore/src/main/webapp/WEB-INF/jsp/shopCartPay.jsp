@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -56,51 +57,54 @@
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车-确认支付 </div>
 				<div class="shop-title">收货地址</div>
-				<form action="" class="shopcart-form__box">
+				<form action="pay.do" method="POST" class="shopcart-form__box">
 					<div class="addr-radio">
+					
+					<c:forEach items="${addresslist}" var="al">
+					<c:if test="${al.astatus == 1 }">
 						<div class="radio-line radio-box active">
-							<label class="radio-label ep" title="福建省 福州市 鼓楼区 温泉街道 五四路159号世界金龙大厦20层B北 福州rpg.blue网络 （喵喵喵 收） 153****9999">
-								<input name="addr" checked="" value="0" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
-								福建省 福州市 鼓楼区 温泉街道
-								五四路159号世界金龙大厦20层B北 福州rpg.blue网络
-								（喵喵喵 收） 153****9999
+							<label class="radio-label ep" title="${al.acity } ${al.alocation } （${al.aconsignee } 收） ${al.aphone }">
+								<input name="aid" checked="" value="${al.aid}" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
+								${al.acity } ${al.alocation }
+								（${al.aconsignee } 收） ${al.aphone }
 							</label>
-							<a href="javascript:;" class="default">默认地址</a>
+							<a class="default">默认地址</a>
 							<a href="addressPage.do" class="edit">修改</a>
 						</div>
+					</c:if>
+					
+					<c:if test="${al.astatus == 0 }">	
 						<div class="radio-line radio-box">
-							<label class="radio-label ep" title="福建省 福州市 鼓楼区 温泉街道 五四路159号世界金龙大厦20层B北 福州rpg.blue网络 （taroxd 收） 153****9999">
-								<input name="addr" value="1" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
-								福建省 福州市 鼓楼区 温泉街道
-								五四路159号世界金龙大厦20层B北 福州rpg.blue网络
-								（taroxd 收） 153****9999
+							<label class="radio-label ep" title="${al.acity } ${al.alocation } （${al.aconsignee } 收） ${al.aphone }">
+								<input name="aid" value="${al.aid}" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
+								${al.acity } ${al.alocation }
+								（${al.aconsignee } 收） ${al.aphone }
 							</label>
-							<a href="" class="default">设为默认地址</a>
+							<a onclick="addressDefault(${al.aid})" class="default">设为默认地址</a>
 							<a href="addressPage.do" class="edit">修改</a>
 						</div>
-						<div class="radio-line radio-box">
-							<label class="radio-label ep" title="福建省 福州市 鼓楼区 温泉街道 五四路159号世界金龙大厦20层B北 福州rpg.blue网络 （喵污喵⑤ 收） 153****9999">
-								<input name="addr" value="2" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
-								福建省 福州市 鼓楼区 温泉街道
-								五四路159号世界金龙大厦20层B北 福州rpg.blue网络
-								（喵污喵⑤ 收） 153****9999
-							</label>
-							<a href="" class="default">设为默认地址</a>
-							<a href="addressPage.do" class="edit">修改</a>
-						</div>
-						<div class="radio-line radio-box">
-							<label class="radio-label ep" title="福建省 福州市 鼓楼区 温泉街道 五四路159号世界金龙大厦20层B北 福州rpg.blue网络 （浴巾打码女 收） 153****9999">
-								<input name="addr" value="2" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
-								福建省 福州市 鼓楼区 温泉街道
-								五四路159号世界金龙大厦20层B北 福州rpg.blue网络
-								（浴巾打码女 收） 153****9999
-							</label>
-							<a href="" class="default">设为默认地址</a>
-							<a href="addressPage.do" class="edit">修改</a>
-						</div>
+					</c:if>
+					
+					</c:forEach>	
+					<script type="text/javascript">
+					// $("input[name='addr']:checked").val()
+						// 设为默认
+						function addressDefault(aid) {
+							if (confirm("您确定要将该地址设置为默认吗？")) {
+								$.post("addressDefault.do",{
+									aid:aid
+								},function(data){
+									if ("OK" == data) {
+										window.location.href="shopCartPayPage.do";
+									}
+								});
+							}
+						}
+					</script>
+					
 					</div>
 					<div class="add_addr"><a href="addressPage.do">添加新地址</a></div>
-					<div class="shop-title">确认订单</div>
+					<div class="shop-title">订单详情</div>
 					<div class="shop-order__detail">
 						<table class="table">
 							<thead>
@@ -114,98 +118,59 @@
 								</tr>
 							</thead>
 							<tbody>
+							
+							<c:forEach items="${listCart }" var="lc">
 								<tr>
-									<th scope="row"><a href="item_show.html"><div class="img"><img src="images/temp/M-003.jpg" alt="" class="cover"></div></a></th>
+									<th scope="row"><a href="item_show.html"><div class="img"><img src="upload/${lc.GPHOTOPIC}" alt="" class="cover"></div></a></th>
 									<td>
-										<div class="name ep3">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
-										<div class="type c9">颜色分类：深棕色  尺码：均码</div>
+										<div class="name ep3">${lc.GNAME }</div>
+										<!--  <div class="type c9">颜色分类：深棕色  尺码：均码</div>  -->
 									</td>
-									<td>¥20.0</td>
-									<td>1</td>
+									<td>${lc.GNOWPRICE}</td>
+									<td>${lc.CNUM}</td>
 									<td>¥0.0</td>
-									<td>¥20.0</td>
+									<td>${lc.GNOWPRICE*lc.CNUM}</td>
 								</tr>
-								<tr>
-									<th scope="row"><a href="item_show.html"><div class="img"><img src="images/temp/S-005.jpg" alt="" class="cover"></div></a></th>
-									<td>
-										<div class="name ep3">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
-										<div class="type c9">颜色分类：深棕色  尺码：均码</div>
-									</td>
-									<td>¥20.0</td>
-									<td>2</td>
-									<td>¥0.0</td>
-									<td>¥40.0</td>
-								</tr>
-								<tr>
-									<th scope="row"><a href="item_show.html"><div class="img"><img src="images/temp/M-007.jpg" alt="" class="cover"></div></a></th>
-									<td>
-										<div class="name ep3">锦瑟 原创传统日常汉服男绣花交领衣裳cp情侣装春夏款</div>
-										<div class="type c9">颜色分类：深棕色  尺码：均码</div>
-									</td>
-									<td>¥20.0</td>
-									<td>1</td>
-									<td>¥0.0</td>
-									<td>¥20.0</td>
-								</tr>
+								<c:set var="lastmoney" value='${lastmoney + lc.GLASTPRICE * lc.CNUM}'></c:set>
+								<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
+							</c:forEach>	
+							
 							</tbody>
 						</table>
 					</div>
 					<div class="shop-cart__info clearfix">
 						<div class="pull-left text-left">
-							<div class="info-line text-nowrap">购买时间：<span class="c6">2017年09月14日 17:31:05</span></div>
+							<div class="info-line text-nowrap">购买时间：<input class="c6" name="ordertime" type="text" readonly="readonly" style="border: 0px;outline:none;cursor: pointer;" value="<fmt:formatDate value="${orders.otime}" type="both"/>"></div>
 							<div class="info-line text-nowrap">交易类型：<span class="c6">担保交易</span></div>
-							<div class="info-line text-nowrap">交易号：<span class="c6">1001001830267490496</span></div>
+							<div class="info-line text-nowrap">交易号：<input class="c6" name="oid" type="text" readonly="readonly" style="width:60px; height:20px; border: 0px;outline:none;cursor: pointer;" value="${order.oid}"></div>
 						</div>
 						<div class="pull-right text-right">
 							<div class="form-group">
-								<label for="coupon" class="control-label">优惠券使用：</label>
-								<select id="coupon" >
-									<option value="-1" selected>- 请选择可使用的优惠券 -</option>
-									<option value="1">【满￥20.0元减￥2.0】</option>
-									<option value="2">【满￥30.0元减￥2.0】</option>
-									<option value="3">【满￥25.0元减￥1.0】</option>
-									<option value="4">【满￥10.0元减￥1.5】</option>
-									<option value="5">【满￥15.0元减￥1.5】</option>
-									<option value="6">【满￥20.0元减￥1.0】</option>
-								</select>
+								<label for="coupon" class="control-label"></label>
 							</div>
-							<script>
-								$('#coupon').bind('change',function() {
-									console.log($(this).val());
-								})
-							</script>
-							<div class="info-line">优惠活动：<span class="c6">无</span></div>
-							<div class="info-line">运费：<span class="c6">¥0.00</span></div>
-							<div class="info-line"><span class="favour-value">已优惠 ¥2.0</span>合计：<b class="fz18 cr">¥18.0</b></div>
-							<div class="info-line fz12 c9">（可获 <span class="c6">20</span> 积分）</div>
+							<div class="info-line">原价：<input class="fz16 cr" name="olastprice" type="text" readonly="readonly" style="width:40px; height:20px; border: 0px;outline:none;cursor: pointer;" value="${lastmoney}"></div>
+							<div class="info-line"><span class="favour-value">已优惠 ¥${lastmoney-money}</span>合计：<input class="fz16 cr" name="onowprice" type="text" readonly="readonly" style="width:40px; height:20px; border: 0px;outline:none;cursor: pointer;" value="${money}"></div>
 						</div>
 					</div>
-					<div class="shop-title">确认订单</div>
+					<div class="shop-title">支付方式</div>
 					<div class="pay-mode__box">
-						<div class="radio-line radio-box">
+						<div class="radio-line radio-box active">
 							<label class="radio-label ep">
-								<input name="pay-mode" value="1" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
-								<span class="fz16">余额支付</span><span class="fz14">（可用余额：¥88.0）</span>
-							</label>
-							<div class="pay-value">支付<b class="fz16 cr">18.00</b>元</div>
-						</div>
-						<div class="radio-line radio-box">
-							<label class="radio-label ep">
-								<input name="pay-mode" value="2" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
+								<input name="paymode" value="1" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
 								<img src="images/icons/alipay.png" alt="支付宝支付">
 							</label>
-							<div class="pay-value">支付<b class="fz16 cr">18.00</b>元</div>
+							<div class="pay-value">支付<b class="fz16 cr">${money}</b>元</div>
 						</div>
 						<div class="radio-line radio-box">
 							<label class="radio-label ep">
-								<input name="pay-mode" value="3" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
+								<input name="paymode" value="2" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
 								<img src="images/icons/paywechat.png" alt="微信支付">
 							</label>
-							<div class="pay-value">支付<b class="fz16 cr">18.00</b>元</div>
+							<div class="pay-value">支付<b class="fz16 cr">${money}</b>元</div>
 						</div>
 					</div>
 					<div class="user-form-group shopcart-submit">
-						<button type="submit" class="btn">继续支付</button>
+						<button type="submit" class="btn">继续支付</button> 
 					</div>
 					<script>
 						$(document).ready(function(){

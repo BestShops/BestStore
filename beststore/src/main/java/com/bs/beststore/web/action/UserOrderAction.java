@@ -153,7 +153,7 @@ public class UserOrderAction {
 		Human human = (Human) session.getAttribute("loginHuman");
 		int count = ordersBiz.getCount(human.getHid(), type);
 		// 如果最大的页面数小于当前页面数
-		if (count < pageNo) {
+		if (count < pageNo && count != 0) {
 			pageNo --;
 		}
 		int[] counts = new int[5];

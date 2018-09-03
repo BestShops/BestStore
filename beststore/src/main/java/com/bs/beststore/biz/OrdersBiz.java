@@ -55,6 +55,7 @@ public interface OrdersBiz {
 	 * 根据oid获取信息
 	 * @param oid
 	 * @return
+	 * @throws  
 	 */
 	Orders findByOid(int oid);
 

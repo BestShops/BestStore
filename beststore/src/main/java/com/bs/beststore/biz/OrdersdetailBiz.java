@@ -35,4 +35,12 @@ public interface OrdersdetailBiz {
 	 * @return
 	 */
 	List<Map<String, Object>> findDetailByOid(int oid);
+
+	/**
+	 * 添加订单详情，将购物车里所有商品复制到订单详情
+	 * @param oid
+	 * @param oid 
+	 * @return
+	 */
+	int addOrdersDetailByCart(int hid, int oid);
 }

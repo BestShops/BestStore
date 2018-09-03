@@ -46,6 +46,7 @@
 								<tr class="order-empty"><td colspan='6'>
 									<div class="empty-msg">最近没有任何订单，家里好像缺了点什么！<br><a href="shopCart.do">要不瞧瞧去？</a></div>
 								</td></tr>
+								</table>
 								</c:if>
 								<c:if test="${requestScope.orderlist!=null && requestScope.orderlist.size() != 0}">
 								<c:forEach items="${requestScope.orderlist}" var="o">
@@ -73,7 +74,7 @@
 									</td>
 									<td class="order">
 										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
-										<a href="shopCartPayPage.do?oid=${o.OID}" class="but but-primary">立即付款</a>
+										<a href="pay.do?oid=${o.OID}" class="but but-primary">立即付款</a>
 										<a href="" onclick="del(${o.OID},${o.OSTATUS})" class="but c3">取消订单</a>
 									</td>
 									</c:if>

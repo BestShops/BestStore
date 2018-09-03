@@ -21,7 +21,7 @@ public class OrdersBizImpl implements OrdersBiz{
 	
 	@Override
 	public int addOrders(Orders orders) {
-		orders.setOstatus(0);
+		orders.setOstatus(-1);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		try {
 			orders.setOtime(df.parse(df.format(new Date())));
@@ -79,8 +79,7 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public Orders findByOid(int oid) {
-		// TODO Auto-generated method stub
-		return null;
+		return OrdersMapper.selectByPrimaryKey(oid);
 	}
 
 	@Override

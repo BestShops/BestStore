@@ -55,12 +55,14 @@
 		<section class="user-center inner clearfix">
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车</div>
-				<form action="shopCartPayPage.do" class="shopcart-form__box">
+				<form action="shopCartPayPage.do" method="post" enctype="multipart/form-data" class="shopcart-form__box">
+				
+					<c:if test="${cartCount >= 1 }">
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th width="150">
-									<label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label>
+								<th width="100">商品图
+									<!-- <label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label> -->
 								</th>
 								<th width="300">商品信息</th>
 								<th width="150">单价</th>
@@ -74,15 +76,15 @@
 						<c:forEach items="${listCart }" var="lc">
 							<tr>
 								<th scope="row">
-									<label class="checked-label"><input type="checkbox"><i></i>
+									<label class="checked-label"><!-- <input type="checkbox"><i></i> -->
 										<div class="img"><img src="upload/${lc.GPHOTOPIC }" alt="" class="cover"></div>
 									</label>
 								</th>
 								<td>
 									<div id="gname" class="name ep3"><a id="gid" >${lc.GID }</a>${lc.GNAME }</div>
-									<div class="type c9">颜色分类：深棕色  尺码：均码</div>
+									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
-								<td>¥${lc.GNOWPRICE }</td>
+								<td>¥${lc.GNOWPRICE } <br>原价：¥${lc.GLASTPRICE }</td>
 								<td>
 									<div class="cart-num__box">
 										<input type="button" class="sub" value="-">
@@ -95,21 +97,34 @@
 							</tr>
 							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
 						</c:forEach>
-							
+
 						</tbody>
 					</table>
 					<div class="user-form-group tags-box shopcart-submit pull-right">
-						<button type="submit" class="btn">提交订单</button>
+						<button type="submit" class="btn">生成订单</button>
 					</div>
 					<div class="checkbox shopcart-total">
-						<label><input type="checkbox" class="check-all"><i></i> 全选</label>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a>
+						<!-- <label><input type="checkbox" class="check-all"><i></i> 全选</label>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a> -->
 						<div class="pull-right">
-							已选商品 <span>2</span> 件
+							<!-- 已选商品 <span><input id="goodsNum" type="text" style="width:30px; height:20px;" value="0"/></span> 件 -->
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-							<b class="cr">¥<span class="fz24">${money }</span></b>
+							<b class="cr">¥<input class="fz24" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="${money}"></input></b>
 						</div>
 					</div>
+					</c:if>
+					
+					
+					<c:if test="${cartCount < 1 }">
+					<table class="table table-bordered">
+						<tr class="order-empty">
+							<td colspan='6'>
+								<div class="empty-msg">购物车里还没有东西，赶快去购物吧！<br><a href="index">点击这里，跳转购物>>></a></div>
+							</td>
+						</tr>
+					</table>
+					</c:if>
+					
 					<script>
 					
 						$(document).ready(function(){
@@ -123,8 +138,14 @@
 							// 点击选择
 							$item_checkboxs.on('change', function() {
 								var flag = true;
+								var num = 0;
 								$item_checkboxs.each(function() {
-									if (!$(this).prop('checked')) { flag = false }
+									if (!$(this).prop('checked')) { 
+										flag = false;
+										num -- ;
+										}
+									num ++;
+									$("#goodsNum").attr("value",num);
 								});
 								$check_all.prop('checked', flag);
 							});

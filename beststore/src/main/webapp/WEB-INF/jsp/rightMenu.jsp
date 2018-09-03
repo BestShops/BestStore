@@ -9,7 +9,7 @@
 				</div>
 		</a></li>
 		<li class="r-toolbar-item"><a href="shopCartPage.do"
-			class="r-item-hd"> <i class="iconfont icon-cart" data-badge="10"></i>
+			class="r-item-hd"> <i class="iconfont icon-cart" data-badge="${sessionScope.cartCount }"></i>
 				<div class="r-tip__box">
 					<span class="r-tip-text">购物车</span>
 				</div>

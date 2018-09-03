@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
-<html>
+<html lang="zh-cmn-Hans">
 <head>
-<meta charset="UTF-8">
+	<meta charset="UTF-8">
 	<link rel="shortcut icon" href="images/favicon.ico">
 	<link rel="stylesheet" href="css/iconfont.css">
 	<link rel="stylesheet" href="css/global.css">
@@ -26,7 +26,7 @@
 		<div class="inner">
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="">申请网店</a>
+				<a href="">网店代销</a>
 				<a href="">帮助中心</a>
 			</div>
 			<div class="pull-right">
@@ -43,54 +43,32 @@
 			</div>
 		</div>
 	</div>
-	<!-- 搜索栏 -->
-	<div class="top-search">
-		<div class="inner">
-			<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
-			<div class="search-box">
-				<form class="input-group">
-					<input placeholder="Ta们都在搜U袋网" type="text">
-					<span class="input-group-btn">
-						<button type="button">
-							<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-						</button>
-					</span>
+	<!-- 顶部标题 -->
+	<div class="bgf5 clearfix">
+		<div class="top-user">
+			<div class="inner">
+				<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>
+				<div class="title">购物车</div>
+			</div>
+		</div>
+	</div>
+	<div class="content clearfix bgf5">
+		<section class="user-center inner clearfix">
+			<div class="user-content__box clearfix bgf">
+				<div class="title">付款 </div>
+				<form action="payDone.do" method="post" class="shopcart-form__box">
+				订单号：<input name="oid" type="text" readonly="readonly" 
+						style="width:40px; height:20px; border: 0px; 
+						outline:none; cursor: pointer;" value="${orders.oid}"><br>
+				订单时间：<a><fmt:formatDate value="${orders.otime}" type="both"/></a><br>
+				付款金额：<a>${orders.onowprice}</a><br>
+					<img alt="扫码付款" src="upload/${payPic}"><br><br>
+					<a href="payDone.do?oid=${orders.oid}">扫码支付完成，若未进行跳转，请点击此处>>></a>
 				</form>
-				<p class="help-block text-nowrap">
-					<a href="">连衣裙</a>
-					<a href="">裤</a>
-					<a href="">衬衫</a>
-					<a href="">T恤</a>
-					<a href="">女包</a>
-					<a href="">家居服</a>
-					<a href="">2017新款</a>
-				</p>
 			</div>
-			<div class="cart-box">
-				<a href="shopCartPage.do" class="cart-but">
-					<i class="iconfont icon-shopcart cr fz16"></i> 购物车${sessionScope.cartCount } 件
-				</a>
-			</div>
-		</div>
+		</section>
 	</div>
-	
-	<!-- 首页导航栏 -->
-	<div class="top-nav bg3">
-		<div class="nav-box inner">
-			<div class="all-cat">
-				<div class="title"><i class="iconfont icon-menu">全部分类</i> </div>
-			</div>
-			<ul class="nva-list">
-				<a href="index"><li class="active">首页</li></a>
-				<a href="goodsQueryPage.do"><li>商品筛选</li></a>
-				<a href="matchPage.do"><li>智能匹配</li></a>
-				<a href="classRoomPage.do"><li>U袋学堂</li></a>
-				<a href="blogPage.do"><li>博客</li></a>
-				<a href="openStorePage.do"><li>申请网店</li></a>
-				<a href="userInfoPage.do"><li>个人中心</li></a>
-				<!-- <a href="aboutUsPage.do"><li>了解我们</li></a> -->
-			</ul>
-		</div>
-	</div>
+	<%@ include file="rightMenu.jsp" %>
+	<%@ include file="bottom.jsp" %>
 </body>
 </html>
