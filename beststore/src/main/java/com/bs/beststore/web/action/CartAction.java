@@ -70,7 +70,6 @@ public class CartAction {
 	@RequestMapping(value = "buyNow.do")
 	public String buyNow(HttpSession session, PrintWriter out, Orders orders, Ordersdetail ordersdetail, Model model) {
 		Human human = (Human) session.getAttribute("loginHuman");
-		
 		// 传入收货地址列表
 		model.addAttribute("addresslist", addressBiz.findAllAddress(human.getHid()));
 		System.out.println("-----------" + ordersdetail.getNum() + "-----------" + ordersdetail.getGprice());
@@ -81,17 +80,15 @@ public class CartAction {
 		List<Map<String, Object>> newOrder = ordersBiz.findOrderByHid(human.getHid(), 1, -1);
 		int oid = (int) newOrder.get(0).get("OID");
 		System.out.println("---------------" + oid);
-		
 		// 将商品加入订单详情表
 		ordersdetail.setOid(oid);
+		ordersdetail.setOdstatus(0);
 		ordersdetailBiz.addOrdersDetail(ordersdetail);
 		List<Map<String, Object>> list = ordersdetailBiz.findOrdersDetail(ordersdetail);
 		model.addAttribute("listCart", list);
-		
 		// 查找刚刚生成的订单，传入页面
 		Orders od = ordersBiz.findByOid(oid);
 		model.addAttribute("order", od);
-		
 		return "shopCartPay";
 	}
 	

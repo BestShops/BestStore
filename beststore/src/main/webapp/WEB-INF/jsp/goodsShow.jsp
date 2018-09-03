@@ -52,7 +52,7 @@
 						<div class="price-box clearfix">
 							<div class="price-panel pull-left">
 								售价：<span class="price">￥<input name="gprice" value="${list.get(0).GNOWPRICE}" type="text" readonly="readonly" 
-								style="width:40px; height:20px; border: 0px; outline:none; cursor: pointer;">
+								style="width:80px; height:20px; border: 0px; outline:none; cursor: pointer;">
 								
 								<s class="fz16 c9">￥${list.get(0).GLASTPRICE}</s></span>
 							</div>

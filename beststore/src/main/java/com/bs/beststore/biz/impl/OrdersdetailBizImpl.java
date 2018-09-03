@@ -50,6 +50,7 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 		for (Map m : list) {
 			ordersdetail.setGid((Integer) m.get("GID"));
 			ordersdetail.setNum((Integer) m.get("CNUM"));
+			ordersdetail.setOdstatus(0);
 			ordersdetail.setGprice((Double) m.get("GNOWPRICE"));
 			ordersdetail.setOid(oid);
 			ordersdetailMapper.insertSelective(ordersdetail);
