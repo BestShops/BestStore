@@ -86,4 +86,20 @@ public class OrdersBizImpl implements OrdersBiz{
 		return null;
 	}
 
+	@Override
+	public List<Map<String, Object>> findAllOrderBySid(int sid,Orders orders, int pageNo, int pageSize) {
+		List<Map<String, Object>> list;
+		if(orders.getOstatus()!=null) {
+			list=OrdersMapper.findBySidAndOstatus(sid, orders.getOstatus(), pageNo, pageSize);
+		}else {
+			list=OrdersMapper.findAllBySid(sid, (pageNo-1)*pageSize, pageSize);
+		}
+		return list;
+	}
+
+	@Override
+	public long findOrderBySidTotal(int sid) {
+		return OrdersMapper.findBySidTotal(sid);
+	}
+
 }

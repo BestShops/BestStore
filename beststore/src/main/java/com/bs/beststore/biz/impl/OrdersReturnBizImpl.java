@@ -43,8 +43,6 @@ public class OrdersReturnBizImpl implements OrdersReturnBiz {
 		} else {
 			list = ordersReturnMapper.findAllOrdersReturnByType(hid, type, pageNo, pageSize);
 		}
-		
-		
 		// 对获取的数据的优化修改
 		for (Map<String, Object> m : list) {
 			int ortype = (int) m.get("ortype");
@@ -78,6 +76,26 @@ public class OrdersReturnBizImpl implements OrdersReturnBiz {
 	public void delReturn(Ordersreturn ordersreturn) {
 		ordersreturn.setOrtype(2);
 		ordersReturnMapper.updateByPrimaryKeySelective(ordersreturn);
+	}
+	
+	public List<Map<String,Object>> findAllOrdersReturn(int sid,int pageNo,int pageSize,Ordersreturn ordersreturn){
+		List<Map<String,Object>> list;
+		if(ordersreturn.getOrtype()!=null) {
+			list=ordersReturnMapper.findReturnBySidAndOrtype(sid, ordersreturn.getOrtype(), (pageNo-1)*pageSize, pageSize);
+		}else {
+			list=ordersReturnMapper.findAllReturnBySid(sid, (pageNo-1)*pageSize, pageSize);
+		}
+		return list;
+	}
+
+	@Override
+	public long findAllOrdersReturnTotal(int sid) {
+		return ordersReturnMapper.findAllReturnBySidTotal(sid);
+	}
+
+	@Override
+	public int updateReturn(Ordersreturn ordereturn) {
+		return ordersReturnMapper.updateByPrimaryKeySelective(ordereturn);
 	}
 
 }

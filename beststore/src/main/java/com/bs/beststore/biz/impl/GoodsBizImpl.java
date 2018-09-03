@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.dao.GoodsMapper;
 import com.bs.beststore.vo.Goods;
+import com.bs.beststore.vo.Type;
 
 @Service
 /**
@@ -114,6 +115,68 @@ public class GoodsBizImpl implements GoodsBiz {
 	@Override
 	public List<Map<String, Object>> reduceHotGoods(int rows) {
 		return gm.reduceHotGoods(rows);
+	}
+
+	@Override
+	public List<Map<String, Object>> goodsQuery(Goods goods,Type type,int tid2,int price1,int price2,int page, int rows) {
+		List<Map<String, Object>> list = null;
+		if(goods.getGname()!=null) {
+			if(goods.getGname().length()<=1) {
+				list=gm.goodsQueryByGname((page-1)*rows, rows, goods.getGname().substring(0, 1));
+			}else if(goods.getGname().length()>=2) {
+				list=gm.goodsQueryByGname1((page-1)*rows, rows,goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
+			}
+		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0){
+			list=gm.goodsQueryByTid((page-1)*rows, rows, Integer.valueOf(type.getTid()));
+		}else if(type.getTid()!=null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+			list=gm.goodsQueryByTidAndPrice((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1,price2);
+		}else if(type.getTid()!=null && tid2==0 && price1!=0 && price2==0){
+			list=gm.goodsQueryByTidAndPrice1((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1);
+		}else if(type.getTid()!=null && tid2!=0 &&price1==0 &&price2==0){
+			list=gm.goodsQueryByTid1((page-1)*rows, rows, tid2);
+		}else if(type.getTid()!=null && tid2!=0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+			list=gm.goodsQueryByTid1AndPrice1((page-1)*rows, rows, tid2,price1,price2);   
+		}else if(type.getTid()!=null && tid2!=0 && price1!=0 && price2==0){
+			list=gm.goodsQueryByTid1AndPrice2((page-1)*rows, rows, tid2,price1);   
+		}else if(type.getTid()==null && tid2==0 && price1==0 && price2==0){
+			list=gm.goodsQuery((page-1)*rows, rows);
+		}else if(type.getTid()==null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+			list=gm.goodsQuery1((page-1)*rows, rows,price1,price2);
+		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0){
+			list=gm.goodsQuery2((page-1)*rows, rows,price1);
+		}
+		return list;
+	}
+
+	@Override
+	public long goodsCountByGoods(Goods goods,Type type,int tid2,int price1,int price2) {
+		long count = 0;
+		if(goods.getGname()!=null) {
+			if(goods.getGname().length()<=1) {
+				count=gm.goodsQueryByGnameTotal(goods.getGname().substring(0, 1));
+			}else if(goods.getGname().length()>=2) {
+				count=gm.goodsQueryByGnameTotal1(goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
+			}
+		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0){
+			count=gm.goodsQueryByTidCount(Integer.valueOf(type.getTid()));
+		}else if(type.getTid()!=null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+			count=gm.goodsQueryByTidAndPriceCount(Integer.valueOf((type.getTid()+"").trim()),price1,price2);
+		}else if(type.getTid()!=null && tid2==0 && price1!=0 && price2==0){
+			count=gm.goodsQueryByTidPriceCount1(Integer.valueOf(type.getTid()),price1);
+		}else if(type.getTid()!=null && tid2!=0 &&price1==0 &&price2==0){
+			count=gm.goodsQueryByTidCount1(tid2);
+		}else if(type.getTid()!=null && tid2!=0 && price1!=0 && price2!=0){
+			count=gm.goodsQueryByTidAndPriceCount1(tid2, price1, price2);
+		}else if(type.getTid()!=null && tid2!=0 && price1!=0 && price2==0){
+			count=gm.goodsByTidAndPriceCount1(tid2,price1);   
+		}else if(type.getTid()==null && tid2==0 && price1==0 && price2==0){
+			count=gm.findByExamineTotal(1);
+		}else if(type.getTid()==null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+			count=gm.goodsQueryTotal1(price1,price2);
+		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0){
+			count=gm.goodsQueryTotal2(price1);
+		}
+		return count;
 	}
 
 	

@@ -31,7 +31,7 @@ public class FavoriteAction {
 		}
 		int rows=8;	//每页条数
 		long total=favoriteBiz.findAllTotal(human.getHid());	//总条数
-		int totalPage=(int) (total/rows==0 ? total/rows: total/rows+1);	//总页数
+		int totalPage=(int) (total%rows==0 ? total/rows: total/rows+1);	//总页数
 		request.setAttribute("totalPage", totalPage);
 		if(Integer.parseInt(page)<=1) {
 			page="1";

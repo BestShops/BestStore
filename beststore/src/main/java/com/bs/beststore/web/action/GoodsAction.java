@@ -37,7 +37,57 @@ public class GoodsAction {
 	private DiscussBiz discussBiz;
 
 	@RequestMapping(path = "goodsQueryPage.todo")
-	public String goodsQueryPage() {
+	public String goodsQueryPage(Goods goods,Type type,HttpServletRequest request) {
+		List<Type> firstList=typeBiz.selectFirstInfo();
+		request.setAttribute("firstList", firstList);
+		String tid2=request.getParameter("tid2");
+		if(tid2==null || tid2=="" || tid2.equals("")) {
+			tid2="0";
+		}
+		String price1=request.getParameter("price1");
+		String price2=request.getParameter("price2");
+		String page=request.getParameter("page");
+		if(page==null || page=="" || page.equals("")) {
+			page="1";
+		}
+		if(price1==null || price1=="" || price1.equals("")) {
+			price1="0";
+		}
+		if(price2==null || price2=="" || price2.equals("")) {
+			price2="0";
+		}
+		int rows=20;	//每页条数
+		long total=goodsBiz.goodsCountByGoods(goods,type,Integer.valueOf(tid2.trim()),Integer.valueOf(price1),Integer.valueOf(price2));	//总条数
+		int totalPage=(int) (total%rows==0 ? total/rows: total/rows+1);	//总页数
+		request.setAttribute("totalPage", totalPage);
+		if(Integer.parseInt(page)<=1) {
+			page="1";
+		}
+		if(Integer.parseInt(page)>=totalPage && totalPage>0){
+			page=totalPage+"";
+		}
+		request.setAttribute("page", page);	//当前页数
+		List<Map<String, Object>> list = goodsBiz.goodsQuery(goods,type,Integer.valueOf(tid2),Integer.valueOf(price1),Integer.valueOf(price2),Integer.valueOf(page), rows);
+		request.setAttribute("goodsQueryList", list);
+		request.setAttribute("total", total);
+		request.setAttribute("rows", rows);
+		request.setAttribute("totalPage", totalPage);
+		if(type.getTid()!=null) {
+			request.setAttribute("typeTid", type.getTid());
+			request.setAttribute("typeTname", typeBiz.findByTid(type.getTid()).getTpriname());
+			request.setAttribute("typeInfo2", typeBiz.selectSecondInfo(type.getTid()));
+		}
+		if(tid2!="0") {
+			request.setAttribute("typeTid2", Integer.valueOf(tid2));
+			request.setAttribute("typeTname2", typeBiz.findByTid(Integer.valueOf(tid2)).getTpriname());
+		}
+		if(price1=="0" && price2=="0") {
+			request.setAttribute("priceSize", 1);
+		}else {
+			request.setAttribute("priceSize", price1);
+			request.setAttribute("price1", price1);
+			request.setAttribute("price2", price2);
+		}
 		return "goodsQuery";
 	}
 
@@ -47,7 +97,7 @@ public class GoodsAction {
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
 		// 查询商品的相关评价
 		List<Map<String, Object>> discussList = discussBiz.findAll(goods.getGid());
-		
+
 		// 查询相关产品，实现相关推荐 根据tid查询
 		goods.setGid(null);
 		goods.setTid((Integer) list.get(0).get("TID"));
@@ -115,7 +165,7 @@ public class GoodsAction {
 		}
 		out.print(data);
 	}
-	
+
 
 	/**
 	 * 查询店铺所有商品或者某个商品(具体查询)
@@ -147,7 +197,7 @@ public class GoodsAction {
 		data.put("total", total);
 		out.print(new Gson().toJson(data));
 	}
-	
+
 	/**
 	 * 商品审核
 	 * @param goods	可以根据商品id、商品类型、店铺id、商品状态来查询，若为null则查询本店所有商品
@@ -176,7 +226,7 @@ public class GoodsAction {
 		data.put("total", total);
 		out.print(new Gson().toJson(data));
 	}
-	
+
 	/**
 	 * 下架、删除、上架
 	 */
@@ -191,7 +241,7 @@ public class GoodsAction {
 		}
 		out.print(data);
 	}
-	
+
 	/**
 	 * 通过关键字查找商品(模糊查询)
 	 * @param goods	商品名、价格

@@ -6,10 +6,12 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -23,10 +25,14 @@ import com.bs.beststore.biz.DiscussBiz;
 import com.bs.beststore.biz.OrdersBiz;
 import com.bs.beststore.biz.OrdersReturnBiz;
 import com.bs.beststore.biz.OrdersdetailBiz;
+import com.bs.beststore.util.Result;
+import com.bs.beststore.vo.Blog;
 import com.bs.beststore.vo.Discuss;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Orders;
 import com.bs.beststore.vo.Ordersreturn;
+import com.bs.beststore.vo.Store;
+import com.google.gson.Gson;
 
 @Controller
 public class UserOrderAction {
@@ -291,5 +297,95 @@ public class UserOrderAction {
 		model.addAttribute("info", discussBiz.findByOdid(odid).get(0));
 		return "userEvaluate";
 	}
+	
+	/**
+	 * 查询店铺所有订单
+	 * @param session	从会话中获取店铺id
+	 */
+	@RequestMapping(value="findOrderBySid.do")
+	public void findOrderBySid(Orders orders,HttpServletRequest request,PrintWriter out){
+		Store storeHuman=(Store) request.getSession().getAttribute("storeHuman");
+		String page=request.getParameter("page");
+		String rows=request.getParameter("rows");
+		int intPage;
+		int intRows;
+		if(page==null) {
+			intPage=1;
+		}else {
+			intPage=Integer.valueOf(page);
+		}
+		if(rows==null){
+			intRows=1;
+		}else{
+			intRows=Integer.valueOf(rows);
+		}
+		List<Map<String, Object>> list=ordersBiz.findAllOrderBySid(storeHuman.getSid(),orders,intPage,intRows);
+		long total=ordersBiz.findOrderBySidTotal(storeHuman.getSid());
+		Map<String,Object> data=new HashMap<String,Object>();
+		data.put("rows", list);
+		data.put("total", total);
+		out.print(new Gson().toJson(data));
+	}
+	
+	/**
+	 * 修改订单状态
+	 * @param orders
+	 * @param out
+	 */
+	@RequestMapping(value="operateOrders.do")
+	public void operateOrders(Orders orders,PrintWriter out) {
+		String data;
+		int result=ordersBiz.updateOrders(orders);
+		if(result>0) {
+			data=new Gson().toJson(Result.getSuccess("发货成功!"));
+		}else {
+			data=new Gson().toJson(Result.getFailure("发货失败!"));
+		}
+		out.print(data);
+	}
+	
+	/**
+	 * 店铺退货管理
+	 * @param orders
+	 * @param request
+	 * @param out
+	 */
+	@RequestMapping(value="ordersReturnManage.do")
+	public void ordersReturnManage(Ordersreturn ordersreturn,HttpServletRequest request,PrintWriter out){
+		Store storeHuman=(Store) request.getSession().getAttribute("storeHuman");
+		String page=request.getParameter("page");
+		String rows=request.getParameter("rows");
+		int intPage;
+		int intRows;
+		if(page==null) {
+			intPage=1;
+		}else {
+			intPage=Integer.valueOf(page);
+		}
+		if(rows==null){
+			intRows=1;
+		}else{
+			intRows=Integer.valueOf(rows);
+		}
+		List<Map<String, Object>> list=ordersReturnBiz.findAllOrdersReturn(storeHuman.getSid(),intPage,intRows,ordersreturn);
+		long total=ordersReturnBiz.findAllOrdersReturnTotal(storeHuman.getSid());
+		Map<String,Object> data=new HashMap<String,Object>();
+		data.put("rows", list);
+		data.put("total", total);
+		out.print(new Gson().toJson(data));
+	}
+	
+	@RequestMapping(value="operateOrdersReturn.do")
+	public void operateOrdersReturn(Ordersreturn ordereturn,PrintWriter out) {
+		String data;
+		int result=ordersReturnBiz.updateReturn(ordereturn);
+		if(result>0) {
+			data=new Gson().toJson(Result.getSuccess("操作成功!"));
+		}else {
+			data=new Gson().toJson(Result.getFailure("操作失败!"));
+		}
+		out.print(data);
+	}
+
 	
 }

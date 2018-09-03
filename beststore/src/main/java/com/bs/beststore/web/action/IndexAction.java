@@ -202,7 +202,19 @@ public class IndexAction {
 		return "back/goodsManage";
 	}
 
-	// 后台店铺商品核实情况界面
+	// 后台店铺订单管理界面
+	@RequestMapping(value = "ordersManagePage.do")
+	public String ordersManagePage() {
+		return "back/ordersManage";
+	}
+
+	// 后台店铺订单退货管理界面
+	@RequestMapping(value = "ordersReturnManagePage.do")
+	public String ordersReturnManagePage() {
+		return "back/ordersReturnManage";
+	}
+
+	// 后台店铺博客管理界面
 	@RequestMapping(value = "blogManagePage.do")
 	public String blogManagePage() {
 		return "back/blogManage";
