@@ -36,16 +36,15 @@ public class GoodsAction {
 	@Resource
 	private DiscussBiz discussBiz;
 
-	@RequestMapping(path = "goodsQueryPage.do")
+	@RequestMapping(path = "goodsQueryPage.todo")
 	public String goodsQueryPage() {
 		return "goodsQuery";
 	}
 
-	@RequestMapping(path = "goodsShowPage.do")
-	public String goodsShowPage(Goods goods, Model model) {
+	@RequestMapping(path = "goodsShowPage.todo")
+	public String goodsShowPage(Goods goods, Model model){
 		// 查询商品详情 根据gid查询
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
-		
 		// 查询商品的相关评价
 		List<Map<String, Object>> discussList = discussBiz.findAll(goods.getGid());
 		

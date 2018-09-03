@@ -43,4 +43,17 @@ public interface OrdersdetailBiz {
 	 * @return
 	 */
 	int addOrdersDetailByCart(int hid, int oid);
+	
+	/**
+	 * 判别订单下所有的商品是否都已经评价过了
+	 * @param oid
+	 * @return 
+	 */
+	boolean checkOrderStatus(int oid);
+	
+	/**
+	 * 修改订单详情的状态，设为已评价1
+	 * @param odid
+	 */
+	void modefiyStatus(int odid);
 }

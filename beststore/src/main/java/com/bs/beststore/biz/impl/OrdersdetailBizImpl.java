@@ -10,6 +10,8 @@ import com.bs.beststore.biz.OrdersdetailBiz;
 import com.bs.beststore.dao.CartMapper;
 import com.bs.beststore.dao.OrdersdetailMapper;
 import com.bs.beststore.vo.Ordersdetail;
+import com.bs.beststore.vo.OrdersdetailExample;
+import com.bs.beststore.vo.OrdersdetailExample.Criteria;
 
 @Service
 public class OrdersdetailBizImpl implements OrdersdetailBiz{
@@ -54,4 +56,28 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 		}
 		return oid;
 	}
+
+	@Override
+	public boolean checkOrderStatus(int oid) {
+		// 查出订单下所有订单详情的信息
+		OrdersdetailExample example = new OrdersdetailExample();
+		Criteria criteria =  example.createCriteria();
+		criteria.andOidEqualTo(oid);
+		List<Ordersdetail> list = ordersdetailMapper.selectByExample(example);
+		for (Ordersdetail o : list) {
+			if (o.getOdstatus() == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public void modefiyStatus(int odid) {
+		Ordersdetail ordersdetail = new Ordersdetail();
+		ordersdetail.setOdid(odid);
+		ordersdetail.setOdstatus(1);
+		ordersdetailMapper.updateByPrimaryKeySelective(ordersdetail);
+	}
+
 }

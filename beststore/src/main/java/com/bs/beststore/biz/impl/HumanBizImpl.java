@@ -38,15 +38,15 @@ public class HumanBizImpl implements HumanBiz {
 		// 先判断用户名
 		HumanExample humanExample = new HumanExample();
 		Criteria criteria = humanExample.createCriteria();
-		criteria.andHnameEqualTo(human.getHname());
+		criteria.andHnameEqualTo(human.getHname().trim());
 		if (humanMapper.selectByExample(humanExample).size() == 0) {// 如果用户名不存在
 			// 如果用户名不存在就判断输入的是否是邮箱
 			String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
 			// 邮箱匹配成功，就获取到用户名
-			if (Pattern.matches(RULE_EMAIL, human.getHname())) {
+			if (Pattern.matches(RULE_EMAIL, human.getHname().trim())) {
 				HumanExample humanExample1 = new HumanExample();
 				Criteria criteria1 = humanExample1.createCriteria();
-				criteria1.andHemailEqualTo(human.getHname());
+				criteria1.andHemailEqualTo(human.getHname().trim());
 				List<Human> list1 = humanMapper.selectByExample(humanExample1);
 				if (list1.size() == 1) {// 如果该号码存在
 					human.setHname(list1.get(0).getHname());// 获取该号码对应的用户名
@@ -57,10 +57,10 @@ public class HumanBizImpl implements HumanBiz {
 			} else {
 				// 如果邮箱也不存在，就判断输入的是否是号码
 				String RULE_EMAIL1 = "^[1][3-9][0-9]{9}$";
-				if (Pattern.matches(RULE_EMAIL1, human.getHname())) {
+				if (Pattern.matches(RULE_EMAIL1, human.getHname().trim())) {
 					HumanExample humanExample2 = new HumanExample();
 					Criteria criteria2 = humanExample2.createCriteria();
-					criteria2.andHphoneEqualTo(Long.parseLong(human.getHname()));
+					criteria2.andHphoneEqualTo(Long.parseLong(human.getHname().trim()));
 					List<Human> list2 = humanMapper.selectByExample(humanExample2);
 					if (list2.size() == 1) {// 如果该邮箱存在
 						human.setHname(list2.get(0).getHname());// 获取该邮箱对应的用户名
@@ -77,9 +77,9 @@ public class HumanBizImpl implements HumanBiz {
 		// 如果输入的账号存在，则用户名已经获取到了，开始判断密码是否正确
 		HumanExample humanExample3 = new HumanExample();
 		Criteria criteria3 = humanExample3.createCriteria();
-		criteria3.andHnameEqualTo(human.getHname());
+		criteria3.andHnameEqualTo(human.getHname().trim());
 		System.out.println(MD5Util.MD5("root123"));
-		criteria3.andHpwdEqualTo(MD5Util.MD5(human.getHname() + human.getHpwd()));// 密码是加密后存入数据库的，所以查询也要加密
+		criteria3.andHpwdEqualTo(MD5Util.MD5(human.getHname().trim() + human.getHpwd()));// 密码是加密后存入数据库的，所以查询也要加密
 		List<Human> list3 = humanMapper.selectByExample(humanExample3);
 		if (list3.size() == 1) {// 用户名密码都正确，返回该用户的信息
 			Human h = list3.get(0);
@@ -125,15 +125,14 @@ public class HumanBizImpl implements HumanBiz {
 		for (Human h : list) {
 			// 该信息不能与其他用户的信息重复
 			if (h.getHid() != human.getHid() && !h.getHid().equals(human.getHid())) {
-				System.out.println("h.getHid()" + h.getHid() + "\t" + "human.getHid()" + human.getHid());
 				if (human.getHname().equals(h.getHname())) {
-					throw new BizException("用户名不能重复");
+					throw new BizException("用户名已存在");
 				} else if (human.getHidcard() == h.getHidcard() || human.getHidcard().equals(h.getHidcard())) {
-					throw new BizException("身份证号不能重复");
+					throw new BizException("身份证已注册");
 				} else if (human.getHphone() == h.getHphone() || human.getHphone().equals(h.getHphone())) {
-					throw new BizException("电话号码不能重复");
+					throw new BizException("电话号已注册");
 				} else if (human.getHemail() == h.getHemail() || human.getHemail().equals(h.getHemail())) {
-					throw new BizException("邮箱地址不能重复");
+					throw new BizException("邮箱已注册");
 				} 
 			}
 		}
@@ -198,6 +197,9 @@ public class HumanBizImpl implements HumanBiz {
 		if (human.getHemail() == null || "".equals(human.getHemail())) {
 			return false;
 		}
+		if (human.getHphoto() == null || "".equals(human.getHphoto())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -246,7 +248,6 @@ public class HumanBizImpl implements HumanBiz {
 		HumanExample humanExample3 = new HumanExample();
 		Criteria criteria3 = humanExample3.createCriteria();
 		criteria3.andHnameEqualTo(human.getHname());
-		System.out.println(MD5Util.MD5("root123"));
 		criteria3.andHpwdEqualTo(MD5Util.MD5(human.getHname() + human.getHpwd()));// 密码是加密后存入数据库的，所以查询也要加密
 		List<Human> list3 = humanMapper.selectByExample(humanExample3);
 		if (list3.size() == 1) {// 用户名密码都正确，返回该用户的信息
@@ -263,7 +264,35 @@ public class HumanBizImpl implements HumanBiz {
 
 	@Override
 	public void changeStatus(int hid, int limit) {
-		// TODO Auto-generated method stub
-		
+		Human human=new Human();
+		human.setHid(hid);
+		human.setHlimit(limit);
+		humanMapper.updateByPrimaryKeySelective(human);
+	}
+
+	@Override
+	public long birthTime(Human human) {
+		long day;
+		day=humanMapper.birthTime(human.getHid());
+		if(day<0) {
+			day=humanMapper.birthTime1(human.getHid());
+		}
+		return day;
+	}
+
+	@Override
+	public List<Human> findByPhoneOrEmail(Human human) {
+		HumanExample humanExample3 = new HumanExample();
+		Criteria criteria3 = humanExample3.createCriteria();
+		if(human.getHemail()!=null) {
+			String RULE_EMAIL = "^\\w+((-\\w+)|(\\.\\w+))*\\@[A-Za-z0-9]+((\\.|-)[A-Za-z0-9]+)*\\.[A-Za-z0-9]+$";
+			// 匹配邮箱
+			if (Pattern.matches(RULE_EMAIL, human.getHemail())) {
+				criteria3.andHemailEqualTo(human.getHemail());
+			}else {
+				criteria3.andHphoneEqualTo(Long.valueOf(human.getHemail()));
+			}
+		}
+		return humanMapper.selectByExample(humanExample3);
 	}
 }

@@ -12,11 +12,16 @@
 				<div class="user-center__info bgf">
 					<div class="pull-left clearfix">
 						<div class="port b-r50 pull-left">
+						<c:if test="${sessionScope.loginHuman.hphoto==null}">
 							<img src="images/icons/default_avt.png" alt="用户名" class="cover b-r50">
+						</c:if>
+						<c:if test="${sessionScope.loginHuman.hphoto!=null}">
+							<img src="${basePath }/upload/${sessionScope.loginHuman.hphoto}" class="cover b-r50">
+						</c:if>	
 							<a href="userInfoPage.do" class="edit"><i class="iconfont icon-edit"></i></a>
 						</div>
 						<p class="name text-nowrap"></p>
-						<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }！</p>
+						<p class="name text-nowrap">您好，${sessionScope.loginHuman.hname }</p>
 						<c:if test="${sessionScope.loginHuman.hlimit==0}">
 							<p class="level text-nowrap">身份：普通用户 <a href="openStorePage.do">去开店</a></p>
 						</c:if>
@@ -65,7 +70,7 @@
 							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=1">待发货 <span class="cr">${counts[1]}</span></a></li>
 							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=2">待收货 <span class="cr">${counts[2]}</span></a></li>
 							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=3">待评价 <span class="cr">${counts[3]}</span></a></li>
-							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=4">待评价 <span class="cr">${counts[4]}</span></a></li>
+							<li role="presentation" class="nav-item "><a href="welcomePage.do?type=4">已评价 <span class="cr">${counts[4]}</span></a></li>
 						</ul>
 						<script type="text/javascript">
 						// 判断当前是选中的那一类选项
@@ -178,7 +183,7 @@
 						<div class="swiper-wrapper">
 							<c:forEach items="${goodsList}" var="g" varStatus="num">
 								<c:if test="${num.index%5==1}"><div class="swiper-slide"></c:if>
-								<a class="picked-item" href="goodsShowPage.do?gid=${g.gid}">
+								<a class="picked-item" href="goodsShowPage.todo?gid=${g.gid}">
 									<img src="upload/${g.gphotopic}" alt="" class="cover">
 									<div class="look_price">¥${g.gnowprice}</div>
 								</a>
@@ -200,5 +205,32 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script type="text/javascript">
+		function del(oid, ostatus) {
+			var index = 0;// 标志符，1为删除
+			if (ostatus==0) {
+				if(confirm("该订单还未支付，如果删除的话订单就会取消，您确定删除吗？")){
+					index = 1;
+				}
+			} else if (ostatus==1 || ostatus==2) {
+				alert("该订单未完成，不能删除");
+			} else if (ostatus==3 || ostatus==4) {
+				if(confirm("该订单删除后，将不能再查看到该订单的具体信息，您确定删除吗？")){
+					index = 1;
+				}
+			}
+			if (index==1) {
+				// 执行删除操作
+				$.post("delOrder.do",{
+					oid:oid
+				},function(data){
+					alert(data);
+					var i = '${requestScope.pageNo}';
+					var type = '${requestScope.type}';
+					window.location.href="userOrderPage.do?pageNo=" + i + "&type=" + type;
+				});
+			}
+		}
+	</script>
 </body>
 </html>

@@ -43,8 +43,8 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public int deleteOrders(Orders orders) {
-		// 状态为5的时候是删除
-		orders.setOstatus(5);
+		// 状态为6的时候是删除
+		orders.setOstatus(6);
 		return OrdersMapper.updateByPrimaryKeySelective(orders);
 	}
 
@@ -73,7 +73,6 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public List<Map<String, Object>> findOrderBySid(Orders orders, int sid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -84,7 +83,6 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public List<Map<String, Object>> findInfoByOid(int oid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

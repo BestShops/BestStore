@@ -70,4 +70,10 @@ public class DiscussBizImpl implements DiscussBiz {
 		}
 	}
 
+	@Override
+	public List<Map<String, Object>> findByOdid(int odid) {
+		List<Map<String, Object>> list = discussMapper.findByOdid(odid);
+		return list;
+	}
+
 }

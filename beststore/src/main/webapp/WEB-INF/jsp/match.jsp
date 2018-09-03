@@ -9,7 +9,7 @@
 </head>
 <body>
 <%@ include file="header1_similar.jsp" %>
-<form method="get" action="goodsQueryPage.do" style="margin:20px auto auto auto;font-size: 62.5%;">
+<form method="get" action="goodsQueryPage.todo" style="margin:20px auto auto auto;font-size: 62.5%;">
 	<fieldset id="criteria" style="border:0;margin:1em 0 0;border-top:1px dotted #aaa;">
 		<legend><span>身材标准</span></legend>
 		<div class="question">

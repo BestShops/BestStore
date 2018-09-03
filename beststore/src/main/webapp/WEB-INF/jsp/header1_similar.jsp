@@ -26,8 +26,8 @@
 		<div class="inner">
 			<div class="pull-left">
 				<div class="pull-left">嗨，欢迎来到<span class="cr">U袋网</span></div>
-				<a href="">申请网店</a>
-				<a href="">帮助中心</a>
+				<a href="openStorePage.do">申请网店</a>
+				<a href="superLoginPage.todo" target="_blank">网站维护</a>
 			</div>
 			<div class="pull-right">
 				<c:if test="${sessionScope.loginHuman==null }">
@@ -39,7 +39,7 @@
 					<a href="userLogout.do" style="color:blue">退出</a>
 				</c:if>
 				<a href="welcomePage.do">我的U袋</a>
-				<a href="userOrderPage.do">我的订单</a>
+				<a href="userOrderPage.do?pageNo=1&type=10">我的订单</a>
 			</div>
 		</div>
 	</div>
@@ -82,7 +82,7 @@
 			</div>
 			<ul class="nva-list">
 				<a href="index"><li class="active">首页</li></a>
-				<a href="goodsQueryPage.do"><li>商品筛选</li></a>
+				<a href="goodsQueryPage.todo"><li>商品筛选</li></a>
 				<a href="matchPage.do"><li>智能匹配</li></a>
 				<a href="classRoomPage.do"><li>U袋学堂</li></a>
 				<a href="blogPage.do"><li>博客</li></a>

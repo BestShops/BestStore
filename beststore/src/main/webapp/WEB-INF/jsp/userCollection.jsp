@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
@@ -17,7 +16,7 @@
 					<c:forEach items="${list}" var="v">
 						<c:if test="${v.FSTATUS == 1 }">
 						<div class="item-card" id="${v.FID }">
-							<a href="goodsShowPage.do?gid=${v.GID }" class="photo">
+							<a href="goodsShowPage.todo?gid=${v.GID }" class="photo">
 								<img src="upload/${v.GPHOTOPIC }" alt="${v.GNAME }" class="cover">
 								<div class="name">${v.GNAME }</div>
 							</a>
@@ -27,22 +26,23 @@
 							</div>
 						</div>
 						</c:if>
-						
 					</c:forEach>
 						
 					</div>
 					<div class="page text-right clearfix">
-						<a class="disabled">上一页</a>
-						<a class="select">1</a>
+						<!-- <a class="disabled">上一页</a> -->
+						<!-- <a class="select">1</a>
 						<a href="">2</a>
-						<a href="">3</a>
-						<a class="" href="">下一页</a>
-						<a class="disabled">1/3页</a>
+						<a href="">3</a> -->
+						
+							<mt:page href="userCollectionPage.do" total="${total }" rows="${rows }"/>
+						
+						<!-- <a class="" href="">下一页</a>
+						<a class="disabled">1/3页</a> -->
 					</div>
 				</div>
 			</div>
 			<script>
-				
 				function remove(fid){
 					$.post("removeFavorite.do",{
 						fid:fid
@@ -55,7 +55,6 @@
 						}
 					});
 				}
-					
 				</script>
 			
 			

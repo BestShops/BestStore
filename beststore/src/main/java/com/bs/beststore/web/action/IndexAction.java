@@ -2,25 +2,41 @@ package com.bs.beststore.web.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bs.beststore.biz.GoodsBiz;
+import com.bs.beststore.biz.HumanBiz;
+import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
 import com.bs.beststore.util.MailUtil;
 import com.bs.beststore.util.SmsUtil;
 import com.bs.beststore.util.VerifyCodeUtil;
+import com.bs.beststore.vo.Human;
+import com.bs.beststore.vo.Type;
 
 /**
  * jsp页面的静态跳转
  */
 @Controller
 public class IndexAction {
+
+	@Resource
+	private TypeBiz typeBiz;
+	@Resource
+	private GoodsBiz goodsBiz;
+	@Resource
+	private HumanBiz humanBiz;
 
 	// 超级管理员登录界面
 	@RequestMapping(path = "superLoginPage.todo")
@@ -64,7 +80,43 @@ public class IndexAction {
 
 	@RequestMapping(path = { "/", "index" })
 	// 主页
-	public String index() {
+	public String index(Model model,HttpSession session){
+		Human human=(Human) session.getAttribute("loginHuman");
+		List<Type> firstList=typeBiz.selectFirstInfo();
+		model.addAttribute("firstList", firstList);
+		List<Map<String,Object>> list=typeBiz.findTypeToIndex(firstList.get(0).getTid());
+		List<Map<String,Object>> lists=typeBiz.selectSecondInfo(firstList.get(0).getTid());
+		List<Map<String,Object>> thirdList=typeBiz.selectSonInfoByParent();
+		model.addAttribute("thirdList", thirdList);
+		model.addAttribute("goodsIndex", list);
+		model.addAttribute("secondType", lists);
+		List<Map<String,Object>> list1=typeBiz.findTypeToIndex(firstList.get(1).getTid());
+		List<Map<String,Object>> lists1=typeBiz.selectSecondInfo(firstList.get(1).getTid());
+		model.addAttribute("goodsIndex1", list1);
+		model.addAttribute("secondType1", lists1);
+		List<Map<String,Object>> list2=typeBiz.findTypeToIndex(firstList.get(2).getTid());
+		List<Map<String,Object>> lists2=typeBiz.selectSecondInfo(firstList.get(2).getTid());
+		model.addAttribute("goodsIndex2", list2);
+		model.addAttribute("secondType2", lists2);
+		List<Map<String,Object>> list3=typeBiz.findTypeToIndex(firstList.get(3).getTid());
+		List<Map<String,Object>> lists3=typeBiz.selectSecondInfo(firstList.get(3).getTid());
+		model.addAttribute("goodsIndex3", list3);
+		model.addAttribute("secondType3", lists3);
+		List<Map<String,Object>> list4=typeBiz.findTypeToIndex(firstList.get(4).getTid());
+		List<Map<String,Object>> lists4=typeBiz.selectSecondInfo(firstList.get(4).getTid());
+		model.addAttribute("goodsIndex4", list4);
+		model.addAttribute("secondType4", lists4);
+		List<Map<String,Object>> hotGoodsList=goodsBiz.findHotGoods();
+		model.addAttribute("hotGoods",hotGoodsList);	//热销商品
+		if(hotGoodsList.size()<6) {
+			List<Map<String,Object>> reduceGoodsList=goodsBiz.reduceHotGoods(6-hotGoodsList.size());
+			model.addAttribute("reduceGoods",reduceGoodsList);
+		}
+		List<Map<String,Object>> newGoodsList=goodsBiz.reduceHotGoods(5);
+		model.addAttribute("newGoods",newGoodsList);
+		if(human!=null) {
+			model.addAttribute("birthTime",humanBiz.birthTime(human));
+		}
 		return "index";
 	}
 
@@ -151,12 +203,6 @@ public class IndexAction {
 	}
 
 	// 后台店铺商品核实情况界面
-	@RequestMapping(value = "goodsVerifyPage.do")
-	public String goodsVerifyPage() {
-		return "back/goodsVerify";
-	}
-
-	// 后台店铺商品核实情况界面
 	@RequestMapping(value = "blogManagePage.do")
 	public String blogManagePage() {
 		return "back/blogManage";
@@ -239,9 +285,9 @@ public class IndexAction {
 		if (AccountValidatorUtil.isEmail(email)) {
 			new Thread(new MailUtil(email, code)).start();
 		} else if (AccountValidatorUtil.isMobile(email)) {
-			new Thread(new SmsUtil(email, code)).start();
+			new Thread(new SmsUtil(email, code)).start();   
 		} else {
-			out.print("手机/邮箱输入错误，请重新输入！");
+			out.print("手机/邮箱输入错误，请重新输入!");
 		}
 		out.print("OK");
 	}

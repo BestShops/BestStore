@@ -1,3 +1,4 @@
+DROP TABLE ordersreturn;
 DROP TABLE discuss;
 DROP TABLE blog;
 DROP TABLE ordersdetail;
@@ -62,7 +63,7 @@ CREATE TABLE TYPE(
 -- 商品信息表
 CREATE TABLE GOODS(
 	GID INT PRIMARY KEY AUTO_INCREMENT,-- 商品id
-	GNAME VARCHAR(32) NOT NULL,-- 商品名
+	GNAME VARCHAR(50) NOT NULL,-- 商品名
 	GLASTPRICE DOUBLE(7,2),-- 原价
 	GNOWPRICE DOUBLE(7,2) NOT NULL,-- 现价
 	GDESC VARCHAR(100),-- 商品描述
@@ -121,6 +122,7 @@ CREATE TABLE ORDERS(
 -- 订单详情表
 CREATE TABLE ORDERSDETAIL(
 	ODID INT PRIMARY KEY AUTO_INCREMENT,-- 订单详情id
+	ODSTATUS INT NOT NULL DEFAULT 0,-- 订单详情的状态，默认为0未评价，1已评价
 	GPRICE DOUBLE(5,2),-- 商品总价格
 	OID INT,-- 订单id
 	GID INT,-- 商品id
@@ -145,16 +147,17 @@ CREATE TABLE BLOG(
 -- 评论表
 CREATE TABLE DISCUSS(
 	DID INT PRIMARY KEY AUTO_INCREMENT,-- 评价id
+	DTIME TIMESTAMP,-- 评价的时间
 	DEPICT VARCHAR(100),-- 评价描述
-	DRANK INT NOT NULL,-- 评价星级
+	DRANK INT NOT NULL,-- 评价星级	0好评，1中评，2差评
 	DPHOTO VARCHAR(100),-- 图片路径，每张图片中间用，分隔
-	DSTATUS INT NOT NULL,-- 评论状态，用于移除评论，1为正常，0删除
+	DSTATUS INT NOT NULL,-- 评论状态，用于移除评论，0删除，1正常，2匿名
+	ODID INT,-- 订单详情的id
 	GID INT,-- 商品id
 	HID INT,-- 用户id
 	FOREIGN KEY (GID) REFERENCES GOODS (GID),
 	FOREIGN KEY (HID) REFERENCES Human (HID)
 );
-
 
 
 -- 退货退款表
@@ -165,7 +168,7 @@ CREATE TABLE ORDERSRETURN(
 	OREASON INT NOT NULL,-- 退款原因，0质量问题，1发错货物，2七天无理由退款，3多拍重拍
 	ORDESC VARCHAR(50),-- 退款说明，50字以内的退款原因描述
 	ORPHOTO VARCHAR(32),-- 图片地址
-	ORTYPE INT NOT NULL,-- 退款进度 0退款中（默认），1已退款（商家同意退款），2退款失败（退款失败）
+	ORTYPE INT NOT NULL,-- 退款进度 0退款中（默认），1已退款（商家同意退款），2移除
 	OID INT,-- 订单id
 	FOREIGN KEY (OID) REFERENCES orders (OID)
 );

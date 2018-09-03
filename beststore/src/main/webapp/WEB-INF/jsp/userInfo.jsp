@@ -49,23 +49,24 @@
 			<div class="pull-right">
 				<div class="user-content__box clearfix bgf">
 					<div class="title">账户信息-个人资料</div>
-					<div class="port b-r50" id="crop-avatar">
-						<div class="img">
-							<c:if test="${loginHuman.hphoto == null || loginHuman.hphoto == ''}">
-								<img name="hphoto" src="images/icons/default_avt.png" class="cover b-r50">
-							</c:if>
-							<c:if test="${loginHuman.hphoto != null && loginHuman.hphoto != ''}">
-								<img name="hphoto" src="upload/${loginHuman.hphoto}" class="cover b-r50">
-							</c:if>
-						</div>
+					<div class="port b-r50  pull-left" id="crop-avatar">
+						<c:if test="${loginHuman.hphoto == null || loginHuman.hphoto == ''}">
+							<img name="hphoto" src="images/icons/default_avt.png" class="cover b-r50">
+						</c:if>
+						<c:if test="${loginHuman.hphoto != null && loginHuman.hphoto != ''}">
+							<img name="hphoto" src="upload/${loginHuman.hphoto}" class="cover b-r50">
+						</c:if>
 					</div>
 					<div style="text-align:right;">
 						<form action="humanInfo.do" method="post" style="padding:20px 10px;width:300px;float:left;" enctype="multipart/form-data">
 							<div style="width:200px;margin-left:22px">
+							<span id="error" style="color:red;margin-right:40px">${error}</span>
+							<span id="success" style="color:green;margin-right:40px">${success}</span><br><br>
 							<a href="javascript:;" class="upload">修改头像
 							    <input class="change" type="file" multiple="multiple" name="file" id="file"/>
 							</a><br><br></div>
-							用户名：<input name="hname" readonly="readonly" value="${loginHuman.hname}" placeholder="请输入您的昵称"><br><br>
+							<input type="hidden" value="${sessionScope.loginHuman.hid }">
+							用户名：<input name="hname" readonly="readonly" value="${sessionScope.loginHuman.hname}" placeholder="请输入您的昵称"><br><br>
 							性别：   <input type="radio" name="sex" value="1" checked>男&nbsp;&nbsp;
 							<input type="radio" name="sex" value="2">女<span>（默认为男性）</span><br><br>
 							身高(cm)：<input name="height" type="number" min="140" max="220" style="height:23px;width:165px;" value="${loginHuman.height}"><br><br>
@@ -74,8 +75,6 @@
 							身份证号码：<input name="hidcard" value="${loginHuman.hidcard}"><br><br>
 							手机号码：<input name="hphone" value="${loginHuman.hphone}"><br><br>
 							邮箱地址：<input name="hemail" value="${loginHuman.hemail}"><br><br>
-							<span id="error" style="color:red;margin-right:40px">${error}</span>
-							<span id="success" style="color:green;margin-right:40px">${success}</span><br><br>
 							<div style="width:200px;">
 								<input type="submit" class="cn" value="确认修改"/>
 							</div>
