@@ -6,7 +6,9 @@
 <meta charset="UTF-8">
 <title>U袋网</title>
 </head>
-<body align=center>
+<body style="align:center;">
+<a href="/">
 <img alt="500" src="images/500.jpg">
+</a>
 </body>
 </html>

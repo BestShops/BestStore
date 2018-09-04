@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bs.beststore.biz.CartBiz;
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.HumanBiz;
 import com.bs.beststore.biz.TypeBiz;
@@ -37,6 +38,8 @@ public class IndexAction {
 	private GoodsBiz goodsBiz;
 	@Resource
 	private HumanBiz humanBiz;
+	@Resource
+	private CartBiz cartBiz;
 
 	// 超级管理员登录界面
 	@RequestMapping(path = "superLoginPage.todo")
@@ -114,8 +117,13 @@ public class IndexAction {
 		}
 		List<Map<String,Object>> newGoodsList=goodsBiz.reduceHotGoods(5);
 		model.addAttribute("newGoods",newGoodsList);
+		// 修改购物车数量信息
 		if(human!=null) {
 			model.addAttribute("birthTime",humanBiz.birthTime(human));
+			int cartCount = (int) cartBiz.countByHid(human.getHid());
+			session.setAttribute("cartCount", cartCount);
+		} else {
+			session.setAttribute("cartCount", 0);
 		}
 		return "index";
 	}

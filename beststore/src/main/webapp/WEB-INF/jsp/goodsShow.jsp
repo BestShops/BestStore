@@ -245,9 +245,7 @@
 							</div>
 						</div>
 						<div class="item-action clearfix bgf5">
-							<input type="submit" value="立即购买" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button"
-								class="item-action__buy">
-								
+							<input type="submit" value="立即购买" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button" class="item-action__buy">
 							<a id="addCart" rel="nofollow" data-addfastbuy="true" role="button" class="item-action__basket"> 
 							<i class="iconfont icon-shopcart"></i> 加入购物车
 							</a>
@@ -271,8 +269,11 @@
 				cnum:buynum,
 				gid:gid
 			},function(data){
-				eval("var d=" + data);
-				alert(d.data);
+				var d = eval("(" + data + ")");
+				alert(d.info);
+				var count = d.count;
+				console.log(count);
+				$("#count").text(count);
 				if(d.code=="0"){
 					window.location.href="userLoginPage.do";
 				} 
