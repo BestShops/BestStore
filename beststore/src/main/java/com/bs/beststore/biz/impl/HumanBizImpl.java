@@ -78,7 +78,6 @@ public class HumanBizImpl implements HumanBiz {
 		HumanExample humanExample3 = new HumanExample();
 		Criteria criteria3 = humanExample3.createCriteria();
 		criteria3.andHnameEqualTo(human.getHname().trim());
-		System.out.println(MD5Util.MD5("root123"));
 		criteria3.andHpwdEqualTo(MD5Util.MD5(human.getHname().trim() + human.getHpwd()));// 密码是加密后存入数据库的，所以查询也要加密
 		List<Human> list3 = humanMapper.selectByExample(humanExample3);
 		if (list3.size() == 1) {// 用户名密码都正确，返回该用户的信息

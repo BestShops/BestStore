@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -184,10 +185,15 @@ public class HumanAction {
 		human.setHsex(1);// 默认为男性
 		ArrayList<String> list = CodeUtil.VerificationCode;
 		for (int i = 0; i < list.size(); i++) {
-			if (list.get(i).substring(0, 4).equalsIgnoreCase(code) && list.get(i).endsWith(emailorphone)) {
-				humanBiz.register(human);
-				session.setAttribute("hname", human.getHname());// 将登录成功的用户信息存入到session中
-				out.print("OK");
+			if(list.get(i).substring(0, 4).equalsIgnoreCase(code)) {
+				if (list.get(i).endsWith(emailorphone)) {
+					humanBiz.register(human);
+					session.setAttribute("hname", human.getHname());// 将登录成功的用户信息存入到session中
+					out.print("OK");
+				}
+				if(CodeUtil.VerificationCode!=null) {
+					CodeUtil.VerificationCode=new ArrayList<String>();
+				}
 			}else {
 				out.print("验证码错误!");
 			}
@@ -212,22 +218,28 @@ public class HumanAction {
 			out.print("手机/邮箱格式错误，请重新输入");
 		}
 		ArrayList<String> list = CodeUtil.VerificationCode;
-		for (int i = 0; i < list.size(); i++) {
+		for (int i = 0; i <list.size(); i++) {
 			// 判断验证码是否存在，对应的手机号或者邮箱是否正确
-			if (list.get(i).startsWith(code) 
-					&& list.get(i).endsWith(emailorphone)
-					// 判断用户是否存在，用手机号或者邮箱查找，因为邮箱和手机号都是唯一的，所以查出的结果只会是一条
-					&& humanBiz.findByCondition(human).size() == 1) {
-				// 遍历出唯一的一条记录，由名字查找，
-				for (Human hm : humanBiz.findByCondition(human)) {
-					// 将传进来的新密码设置到hm上，再进行更新
-					hm.setHpwd(human.getHpwd());
-					if (humanBiz.forgetPwd(hm) == 1) {
-						out.print("OK");
-					} else {
-						out.print("修改失败，请重试！");
+			if(list.get(i).substring(0,4).equalsIgnoreCase(code)) {
+				if (list.get(i).endsWith(emailorphone)
+						// 判断用户是否存在，用手机号或者邮箱查找，因为邮箱和手机号都是唯一的，所以查出的结果只会是一条
+						&& humanBiz.findByCondition(human).size() == 1) {
+					// 遍历出唯一的一条记录，由名字查找，
+					for (Human hm : humanBiz.findByCondition(human)) {
+						// 将传进来的新密码设置到hm上，再进行更新
+						hm.setHpwd(human.getHpwd());
+						if (humanBiz.forgetPwd(hm) == 1) {
+							out.print("OK");
+						} else {
+							out.print("修改失败，请重试！");
+						}
+					}
+					if(CodeUtil.VerificationCode!=null) {
+						CodeUtil.VerificationCode=new ArrayList<String>();
 					}
 				}
+			}else {
+				out.print("验证码错误!");
 			}
 		}
 	}

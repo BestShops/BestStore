@@ -56,7 +56,6 @@
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车</div>
 				<form action="shopCartPayPage.do" method="post" enctype="multipart/form-data" class="shopcart-form__box">
-				
 					<c:if test="${cartCount >= 1 }">
 					<table class="table table-bordered">
 						<thead>

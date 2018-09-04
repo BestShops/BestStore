@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.HumanBiz;
+import com.bs.beststore.biz.StoreBiz;
 import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.AccountValidatorUtil;
 import com.bs.beststore.util.CodeUtil;
@@ -37,6 +38,8 @@ public class IndexAction {
 	private GoodsBiz goodsBiz;
 	@Resource
 	private HumanBiz humanBiz;
+	@Resource
+	private StoreBiz storeBiz;
 
 	// 超级管理员登录界面
 	@RequestMapping(path = "superLoginPage.todo")
@@ -117,6 +120,7 @@ public class IndexAction {
 		if(human!=null) {
 			model.addAttribute("birthTime",humanBiz.birthTime(human));
 		}
+		model.addAttribute("storeCount",storeBiz.findAllTotal(null));
 		return "index";
 	}
 
