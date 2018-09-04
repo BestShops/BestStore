@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,12 +14,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bs.beststore.biz.AddressBiz;
 import com.bs.beststore.biz.CartBiz;
 import com.bs.beststore.biz.OrdersBiz;
 import com.bs.beststore.biz.OrdersdetailBiz;
-import com.bs.beststore.util.Result;
 import com.bs.beststore.vo.Cart;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Orders;
@@ -33,6 +34,7 @@ import com.google.gson.Gson;
  * @author Administrator
  *
  */
+@ResponseBody
 public class CartAction {
 
 	@Resource
@@ -70,11 +72,12 @@ public class CartAction {
 	
 	// 立即购买
 	@RequestMapping(value = "buyNow.do")
-	public String buyNow(HttpSession session, PrintWriter out, Orders orders, Ordersdetail ordersdetail, Model model) {
+	public String buyNow(HttpSession session, Ordersdetail ordersdetail, Model model) {
 		Human human = (Human) session.getAttribute("loginHuman");
 		// 传入收货地址列表
 		model.addAttribute("addresslist", addressBiz.findAllAddress(human.getHid()));
 		System.out.println("-----------" + ordersdetail.getNum() + "-----------" + ordersdetail.getGprice());
+		Orders orders = new Orders();
 		orders.setOnowprice(ordersdetail.getNum() * ordersdetail.getGprice());
 		orders.setHid(human.getHid());
 		ordersBiz.addOrders(orders);
@@ -94,29 +97,36 @@ public class CartAction {
 		return "shopCartPay";
 	}
 	
-
 	// 添加商品到购物车
 	@RequestMapping(value = "addCart.todo")
 	public void addCart(Cart cart, HttpSession session, PrintWriter out) {
 		Human human = (Human) session.getAttribute("loginHuman");
-		String data = null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		if(human!=null) {
 			cart.setHid(human.getHid());
 			List<Cart> list = cartBiz.findByGidAndHid(cart);
-			if (list.size() == 1) {
+			if (list.size() == 1) {// 购物车中已有该商品
 				cart.setCid(list.get(0).getCid());
 				cart.setCnum(list.get(0).getCnum() + cart.getCnum());
 				if (cartBiz.updateCartGoods(cart) == 1) {
-					data=new Gson().toJson(Result.getSuccess("添加购物车成功!"));
+					map.put("info", "添加购物车成功!");
 				}
-			} else {
+			} else {// 购物车还没有添加该商品
 				if (cartBiz.addCartGoods(cart) == 1) {
-					data=new Gson().toJson(Result.getSuccess("添加购物车成功!"));
+					map.put("info", "添加购物车成功!");
 				}
 			}
+			// 修改购物车数量信息
+			int cartCount = (int) cartBiz.countByHid(human.getHid());
+			session.setAttribute("cartCount", cartCount);
+			map.put("count", cartCount);
+			map.put("code", 1);
 		}else {
-			data=new Gson().toJson(Result.getFailure("立即去登录!"));
+			map.put("info", "立即去登录!");
+			map.put("code", 0);
 		}
+		Gson gson = new Gson();
+		String data = gson.toJson(map);
 		out.print(data);
 	}
 

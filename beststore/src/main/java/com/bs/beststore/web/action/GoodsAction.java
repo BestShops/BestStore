@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bs.beststore.biz.CartBiz;
 import com.bs.beststore.biz.DiscussBiz;
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.Result;
 import com.bs.beststore.vo.Goods;
+import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Store;
 import com.bs.beststore.vo.Type;
 import com.google.gson.Gson;
@@ -35,6 +37,8 @@ public class GoodsAction {
 	private TypeBiz typeBiz;
 	@Resource
 	private DiscussBiz discussBiz;
+	@Resource
+	private CartBiz cartBiz;
 
 	@RequestMapping(path = "goodsQueryPage.todo")
 	public String goodsQueryPage(Goods goods,Type type,HttpServletRequest request) {
@@ -92,7 +96,7 @@ public class GoodsAction {
 	}
 
 	@RequestMapping(path = "goodsShowPage.todo")
-	public String goodsShowPage(Goods goods, Model model,String color,String size){
+	public String goodsShowPage(Goods goods, Model model,String color,String size, HttpSession session){
 		// 查询商品详情 根据gid查询
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
 		// 查询商品的相关评价
@@ -104,6 +108,12 @@ public class GoodsAction {
 		model.addAttribute("list", list);
 		model.addAttribute("discussList", discussList);
 		model.addAttribute("linkList", linkList);
+		// 修改购物车数量信息
+		if (session.getAttribute("loginHuman") != null) {
+			Human human = (Human) session.getAttribute("loginHuman");
+			int cartCount = (int) cartBiz.countByHid(human.getHid());
+			session.setAttribute("cartCount", cartCount);
+		}
 		if(color==null || color.equals("")) {
 			model.addAttribute("color", 1);
 		}else {
