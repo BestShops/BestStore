@@ -26,11 +26,16 @@ public interface GoodsMapper {
 	List<Goods> findByNum();
 
 	// 商品id
-	@Select("select * from goods g " 
-			+ " left join type t on g.tid=t.tid "
-			+ " left join store s on g.sid=s.sid "
-			+ " left join discuss d on g.gid=d.gid "
-			+ " where g.gid=#{gid} and g.gstatus=1 and s.sstatus=1")
+	@Select("select a.*,b.sname,c.num,d.count,t1.TPRINAME from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid \r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and a.gid=#{gid}")
 	List<Map<String, Object>> findByGid(@Param("gid") int gid);
 
 	// 商品类型id

@@ -18,10 +18,12 @@ import com.bs.beststore.biz.AddressBiz;
 import com.bs.beststore.biz.CartBiz;
 import com.bs.beststore.biz.OrdersBiz;
 import com.bs.beststore.biz.OrdersdetailBiz;
+import com.bs.beststore.util.Result;
 import com.bs.beststore.vo.Cart;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Orders;
 import com.bs.beststore.vo.Ordersdetail;
+import com.google.gson.Gson;
 
 @Controller
 /**
@@ -94,28 +96,28 @@ public class CartAction {
 	
 
 	// 添加商品到购物车
-	@RequestMapping(value = "addCart.do")
+	@RequestMapping(value = "addCart.todo")
 	public void addCart(Cart cart, HttpSession session, PrintWriter out) {
 		Human human = (Human) session.getAttribute("loginHuman");
-		// 根据session查找loginHuman中hid，将其设入cart里
-		// 然后再对cart表进行insert，从而完成添加购物车功能
-		cart.setHid(human.getHid());
-		// 按照Gid和hid查找用户购物车是否已经存在该商品，如果不存在则添加，如果存在则加上相应的数量
-		List<Cart> list = cartBiz.findByGidAndHid(cart);
-		if (list.size() == 1) {
-			cart.setCid(list.get(0).getCid());
-			cart.setCnum(list.get(0).getCnum() + cart.getCnum());
-			if (cartBiz.updateCartGoods(cart) == 1) {
-				out.print("OK");
-				return;
+		String data = null;
+		if(human!=null) {
+			cart.setHid(human.getHid());
+			List<Cart> list = cartBiz.findByGidAndHid(cart);
+			if (list.size() == 1) {
+				cart.setCid(list.get(0).getCid());
+				cart.setCnum(list.get(0).getCnum() + cart.getCnum());
+				if (cartBiz.updateCartGoods(cart) == 1) {
+					data=new Gson().toJson(Result.getSuccess("添加购物车成功!"));
+				}
+			} else {
+				if (cartBiz.addCartGoods(cart) == 1) {
+					data=new Gson().toJson(Result.getSuccess("添加购物车成功!"));
+				}
 			}
-		} else {
-			if (cartBiz.addCartGoods(cart) == 1) {
-				out.print("OK");
-				return;
-			}
+		}else {
+			data=new Gson().toJson(Result.getFailure("立即去登录!"));
 		}
-		out.print("添加购物车失败！");
+		out.print(data);
 	}
 
 	// 删除购物车商品
