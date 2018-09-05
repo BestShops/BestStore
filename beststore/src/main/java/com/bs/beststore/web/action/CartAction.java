@@ -27,6 +27,13 @@ import com.bs.beststore.vo.Ordersdetail;
 import com.google.gson.Gson;
 
 @Controller
+/**
+ * 
+ * 因为购物车所关联的至少有用户和商品， 所以没执行增删改购物车商品操作的时候都要关联hid和gid
+ * 
+ * @author Administrator
+ *
+ */
 public class CartAction {
 
 	@Resource

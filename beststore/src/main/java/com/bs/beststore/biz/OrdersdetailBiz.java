@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 import com.bs.beststore.vo.Ordersdetail;
 
 public interface OrdersdetailBiz {
+	
+	/**
+	 * 查询同一个店铺下面不同商品的销量，由此绘制销量图
+	 * @return
+	 */
+	List<Map<String, Object>> findGnameAndNum(int sid);
 
 	/**
 	 * 新增订单详情表

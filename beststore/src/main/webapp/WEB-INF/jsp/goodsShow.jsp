@@ -49,7 +49,8 @@
 					<div class="item-price bgf5">
 						<div class="price-box clearfix">
 							<div class="price-panel pull-left">
-								售价：<span class="price">￥<span name="gprice" style="width:80px; height:20px; border: 0px; outline:none;">${list.get(0).GNOWPRICE}</span>
+								售价：<span class="price">￥<span style="width:80px; height:20px; border: 0px; outline:none;">${list.get(0).GNOWPRICE}</span>
+								<input type="hidden" name="gprice" value="${list.get(0).GNOWPRICE}"/>
 								<s class="fz16 c9">￥${list.get(0).GLASTPRICE}</s></span>
 							</div>
 							<script>
