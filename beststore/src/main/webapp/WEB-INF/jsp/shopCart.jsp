@@ -243,7 +243,7 @@
 	<script type="text/javascript">
 		function checkboxOnclick(e) {
 			if ( e.checked == true){
-				var parent = 
+				var parent = e.parentNode.nextSbiling.nextSbiling;
 			}else{
 				alert(2); 
 			}
