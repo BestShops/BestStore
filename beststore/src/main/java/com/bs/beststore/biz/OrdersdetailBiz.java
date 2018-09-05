@@ -3,6 +3,8 @@ package com.bs.beststore.biz;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+
 import com.bs.beststore.vo.Ordersdetail;
 
 public interface OrdersdetailBiz {
@@ -42,7 +44,7 @@ public interface OrdersdetailBiz {
 	 * @param oid 
 	 * @return
 	 */
-	int addOrdersDetailByCart(int hid, int oid);
+	int addOrdersDetailByCart(String cids, int oid);
 	
 	/**
 	 * 判别订单下所有的商品是否都已经评价过了

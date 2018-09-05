@@ -55,7 +55,6 @@ public class AddressBizImpl implements AddressBiz {
 		Criteria criteria = addressExample.createCriteria();
 		criteria.andHidEqualTo(hid);
 		List<Address> list = addressMapper.selectByExample(addressExample);
-		
 		// 如果用户存有地址
 		if (list == null || list.size() == 0) {
 			return new ArrayList<Address>();

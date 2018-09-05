@@ -255,7 +255,6 @@
 				</form>
 	</div>
 	<script>
-	
 		// 添加购物车按钮
 		$('#addCart').click(function() {
 			var buynum = $("#buy_goodsNum").val();
@@ -265,14 +264,13 @@
 				alert("超过商品库存!!!");
 				return;
 			}
-			$.post("addCart.todo",{
+			$.post("addCart.do",{
 				cnum:buynum,
 				gid:gid
 			},function(data){
 				var d = eval("(" + data + ")");
 				alert(d.info);
 				var count = d.count;
-				console.log(count);
 				$("#count").text(count);
 				if(d.code=="0"){
 					window.location.href="userLoginPage.do";

@@ -59,7 +59,6 @@
 				<div class="shop-title">收货地址</div>
 				<form action="pay.do" method="POST" class="shopcart-form__box">
 					<div class="addr-radio">
-					
 					<c:forEach items="${addresslist}" var="al">
 					<c:if test="${al.astatus == 1 }">
 						<div class="radio-line radio-box active">
@@ -72,7 +71,6 @@
 							<a href="addressPage.do" class="edit">修改</a>
 						</div>
 					</c:if>
-					
 					<c:if test="${al.astatus == 0 }">	
 						<div class="radio-line radio-box">
 							<label class="radio-label ep" title="${al.acity } ${al.alocation } （${al.aconsignee } 收） ${al.aphone }">
@@ -140,7 +138,7 @@
 					</div>
 					<div class="shop-cart__info clearfix">
 						<div class="pull-left text-left">
-							<div class="info-line text-nowrap">购买时间：<input class="c6" name="ordertime" type="text" readonly="readonly" style="border: 0px;outline:none;cursor: pointer;" value="<fmt:formatDate value="${orders.otime}" type="both"/>"></div>
+							<div class="info-line text-nowrap">购买时间：<input class="c6" name="ordertime" type="text" readonly="readonly" style="border: 0px;outline:none;cursor: pointer;" value="<fmt:formatDate value="${order.otime}" type="both"/>"></div>
 							<div class="info-line text-nowrap">交易类型：<span class="c6">担保交易</span></div>
 							<div class="info-line text-nowrap">交易号：<input class="c6" name="oid" type="text" readonly="readonly" style="width:60px; height:20px; border: 0px;outline:none;cursor: pointer;" value="${order.oid}"></div>
 						</div>
@@ -156,7 +154,7 @@
 					<div class="pay-mode__box">
 						<div class="radio-line radio-box active">
 							<label class="radio-label ep">
-								<input name="paymode" value="1" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
+								<input name="paymode" value="1" autocomplete="off" type="radio" checked="checked"><i class="iconfont icon-radio"></i>
 								<img src="images/icons/alipay.png" alt="支付宝支付">
 							</label>
 							<div class="pay-value">支付<b class="fz16 cr">${money}</b>元</div>

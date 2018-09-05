@@ -140,13 +140,14 @@
 				<div class="item-list__area clearfix">
 				<c:forEach items="${goodsQueryList}" var="c">
 					<div class="item-card">
+						<input id="goodsGid" type="hidden" value="${c.GID }">
 						<a href="goodsShowPage.todo?gid=${c.GID }" class="photo">
 							<img src="${basePath }/upload/${c.GPHOTOPIC }" class="cover">
 							<div class="name">${c.GNAME }</div>
 						</a>
 						<div class="middle">
 							<div class="price"><small>￥</small>${c.GNOWPRICE }</div>
-							<div class="sale"><a href="">加入购物车</a></div>
+							<div class="sale"><a href="javascript:void(0);" onclick="changeNum(${c.GID})">加入购物车</a></div>
 						</div>
 						<div class="buttom">
 							<div>店铺 <b>${c.sname }</b></div>
@@ -196,5 +197,30 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script type="text/javascript">
+		function changeNum(gid){
+			var loginHuman='${sessionScope.loginHuman}';
+			if(loginHuman!=null){
+				window.location.href = "userLoginPage.do";
+			}else{
+				$.post("addCart.do",
+						{
+							gid:gid,
+							cnum:1
+						},
+						function(data){
+							var d = eval("(" + data + ")");
+							alert(d.info);
+							var count = d.count;
+							$("#count").text(count);
+							if(d.code=="0"){
+								alert(1);
+								
+							}
+				}); 
+			} 
+			
+		}
+	</script>
 </body>
 </html>
