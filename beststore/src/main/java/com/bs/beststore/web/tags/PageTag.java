@@ -25,13 +25,7 @@ public class PageTag extends TagSupport {
 		while(pageNo<totalPage){
 			//String pageName=  pageNo==0 ? "首页" : pageNo==totalPage-1 ? "尾页" : (pageNo+1+"");
 			String pageName=null;
-			if(pageNo==0){
-				pageName="首页";
-			}else if(pageNo==totalPage-1){
-				pageName="尾页";
-			}else{
-				pageName=pageNo+1+"";
-			}
+			pageName=pageNo+1+"";
 			
 			pageNo++;
 			
