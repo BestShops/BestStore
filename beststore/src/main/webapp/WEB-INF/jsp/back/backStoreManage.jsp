@@ -62,7 +62,7 @@
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'ordersReturnManagePage.do')" data-options="iconCls:'icon-search'" >退货管理</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'${basePath}/back/takeCourse.jsp')" data-options="iconCls:'icon-search'" >商品评价</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'blogManagePage.do')" data-options="iconCls:'icon-search'" >博客管理</a>  
-			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'${basePath}/back/takeCourse.jsp')" data-options="iconCls:'icon-search'" >销量图表</a>    
+			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsSaleReportPage.do')" data-options="iconCls:'icon-search'" >销量图表</a>    
 		</div>
 	</div>
 	<div data-options="region:'south'" style="text-align: center;padding: 3px">

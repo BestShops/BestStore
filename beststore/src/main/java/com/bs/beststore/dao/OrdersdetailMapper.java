@@ -10,6 +10,13 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 public interface OrdersdetailMapper {
+	
+	
+	@Select("select concat('''',g.gname,'''') as name,sum(od.num) as value from ordersdetail od "
+			+ "left join goods g on od.gid = g.gid "
+			+ "where g.sid = #{sid} group by g.gname")
+	List<Map<String, Object>> findGnameAndNum(@Param("sid")int sid);
+	
 	@Select("select a.odid,a.odstatus,num,sname,gname,gphotopic,gnowprice,gdesc,b.gid from ordersdetail a\r\n" + 
 			"left join goods b on a.gid=b.gid\r\n" + 
 			"left join store c on b.sid=c.sid\r\n" + 

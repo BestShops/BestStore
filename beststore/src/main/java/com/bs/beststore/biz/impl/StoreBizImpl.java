@@ -39,8 +39,10 @@ public class StoreBizImpl implements StoreBiz {
 	@Override
 	public long findAllTotal(Store store) {
 		long count=0;
-		if(store.getSstatus()!=null) {
-			count= storeMapper.findAllByStatusTotal(store);
+		if(store!=null) {
+			if(store.getSstatus()!=null) {
+				count= storeMapper.findAllByStatusTotal(store);
+			}
 		}else {
 			count= storeMapper.findAllStoreInfoTotal();
 		}

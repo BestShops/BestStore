@@ -57,7 +57,6 @@
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车</div>
 				<form action="shopCartPayPage.do" method="post" enctype="multipart/form-data" class="shopcart-form__box">
-				
 					<c:if test="${cartCount >= 1 }">
 					<table class="table table-bordered">
 						<thead>
@@ -90,7 +89,7 @@
 									</label>
 								</th>
 								<td>
-									<div id="gname" class="name ep3"><a name="gid" >${lc.GID}.</a>${lc.GNAME }</div>
+									<div id="gname" class="name ep3"><a name="gid" >${lc.GID }</a>${lc.GNAME }</div>
 									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
 								<td>¥${lc.GNOWPRICE } <br><s style="color:gray;font-size: 14px">¥${lc.GLASTPRICE }</s></td>

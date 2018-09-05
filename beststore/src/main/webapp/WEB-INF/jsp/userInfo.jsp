@@ -58,7 +58,7 @@
 						</c:if>
 					</div>
 					<div style="text-align:right;">
-						<form action="humanInfo.do" method="post" style="padding:20px 10px;width:300px;float:left;" enctype="multipart/form-data">
+						<form action="humanInfo.do" method="post" style="width:300px;float:left;" enctype="multipart/form-data">
 							<div style="width:200px;margin-left:22px">
 							<span id="error" style="color:red;margin-right:40px">${error}</span>
 							<span id="success" style="color:green;margin-right:40px">${success}</span><br><br>
@@ -67,14 +67,28 @@
 							</a><br><br></div>
 							<input type="hidden" value="${sessionScope.loginHuman.hid }">
 							用户名：<input name="hname" readonly="readonly" value="${sessionScope.loginHuman.hname}" placeholder="请输入您的昵称"><br><br>
-							性别：   <input type="radio" name="sex" value="1" checked>男&nbsp;&nbsp;
-							<input type="radio" name="sex" value="2">女<span>（默认为男性）</span><br><br>
+							性别：   
+							<c:if test="${sessionScope.loginHuman.hsex==null }">
+								<input type="radio" name="hsex" value="1" checked>男&nbsp;&nbsp;
+								<input type="radio" name="hsex" value="2">女<span>（默认为男性）</span><br><br>
+							</c:if>
+							<c:if test="${sessionScope.loginHuman.hsex!=null }">
+								<c:if test="${sessionScope.loginHuman.hsex==1 }">
+									<input type="radio" name="hsex" value="1" checked>男&nbsp;&nbsp;
+									<input type="radio" name="hsex" value="2">女<span>（默认为男性）</span><br><br>
+								</c:if>
+								<c:if test="${sessionScope.loginHuman.hsex==2 }">
+									<input type="radio" name="hsex" value="1" >男&nbsp;&nbsp;
+									<input type="radio" name="hsex" value="2" checked>女<span>（默认为男性）</span><br><br>
+								</c:if>
+							</c:if>
 							身高(cm)：<input name="height" type="number" min="140" max="220" style="height:23px;width:165px;" value="${loginHuman.height}"><br><br>
 							体重(kg)：<input name="hweight" type="number" min="5" max="190" style="height:23px;width:165px;" value="${loginHuman.hweight}"><br><br>
-							生日：<input type="text" class="datepicker" name="time" value="<fmt:formatDate value="${loginHuman.hbirth}" pattern="yyyy-MM-dd" />"><br><br>
-							身份证号码：<input name="hidcard" value="${loginHuman.hidcard}"><br><br>
-							手机号码：<input name="hphone" value="${loginHuman.hphone}"><br><br>
-							邮箱地址：<input name="hemail" value="${loginHuman.hemail}"><br><br>
+							生日<span style="color:red;">&nbsp;&nbsp;*</span>：<input type="text" class="datepicker" name="time" value="<fmt:formatDate value="${loginHuman.hbirth}" pattern="yyyy-MM-dd" />">
+							<br><br>
+							身份证号码<span style="color:red;">&nbsp;&nbsp;*</span>：<input name="hidcard" value="${loginHuman.hidcard}"><br><br>
+							手机号码<span style="color:red;">&nbsp;&nbsp;*</span>：<input name="hphone" value="${loginHuman.hphone}"><br><br>
+							邮箱地址<span style="color:red;">&nbsp;&nbsp;*</span>：<input name="hemail" value="${loginHuman.hemail}"><br><br>
 							<div style="width:200px;">
 								<input type="submit" class="cn" value="确认修改"/>
 							</div>

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 </head>
 <body>
 	<%@ include file="header2.jsp" %>
@@ -177,6 +177,7 @@
 			// 设置城市的值
 			$('.addr-linkage').citys({
 				// 如果某天这个仓库地址失效了dataUrl请使用本地 2017.10 的数据 'js/data_location/list.json'
+				//http://passer-by.com/data_location/list.json
 				dataUrl: 'http://passer-by.com/data_location/list.json',
 				spareUrl: 'js/data_location/list.json',
 				dataType: 'json',

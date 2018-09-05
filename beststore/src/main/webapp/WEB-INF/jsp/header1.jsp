@@ -237,17 +237,17 @@
 				<div class="login-box">
 					<div class="avt-port">
 						<c:if test="${sessionScope.loginHuman.hphoto!=null }">
-							<img src="${basePath }/upload/${sessionScope.loginHuman.hphoto }" alt="欢迎来到U袋网"
-								class="cover b-r50">
+							<img onclick="window.open('userInfoPage.do')" src="${basePath }/upload/${sessionScope.loginHuman.hphoto }"
+								class="cover b-r50" />
 						</c:if>
 						<c:if test="${sessionScope.loginHuman.hphoto==null }">
-							<img src="${basePath }/images/icons/default_avt.png" alt="欢迎来到U袋网"
+							<img onclick="imgClick()" src="${basePath }/images/icons/default_avt.png"
 								class="cover b-r50">
 						</c:if>
 					</div>
 					<c:if test="${sessionScope.loginHuman!=null }">
 						<div class="name c6">
-							Hi~ <span class="cr">${sessionScope.loginHuman.hname }</span>
+							Hi~ <a href="userInfoPage.do"><span class="cr">${sessionScope.loginHuman.hname }</span></a>
 						</div>
 						<div class="point c6">积分: 30</div>
 						<div class="report-box">
@@ -272,7 +272,7 @@
 					</a> <a href="javascript:;" class="agent"> <i
 						class="iconfont icon-agent"></i>
 						<p>
-							<span class="cr">9527</span>个网店
+							<span class="cr">${storeCount }</span>个网店
 						</p>
 					</a>
 				</div>
@@ -318,4 +318,9 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	function imgClick(){
+		window.onload.href="userInfoPage.do";
+	}
+</script>
 </html>
