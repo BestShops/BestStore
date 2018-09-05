@@ -47,7 +47,7 @@
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<!-- 192.168.43.209:3306 -->
-		<property name="url" value="jdbc:mysql://127.0.0.1/beststore?useUnicode=true
+		<property name="url" value="jdbc:mysql://localhost:3306/beststore?useUnicode=true
 		&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Shanghai" />
 		<property name="username" value="root" />
 		<property name="password" value="a" />

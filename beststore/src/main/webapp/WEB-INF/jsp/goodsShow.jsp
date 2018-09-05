@@ -26,7 +26,7 @@
 					</div>
 	
 					<div ><br><br>
-						<a>商品来源：<strong>${list.get(0).SNAME }</strong></a>
+						<a>商品来源：<strong>${list.get(0).sname }</strong></a>
 					</div>
 					
 					<div class="big-box">
@@ -42,28 +42,15 @@
 	
 				<div class="item-info__box">
 					<div class="item-title">
-						<div class="name ep2"><input name="gid" value="${list.get(0).GID}" type="text" readonly="readonly" 
+						<div class="name ep2"><input name="gid" value="${list.get(0).GID}" type="hidden" readonly="readonly" 
 								style="width:40px; height:20px; border: 0px; outline:none; cursor: pointer;">
 								${list.get(0).GNAME}</div>
-						<!-- <div class="sale cr">优惠活动：该商品享受8折优惠</div> -->
-
 					</div>
 					<div class="item-price bgf5">
 						<div class="price-box clearfix">
 							<div class="price-panel pull-left">
-								售价：<span class="price">￥<input name="gprice" value="${list.get(0).GNOWPRICE}" type="text" readonly="readonly" 
-								style="width:80px; height:20px; border: 0px; outline:none; cursor: pointer;">
-								
+								售价：<span class="price">￥<span name="gprice" style="width:80px; height:20px; border: 0px; outline:none;">${list.get(0).GNOWPRICE}</span>
 								<s class="fz16 c9">￥${list.get(0).GLASTPRICE}</s></span>
-							</div>
-							<div class="vip-price-panel pull-right">
-								会员等级价格 <i class="iconfont icon-down"></i>
-								<ul class="all-price__box">
-									<li><span class="text-justify">普通：</span>40.00元</li>
-									<li><span class="text-justify">银牌：</span>38.00元</li>
-									<li><span class="text-justify">超级：</span>28.00元</li>
-									<li><span class="text-justify">V I P：</span>19.20元</li>
-								</ul>
 							</div>
 							<script>
 							// 会员价格折叠展开
@@ -84,12 +71,25 @@
 					</div>
 					<ul class="item-ind-panel clearfix">
 						<li class="item-ind-item"><span class="ind-label c9">累计销量</span>
-							<span class="ind-count cr">1688</span></li>
-						<li class="item-ind-item"><a href=""><span
-								class="ind-label c9">累计评论</span> <span class="ind-count cr">1314</span></a>
+						<c:if test="${list.get(0).num!=null }">
+							<span class="ind-count cr">${list.get(0).num }</span>
+						</c:if>
+						<c:if test="${list.get(0).num==null }">
+							<span class="ind-count cr">0</span>
+						</c:if>	
 						</li>
 						<li class="item-ind-item"><a href=""><span
-								class="ind-label c9">商品评分</span> <span class="ind-count cr">${list.get(0).GRADE }</span></a>
+								class="ind-label c9">累计评论</span>
+								<c:if test="${list.get(0).count==null }">
+								 	<span class="ind-count cr">0</span>
+								</c:if> 
+								<c:if test="${list.get(0).count!=null }">
+								 	<span class="ind-count cr">${list.get(0).count }</span>
+								</c:if> 
+								 </a>
+						</li>
+						<li class="item-ind-item"><span
+								class="ind-label c9">商品评分</span> <span class="ind-count cr">${list.get(0).GRADE }</span>
 						</li>
 					</ul>
 					<div class="item-key">
@@ -98,18 +98,48 @@
 								<dt class="item-metatit">颜色：</dt>
 								<dd>
 									<ul data-property="颜色" class="clearfix">
-										<li><a class="on" href="javascript:;" role="button"
-											data-value="白色" aria-disabled="true"> <span>白色</span>
-										</a></li>
-										<li><a href="javascript:;" role="button" data-value="黑色"
-											aria-disabled="true"> <span>黑色</span>
-										</a></li>
-										<li><a href="javascript:;" role="button"
-											data-value="粉红色" aria-disabled="true"> <span>粉红色</span>
-										</a></li>
-										<li><a href="javascript:;" role="button" data-value="黄色"
-											aria-disabled="true"> <span>黄色</span>
-										</a></li>
+										<li><c:if test="${color==1}">
+											<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=1&size=${size}" role="button"
+												data-value="白色" aria-disabled="true"> <span >白色</span></a>
+										</c:if>
+										<c:if test="${color!=1}">
+											<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=1&size=${size}" role="button"
+												data-value="白色" aria-disabled="true"> <span >白色</span></a>
+										</c:if></li>
+										<li>
+											<c:if test="${color==2 }">
+												<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=2&size=${size}" role="button" data-value="黑色"
+												aria-disabled="true"> <span>黑色</span></a>
+											</c:if>
+											<c:if test="${color!=2 }">
+												<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=2&size=${size}" role="button" data-value="黑色"
+												aria-disabled="true"> <span>黑色</span></a>
+											</c:if>
+										</li>
+										<li>
+											<c:if test="${color==3 }">
+												<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=3&size=${size}" role="button"
+													data-value="粉红色" aria-disabled="true"> <span>粉红色</span>
+												</a>
+											</c:if>
+											<c:if test="${color!=3 }">
+												<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=3&size=${size}" role="button"
+													data-value="粉红色" aria-disabled="true"> <span>粉红色</span>
+												</a>
+											</c:if>
+										</li>
+										<li>
+											<c:if test="${color==4 }">
+												<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=4&size=${size}" role="button" data-value="黄色"
+												aria-disabled="true"> <span>黄色</span>
+												</a>
+											</c:if>
+											<c:if test="${color!=4 }">
+												<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=4&size=${size}" role="button" data-value="黄色"
+												aria-disabled="true"> <span>黄色</span>
+												</a>
+											</c:if>
+										</li>
 									</ul>
 								</dd>
 							</dl>
@@ -117,18 +147,54 @@
 								<dt class="item-metatit">尺码：</dt>
 								<dd>
 									<ul data-property="尺码" class="clearfix">
-										<li><a href="javascript:;" role="button" data-value="S"
-											aria-disabled="true"> <span>S</span>
-										</a></li>
-										<li><a href="javascript:;" role="button" data-value="M"
-											aria-disabled="true"> <span>M</span>
-										</a></li>
-										<li><a href="javascript:;" role="button" data-value="L"
-											aria-disabled="true"> <span>L</span>
-										</a></li>
-										<li><a href="javascript:;" role="button" data-value="XL"
-											aria-disabled="true"> <span>XL</span>
-										</a></li>
+										<li>
+											<c:if test="${size==1}">
+												<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=1" role="button"
+												> <span>S</span>
+												</a>
+											</c:if>
+											<c:if test="${size!=1}">
+												<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=1" role="button" data-value="S"
+												aria-disabled="true"> <span>S</span>
+												</a>
+											</c:if>
+										</li>
+										<li>
+											<c:if test="${size==2 }">
+												<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=2" role="button" data-value="M"
+												aria-disabled="true"> <span>M</span>
+												</a>	
+											</c:if>
+											<c:if test="${size!=2 }">
+												<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=2" role="button" data-value="M"
+												aria-disabled="true"> <span>M</span>
+												</a>	
+											</c:if>
+										</li>
+										<li>
+											<c:if test="${size==3 }">
+												<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=3" role="button" data-value="L"
+												aria-disabled="true"> <span>L</span>
+												</a>
+											</c:if>
+											<c:if test="${size!=3 }">
+												<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=3" role="button" data-value="L"
+												aria-disabled="true"> <span>L</span>
+												</a>
+											</c:if>
+										</li>
+										<li>
+											<c:if test="${size==4 }">
+												<a class="on" href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=4" role="button" data-value="XL"
+												aria-disabled="true"> <span>XL</span>
+												</a>
+											</c:if>
+											<c:if test="${size!=4}">
+												<a href="goodsShowPage.todo?gid=${list.get(0).GID }&color=${color}&size=4" role="button" data-value="XL"
+												aria-disabled="true"> <span>XL</span>
+												</a>
+											</c:if>
+										</li>
 									</ul>
 								</dd>
 							</dl>
@@ -137,7 +203,7 @@
 							<div class="item-metatit">数量：</div>
 							<div class="amount-box">
 								<div class="amount-widget">
-									<input class="amount-input" id="buy_goodsNum" name="num" value="1" maxlength="8" title="请输入购买量" type="text">
+									<input class="amount-input" id="buy_goodsNum" name="num" min="1" max="${list.get(0).GNUMBER }" value="1" type="number">
 									<div class="amount-btn">
 										<a class="amount-but add"></a> <a class="amount-but sub"></a>
 									</div>
@@ -148,7 +214,7 @@
 									</span>
 								</div>
 								<script>
-								$(function () {
+								 $(function () {
 									$('.amount-input').onlyReg({reg: /[^0-9]/g});
 									var stock = parseInt($('#Stock').html());
 									$('.amount-widget').on('click','.amount-but',function() {
@@ -174,14 +240,12 @@
 											$('.amount-input').val(num - 1);
 										}
 									});
-								});
+								}); 
 							</script>
 							</div>
 						</div>
 						<div class="item-action clearfix bgf5">
-							<input type="submit" value="立即购买" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button"
-								class="item-action__buy">
-								
+							<input type="submit" value="立即购买" rel="nofollow" data-addfastbuy="true" title="点击此按钮，到下一步确认购买信息。" role="button" class="item-action__buy">
 							<a id="addCart" rel="nofollow" data-addfastbuy="true" role="button" class="item-action__basket"> 
 							<i class="iconfont icon-shopcart"></i> 加入购物车
 							</a>
@@ -190,8 +254,6 @@
 				</div>
 				</form>
 	</div>
-	
-	
 	<script>
 	
 		// 添加购物车按钮
@@ -203,15 +265,18 @@
 				alert("超过商品库存!!!");
 				return;
 			}
-			$.post("addCart.do",{
+			$.post("addCart.todo",{
 				cnum:buynum,
 				gid:gid
 			},function(data){
-				if (data == "OK") {
-					alert("添加购物车成功！");
-				} else {
-					alert(data);
-				}
+				var d = eval("(" + data + ")");
+				alert(d.info);
+				var count = d.count;
+				console.log(count);
+				$("#count").text(count);
+				if(d.code=="0"){
+					window.location.href="userLoginPage.do";
+				} 
 			});
 		});
 	

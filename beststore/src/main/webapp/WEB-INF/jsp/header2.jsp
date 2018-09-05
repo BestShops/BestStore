@@ -60,7 +60,7 @@
 					<dt>帐户信息</dt>
 					<a class="myinfo1" href="userInfoPage.do"><dd class="active">个人资料</dd></a>
 					<a href="addressPage.do"><dd>收货地址</dd></a>
-					<a href="couponPage.do"><dd>我的优惠券</dd></a>
+					<!-- <a href="couponPage.do"><dd>我的优惠券</dd></a> -->
 					<a href="userModifyPwdPage.do"><dd>修改登录密码</dd></a>
 				</dl>
 				<dl class="user-center__nav">
@@ -72,17 +72,15 @@
 				<dl class="user-center__nav">
 					<dt>我的店铺</dt>
 					<a href="openStorePage.do"><dd>开店流程</dd></a>
-					
 					<c:if test="${sessionScope.loginHuman.hlimit==1}">
 						<a href="storeManagePage.do"><dd>店铺管理</dd></a>
 					</c:if>
-					
 				</dl>
-				<dl class="user-center__nav">
+				<!-- <dl class="user-center__nav">
 					<dt>服务中心</dt>
 					<a href=""><dd>在线客服</dd></a>
 					<a href=""><dd>商品反馈</dd></a>
-				</dl>
+				</dl> -->
 			</div>
 </body>
 </html>

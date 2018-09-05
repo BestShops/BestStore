@@ -56,14 +56,16 @@
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车</div>
 				<form action="shopCartPayPage.do" method="post" enctype="multipart/form-data" class="shopcart-form__box">
-				
 					<c:if test="${cartCount >= 1 }">
 					<table class="table table-bordered">
 						<thead>
 							<tr>
-								<th width="100">商品图
-									<!-- <label class="checked-label"><input type="checkbox" class="check-all"><i></i> 全选</label> -->
+								<th width="100">
+									<label class="checked-label">
+										<input type="checkbox" class="check-all"><i></i> 全选
+									</label>
 								</th>
+								<th width="100">图片</th>
 								<th width="300">商品信息</th>
 								<th width="150">单价</th>
 								<th width="200">数量</th>
@@ -76,19 +78,24 @@
 						<c:forEach items="${listCart }" var="lc">
 							<tr>
 								<th scope="row">
+									<label class="checked-label">
+										<div class="img"><input type="checkbox" value="${lc.GID }"></div>
+									</label>
+								</th>
+								<th scope="row">
 									<label class="checked-label"><!-- <input type="checkbox"><i></i> -->
-										<div class="img"><img src="upload/${lc.GPHOTOPIC }" alt="" class="cover"></div>
+										<div class="img"><img src="upload/${lc.GPHOTOPIC }" class="cover"></div>
 									</label>
 								</th>
 								<td>
 									<div id="gname" class="name ep3"><a name="gid" >${lc.GID }</a>${lc.GNAME }</div>
 									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
-								<td>¥${lc.GNOWPRICE } <br>原价：¥${lc.GLASTPRICE }</td>
+								<td>¥${lc.GNOWPRICE } <br><s style="color:gray;font-size: 14px">¥${lc.GLASTPRICE }</s></td>
 								<td>
 									<div class="cart-num__box">
 										<input type="button" class="sub" value="-">
-										<input type="text" id="val" class="val" value="${lc.CNUM }" maxlength="2">
+										<input type="number" id="val" class="val" max="${lc.GNUMBER }" value="${lc.CNUM }">
 										<input type="button" class="add" value="+">
 									</div>
 								</td>
@@ -157,7 +164,6 @@
 								var gid =  document.getElementById('gid').innerText;
 								if ($(this).hasClass('add')) {
 									$(this).siblings('.val').val(Math.min((value += 1),99));
-									
 									// 加减购物车内商品数量
 									$.post("changeCartNum.do",{
 										cnum:value,
@@ -171,7 +177,6 @@
 									});
 								} else {
 									$(this).siblings('.val').val(Math.max((value -= 1),1));
-									
 									// 加减购物车内商品数量
 									$.post("changeCartNum.do",{
 										cnum:value,

@@ -55,7 +55,7 @@
 								</c:if>
 							</c:if>
 						</div>
-						<a class="reset pull-right" href="item_category.html">重置</a>
+						<a class="reset pull-right" href="goodsQueryPage.todo">重置</a>
 					</div>
 				</div>
 				<div class="filter-prop-item">

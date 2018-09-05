@@ -10,10 +10,11 @@ import org.apache.ibatis.annotations.Select;
 
 public interface CartMapper {
 	
-	@Select("select * from cart c "
-			+ "left join human h on c.hid=h.hid "
-			+ "left join goods g on c.gid=g.gid "
-			+ "where c.hid=#{hid} group by c.gid "
+	@Select("select * from cart c\r\n" + 
+			"left join human h on c.hid=h.hid \r\n" + 
+			"left join goods g on c.gid=g.gid \r\n" + 
+			"left join store s on s.sid=g.sid\r\n" + 
+			"where c.hid=#{hid} and s.sstatus=1 and g.gstatus=1 group by c.gid\r\n"
 			+ "limit #{page},#{rows}")
 	List<Map<String, Object>> selectByHid(@Param("hid")int hid, @Param("page")long page,@Param("rows")int rows);
 	
