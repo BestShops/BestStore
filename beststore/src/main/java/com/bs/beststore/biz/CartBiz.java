@@ -16,10 +16,10 @@ public interface CartBiz {
 	
 	/**
 	 * 清空购物车
-	 * @param hid	用户id
+	 * @param oid	订单id
 	 * @return	成功返回1，否则为失败
 	 */
-	int removeCartGoods(int hid);
+	int removeCartGoods(int oid);
 	
 	/**
 	 * 根据cid删除购物车商品
@@ -40,7 +40,14 @@ public interface CartBiz {
 	 * @param cart	根据购物车信息去查找商品信息及商品图片信息
 	 * @return	商品信息和商品图片信息的集合
 	 */
-	List<Map<String, Object>> findByhid(int hid,  long page, int rows);
+	List<Map<String, Object>> findByhid(int hid,long page, int rows);
+	
+	/**
+	 * 根据用户id去查询购物车的所有商品信息
+	 * @param cart	根据购物车信息去查找商品信息及商品图片信息
+	 * @return	商品信息和商品图片信息的集合
+	 */
+	List<Map<String, Object>> findGoodsByCids(String cids,long page, int rows);
 	
 	
 	/**

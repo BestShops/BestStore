@@ -22,6 +22,7 @@ import com.bs.beststore.biz.DiscussBiz;
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.Result;
+import com.bs.beststore.vo.Cart;
 import com.bs.beststore.vo.Goods;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Store;
@@ -41,7 +42,7 @@ public class GoodsAction {
 	private CartBiz cartBiz;
 
 	@RequestMapping(path = "goodsQueryPage.todo")
-	public String goodsQueryPage(Goods goods,Type type,HttpServletRequest request) {
+	public String goodsQueryPage(Goods goods,Type type,HttpServletRequest request,Cart cart) {
 		List<Type> firstList=typeBiz.selectFirstInfo();
 		request.setAttribute("firstList", firstList);
 		String tid2=request.getParameter("tid2");

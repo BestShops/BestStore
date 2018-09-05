@@ -48,7 +48,24 @@ option = {
             type:'pie',
             radius : [30, 250],
             center : ['50%', '50%'],
-            roseType : 'area',
+            roseType : 'radius',  //半径模式
+            // roseType : 'area', // 面积模式
+            label: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            lableLine: {
+                normal: {
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
             data:${valueList.toString().replaceAll("=",":")}
         }
     ]

@@ -20,6 +20,66 @@
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
 	<title>U袋网</title>
 </head>
+<script type="text/javascript">
+var is;
+$(function() {
+	$("#selectAllBox").change(function() {
+		var flag = $(this).is(":checked");
+		if (flag) {
+			var idStr = [];
+			$(".selectBox").each(function() {
+				$(this).prop("checked", true);
+				idStr.push($(this).val() + ",");
+			});
+		} else {
+			$(".selectBox").each(function() {
+				$(this).removeAttr("checked", false);
+			});
+		}
+		is = idStr;
+		$("#gidsInput").attr("value",is);
+	});
+
+	$(".selectBox").change(function() {
+		var parent = $(this).parent().parent().parent().parent();
+		var money = parent.children("td.money").text().split(" ")[1];
+		if ($(this).is(":checked") == true) {
+			var sumprice = parseFloat($("#sumprice").val()) + parseFloat(money);
+			$("#sumprice").val(sumprice);
+		} else {
+			var sumprice = parseFloat($("#sumprice").val()) - parseFloat(money);
+			$("#sumprice").val(sumprice);
+		}
+		var idStr = [];
+		$(".selectBox").each(function() {
+			if ($(this).is(":checked")) {
+				idStr.push($(this).val() + ",");
+			} else {
+				$("#selectAllBox").removeAttr("checked", false);
+			}
+		});
+		var lengthSelected = $(".selectBox:checked").length;
+		var length = $(".selectBox").length;
+		if (lengthSelected == length) {
+			$("#selectAllBox").prop("checked", true);
+		}
+		is = idStr;
+		$("#gidsInput").attr("value",is);
+	});
+	
+});
+
+function makeOrder(){
+	if (is == null || is.length <= 0 || is == "") {
+		alert("至少选择一件商品哦!");
+		return false;
+	} else {
+		return true;
+	}
+}
+
+
+</script>
 <body>
 	<!-- 顶部tab -->
 	<div class="tab-header">
@@ -56,14 +116,15 @@
 		<section class="user-center inner clearfix">
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车</div>
-				<form action="shopCartPayPage.do" method="post" enctype="multipart/form-data" class="shopcart-form__box">
+				<form action="shopCartPayPage.do" onsubmit="return makeOrder()" method="post" enctype="multipart/form-data" class="shopcart-form__box">
+					<input id="gidsInput" name="cids" type="hidden">
 					<c:if test="${cartCount >= 1 }">
 					<table class="table table-bordered">
 						<thead>
 							<tr>
 								<th width="100">
 									<label class="checked-label">
-										<input type="checkbox" class="check-all"><i></i> 全选
+										<input id="selectAllBox" type="checkbox"><i></i> 全选
 									</label>
 								</th>
 								<th width="100">图片</th>
@@ -80,9 +141,7 @@
 							<tr>
 								<th scope="row">
 									<label class="checked-label">
-										<div class="img">
-										<input name="check" type="checkbox" value="${lc.GID }"/>
-										</div>
+										<div class="img"><input type="checkbox" class="selectBox" value="${lc.GID }"></div>
 									</label>
 								</th>
 								<th scope="row">
@@ -123,7 +182,6 @@
 						</div>
 					</div>
 					</c:if>
-					
 					
 					<c:if test="${cartCount < 1 }">
 					<table class="table table-bordered">
@@ -239,19 +297,5 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
-	
-	<script type="text/javascript">
-		$("input[name='check']").click(function(){
-			var parent = $(this).parent().parent().parent().parent();
-			var money = parent.children("td.money").text().split(" ")[1];
-			if ($(this).is(":checked") == true) {
-				var sumprice = parseFloat($("#sumprice").val()) + parseFloat(money);
-				$("#sumprice").val(sumprice);
-			} else {
-				var sumprice = parseFloat($("#sumprice").val()) - parseFloat(money);
-				$("#sumprice").val(sumprice);
-			}
-		});
-	</script>
 </body>
 </html>

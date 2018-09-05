@@ -18,7 +18,6 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 
 	@Autowired
 	private OrdersdetailMapper ordersdetailMapper;
-	
 	@Autowired
 	private CartMapper cartMapper;
 	
@@ -42,20 +41,26 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 		return ordersdetailMapper.findDetailByOid(oid);
 	}
 
-	@SuppressWarnings({ "null", "rawtypes" })
 	@Override
-	public int addOrdersDetailByCart(int hid, int oid) {
-		List<Map<String, Object>> list = cartMapper.selectByHid(hid, 0, 1000);
-		Ordersdetail ordersdetail = new Ordersdetail();
-		for (Map m : list) {
-			ordersdetail.setGid((Integer) m.get("GID"));
-			ordersdetail.setNum((Integer) m.get("CNUM"));
-			ordersdetail.setOdstatus(0);
-			ordersdetail.setGprice((Double) m.get("GNOWPRICE"));
-			ordersdetail.setOid(oid);
-			ordersdetailMapper.insertSelective(ordersdetail);
+	public int addOrdersDetailByCart(String cids, int oid) {
+		String[] cidField=cids.split(",");
+		int result = 0;
+		if(cidField.length>0){
+			for(String string:cidField){
+				if(string.trim().length()>0){
+					List<Map<String, Object>> cart=cartMapper.selectGoodsAndCart(Integer.parseInt(string));
+					Ordersdetail ordersdetail = new Ordersdetail();
+					ordersdetail.setGid(Integer.valueOf(cart.get(0).get("GID")+""));
+					ordersdetail.setNum(Integer.valueOf(cart.get(0).get("CNUM")+""));
+					ordersdetail.setOdstatus(0);
+					Double price=(Double.parseDouble(cart.get(0).get("GNOWPRICE")+"")*Double.parseDouble(cart.get(0).get("CNUM")+""));
+					ordersdetail.setGprice(price);
+					ordersdetail.setOid(oid);
+					result=ordersdetailMapper.insertSelective(ordersdetail);
+				}
+			}
 		}
-		return oid;
+		return result;
 	}
 
 	@Override

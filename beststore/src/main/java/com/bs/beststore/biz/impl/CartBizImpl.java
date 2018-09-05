@@ -1,5 +1,6 @@
 package com.bs.beststore.biz.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,8 +30,25 @@ public class CartBizImpl implements CartBiz{
 	}
 
 	@Override
-	public List<Map<String, Object>> findByhid(int hid, long page, int rows) {
+	public List<Map<String, Object>> findByhid(int hid,long page, int rows) {
 		return cartMapper.selectByHid(hid, page, rows);
+	}
+	
+	@Override
+	public List<Map<String, Object>> findGoodsByCids(String cids, long page, int rows) {
+		String[] cidField=cids.split(",");
+		List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
+		if(cidField.length>0){
+			for(String string:cidField){
+				if(string.trim().length()>0){
+					List<Map<String, Object>> cart=cartMapper.selectGoodsAndCart(Integer.parseInt(string));
+					for(Map<String,Object> m:cart){
+						list.add(m);
+					}
+				}
+			}
+		}
+		return list;
 	}
 
 	@Override
@@ -39,11 +57,13 @@ public class CartBizImpl implements CartBiz{
 	}
 
 	@Override
-	public int removeCartGoods(int hid) {
-		CartExample cartExample = new CartExample();
-		Criteria criteria = cartExample.createCriteria();
-		criteria.andHidEqualTo(hid);
-		return cartMapper.deleteByExample(cartExample);
+	public int removeCartGoods(int oid) {
+		int result = 0;
+		List<Cart> lists=cartMapper.selectCidByOid(oid);
+		for(Cart c:lists) {
+			result=cartMapper.deleteByPrimaryKey(c.getCid());
+		}
+		return result;
 	}
 
 	@Override
@@ -53,10 +73,7 @@ public class CartBizImpl implements CartBiz{
 
 	@Override
 	public long countByHid(Integer hid) {
-		CartExample cartExample = new CartExample();
-		Criteria criteria = cartExample.createCriteria();
-		criteria.andHidEqualTo(hid);
-		return cartMapper.countByExample(cartExample);
+		return cartMapper.selectCount(hid);
 	}
 
 	@Override
@@ -67,5 +84,6 @@ public class CartBizImpl implements CartBiz{
 		criteria.andGidEqualTo(cart.getGid());
 		return cartMapper.selectByExample(cartExample);
 	}
+
 
 }
