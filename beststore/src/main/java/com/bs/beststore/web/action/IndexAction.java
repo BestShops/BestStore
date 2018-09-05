@@ -179,6 +179,7 @@ public class IndexAction {
 	@RequestMapping(value = "userLogout.do")
 	public String userLogout(HttpSession session) {
 		session.removeAttribute("loginHuman");
+		session.removeAttribute("cartCount");
 		return "login";
 	}
 
