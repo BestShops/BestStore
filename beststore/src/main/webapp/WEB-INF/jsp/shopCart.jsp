@@ -81,7 +81,7 @@
 									</label>
 								</th>
 								<td>
-									<div id="gname" class="name ep3"><a id="gid" >${lc.GID }</a>${lc.GNAME }</div>
+									<div id="gname" class="name ep3"><a name="gid" >${lc.GID }</a>${lc.GNAME }</div>
 									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
 								<td>¥${lc.GNOWPRICE } <br>原价：¥${lc.GLASTPRICE }</td>

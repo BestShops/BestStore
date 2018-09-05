@@ -81,4 +81,9 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 		ordersdetailMapper.updateByPrimaryKeySelective(ordersdetail);
 	}
 
+	@Override
+	public List<Map<String, Object>> findGnameAndNum(int sid) {
+		return ordersdetailMapper.findGnameAndNum(sid);
+	}
+
 }
