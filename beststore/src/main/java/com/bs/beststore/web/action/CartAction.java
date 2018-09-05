@@ -14,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bs.beststore.biz.AddressBiz;
 import com.bs.beststore.biz.CartBiz;
@@ -34,7 +33,6 @@ import com.google.gson.Gson;
  * @author Administrator
  *
  */
-@ResponseBody
 public class CartAction {
 
 	@Resource

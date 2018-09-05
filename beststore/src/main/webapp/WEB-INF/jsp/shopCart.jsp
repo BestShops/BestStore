@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -79,7 +80,7 @@
 							<tr>
 								<th scope="row">
 									<label class="checked-label">
-										<div class="img"><input type="checkbox" value="${lc.GID }"></div>
+										<div class="img"><input onclick="checkboxOnclick(this)" type="checkbox" value="${lc.GID }"></div>
 									</label>
 								</th>
 								<th scope="row">
@@ -99,7 +100,8 @@
 										<input type="button" class="add" value="+">
 									</div>
 								</td>
-								<td>¥${lc.GNOWPRICE * lc.CNUM }</td>
+								<td>¥
+<fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
 								<td><a type="button" id="delete">删除</a></td>
 							</tr>
 							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
@@ -111,12 +113,12 @@
 						<button type="submit" class="btn">生成订单</button>
 					</div>
 					<div class="checkbox shopcart-total">
-						<!-- <label><input type="checkbox" class="check-all"><i></i> 全选</label>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a> -->
+						<label><input type="checkbox" class="check-all"><i></i> 全选</label>
+						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a> -->
 						<div class="pull-right">
-							<!-- 已选商品 <span><input id="goodsNum" type="text" style="width:30px; height:20px;" value="0"/></span> 件 -->
+							已选商品 <span><input id="goodsNum" type="text" style="width:30px; height:20px;" value="0"/></span> 件
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-							<b class="cr">¥<input class="fz24" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="${money}"></input></b>
+							<b class="cr">¥<input class="fz24" id="sumprice" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0"></input></b>
 						</div>
 					</div>
 					</c:if>
@@ -161,7 +163,9 @@
 							// 加减个数
 							$('.cart-num__box').on('click', '.sub,.add', function() {
 								var value = Number($(this).siblings('.val').val());
-								var gid =  document.getElementById('gid').innerText;
+								console.log(value);
+								var gid =  $(this).parent().parent().prev().prev().children().text().split(".")[0];
+								console.log(gid);
 								if ($(this).hasClass('add')) {
 									$(this).siblings('.val').val(Math.min((value += 1),99));
 									// 加减购物车内商品数量
@@ -234,5 +238,16 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	
+	<script type="text/javascript">
+		function checkboxOnclick(e) {
+			if ( e.checked == true){
+				var parent = e.parentNode.nextSbiling.nextSbiling;
+			}else{
+				alert(2); 
+			}
+
+		}
+	</script>
 </body>
 </html>
