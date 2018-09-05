@@ -243,7 +243,7 @@
 	<script type="text/javascript">
 		function checkboxOnclick(e) {
 			if ( e.checked == true){
-				alert(1);
+				var parent = 
 			}else{
 				alert(2); 
 			}
