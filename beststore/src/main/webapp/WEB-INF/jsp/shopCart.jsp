@@ -26,12 +26,28 @@ $(function() {
 	$("#selectAllBox").change(function() {
 		var flag = $(this).is(":checked");
 		if (flag) {
+			// 修改金额和数量
+			var num = 0;
+			var sum = 0;
+			$(".val").each(function(){
+				num = parseInt(num) + parseInt($(this).val());
+			});
+			$(".money").each(function(){
+				sum = parseFloat(sum) + parseFloat($(this).text().split(" ")[1]);
+			});
+			$("#goodsNum").val(num);
+			$("#sumprice").val(sum);
+			// 修改复选框
 			var idStr = [];
 			$(".selectBox").each(function() {
 				$(this).prop("checked", true);
 				idStr.push($(this).val() + ",");
 			});
 		} else {
+			// 修改金额和数量
+			$("#goodsNum").val(0);
+			$("#sumprice").val(0);
+			// 修改复选框
 			$(".selectBox").each(function() {
 				$(this).removeAttr("checked", false);
 			});
@@ -154,10 +170,10 @@ function makeOrder(){
 									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
 								<td>¥${lc.GNOWPRICE } <br><s style="color:gray;font-size: 14px">¥${lc.GLASTPRICE }</s></td>
-								<td>
+								<td class="num">
 									<div class="cart-num__box">
 										<input type="button" class="sub" value="-">
-										<input type="number" id="val" class="val" max="${lc.GNUMBER }" value="${lc.CNUM }">
+										<input type="number" class="val" max="${lc.GNUMBER }" value="${lc.CNUM }">
 										<input type="button" class="add" value="+">
 									</div>
 								</td>
@@ -173,7 +189,7 @@ function makeOrder(){
 						<button type="submit" class="btn">生成订单</button>
 					</div>
 					<div class="checkbox shopcart-total">
-						<label><input type="checkbox" class="check-all"><i></i> 全选</label>
+						<!-- <label><input type="checkbox" class="check-all"><i></i> 全选</label> -->
 						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a> -->
 						<div class="pull-right">
 							已选商品 <span><input id="goodsNum" type="text" style="width:30px; height:20px;" value="0"/></span> 件
@@ -211,7 +227,11 @@ function makeOrder(){
 									if (!$(this).prop('checked')) { 
 										flag = false;
 										num -- ;
-										}
+									} else {
+										var val = $(this).parent().parent().parent().parent().children("td.num").children().children("input.val").val();
+										num = parseInt(num) + parseInt(val);
+										num -- ;
+									}
 									num ++;
 									$("#goodsNum").attr("value",num);
 								});
@@ -256,7 +276,7 @@ function makeOrder(){
 							
 							// 失焦改变数量
 							$('.cart-num__box').on('blur', '.val', function() {
-								var value = $("#val").val();
+								var value = $("input.val").val();
 								var gid =  document.getElementById('gid').innerText;
 								if( value == 0 || value == null ){
 									alert("商品数量不能为0或者为空");
