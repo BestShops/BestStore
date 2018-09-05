@@ -13,12 +13,12 @@
 		<section class="item-show__div item-show__head clearfix">
 			<div class="pull-left">
 				<ol class="breadcrumb">
-				
 					<li><a href="index.html">首页</a></li>
 					<li><a href="item_sale_page.html">${list.get(0).TPRINAME }</a></li>
 					<li class="active">${list.get(0).GNAME }</li>
 				</ol>
 				<form action="buyNow.do" method="post">
+				<input type="hidden" value="${list.get(0).GID }">
 				<div class="item-pic__box" id="magnifier">
 					<div class="small-box">
 						<img style="width: 360px;height:360px;" src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
@@ -258,27 +258,28 @@
 	<script>
 		// 添加购物车按钮
 		$('#addCart').click(function() {
-			var buynum = $("#buy_goodsNum").val();
-			var gid = ${list.get(0).GID };
-			var maxnum = ${list.get(0).GNUMBER };
-			if (buynum > maxnum ) {
-				alert("超过商品库存!!!");
-				return;
+			var loginHuman='${sessionScope.loginHuman}';
+			if(loginHuman==null || loginHuman==""){
+				window.location.href = "userLoginPage.do";
+			}else{
+				var buynum = $("#buy_goodsNum").val();
+				var gid = ${list.get(0).GID };
+				var maxnum = ${list.get(0).GNUMBER };
+				if (buynum > maxnum ) {
+					alert("超过商品库存!!!");
+					return;
+				}
+				$.post("addCart.do",{
+					cnum:buynum,
+					gid:gid
+				},function(data){
+					var d = eval("(" + data + ")");
+					alert(d.info);
+					var count = d.count;
+					$("#count").text(count);
+				});
 			}
-			$.post("addCart.do",{
-				cnum:buynum,
-				gid:gid
-			},function(data){
-				var d = eval("(" + data + ")");
-				alert(d.info);
-				var count = d.count;
-				$("#count").text(count);
-				if(d.code=="0"){
-					window.location.href="userLoginPage.do";
-				} 
-			});
 		});
-	
 	</script>
 
 
@@ -726,8 +727,6 @@
 				</div>
 				<div class="swiper-container recommends-swiper">
 					<div class="swiper-wrapper">
-					
-					
 						<!-- 按打开的商品类别 -->
 						<c:forEach items="${linkList}" var="ll">
 							<div class="swiper-slide">
@@ -737,8 +736,6 @@
 								</a> 
 							</div>
 						</c:forEach>
-						
-						
 					</div>
 				</div>
 				<script>

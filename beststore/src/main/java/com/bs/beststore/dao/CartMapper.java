@@ -28,8 +28,8 @@ public interface CartMapper {
 	
 	@Select("select * from cart c\r\n" + 
 			"left join goods g on c.gid=g.gid\r\n" + 
-			"where c.cid=#{cid}")
-	List<Map<String,Object>> selectGoodsAndCart(@Param("cid")int cid);
+			"where c.gid=#{gid} and c.hid=#{hid}")
+	List<Map<String,Object>> selectGoodsAndCart(@Param("gid")int gid,@Param("hid")int hid);
 	
 	@Select("select cid from orders o \r\n" + 
 			"left join ordersdetail od on o.oid=od.oid\r\n" + 

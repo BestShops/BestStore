@@ -68,8 +68,6 @@ function makeOrder(){
 		return true;
 	}
 }
-
-
 </script>
 <body>
 	<!-- 顶部tab -->
@@ -132,15 +130,11 @@ function makeOrder(){
 							<tr>
 								<th scope="row">
 									<label class="checked-label">
-<<<<<<< HEAD
-										<div class="img"><input type="checkbox" class="selectBox" value="${lc.CID }"></div>
-=======
-										<div class="img"><input onclick="checkboxOnclick(this)" type="checkbox" value="${lc.GID }"></div>
->>>>>>> branch 'master' of https://github.com/BestShops/BestStore.git
+										<div class="img"><input type="checkbox" class="selectBox" onclick="checkboxOnclick(this)" type="checkbox" value="${lc.GID }"></div>
 									</label>
 								</th>
 								<th scope="row">
-									<label class="checked-label"><!-- <input type="checkbox"><i></i> -->
+									<label class="checked-label">
 										<div class="img"><img src="upload/${lc.GPHOTOPIC }" class="cover"></div>
 									</label>
 								</th>
@@ -190,7 +184,6 @@ function makeOrder(){
 					</c:if>
 					
 					<script>
-					
 						$(document).ready(function(){
 							var $item_checkboxs = $('.shopcart-form__box tbody input[type="checkbox"]'),
 								$check_all = $('.check-all');

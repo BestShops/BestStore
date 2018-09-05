@@ -35,13 +35,13 @@ public class CartBizImpl implements CartBiz{
 	}
 	
 	@Override
-	public List<Map<String, Object>> findGoodsByCids(String cids, long page, int rows) {
+	public List<Map<String, Object>> findGoodsByCids(String cids, long page, int rows,int hid) {
 		String[] cidField=cids.split(",");
 		List<Map<String,Object>> list=new ArrayList<Map<String,Object>>();
 		if(cidField.length>0){
 			for(String string:cidField){
 				if(string.trim().length()>0){
-					List<Map<String, Object>> cart=cartMapper.selectGoodsAndCart(Integer.parseInt(string));
+					List<Map<String, Object>> cart=cartMapper.selectGoodsAndCart(Integer.parseInt(string),hid);
 					for(Map<String,Object> m:cart){
 						list.add(m);
 					}

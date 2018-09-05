@@ -42,13 +42,13 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 	}
 
 	@Override
-	public int addOrdersDetailByCart(String cids, int oid) {
+	public int addOrdersDetailByCart(String cids, int oid,int hid) {
 		String[] cidField=cids.split(",");
 		int result = 0;
 		if(cidField.length>0){
 			for(String string:cidField){
 				if(string.trim().length()>0){
-					List<Map<String, Object>> cart=cartMapper.selectGoodsAndCart(Integer.parseInt(string));
+					List<Map<String, Object>> cart=cartMapper.selectGoodsAndCart(Integer.parseInt(string),hid);
 					Ordersdetail ordersdetail = new Ordersdetail();
 					ordersdetail.setGid(Integer.valueOf(cart.get(0).get("GID")+""));
 					ordersdetail.setNum(Integer.valueOf(cart.get(0).get("CNUM")+""));

@@ -129,9 +129,30 @@
 			</div>
 			<div class="sort-box bgf5">
 				<div class="sort-text">排序：</div>
-				<a href=""><div class="sort-text">销量 <i class="iconfont icon-sortDown"></i></div></a>
-				<a href=""><div class="sort-text">评价 <i class="iconfont icon-sortUp"></i></div></a>
-				<a href=""><div class="sort-text">价格 <i class="iconfont"></i></div></a>
+				<c:if test="${order==null || order==0 }">
+					<a href="goodsQueryPage.todo?page=${page }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&order=0">
+					<div style="color:#b31e22" class="sort-text">销量 <i class="iconfont icon-sortDown"></i></div></a>
+				</c:if>
+				<c:if test="${order!=null && order!=0 }">
+					<a href="goodsQueryPage.todo?page=${page }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&order=0">
+					<div class="sort-text">销量 <i class="iconfont icon-sortDown"></i></div></a>
+				</c:if>
+				<c:if test="${order!=1 }">
+					<a href="goodsQueryPage.todo?page=${page }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&order=1">
+					<div class="sort-text">评价 <i class="iconfont icon-sortDown"></i></div></a>
+				</c:if>
+				<c:if test="${order==1 }">
+					<a href="goodsQueryPage.todo?page=${page }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&order=1">
+					<div style="color:#b31e22" class="sort-text">评价 <i class="iconfont icon-sortDown"></i></div></a>
+				</c:if>
+				<c:if test="${order!=2 }">
+					<a href="goodsQueryPage.todo?page=${page }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&order=2">
+					<div class="sort-text">价格 <i class="iconfont icon-sortUp"></i></div></a>
+				</c:if>
+				<c:if test="${order==2 }">
+					<a href="goodsQueryPage.todo?page=${page }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&order=2">
+					<div style="color:#b31e22" class="sort-text">价格 <i class="iconfont icon-sortUp"></i></div></a>
+				</c:if>
 				<div class="sort-total pull-right">共${total }个商品</div>
 			</div>
 		</section>
@@ -200,7 +221,7 @@
 	<script type="text/javascript">
 		function changeNum(gid){
 			var loginHuman='${sessionScope.loginHuman}';
-			if(loginHuman!=null){
+			if(loginHuman==null || loginHuman==""){
 				window.location.href = "userLoginPage.do";
 			}else{
 				$.post("addCart.do",
@@ -213,10 +234,6 @@
 							alert(d.info);
 							var count = d.count;
 							$("#count").text(count);
-							if(d.code=="0"){
-								alert(1);
-								
-							}
 				}); 
 			} 
 			

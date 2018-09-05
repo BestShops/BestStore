@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.AddressBiz;
 import com.bs.beststore.biz.CartBiz;
+import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.OrdersBiz;
 import com.bs.beststore.biz.OrdersdetailBiz;
 import com.bs.beststore.vo.Cart;
@@ -44,6 +46,8 @@ public class CartAction {
 	private OrdersBiz ordersBiz;
 	@Resource
 	private OrdersdetailBiz ordersdetailBiz;
+	@Resource
+	private GoodsBiz goodsBiz;
 
 	// 跳转到购物车
 	@RequestMapping(value = "shopCartPage.do")
@@ -68,27 +72,25 @@ public class CartAction {
 
 	// 立即购买
 	@RequestMapping(value = "buyNow.do")
-	public String buyNow(HttpSession session, Ordersdetail ordersdetail, Model model) {
-		Human human = (Human) session.getAttribute("loginHuman");
-		// 传入收货地址列表
-		model.addAttribute("addresslist", addressBiz.findAllAddress(human.getHid()));
-		System.out.println("-----------" + ordersdetail.getNum() + "-----------" + ordersdetail.getGprice());
-		Orders orders = new Orders();
-		orders.setOnowprice(ordersdetail.getNum() * ordersdetail.getGprice());
+	public String buyNow(HttpServletRequest request, Ordersdetail ordersdetail,Orders orders,Goods goods) {
+		ordersdetail.setNum(Integer.valueOf(request.getParameter("num")));
+		Human human = (Human) request.getSession().getAttribute("loginHuman");
+		request.setAttribute("addresslist", addressBiz.findAllAddress(human.getHid()));
+		Goods goodsInfo=goodsBiz.findByGid(goods.getGid());
+		orders.setOnowprice(goodsInfo.getGnowprice()*ordersdetail.getNum());
+		orders.setOlastprice(goodsInfo.getGlastprice()*ordersdetail.getNum());
 		orders.setHid(human.getHid());
 		ordersBiz.addOrders(orders);
-		// 查找订单号
-		List<Map<String, Object>> newOrder = ordersBiz.findOrderByHid(human.getHid(), 1, -1);
-		int oid = (int) newOrder.get(0).get("OID");
-		// 将商品加入订单详情表
-		ordersdetail.setOid(oid);
+		ordersdetail.setOid(orders.getOid());
 		ordersdetail.setOdstatus(0);
+		ordersdetail.setGid(goods.getGid());
+		ordersdetail.setGprice(goodsInfo.getGnowprice()*ordersdetail.getNum());
 		ordersdetailBiz.addOrdersDetail(ordersdetail);
 		List<Map<String, Object>> list = ordersdetailBiz.findOrdersDetail(ordersdetail);
-		model.addAttribute("listCart", list);
+		request.setAttribute("listCart", list);
 		// 查找刚刚生成的订单，传入页面
-		Orders od = ordersBiz.findByOid(oid);
-		model.addAttribute("order", od);
+		Orders od = ordersBiz.findByOid(orders.getOid());
+		request.setAttribute("order", od);
 		return "shopCartPay";
 	}
 
@@ -170,8 +172,8 @@ public class CartAction {
 		//生成订单表，未付款状态
 		if(ordersBiz.addOrders(orders)>0) {
 			//商品按订单号列入订单详情
-			if(ordersdetailBiz.addOrdersDetailByCart(cids,orders.getOid())>0) {
-				List<Map<String, Object>> list = cartBiz.findGoodsByCids(cids, 0, 100);
+			if(ordersdetailBiz.addOrdersDetailByCart(cids,orders.getOid(),human.getHid())>0) {
+				List<Map<String, Object>> list = cartBiz.findGoodsByCids(cids, 0, 100,human.getHid());
 				model.addAttribute("listCart", list);
 				// 查找刚刚生成的订单，传入页面
 				Orders od = ordersBiz.findByOid(orders.getOid());

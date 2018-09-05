@@ -118,7 +118,7 @@ public class GoodsBizImpl implements GoodsBiz {
 	}
 
 	@Override
-	public List<Map<String, Object>> goodsQuery(Goods goods,Type type,int tid2,int price1,int price2,int page, int rows) {
+	public List<Map<String, Object>> goodsQuery(Goods goods,Type type,int tid2,int price1,int price2,int page, int rows,int order) {
 		List<Map<String, Object>> list = null;
 		if(goods.getGname()!=null) {
 			if(goods.getGname().length()<=1) {
@@ -126,24 +126,60 @@ public class GoodsBizImpl implements GoodsBiz {
 			}else if(goods.getGname().length()>=2) {
 				list=gm.goodsQueryByGname1((page-1)*rows, rows,goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
 			}
-		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0){
+		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0 &&order==0){	//1
 			list=gm.goodsQueryByTid((page-1)*rows, rows, Integer.valueOf(type.getTid()));
-		}else if(type.getTid()!=null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0 &&order==1){
+			list=gm.goodsQueryByTidOrder((page-1)*rows, rows, Integer.valueOf(type.getTid()));
+		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0 &&order==2){
+			list=gm.goodsQueryByTidprice((page-1)*rows, rows, Integer.valueOf(type.getTid()));
+		}else if(type.getTid()!=null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==0){	//2
 			list=gm.goodsQueryByTidAndPrice((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1,price2);
-		}else if(type.getTid()!=null && tid2==0 && price1!=0 && price2==0){
+		}else if(type.getTid()!=null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==1){	//2
+			list=gm.goodsQueryByTidAndPriceOrder((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1,price2);
+		}else if(type.getTid()!=null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==2){	//2
+			list=gm.goodsQueryByTidAndPriceAsc((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1,price2);
+		}else if(type.getTid()!=null && tid2==0 && price1!=0 && price2==0 &&order==0){	//3
 			list=gm.goodsQueryByTidAndPrice1((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1);
-		}else if(type.getTid()!=null && tid2!=0 &&price1==0 &&price2==0){
+		}else if(type.getTid()!=null && tid2==0 && price1!=0 && price2==0 &&order==1){	//3
+			list=gm.goodsQueryByTidAndPrice1Order((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1);
+		}else if(type.getTid()!=null && tid2==0 && price1!=0 && price2==0 &&order==2){	//3
+			list=gm.goodsQueryByTidAndPrice1Asc((page-1)*rows, rows, Integer.valueOf(type.getTid()),price1);
+		}else if(type.getTid()!=null && tid2!=0 &&price1==0 &&price2==0 &&order==0){	//4
 			list=gm.goodsQueryByTid1((page-1)*rows, rows, tid2);
-		}else if(type.getTid()!=null && tid2!=0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+		}else if(type.getTid()!=null && tid2!=0 &&price1==0 &&price2==0 &&order==1){	//4
+			list=gm.goodsQueryByTid1Order((page-1)*rows, rows, tid2);
+		}else if(type.getTid()!=null && tid2!=0 &&price1==0 &&price2==0 &&order==2){	//4
+			list=gm.goodsQueryByTid1Asc((page-1)*rows, rows, tid2);
+		}else if(type.getTid()!=null && tid2!=0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==0){	//5
 			list=gm.goodsQueryByTid1AndPrice1((page-1)*rows, rows, tid2,price1,price2);   
-		}else if(type.getTid()!=null && tid2!=0 && price1!=0 && price2==0){
+		}else if(type.getTid()!=null && tid2!=0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==1){	//5
+			list=gm.goodsQueryByTid1AndPrice1Order((page-1)*rows, rows, tid2,price1,price2);   
+		}else if(type.getTid()!=null && tid2!=0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==2){	//5
+			list=gm.goodsQueryByTid1AndPrice1Asc((page-1)*rows, rows, tid2,price1,price2);   
+		}else if(type.getTid()!=null && tid2!=0 && price1!=0 && price2==0 &&order==0){	//6
 			list=gm.goodsQueryByTid1AndPrice2((page-1)*rows, rows, tid2,price1);   
-		}else if(type.getTid()==null && tid2==0 && price1==0 && price2==0){
+		}else if(type.getTid()!=null && tid2!=0 && price1!=0 && price2==0 &&order==1){	//6
+			list=gm.goodsQueryByTid1AndPrice2Order((page-1)*rows, rows, tid2,price1);   
+		}else if(type.getTid()!=null && tid2!=0 && price1!=0 && price2==0 &&order==2){	//6
+			list=gm.goodsQueryByTid1AndPrice2Asc((page-1)*rows, rows, tid2,price1);   
+		}else if(type.getTid()==null && tid2==0 && price1==0 && price2==0 &&order==0){	//7
 			list=gm.goodsQuery((page-1)*rows, rows);
-		}else if(type.getTid()==null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
+		}else if(type.getTid()==null && tid2==0 && price1==0 && price2==0 &&order==1){	//7
+			list=gm.goodsQueryOrder((page-1)*rows, rows);
+		}else if(type.getTid()==null && tid2==0 && price1==0 && price2==0 &&order==2){	//7
+			list=gm.goodsQueryAsc((page-1)*rows, rows);
+		}else if(type.getTid()==null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==0){	//8
 			list=gm.goodsQuery1((page-1)*rows, rows,price1,price2);
-		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0){
+		}else if(type.getTid()==null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==1){	//8
+			list=gm.goodsQuery1Order((page-1)*rows, rows,price1,price2);
+		}else if(type.getTid()==null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0)) &&order==2){	//8
+			list=gm.goodsQuery1Asc((page-1)*rows, rows,price1,price2);
+		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0 &&order==0){
 			list=gm.goodsQuery2((page-1)*rows, rows,price1);
+		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0 &&order==1){
+			list=gm.goodsQuery2Order((page-1)*rows, rows,price1);
+		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0 &&order==2){
+			list=gm.goodsQuery2Asc((page-1)*rows, rows,price1);
 		}
 		return list;
 	}

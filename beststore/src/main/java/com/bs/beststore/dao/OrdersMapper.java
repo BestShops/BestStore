@@ -62,12 +62,12 @@ public interface OrdersMapper {
 			+ "where c.sid=#{sid} and ostatus=#{ostatus} group by oid order by oid desc limit #{pageNo},#{pageSize}")
 	List<Map<String, Object>> findBySidAndOstatus(@Param("sid") int sid,@Param("ostatus") int ostatus, @Param("pageNo")int pageNo, @Param("pageSize")int pageSize);
 	
-	@Insert("insert into orders values(null,current_timestamp(6),null,null,0,#{aid},#{hid},#{olastprice},#{onowprice})")
+	@Insert("insert into orders values(null,current_timestamp(6),null,null,0,null,#{hid},#{olastprice},#{onowprice})")
 	@Options(useGeneratedKeys=true,keyColumn="oid",keyProperty="oid")
 	int insertOrders(Orders orders);
 	
 	
-	@Update("update orders set opaytime=current_timestamp(6),ostatus=#{ostatus} where oid=#{oid}")
+	@Update("update orders set opaytime=current_timestamp(6),ostatus=#{ostatus},aid=#{aid} where oid=#{oid}")
 	int updateOrders(Orders orders);
 	
     /**

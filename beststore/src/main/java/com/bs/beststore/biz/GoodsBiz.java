@@ -85,7 +85,7 @@ public interface GoodsBiz {
 	 * @param rows
 	 * @return
 	 */
-	List<Map<String, Object>> goodsQuery(Goods goods,Type type,int tid2,int price1,int price2,int page,int rows);
+	List<Map<String, Object>> goodsQuery(Goods goods,Type type,int tid2,int price1,int price2,int page,int rows,int order);
 	
 	long goodsCountByGoods(Goods goods,Type type,int tid2,int price1,int price2);
 	
