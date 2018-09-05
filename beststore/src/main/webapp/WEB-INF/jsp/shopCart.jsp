@@ -80,7 +80,9 @@
 							<tr>
 								<th scope="row">
 									<label class="checked-label">
-										<div class="img"><input onclick="checkboxOnclick(this)" type="checkbox" value="${lc.GID }"></div>
+										<div class="img">
+										<input name="check" type="checkbox" value="${lc.GID }"/>
+										</div>
 									</label>
 								</th>
 								<th scope="row">
@@ -89,7 +91,7 @@
 									</label>
 								</th>
 								<td>
-									<div id="gname" class="name ep3"><a name="gid" >${lc.GID }</a>${lc.GNAME }</div>
+									<div id="gname" class="name ep3">${lc.GNAME }</div>
 									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
 								<td>¥${lc.GNOWPRICE } <br><s style="color:gray;font-size: 14px">¥${lc.GLASTPRICE }</s></td>
@@ -100,9 +102,8 @@
 										<input type="button" class="add" value="+">
 									</div>
 								</td>
-								<td>¥
-<fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
-								<td><a type="button" id="delete">删除</a></td>
+								<td class="money">¥ <fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
+								<td><a type="button" id="delete" name="${lc.GID}">删除</a></td>
 							</tr>
 							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
 						</c:forEach>
@@ -164,7 +165,7 @@
 							$('.cart-num__box').on('click', '.sub,.add', function() {
 								var value = Number($(this).siblings('.val').val());
 								console.log(value);
-								var gid =  $(this).parent().parent().prev().prev().children().text().split(".")[0];
+								var gid =  $(this).parent().parent().parent().children().children().children().children().val();
 								console.log(gid);
 								if ($(this).hasClass('add')) {
 									$(this).siblings('.val').val(Math.min((value += 1),99));
@@ -217,7 +218,7 @@
 							
 							// 删除购物车商品
 							$('#delete').click(function() {
-								var gid =  document.getElementById('gid').innerText;
+								var gid =  $(this).attr("name");
 								$.post("delete.do",{
 									gid:gid
 								},function(data){
@@ -240,14 +241,17 @@
 	<%@ include file="bottom.jsp" %>
 	
 	<script type="text/javascript">
-		function checkboxOnclick(e) {
-			if ( e.checked == true){
-				var parent = e.parentNode.nextSbiling.nextSbiling;
-			}else{
-				alert(2); 
+		$("input[name='check']").click(function(){
+			var parent = $(this).parent().parent().parent().parent();
+			var money = parent.children("td.money").text().split(" ")[1];
+			if ($(this).is(":checked") == true) {
+				var sumprice = parseFloat($("#sumprice").val()) + parseFloat(money);
+				$("#sumprice").val(sumprice);
+			} else {
+				var sumprice = parseFloat($("#sumprice").val()) - parseFloat(money);
+				$("#sumprice").val(sumprice);
 			}
-
-		}
+		});
 	</script>
 </body>
 </html>
