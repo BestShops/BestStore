@@ -99,7 +99,6 @@ public class CartAction {
 	public void addCart(Cart cart, HttpSession session, PrintWriter out) {
 		Human human = (Human) session.getAttribute("loginHuman");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		System.out.println(human+"=====================");
 		if(human!=null) {
 			cart.setHid(human.getHid());
 			List<Cart> list = cartBiz.findByGidAndHid(cart);

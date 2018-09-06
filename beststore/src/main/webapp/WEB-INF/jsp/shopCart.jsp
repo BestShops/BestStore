@@ -26,12 +26,28 @@ $(function() {
 	$("#selectAllBox").change(function() {
 		var flag = $(this).is(":checked");
 		if (flag) {
+			// 修改金额和数量
+			var num = 0;
+			var sum = 0;
+			$(".val").each(function(){
+				num = parseInt(num) + parseInt($(this).val());
+			});
+			$(".money").each(function(){
+				sum = parseFloat(sum) + parseFloat($(this).text().split(" ")[1]);
+			});
+			$("#goodsNum").attr("value",num);
+			$("#sumprice").val(sum);
+			// 修改复选框
 			var idStr = [];
 			$(".selectBox").each(function() {
 				$(this).prop("checked", true);
 				idStr.push($(this).val() + ",");
 			});
 		} else {
+			// 修改金额和数量
+			$("#goodsNum").attr("value",0);
+			$("#sumprice").val(0);
+			// 修改复选框
 			$(".selectBox").each(function() {
 				$(this).removeAttr("checked", false);
 			});
@@ -41,6 +57,15 @@ $(function() {
 	});
 
 	$(".selectBox").change(function() {
+		var parent = $(this).parent().parent().parent().parent();
+		var money = parent.children("td.money").text().split(" ")[1];
+		if ($(this).is(":checked") == true) {
+			var sumprice = parseFloat($("#sumprice").val()) + parseFloat(money);
+			$("#sumprice").val(sumprice);
+		} else {
+			var sumprice = parseFloat($("#sumprice").val()) - parseFloat(money);
+			$("#sumprice").val(sumprice);
+		}
 		var idStr = [];
 		$(".selectBox").each(function() {
 			if ($(this).is(":checked")) {
@@ -68,6 +93,7 @@ function makeOrder(){
 		return true;
 	}
 }
+
 </script>
 <body>
 	<!-- 顶部tab -->
@@ -130,28 +156,28 @@ function makeOrder(){
 							<tr>
 								<th scope="row">
 									<label class="checked-label">
-										<div class="img"><input type="checkbox" class="selectBox" onclick="checkboxOnclick(this)" type="checkbox" value="${lc.GID }"></div>
+										<div class="img"><input type="checkbox" class="selectBox" value="${lc.GID }"></div>
 									</label>
 								</th>
 								<th scope="row">
-									<label class="checked-label">
+									<label class="checked-label"><!-- <input type="checkbox"><i></i> -->
 										<div class="img"><img src="upload/${lc.GPHOTOPIC }" class="cover"></div>
 									</label>
 								</th>
 								<td>
-									<div id="gname" class="name ep3"><a name="gid" hidden="yes">${lc.GID }.</a>${lc.GNAME }</div>
+									<div id="gname" class="name ep3">${lc.GNAME }</div>
 									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
 								<td>¥${lc.GNOWPRICE } <br><s style="color:gray;font-size: 14px">¥${lc.GLASTPRICE }</s></td>
 								<td class="num">
 									<div class="cart-num__box">
 										<input type="button" class="sub" value="-">
-										<input type="number" id="val" class="val" max="${lc.GNUMBER }" value="${lc.CNUM }">
+										<input type="number" class="val" max="${lc.GNUMBER }" value="${lc.CNUM }">
 										<input type="button" class="add" value="+">
 									</div>
 								</td>
-								<td class="money">¥<fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
-								<td><a type="button" id="delete">删除</a></td>
+								<td class="money">¥ <fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
+								<td><a onclick="deletegood(${lc.GID})" name="${lc.GID}" style="cursor: pointer;">删除</a></td>
 							</tr>
 							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
 						</c:forEach>
@@ -162,12 +188,12 @@ function makeOrder(){
 						<button type="submit" class="btn">生成订单</button>
 					</div>
 					<div class="checkbox shopcart-total">
-						<label><input type="checkbox" class="check-all"><i></i> 全选</label>
+						<!-- <label><input type="checkbox" class="check-all"><i></i> 全选</label> -->
 						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a> -->
 						<div class="pull-right">
-							已选商品 <span><input id="goodsNum" type="text" style="width:30px; height:20px;" value="0"/></span> 件
+							已选商品 <span><input style="width:20px; height:20px; border: 0px;outline:none;" class="fz16 cr" id="goodsNum" type="text" readonly="readonly" style="width:30px; height:20px;" value="0"/></span> 件
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-							<b class="cr">¥<input class="fz24" id="sumprice" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0"></input></b>
+							<b class="cr">¥<input class="fz24" pattern="0.00" id="sumprice" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0"></input></b>
 						</div>
 					</div>
 					</c:if>
@@ -183,6 +209,7 @@ function makeOrder(){
 					</c:if>
 					
 					<script>
+					
 						$(document).ready(function(){
 							var $item_checkboxs = $('.shopcart-form__box tbody input[type="checkbox"]'),
 								$check_all = $('.check-all');
@@ -199,7 +226,11 @@ function makeOrder(){
 									if (!$(this).prop('checked')) { 
 										flag = false;
 										num -- ;
-										}
+									} else {
+										var val = $(this).parent().parent().parent().parent().children("td.num").children().children("input.val").val();
+										num = parseInt(num) + parseInt(val);
+										num -- ;
+									}
 									num ++;
 									$("#goodsNum").attr("value",num);
 								});
@@ -211,7 +242,7 @@ function makeOrder(){
 							$('.cart-num__box').on('click', '.sub,.add', function() {
 								var value = Number($(this).siblings('.val').val());
 								console.log(value);
-								var gid =  $(this).parent().parent().prev().prev().children().text().split(".")[0];
+								var gid =  $(this).parent().parent().parent().children().children().children().children().val();
 								console.log(gid);
 								if ($(this).hasClass('add')) {
 									$(this).siblings('.val').val(Math.min((value += 1),99));
@@ -244,7 +275,7 @@ function makeOrder(){
 							
 							// 失焦改变数量
 							$('.cart-num__box').on('blur', '.val', function() {
-								var value = $("#val").val();
+								var value = $("input.val").val();
 								var gid =  document.getElementById('gid').innerText;
 								if( value == 0 || value == null ){
 									alert("商品数量不能为0或者为空");
@@ -261,23 +292,21 @@ function makeOrder(){
 									}
 								});
 							});
-							
-							// 删除购物车商品
-							$('#delete').click(function() {
-								var gid =  document.getElementById('gid').innerText;
-								$.post("delete.do",{
-									gid:gid
-								},function(data){
-									if (data == "OK") {
-										alert("删除成功！");
-										window.location.href = "shopCartPage.do";
-									} else {
-										alert(data);
-									}
-								});
-							});
-							
 						});
+						
+						// 删除购物车商品
+						function deletegood(gid){
+							$.post("delete.do",{
+								gid:gid
+							},function(data){
+								if (data == "OK") {
+									alert("删除成功！");
+									window.location.href = "shopCartPage.do";
+								} else {
+									alert(data);
+								}
+							});
+						}
 					</script>
 				</form>
 			</div>
@@ -285,13 +314,5 @@ function makeOrder(){
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
-	
-	<script type="text/javascript">
-		function checkboxOnclick(e) {
-			if ( e.checked == true){
-				var parent = e.parentNode.nextSbiling.nextSbiling;
-			}
-		}
-	</script>
 </body>
 </html>
