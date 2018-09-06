@@ -117,7 +117,7 @@ public class GoodsAction {
 		// 修改购物车数量信息
 		if (session.getAttribute("loginHuman") != null) {
 			Human human = (Human) session.getAttribute("loginHuman");
-			int cartCount = (int) cartBiz.countByHid(human.getHid());
+			Long cartCount = cartBiz.countByHid(human.getHid());
 			session.setAttribute("cartCount", cartCount);
 		}
 		if(color==null || color.equals("")) {

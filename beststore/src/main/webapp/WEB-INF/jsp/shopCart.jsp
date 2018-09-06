@@ -246,7 +246,7 @@ function makeOrder(){
 								console.log(gid);
 								if ($(this).hasClass('add')) {
 									$(this).siblings('.val').val(Math.min((value += 1),99));
-									// 加减购物车内商品数量
+									// 加购物车内商品数量
 									$.post("changeCartNum.do",{
 										cnum:value,
 										gid:gid
@@ -254,12 +254,13 @@ function makeOrder(){
 										if (data == "OK") {
 											window.location.href = "shopCartPage.do";
 										} else {
+											location.reload();
 											alert(data);
 										}
 									});
 								} else {
 									$(this).siblings('.val').val(Math.max((value -= 1),1));
-									// 加减购物车内商品数量
+									// 减购物车内商品数量
 									$.post("changeCartNum.do",{
 										cnum:value,
 										gid:gid
@@ -267,16 +268,19 @@ function makeOrder(){
 										if (data == "OK") {
 											window.location.href = "shopCartPage.do";
 										} else {
+											location.reload();
 											alert(data);
 										}
 									});
 								}
 							});
 							
-							// 失焦改变数量
-							$('.cart-num__box').on('blur', '.val', function() {
-								var value = $("input.val").val();
-								var gid =  document.getElementById('gid').innerText;
+							// onchange事件，改变数量
+							$('.cart-num__box').on('change', '.val', function() {
+								var value = $(this).parent().children('input').eq(1).val();
+								console.log(value);
+								var gid =  $(this).parent().parent().parent().children().children().children().children().val();
+								console.log(gid);
 								if( value == 0 || value == null ){
 									alert("商品数量不能为0或者为空");
 								} 
@@ -288,6 +292,7 @@ function makeOrder(){
 									if (data == "OK") {
 										window.location.href = "shopCartPage.do";
 									} else {
+										location.reload();
 										alert(data);
 									}
 								});

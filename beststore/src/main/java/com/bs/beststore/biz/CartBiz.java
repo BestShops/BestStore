@@ -62,7 +62,7 @@ public interface CartBiz {
 	 * @param hid
 	 * @return
 	 */
-	long countByHid(Integer hid);
+	Long countByHid(Integer hid);
 
 	/**
 	 * 根据Hid和Gid查询商品是否已经存在购物车

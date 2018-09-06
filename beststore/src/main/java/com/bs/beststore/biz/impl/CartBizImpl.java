@@ -72,8 +72,12 @@ public class CartBizImpl implements CartBiz{
 	}
 
 	@Override
-	public long countByHid(Integer hid) {
-		return cartMapper.selectCount(hid);
+	public Long countByHid(Integer hid) {
+		if(cartMapper.selectCount(hid) == null) {
+			return (long) 0;
+		} else {
+			return cartMapper.selectCount(hid);
+		}
 	}
 
 	@Override
