@@ -139,19 +139,18 @@ function makeOrder(){
 									</label>
 								</th>
 								<td>
-									<div id="gname" class="name ep3"><a name="gid" >${lc.GID }</a>${lc.GNAME }</div>
+									<div id="gname" class="name ep3"><a name="gid" hidden="yes">${lc.GID }.</a>${lc.GNAME }</div>
 									<!-- <div class="type c9">颜色分类：深棕色  尺码：均码</div> -->
 								</td>
 								<td>¥${lc.GNOWPRICE } <br><s style="color:gray;font-size: 14px">¥${lc.GLASTPRICE }</s></td>
-								<td>
+								<td class="num">
 									<div class="cart-num__box">
 										<input type="button" class="sub" value="-">
 										<input type="number" id="val" class="val" max="${lc.GNUMBER }" value="${lc.CNUM }">
 										<input type="button" class="add" value="+">
 									</div>
 								</td>
-								<td>¥
-<fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
+								<td class="money">¥<fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
 								<td><a type="button" id="delete">删除</a></td>
 							</tr>
 							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
@@ -291,10 +290,7 @@ function makeOrder(){
 		function checkboxOnclick(e) {
 			if ( e.checked == true){
 				var parent = e.parentNode.nextSbiling.nextSbiling;
-			}else{
-				alert(2); 
 			}
-
 		}
 	</script>
 </body>
