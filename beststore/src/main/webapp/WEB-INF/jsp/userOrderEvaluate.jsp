@@ -4,7 +4,11 @@
 <html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 			<div class="pull-right">
@@ -106,7 +110,10 @@
 									var drank = $("input[name='opinion']:checked").val();
 									var depict = $("#depict").val();
 									if (depict.length > 80) {
-										alert("评价描述的长度适合在15~80字之间，请不要超出范围");
+										$.message({
+					                        message:"评价描述的长度适合在15~80字之间，请不要超出范围",
+					                        type:'warning'
+					                    });
 									}
 									formData.append('gid',gid);
 									formData.append('oid',oid);
@@ -119,25 +126,24 @@
 									xhr.open("POST","addDiscuss.do", true);
 									xhr.send(formData);
 									xhr.onload = function(data) {
-										/* console.info(data);
-										if (data == "OK") {
-											alert("提交成功");
-											// 返回到订单详情
-											window.location.href="userOrderDetailPage.do?oid=${Info.OID}";
-										}
-										alert(data); */
 										if (xhr.readyState==4) {// 4 = "loaded"
 										  if (xhr.status==200) {// 200 = OK
 										    var data = xhr.responseText;
 										    if (data == 1) {// 订单全部评价完成
-												alert("提交成功");
+										    	$.message("提交成功");
 												// 跳到评论显示页面
 												window.location.href="EvaluatePage.do?odid=" + odid;
 											} else {
-												alert(data); 
+												$.message({
+							                        message:data,
+							                        type:'error'
+							                    }); 
 											}
 										  } else {
-										    alert("图片上传失败，请稍后重试");
+											  $.message({
+						                        message:"图片上传失败，请稍后重试",
+						                        type:'warning'
+						                      });
 										  }
 										}
 									}

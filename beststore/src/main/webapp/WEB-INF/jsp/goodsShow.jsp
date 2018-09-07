@@ -4,7 +4,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
-<head>
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
+</head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <meta charset="UTF-8">
 </head>
 <body>
@@ -267,7 +271,10 @@
 				var gid = ${list.get(0).GID };
 				var maxnum = ${list.get(0).GNUMBER };
 				if (buynum > maxnum ) {
-					alert("超过商品库存!!!");
+					$.message({
+                        message:"超过商品库存!!!",
+                        type:'warning'
+                    });
 					return;
 				}
 				$.post("addCart.do",{
@@ -275,7 +282,10 @@
 					gid:gid
 				},function(data){
 					var d = eval("(" + data + ")");
-					alert(d.info);
+					$.message({
+                        message:d.info,
+                        type:'info'
+                    });
 					var count = d.count;
 					$("#count").text(count);
 				});

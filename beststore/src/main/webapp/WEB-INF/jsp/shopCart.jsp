@@ -98,7 +98,10 @@ $(function() {
 
 function makeOrder(){
 	if (is == null || is.length <= 0 || is == "") {
-		alert("至少选择一件商品哦!");
+		$.message({
+            message:"至少选择一件商品哦!",
+            type:'warning'
+        });
 		return false;
 	} else {
 		return true;
@@ -269,7 +272,10 @@ function makeOrder(){
 											window.location.href = "shopCartPage.do";
 										} else {
 											location.reload();
-											alert(data);
+											$.message({
+						                        message:data,
+						                        type:'error'
+						                    });
 										}
 									});
 								} else {
@@ -283,7 +289,10 @@ function makeOrder(){
 											window.location.href = "shopCartPage.do";
 										} else {
 											location.reload();
-											alert(data);
+											$.message({
+						                        message:data,
+						                        type:'error'
+						                    });
 										}
 									});
 								}
@@ -296,7 +305,10 @@ function makeOrder(){
 								var gid =  $(this).parent().parent().parent().children().children().children().children().val();
 								console.log(gid);
 								if( value == 0 || value == null ){
-									alert("商品数量不能为0或者为空");
+									$.message({
+				                        message:"商品数量不能为0或者为空",
+				                        type:'warning'
+				                    });
 								} 
 								// 改变购物车内商品数量
 								$.post("changeCartNum.do",{
@@ -307,7 +319,10 @@ function makeOrder(){
 										window.location.href = "shopCartPage.do";
 									} else {
 										location.reload();
-										alert(data);
+										$.message({
+					                        message:data,
+					                        type:'warning'
+					                    });
 									}
 								});
 							});
@@ -319,10 +334,13 @@ function makeOrder(){
 								gid:gid
 							},function(data){
 								if (data == "OK") {
-									alert("删除成功！");
+									$.message("删除成功！");
 									window.location.href = "shopCartPage.do";
 								} else {
-									alert(data);
+									$.message({
+				                        message:data,
+				                        type:'error'
+				                    });
 								}
 							});
 						}

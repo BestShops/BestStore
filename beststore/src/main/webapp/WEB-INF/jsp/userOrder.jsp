@@ -4,7 +4,11 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 	<div class="pull-right">
@@ -87,7 +91,7 @@
 									</td>
 									<td class="order">
 										<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
-										<c:if test="${o.OSTATUS==1}"><a href="" class="but but-primary" onclick="alert('您的订单还未发货，不能确认收货');">确认收货</a></c:if>
+										<c:if test="${o.OSTATUS==1}"><a href="" class="but but-primary" onclick="$.message({message:'您的订单还未发货，不能确认收货',type:'warning'});">确认收货</a></c:if>
 										<c:if test="${o.OSTATUS==2}"><a href="receiptedOrder.do?oid=${o.OID}" class="but but-primary">确认收货</a></c:if>
 										<a href="userOrderReturn.do?oid=${o.OID}" class="but c3">退款/退货</a>
 									</td>
@@ -165,7 +169,10 @@
 					index = 1;
 				}
 			} else if (ostatus==1 || ostatus==2) {
-				alert("该订单未完成，不能删除");
+				$.message({
+                    message:"该订单未完成，不能删除",
+                    type:'warning'
+                });
 			} else if (ostatus==3 || ostatus==4) {
 				if(confirm("该订单删除后，将不能再查看到该订单的具体信息，您确定删除吗？")){
 					index = 1;
@@ -176,7 +183,10 @@
 				$.post("delOrder.do",{
 					oid:oid
 				},function(data){
-					alert(data);
+					$.message({
+                        message:data,
+                        type:'info'
+                    });
 					var i = '${requestScope.pageNo}';
 					var type = '${requestScope.type}';
 					window.location.href="userOrderPage.do?pageNo=" + i + "&type=" + type;

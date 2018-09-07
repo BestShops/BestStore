@@ -6,7 +6,11 @@
 <html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 	<div class="pull-right">
@@ -146,7 +150,7 @@
 					aid:aid
 				},function(data){
 					if ("OK" == data) {
-						alert("设置成功");
+						$.message("设置成功");
 					}
 				});
 			}
@@ -159,7 +163,7 @@
 					aid:aid
 				},function(data){
 					if (data == "OK") {
-						alert("删除成功");
+						$.message("删除成功");
 						window.location.href = "addressPage.do";
 					}
 				});
@@ -273,9 +277,9 @@
 				},function(data){
 					if (data == "OK") {
 						if (a == 0) {
-							alert("地址添加成功");
+							$.message("地址添加成功");
 						} else {
-							alert("地址修改成功");
+							$.message("地址修改成功");
 						}
 						window.location.href = "addressPage.do";
 					} else {
