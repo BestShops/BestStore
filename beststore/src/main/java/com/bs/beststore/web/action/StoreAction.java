@@ -212,4 +212,18 @@ public class StoreAction {
 	}
 	
 	
+	/**
+	 * 通过点击跳转商店
+	 */
+	@RequestMapping("showStore.do")
+	public String showStore(Store store, Model model) {
+		// 查出商店信息，传给页面
+		store = storeBiz.findBySid(store.getSid());
+		model.addAttribute("store", store);
+		// 查出商品信息，传给页面
+		List<Map<String, Object>> goods = goodsBiz.findBySid(store.getSid(), 0, 1000);  //如果要做翻页再自己进行修改
+		model.addAttribute("goods", goods);
+		return "store";
+	}
+	
 }

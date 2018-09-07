@@ -26,7 +26,7 @@
 					</div>
 	
 					<div ><br><br>
-						<a>商品来源：<strong>${list.get(0).sname }</strong></a>
+						<a herf="showStore.do?sid=${list.get(0).SID }" >商品来源：<strong>${list.get(0).sname }</strong></a>
 					</div>
 					
 					<div class="big-box">
@@ -35,6 +35,7 @@
 				</div>
 				<script src="js/jquery.magnifier.js"></script>
 				<script>
+				
 				$(function () {
 					$('#magnifier').magnifier();
 				});

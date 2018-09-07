@@ -180,8 +180,6 @@ public class CartAction {
 		} else {
 			out.print("清空购物车失败！");
 		}
-		
-		
 	}
 	
 	// 跳转到付款界面
