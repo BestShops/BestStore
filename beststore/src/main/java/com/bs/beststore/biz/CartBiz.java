@@ -70,6 +70,13 @@ public interface CartBiz {
 	 * @return 返回查询列表结果
 	 */
 	List<Cart> findByGidAndHid(Cart cart);
+
+	/**
+	 * 根据Hid清空购物车
+	 * @param hid
+	 * @return
+	 */
+	int removeAll(Integer hid);
 	
 	
 }

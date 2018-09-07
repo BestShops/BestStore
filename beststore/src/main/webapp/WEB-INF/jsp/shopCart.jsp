@@ -143,7 +143,7 @@ function makeOrder(){
 			<div class="user-content__box clearfix bgf">
 				<div class="title">
 					购物车
-					<a style="float: right;color: #fff;text-align: center;line-height: 24px;margin-top: 4px;height: 24px;width: 90px;background-color: #b31e22;text-decoration: none;cursor: pointer;">清空购物车</a>
+					<a onclick="removeAll()" style="float: right;color: #fff;text-align: center;line-height: 24px;margin-top: 4px;height: 24px;width: 90px;background-color: #b31e22;text-decoration: none;cursor: pointer;">清空购物车</a>
 				</div>
 				<form action="shopCartPayPage.do" onsubmit="return makeOrder()" method="post" enctype="multipart/form-data" class="shopcart-form__box">
 					<input id="gidsInput" name="cids" type="hidden">
@@ -320,6 +320,19 @@ function makeOrder(){
 							},function(data){
 								if (data == "OK") {
 									alert("删除成功！");
+									window.location.href = "shopCartPage.do";
+								} else {
+									alert(data);
+								}
+							});
+						}
+						
+						// 删除购物车商品
+						function removeAll(){
+							$.post("removeAll.do",
+									function(data){
+								if (data == "OK") {
+									alert("清空购物车成功！");
 									window.location.href = "shopCartPage.do";
 								} else {
 									alert(data);
