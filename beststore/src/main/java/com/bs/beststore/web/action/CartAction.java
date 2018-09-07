@@ -114,7 +114,7 @@ public class CartAction {
 				}
 			}
 			// 修改购物车数量信息
-			int cartCount = (int) cartBiz.countByHid(human.getHid());
+			Long cartCount = cartBiz.countByHid(human.getHid());
 			session.setAttribute("cartCount", cartCount);
 			map.put("count", cartCount);
 			map.put("code", 1);
@@ -152,12 +152,21 @@ public class CartAction {
 		cart.setHid(human.getHid()); // cnum gid hid
 		// 按照Gid和hid查找用户购物车是否已经存在该商品，则修改为相应的数量
 		List<Cart> list = cartBiz.findByGidAndHid(cart);
-		if (list.size() == 1) {
+		
+		// 查找商品的库存
+		Goods goods = new Goods();
+		goods.setGid(cart.getGid());
+		List<Map<String, Object>> goodlist = goodsBiz.findAll(goods, 0, 1000);
+		System.out.println("----------------" + goodlist.size() + "---------------"  +goodlist.get(0).get("GNUMBER")   );
+		if (list.size() == 1 && (Integer)goodlist.get(0).get("GNUMBER") >= cart.getCnum()) {
 			cart.setCid(list.get(0).getCid());
 			if (cartBiz.updateCartGoods(cart) == 1) {
 				out.print("OK");
 				return;
 			}
+		} else {
+			out.print("所购数量超过库存！");
+			return;
 		}
 		out.print("修改数量失败！");
 	}
