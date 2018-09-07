@@ -35,7 +35,7 @@ $(function() {
 			$(".money").each(function(){
 				sum = parseFloat(sum) + parseFloat($(this).text().split(" ")[1]);
 			});
-			$("#goodsNum").val(num);
+			$("#goodsNum").attr("value",num);
 			$("#sumprice").val(sum);
 			// 修改复选框
 			var idStr = [];
@@ -45,7 +45,7 @@ $(function() {
 			});
 		} else {
 			// 修改金额和数量
-			$("#goodsNum").val(0);
+			$("#goodsNum").attr("value",0);
 			$("#sumprice").val(0);
 			// 修改复选框
 			$(".selectBox").each(function() {
@@ -231,6 +231,7 @@ function makeOrder(){
 										var val = $(this).parent().parent().parent().parent().children("td.num").children().children("input.val").val();
 										num = parseInt(num) + parseInt(val);
 										num -- ;
+										console.log(val);
 									}
 									num ++;
 									$("#goodsNum").attr("value",num);
