@@ -224,5 +224,10 @@ public class GoodsBizImpl implements GoodsBiz {
 		return gm.updateGoodNum(num, gid);
 	}
 
+	@Override
+	public List<Map<String, Object>> findBySid(int sid, int page, int rows) {
+		return gm.findBySid(sid, page, rows);
+	}
+
 	
 }

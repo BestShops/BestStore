@@ -42,13 +42,13 @@
 							</a>
 						</c:if>
 					</div>
-					
 					<div class="big-box">
 						<img src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
 					</div>
 				</div>
 				<script src="js/jquery.magnifier.js"></script>
 				<script>
+				
 				$(function () {
 					$('#magnifier').magnifier();
 				});
