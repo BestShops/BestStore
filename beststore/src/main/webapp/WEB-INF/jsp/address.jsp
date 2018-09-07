@@ -119,6 +119,7 @@
 						<div class="tdf3">${a.acity}</div>
 						<div class="tdf3 tdt-a_l" style="text-align:center;">${a.alocation}</div>
 						<div class="tdf1">${fn:substring(a.aphone, 0, 3)}****${fn:substring(a.aphone, 7, 11)}</div>
+						<div class="tdf1_hidden" hidden="yes">${a.aphone}</div>
 						<div class="tdf1 order"><a onclick="change(this)">修改</a><a onclick="del(${a.aid})">删除</a></div>
 						<div class="tdf1">
 							<c:if test="${a.astatus==1}">
@@ -170,7 +171,7 @@
 			// 设值
 			var aphone = $(e).parent().prev();
 			$("#mobile").val(aphone.text());
-			var alocation = aphone.prev();
+			var alocation = aphone.prev().prev();
 			$("#details").val(alocation.text());
 			var acity = alocation.prev();
 			var citys = acity.text().split(" ");
@@ -243,11 +244,10 @@
 				+ $("#city option:selected").text() + " "
 				+ $("#area option:selected").text() + " "
 				+ $("#town option:selected").text() + " ";
-			console.log(option);
 			var details = $("#details").val();
 			var mobile = $("#mobile").val();
 			var status;
-			if ($('#status').attr('checked')) {
+			if ($('#status').is(':checked')) {
 			   	status = 1;
 			} else {
 				status = 0;
@@ -262,7 +262,7 @@
 			} else if (!isPhone.test(mobile)) {
 				$("#error").html("请填写真实的号码");
 			}else {
-				console.log(aid + "," + name + "," + mobile + "," + option + "," + details + "," + status );
+				
 				$.post(url,{
 					aid:aid,
 					aphone:mobile,

@@ -67,7 +67,7 @@ public interface OrdersMapper {
 	int insertOrders(Orders orders);
 	
 	
-	@Update("update orders set opaytime=current_timestamp(6),ostatus=#{ostatus},aid=#{aid} where oid=#{oid}")
+	@Update("update orders set opaytime=#{opaytime},ostatus=#{ostatus},aid=#{aid} where oid=#{oid}")
 	int updateOrders(Orders orders);
 	
 	@Select("select num,g.gid from orders o\r\n" + 

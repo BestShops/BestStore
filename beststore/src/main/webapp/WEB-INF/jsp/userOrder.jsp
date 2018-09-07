@@ -44,7 +44,7 @@
 								</tr>
 								<c:if test="${requestScope.orderlist==null || requestScope.orderlist.size() == 0}">
 								<tr class="order-empty"><td colspan='6'>
-									<div class="empty-msg">最近没有任何订单，家里好像缺了点什么！<br><a href="shopCart.do">要不瞧瞧去？</a></div>
+									<div class="empty-msg">最近没有任何订单，家里好像缺了点什么！<br><a href="goodsQueryPage.todo">要不瞧瞧去？</a></div>
 								</td></tr>
 								</table>
 								</c:if>

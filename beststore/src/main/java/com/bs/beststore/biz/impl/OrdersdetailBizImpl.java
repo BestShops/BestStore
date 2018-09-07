@@ -53,7 +53,8 @@ public class OrdersdetailBizImpl implements OrdersdetailBiz{
 					ordersdetail.setGid(Integer.valueOf(cart.get(0).get("GID")+""));
 					ordersdetail.setNum(Integer.valueOf(cart.get(0).get("CNUM")+""));
 					ordersdetail.setOdstatus(0);
-					Double price=(Double.parseDouble(cart.get(0).get("GNOWPRICE")+"")*Double.parseDouble(cart.get(0).get("CNUM")+""));
+					Double dou=(Double.parseDouble(cart.get(0).get("GNOWPRICE")+"")*Double.parseDouble(cart.get(0).get("CNUM")+""));
+					Double price=(double)Math.round(dou*100)/100;
 					ordersdetail.setGprice(price);
 					ordersdetail.setOid(oid);
 					result=ordersdetailMapper.insertSelective(ordersdetail);

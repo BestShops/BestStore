@@ -29,14 +29,19 @@ $(function() {
 			// 修改金额和数量
 			var num = 0;
 			var sum = 0;
+			var sum1 = 0;
 			$(".val").each(function(){
 				num = parseInt(num) + parseInt($(this).val());
 			});
 			$(".money").each(function(){
-				sum = parseFloat(sum) + parseFloat($(this).text().split(" ")[1]);
+				sum = (parseFloat(sum) + parseFloat($(this).text().split(" ")[1])).toFixed(2);
+			});
+			$(".money1").each(function(){
+				sum1 = (parseFloat(sum1) + parseFloat($(this).text().split(" ")[1])).toFixed(2);
 			});
 			$("#goodsNum").attr("value",num);
-			$("#sumprice").val(sum);
+			$("#sumprice").val(sum);			
+			$("#sumlastprice").val(sum1);
 			// 修改复选框
 			var idStr = [];
 			$(".selectBox").each(function() {
@@ -47,6 +52,7 @@ $(function() {
 			// 修改金额和数量
 			$("#goodsNum").attr("value",0);
 			$("#sumprice").val(0);
+			$("#sumlastprice").val(0);
 			// 修改复选框
 			$(".selectBox").each(function() {
 				$(this).removeAttr("checked", false);
@@ -59,12 +65,17 @@ $(function() {
 	$(".selectBox").change(function() {
 		var parent = $(this).parent().parent().parent().parent();
 		var money = parent.children("td.money").text().split(" ")[1];
+		var money1 = parent.children("td.money1").text().split(" ")[1];
 		if ($(this).is(":checked") == true) {
-			var sumprice = parseFloat($("#sumprice").val()) + parseFloat(money);
+			var sumprice = (parseFloat($("#sumprice").val()) + parseFloat(money)).toFixed(2);
 			$("#sumprice").val(sumprice);
+			var sumlastprice = (parseFloat($("#sumlastprice").val()) + parseFloat(money1)).toFixed(2);
+			$("#sumlastprice").val(sumlastprice);
 		} else {
-			var sumprice = parseFloat($("#sumprice").val()) - parseFloat(money);
+			var sumprice = (parseFloat($("#sumprice").val()) - parseFloat(money)).toFixed(2);
 			$("#sumprice").val(sumprice);
+			var sumlastprice = (parseFloat($("#sumlastprice").val()) - parseFloat(money1)).toFixed(2);
+			$("#sumlastprice").val(sumlastprice);
 		}
 		var idStr = [];
 		$(".selectBox").each(function() {
@@ -130,7 +141,10 @@ function makeOrder(){
 	<div class="content clearfix bgf5">
 		<section class="user-center inner clearfix">
 			<div class="user-content__box clearfix bgf">
-				<div class="title">购物车</div>
+				<div class="title">
+					购物车
+					<a style="float: right;color: #fff;text-align: center;line-height: 24px;margin-top: 4px;height: 24px;width: 90px;background-color: #b31e22;text-decoration: none;cursor: pointer;">清空购物车</a>
+				</div>
 				<form action="shopCartPayPage.do" onsubmit="return makeOrder()" method="post" enctype="multipart/form-data" class="shopcart-form__box">
 					<input id="gidsInput" name="cids" type="hidden">
 					<c:if test="${cartCount >= 1 }">
@@ -177,11 +191,11 @@ function makeOrder(){
 									</div>
 								</td>
 								<td class="money">¥ <fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
+								<td hidden="yes" class="money1">¥ <fmt:formatNumber type="number" value="${lc.GLASTPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
 								<td><a onclick="deletegood(${lc.GID})" name="${lc.GID}" style="cursor: pointer;">删除</a></td>
 							</tr>
 							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
 						</c:forEach>
-
 						</tbody>
 					</table>
 					<div class="user-form-group tags-box shopcart-submit pull-right">
@@ -189,11 +203,12 @@ function makeOrder(){
 					</div>
 					<div class="checkbox shopcart-total">
 						<!-- <label><input type="checkbox" class="check-all"><i></i> 全选</label> -->
-						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a> -->
+						<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">清空购物车</a>  -->
 						<div class="pull-right">
 							已选商品 <span><input style="width:20px; height:20px; border: 0px;outline:none;" class="fz16 cr" id="goodsNum" type="text" readonly="readonly" style="width:30px; height:20px;" value="0"/></span> 件
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-							<b class="cr">¥<input class="fz24" pattern="0.00" id="sumprice" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0"></input></b>
+							<b class="cr">¥<input class="fz24" pattern="0.00" id="sumprice" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0" /></b>
+							<input class="fz24" pattern="0.00" id="sumlastprice" name="olastprice" type="hidden" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0" />
 						</div>
 					</div>
 					</c:if>
@@ -207,7 +222,6 @@ function makeOrder(){
 						</tr>
 					</table>
 					</c:if>
-					
 					<script>
 					
 						$(document).ready(function(){

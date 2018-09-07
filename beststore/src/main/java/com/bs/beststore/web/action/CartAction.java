@@ -201,7 +201,7 @@ public class CartAction {
 				goodsBiz.updateGoodNum((int)map.get("num"), (int)map.get("gid"));//商品库存改变
 			}
 			List<Map<String,Object>> ordersList = ordersBiz.findAddressAndOrders(orders.getOid());
-			model.addAttribute("orders", ordersList);
+			model.addAttribute("orders", ordersList.get(0));
 		}
 		return "pay";
 	}
