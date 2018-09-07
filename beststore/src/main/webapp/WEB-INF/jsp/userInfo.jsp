@@ -112,9 +112,9 @@
 					          	if (ext != 'jpg' && ext != 'png' && ext != 'jpeg' && ext != 'gif'){
 					        	  	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",true);// 将提交按钮锁定，禁止点击
 					        	  	$.message({
-				                        message:"只能上传.jpg  .png  .jpeg  .gif类型的文件!",
-				                        type:'warning'
-				                    }); 
+										message:"只能上传.jpg  .png  .jpeg  .gif类型的文件!",
+										type:'warning'
+									});
 					              	return;  
 					          	} else {
 					        	 	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",false);
@@ -122,9 +122,9 @@
 					      	} else {  
 					    	  	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",true);
 					    	  	$.message({
-			                        message:"只能上传.jpg  .png  .jpeg  .gif类型的文件!",
-			                        type:'warning'
-			                    }); 
+									message:"只能上传.jpg  .png  .jpeg  .gif类型的文件!",
+									type:'warning'
+								});
 						        return;
 					      	} 
 					      
@@ -144,9 +144,9 @@
 					      	if(fileSize>(1024 * 1024 * 2)) {    
 					    	  	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",true);
 					    	  	$.message({
-			                        message:"文件大小不能超过2M",
-			                        type:'warning'
-			                    });  
+									message:"文件大小不能超过2M",
+									type:'warning'
+								});
 					          	return;
 					      	} else {
 					      		$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",false);

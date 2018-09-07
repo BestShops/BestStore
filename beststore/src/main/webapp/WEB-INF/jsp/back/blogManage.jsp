@@ -82,7 +82,7 @@
 					$("#foodGrid").datagrid('reload');
 					$.message(d.data);
 				} else {
-					 $.message({
+					$.message({
                         message:d.data,
                         type:'error'
                     });
@@ -109,8 +109,8 @@
 				} else {
 					$.message({
                         message:d.data,
-	                    type:'error'
-                	});
+                        type:'error'
+                    });
 				}
 			});
 		}
@@ -132,7 +132,7 @@
 					$("#foodGrid").datagrid('reload');
 					$.message(d.data);
 				} else {
-					 $.message({
+					$.message({
                         message:d.data,
                         type:'error'
                     });
@@ -172,16 +172,16 @@
 		flag = confirm("修改之后博客需要去推至审核哦,确定修改吗?");
 		if(flag){
 			if ($("#btitle").val() == "" || $("#btitle").val() == null) {
-				 $.message({
-                     message:"博客标题不能为空",
-                     type:'warning'
-                 });
+				$.message({
+					message:"博客标题不能为空",
+					type:'warning'
+				});
 				return;
 			} else if ($("#bdesc").val() == "" || $("#bdesc").val() == null) {
-				 $.message({
-                     message:"博客描述不能为空",
-                     type:'warning'
-            	});
+				$.message({
+					message:"博客描述不能为空",
+					type:'warning'
+				});
 				return;
 			} 
 			$("#form1").form("submit", {
@@ -194,9 +194,9 @@
 						$("#foodGrid").datagrid('reload');
 						$.message(d.data);
 					} else {
-						 $.message({
+						$.message({
 	                        message:d.data,
-	                        type:'warning'
+	                        type:'error'
 	                    });
 					}
 				}
@@ -209,15 +209,15 @@
 	function save() {
 		if ($("#btitle").val() == "" || $("#btitle").val() == null) {
 			$.message({
-                message:"博客标题不能为空",
-                type:'warning'
-            });
+				message:"博客标题不能为空",
+				type:'warning'
+			});
 			return;
 		} else if ($("#bdesc").val() == "" || $("#bdesc").val() == null) {
 			$.message({
-                message:"博客描述不能为空",
-                type:'warning'
-        	});
+				message:"博客描述不能为空",
+				type:'warning'
+			});
 			return;
 		} 
 		$("#form1").form("submit", {

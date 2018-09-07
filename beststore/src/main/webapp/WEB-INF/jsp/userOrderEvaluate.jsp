@@ -111,9 +111,9 @@
 									var depict = $("#depict").val();
 									if (depict.length > 80) {
 										$.message({
-					                        message:"评价描述的长度适合在15~80字之间，请不要超出范围",
-					                        type:'warning'
-					                    });
+											message:"评价描述的长度适合在15~80字之间，请不要超出范围",
+											type:'warning'
+										});
 									}
 									formData.append('gid',gid);
 									formData.append('oid',oid);
@@ -137,13 +137,13 @@
 												$.message({
 							                        message:data,
 							                        type:'error'
-							                    }); 
+							                    });
 											}
 										  } else {
 											  $.message({
-						                        message:"图片上传失败，请稍后重试",
-						                        type:'warning'
-						                      });
+													message:"图片上传失败，请稍后重试",
+													type:'warning'
+												});
 										  }
 										}
 									}

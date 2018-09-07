@@ -35,6 +35,10 @@ public class FavoriteBizImpl implements FavoriteBiz {
 		return favoriteMapper.findByHid(hid,(page-1)*rows,rows);
 	}
 	
+	public List<Favorite> findFavoriteByHidAndGid(int hid,int gid){
+		return favoriteMapper.findByHidAndGid(hid, gid);
+	}
+	
 	@Override
 	public long findAllTotal(int hid) {
 		return favoriteMapper.selectAllTotal(hid);

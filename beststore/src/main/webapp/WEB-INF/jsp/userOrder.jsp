@@ -171,7 +171,7 @@
 			} else if (ostatus==1 || ostatus==2) {
 				$.message({
                     message:"该订单未完成，不能删除",
-                    type:'warning'
+                    type:'error'
                 });
 			} else if (ostatus==3 || ostatus==4) {
 				if(confirm("该订单删除后，将不能再查看到该订单的具体信息，您确定删除吗？")){

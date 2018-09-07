@@ -37,7 +37,6 @@ public class OrdersBizImpl implements OrdersBiz{
 		} catch (ParseException e) {
 			orders.setOpaytime(new Date());
 		}
-		orders.setOtime(null);
 		return OrdersMapper.updateOrders(orders);
 	}
 

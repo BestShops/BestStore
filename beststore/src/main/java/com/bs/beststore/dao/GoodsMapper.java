@@ -160,11 +160,25 @@ public interface GoodsMapper {
 			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
 			"left join \r\n" + 
 			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 order by c.num desc")
+	List<Map<String, Object>> goodsQueryAll(@Param("page")int page,@Param("rows")int rows);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
 			"where b.sstatus=1 and a.gstatus=1 and a.gname like concat('%',#{gname},'%') and a.gname like concat('%',#{gname1},'%') order by c.num desc")
 	List<Map<String, Object>> goodsQueryByGname1(@Param("page")int page,@Param("rows")int rows,@Param("gname")String gname,@Param("gname1")String gname1);
 	
 	@Select("select count(*) from store s left join goods g on s.sid=g.sid where gstatus=1 and s.sstatus=1 and g.gname like concat('%',#{gname},'%')")
 	long goodsQueryByGnameTotal(@Param("gname")String gname);
+	
+	@Select("select count(*) from store s left join goods g on s.sid=g.sid where gstatus=1 and s.sstatus=1")
+	long goodsQueryAll1();
 	
 	@Select("select count(*) from store s left join goods g on s.sid=g.sid where gstatus=1 and s.sstatus=1 and g.gname like concat('%',#{gname},'%') and g.gname like concat('%',#{gname1},'%')")
 	long goodsQueryByGnameTotal1(@Param("gname")String gname,@Param("gname1")String gname1);

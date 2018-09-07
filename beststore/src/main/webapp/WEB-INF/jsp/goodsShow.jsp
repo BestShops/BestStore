@@ -4,13 +4,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
+<head>
+<meta charset="UTF-8">
 <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
 <link rel="stylesheet" href="css/message.css">
 </head>
 <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
 <script src="js/message.min.js"></script>
-<meta charset="UTF-8">
-</head>
 <body>
 	<%@ include file="header1_similar.jsp"%>
 	<div class="content inner">
@@ -30,7 +30,17 @@
 					</div>
 	
 					<div ><br><br>
-						<a>商品来源：<strong>${list.get(0).sname }</strong></a>
+						<a style="cursor: pointer;">商品来源：<strong>${list.get(0).sname }</strong></a>
+						<c:if test="${collectionGoods.fstatus==1 }">
+							<a onclick="removeCollectionGoods(${list.get(0).GID })" style="float: right;color: #6c6c6c;cursor: pointer;">
+								<img src="${basePath }/images/xing2.png" style="width: 15px;height: 15px;margin-right: 5px;margin-top: -5px">已收藏
+							</a>
+						</c:if>
+						<c:if test="${collectionGoods.fstatus==0 || collectionGoods==null }">
+							<a onclick="collectionGoods(${list.get(0).GID })" style="float: right;color: #6c6c6c;cursor: pointer;">
+								<img src="${basePath }/images/xing1.png" style="width: 15px;height: 15px;margin-right: 5px;margin-top: -5px">收藏宝贝
+							</a>
+						</c:if>
 					</div>
 					
 					<div class="big-box">
@@ -271,9 +281,9 @@
 				var maxnum = ${list.get(0).GNUMBER };
 				if (buynum > maxnum ) {
 					$.message({
-                        message:"超过商品库存!!!",
-                        type:'warning'
-                    });
+						message:"超过商品库存!!!",
+						type:'warning'
+					});
 					return;
 				}
 				$.post("addCart.do",{
@@ -842,6 +852,27 @@
 						.removeClass('in').removeClass('active');
 					});
 				});
+				
+				function collectionGoods(gid){
+					var loginHuman='${sessionScope.loginHuman}';
+					if(loginHuman==null || loginHuman==""){
+						window.location.href = "userLoginPage.do";
+					}else{
+						flag=confirm("确定收藏宝贝吗?");
+						if(flag){
+							$.post("addFavorite.do",{gid:gid},function(data){
+								if(data=="OK"){
+									$.message("收藏成功");
+								}else{
+									$.message({
+				                        message:data,
+				                        type:'error'
+				                    });
+								}
+							})
+						}
+					}
+				}
 			</script>
 	</section>
 	</div>

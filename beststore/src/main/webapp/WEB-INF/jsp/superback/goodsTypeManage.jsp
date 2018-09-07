@@ -12,6 +12,7 @@
 <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
 <script src="js/message.min.js"></script>
 <script>
+
 function openEdit1(){
 	//添加
 	$("#editWin").dialog('open');
@@ -129,9 +130,9 @@ function modSave2(){
 	if(flag){
 		if($("#tpriname2").val() == "" || $("#tpriname2").val() == null){
 			$.message({
-                message:"商品类别不能为空!",
-                type:'warning'
-            });
+				message:"商品类别不能为空!",
+				type:'warning'
+			});
 			return;
 		}
 		$("#form2").form("submit",{
@@ -209,9 +210,9 @@ function modSave3(){
 	if(flag){
 		if($("#tpriname3").val() == "" || $("#tpriname3").val() == null){
 			$.message({
-                message:"商品类别不能为空!",
-                type:'error'
-            });
+				message:"商品类别不能为空!",
+				type:'warning'
+			});
 			return;
 		}
 		$("#form3").form("submit",{

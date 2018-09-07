@@ -120,13 +120,7 @@ public class GoodsBizImpl implements GoodsBiz {
 	@Override
 	public List<Map<String, Object>> goodsQuery(Goods goods,Type type,int tid2,int price1,int price2,int page, int rows,int order) {
 		List<Map<String, Object>> list = null;
-		if(goods.getGname()!=null) {
-			if(goods.getGname().length()<=1) {
-				list=gm.goodsQueryByGname((page-1)*rows, rows, goods.getGname().substring(0, 1));
-			}else if(goods.getGname().length()>=2) {
-				list=gm.goodsQueryByGname1((page-1)*rows, rows,goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
-			}
-		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0 &&order==0){	//1
+		if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0 &&order==0){	//1
 			list=gm.goodsQueryByTid((page-1)*rows, rows, Integer.valueOf(type.getTid()));
 		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0 &&order==1){
 			list=gm.goodsQueryByTidOrder((page-1)*rows, rows, Integer.valueOf(type.getTid()));
@@ -180,20 +174,22 @@ public class GoodsBizImpl implements GoodsBiz {
 			list=gm.goodsQuery2Order((page-1)*rows, rows,price1);
 		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0 &&order==2){
 			list=gm.goodsQuery2Asc((page-1)*rows, rows,price1);
-		}
+		}if(goods.getGname()!=null && !goods.getGname().equals("")) {
+			if(goods.getGname().length()<=1) {
+				list=gm.goodsQueryByGname((page-1)*rows, rows, goods.getGname().substring(0, 1));
+			}else if(goods.getGname().length()>=2) {
+				list=gm.goodsQueryByGname1((page-1)*rows, rows,goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
+			}
+		}else if(goods.getGname()==null) {
+			list=gm.goodsQueryAll((page-1)*rows, rows);
+		} 
 		return list;
 	}
 
 	@Override
 	public long goodsCountByGoods(Goods goods,Type type,int tid2,int price1,int price2) {
 		long count = 0;
-		if(goods.getGname()!=null) {
-			if(goods.getGname().length()<=1) {
-				count=gm.goodsQueryByGnameTotal(goods.getGname().substring(0, 1));
-			}else if(goods.getGname().length()>=2) {
-				count=gm.goodsQueryByGnameTotal1(goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
-			}
-		}else if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0){
+		if(type.getTid()!=null && tid2==0 &&price1==0 &&price2==0){
 			count=gm.goodsQueryByTidCount(Integer.valueOf(type.getTid()));
 		}else if(type.getTid()!=null && tid2==0 && ((price1!=0 && price2!=0)||(price1==0 && price2!=0))){
 			count=gm.goodsQueryByTidAndPriceCount(Integer.valueOf((type.getTid()+"").trim()),price1,price2);
@@ -211,7 +207,15 @@ public class GoodsBizImpl implements GoodsBiz {
 			count=gm.goodsQueryTotal1(price1,price2);
 		}else if(type.getTid()==null && tid2==0 && price1!=0 && price2==0){
 			count=gm.goodsQueryTotal2(price1);
-		}
+		}else if(goods.getGname()!=null && !goods.getGname().equals("")) {
+			if(goods.getGname().length()<=1) {
+				count=gm.goodsQueryByGnameTotal(goods.getGname().substring(0, 1));
+			}else if(goods.getGname().length()>=2) {
+				count=gm.goodsQueryByGnameTotal1(goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
+			}
+		}else if(goods.getGname()==null) {
+			count=gm.goodsQueryAll1();
+		} 
 		return count;
 	}
 

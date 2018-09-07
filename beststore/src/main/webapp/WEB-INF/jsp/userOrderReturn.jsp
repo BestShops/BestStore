@@ -144,7 +144,7 @@
 	        	  	$.message({
 						message:"只能上传.jpg  .png  .jpeg  .gif类型的文件!",
 						type:'warning'
-					});
+					}); 
 	              	return;  
 	          	} else {
 	        	 	$("#submit").attr("disabled",false);

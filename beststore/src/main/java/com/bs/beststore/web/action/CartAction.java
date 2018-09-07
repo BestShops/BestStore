@@ -171,19 +171,6 @@ public class CartAction {
 		out.print("修改数量失败！");
 	}
 
-	// 清空购物车
-	@RequestMapping("removeAll.do")
-	public void removeAll(HttpSession session, PrintWriter out) {
-		Human human = (Human) session.getAttribute("loginHuman");
-		if(cartBiz.removeAll(human.getHid()) >= 1) {
-			out.print("OK");
-		} else {
-			out.print("清空购物车失败！");
-		}
-		
-		
-	}
-	
 	// 跳转到付款界面
 	@RequestMapping(value = "shopCartPayPage.do")
 	public String shopCartPayPage(Orders orders,Goods goods,HttpSession session, Model model,String cids) throws ParseException {
@@ -204,7 +191,6 @@ public class CartAction {
 		return "shopCartPay";
 	}
 
-	// 付款
 	@RequestMapping("pay.do")
 	public String payPage(Orders orders, Model model) throws ParseException {
 		cartBiz.removeCartGoods(orders.getOid());
@@ -220,7 +206,6 @@ public class CartAction {
 		return "pay";
 	}
 
-	// 付款完成
 	@RequestMapping("payDone.do")
 	public String payDonePage(Orders orders) throws ParseException {
 		// 添加付款时间

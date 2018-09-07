@@ -44,4 +44,12 @@ public interface FavoriteBiz {
 	 */
 	int getCount(int hid);
 	
+	/**
+	 * 通过用户id和商品id查看收藏商品没有
+	 * @param hid
+	 * @param gid
+	 * @return
+	 */
+	List<Favorite> findFavoriteByHidAndGid(int hid,int gid);
+	
 }

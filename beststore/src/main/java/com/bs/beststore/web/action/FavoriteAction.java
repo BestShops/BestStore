@@ -59,5 +59,18 @@ public class FavoriteAction {
 		}
 		
 	}
+	
+	//添加收藏
+	@RequestMapping(value="addFavorite.do")
+	public void addFavorite(HttpSession session, Favorite favorite, PrintWriter out) {
+		Human human = (Human)session.getAttribute("loginHuman");
+		favorite.setHid(human.getHid());
+		if(favoriteBiz.addFavoriteGoods(favorite) == 1) {
+			out.print("OK");
+		} else {
+			out.println("收藏失败，请重试！");
+		}
+		
+	}
 
 }

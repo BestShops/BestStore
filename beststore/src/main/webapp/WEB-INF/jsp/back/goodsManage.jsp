@@ -84,8 +84,8 @@
 					$.message(d.data);
 				} else {
 					$.message({
-	                    message:d.data,
-                        type:'warning'
+                        message:d.data,
+                        type:'error'
                     });
 				}
 			});
@@ -110,8 +110,8 @@
 				} else {
 					$.message({
                         message:d.data,
-	                    type:'error'
-                	});
+                        type:'error'
+                    });
 				}
 			});
 		}
@@ -184,27 +184,27 @@
 			if ($("#gname").val() == "" || $("#gname").val() == null) {
 				$.message({
 					message:"商品名不能为空",
-                    type:'warning'
-                });
+					type:'warning'
+				});
 				return;
 			}else if ($("#gname").val().length>50) {
 				$.message({
 					message:"商品名不能超过50个字符",
-                    type:'warning'
-                });
+					type:'warning'
+				});
 				return;
 			} else if ($("#gnowprice").val() == ""
 					|| $("#gnowprice").val() == null) {
 				$.message({
 					message:"商品现价不能为空",
-                    type:'warning'
-                });
+					type:'warning'
+				});
 				return;
 			} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null || $("#gnumber").val()<=0) {
 				$.message({
 					message:"商品库存数不能为空",
-                    type:'warning'
-                });
+					type:'warning'
+				});
 				return;
 			} 
 			$("#form1").form("submit", {
@@ -218,7 +218,7 @@
 						$.message(d.data);
 					} else {
 						$.message({
-							message:d.data,
+	                        message:d.data,
 	                        type:'error'
 	                    });
 					}
@@ -232,28 +232,26 @@
 		if ($("#gname").val() == "" || $("#gname").val() == null) {
 			$.message({
 				message:"商品名不能为空",
-                type:'warning'
-            });
-			}
+				type:'warning'
+			});
 			return;
 		}else if ($("#gname").val().length>50) {
 			$.message({
 				message:"商品名不能超过50个字符",
-                type:'error'
-            });
-			}
+				type:'warning'
+			});
 			return;
 		} else if ($("#gnowprice").val() == "" || $("#gnowprice").val() == null) {
 			$.message({
 				message:"商品现价不能为空",
-                type:'error'
-            });
+				type:'warning'
+			});
 			return;
 		} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null || $("#gnumber").val()<=0) {
 			$.message({
 				message:"商品库存数不能为空",
-                type:'error'
-            });
+				type:'warning'
+			});
 			return;
 		} 
 		//添加
@@ -268,9 +266,9 @@
 					$.message(d.data);
 				} else {
 					$.message({
-						message:d.data,
-		                type:'error'
-		            });
+                        message:d.data,
+                        type:'error'
+                    });
 				}
 			}
 		});
