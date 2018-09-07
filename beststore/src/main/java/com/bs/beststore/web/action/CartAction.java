@@ -183,17 +183,16 @@ public class CartAction {
 	}
 
 	@RequestMapping("pay.do")
-	public String payPage(Orders orders, Integer paymode, Model model) throws ParseException {
+	public String payPage(Orders orders, Model model) throws ParseException {
 		cartBiz.removeCartGoods(orders.getOid());
 		orders.setOstatus(1);
 		if(ordersBiz.updateOrders(orders)>0) {
-			orders = ordersBiz.findByOid(orders.getOid());
-			model.addAttribute("orders", orders);
-			if (paymode == 1) {
-				model.addAttribute("payPic", "aliPay.jpg");
-			} else {
-				model.addAttribute("payPic", "wePay.jpg");
+			List<Map<String,Object>> list=ordersBiz.findGoodsSale(orders.getOid());
+			for(Map<String,Object> map:list) {
+				goodsBiz.updateGoodNum((int)map.get("num"), (int)map.get("gid"));//商品库存改变
 			}
+			List<Map<String,Object>> ordersList = ordersBiz.findAddressAndOrders(orders.getOid());
+			model.addAttribute("orders", ordersList);
 		}
 		return "pay";
 	}

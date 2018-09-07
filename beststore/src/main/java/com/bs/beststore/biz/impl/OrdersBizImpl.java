@@ -93,4 +93,14 @@ public class OrdersBizImpl implements OrdersBiz{
 		return OrdersMapper.findBySidTotal(sid);
 	}
 
+	@Override
+	public List<Map<String, Object>> findGoodsSale(int oid) {
+		return OrdersMapper.findGoodsSale(oid);
+	}
+
+	@Override
+	public List<Map<String, Object>> findAddressAndOrders(int oid) {
+		return OrdersMapper.findAddressAndOrders(oid);
+	}
+
 }

@@ -20,6 +20,9 @@ public interface GoodsMapper {
 	@Update("update goods set gstatus=#{gstatus} where gid=#{gid}")
 	int updateGoodGstatus(Goods record);
 	
+	@Update("update goods set gnumber=gnumber-#{num} where gid=#{gid}")
+	int updateGoodNum(@Param("num")int num,@Param("gid")int gid);
+	
 	@Select("select a.gid,a.gphotopic,a.gnowprice from goods a\r\n" + 
 			"left join ordersdetail b on a.gid=b.gid\r\n" + 
 			"group by a.gid order by sum(b.num) desc limit 0,20")

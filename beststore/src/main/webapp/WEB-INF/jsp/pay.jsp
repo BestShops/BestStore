@@ -81,15 +81,15 @@
             </div>
             <form action="payDone.do" method="post" class="shopcart-form__box">
 	            <div class="info">
-	                <p>金额：<span class="pay-total">${orders.onowprice}元</span></p>
+	                <p>金额：<span class="pay-total">${orders.ONOWPRICE}元</span></p>
 	                <p>订单号：<input name="oid" type="text" readonly="readonly" 
 						style="width:40px; height:20px; border: 0px; 
-						outline:none; cursor: pointer;" value="${orders.oid}"></p>
+						outline:none; cursor: pointer;" value="${orders.OID}"></p>
 	                <p>
-	                <p>订单时间：<fmt:formatDate value="${orders.otime}" type="both"/></p>
-	                <p>付款时间：${orders.onowprice}</p>
-		                    配送：庄明勇<span class="line">/</span>159****3461<span class="line">/</span>
-		                    福建,厦门市,思明区 福建厦门思明区湖滨四里64号湖光大厦11楼A座<span class="line">/</span>
+	                <%-- <p>订单时间：<fmt:formatDate value="${orders.otime}" type="both"/></p> --%>
+	                <p>付款时间：${orders.OPAYTIME}</p>
+		                    配送：${orders.ACONSIGNEE }<span class="line">/</span>${orders.APHONE }<span class="line">/</span>
+		                  ${orders.ACITY } ${orders.ALOCATION }<span class="line">/</span>
 		                    不限送货时间<span class="line">/</span>个人电子发票</p>
 		            </div>
             </form>

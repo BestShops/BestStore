@@ -89,4 +89,6 @@ public interface GoodsBiz {
 	
 	long goodsCountByGoods(Goods goods,Type type,int tid2,int price1,int price2);
 	
+	int updateGoodNum(int num,int gid);
+	
 }

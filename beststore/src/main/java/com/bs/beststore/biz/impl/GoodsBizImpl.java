@@ -215,5 +215,10 @@ public class GoodsBizImpl implements GoodsBiz {
 		return count;
 	}
 
+	@Override
+	public int updateGoodNum(int num, int gid) {
+		return gm.updateGoodNum(num, gid);
+	}
+
 	
 }
