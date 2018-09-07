@@ -50,7 +50,7 @@ public interface OrdersdetailBiz {
 	 * @param oid 
 	 * @return
 	 */
-	int addOrdersDetailByCart(String cids, int oid);
+	int addOrdersDetailByCart(String cids, int oid,int hid);
 	
 	/**
 	 * 判别订单下所有的商品是否都已经评价过了

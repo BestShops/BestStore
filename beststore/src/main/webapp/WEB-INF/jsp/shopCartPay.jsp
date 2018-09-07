@@ -146,8 +146,8 @@
 							<div class="form-group">
 								<label for="coupon" class="control-label"></label>
 							</div>
-							<div class="info-line">原价：<input class="fz16 cr" name="olastprice" type="text" readonly="readonly" style="width:40px; height:20px; border: 0px;outline:none;cursor: pointer;" value="${lastmoney}"></div>
-							<div class="info-line"><span class="favour-value">已优惠 ¥${lastmoney-money}</span>合计：<input class="fz16 cr" name="onowprice" type="text" readonly="readonly" style="width:40px; height:20px; border: 0px;outline:none;cursor: pointer;" value="${money}"></div>
+							<div class="info-line">原价：<input class="fz16 cr" name="olastprice" type="text" readonly="readonly" style="width:90px; height:20px; border: 0px;outline:none;" value="${lastmoney}"></div>
+							<div class="info-line"><span class="favour-value">已优惠 ¥${lastmoney-money}</span>合计：<input class="fz16 cr" name="onowprice" type="text" readonly="readonly" style="width:90px; height:20px; border: 0px;outline:none;" value="${money}"></div>
 						</div>
 					</div>
 					<div class="shop-title">支付方式</div>

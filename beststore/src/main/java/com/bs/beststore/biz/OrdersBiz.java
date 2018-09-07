@@ -71,4 +71,8 @@ public interface OrdersBiz {
 	
 	long findOrderBySidTotal(int sid);
 	
+	List<Map<String,Object>> findGoodsSale(int oid);
+	
+	List<Map<String,Object>> findAddressAndOrders(int oid);
+	
 }

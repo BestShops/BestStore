@@ -16,7 +16,11 @@
 	<script src="js/global.js" charset="UTF-8"></script>
 	<script src="js/login.js" charset="UTF-8"></script>
 	<title>U袋网 - 登录 / 注册</title>
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <body>
 	<div class="public-head-layout container">
 		<a class="logo" href="index"><img src="images/icons/logo.jpg" alt="U袋网" class="cover"></a>

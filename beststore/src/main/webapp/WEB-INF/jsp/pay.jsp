@@ -13,6 +13,8 @@
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="css/swiper.min.css">
 	<link rel="stylesheet" href="css/styles.css">
+	<link href="css/base.css" rel="stylesheet" type="text/css" />
+	<link href="css/user.css" rel="stylesheet" type="text/css" />
 	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
 	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
 	<script src="js/swiper.min.js" charset="UTF-8"></script>
@@ -52,8 +54,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="content clearfix bgf5">
-		<section class="user-center inner clearfix">
+	<!-- <div class="content clearfix bgf5"> -->
+		<%-- <section class="user-center inner clearfix">
 			<div class="user-content__box clearfix bgf">
 				<div class="title">付款 </div>
 				<form action="payDone.do" method="post" class="shopcart-form__box">
@@ -66,9 +68,51 @@
 					<a href="payDone.do?oid=${orders.oid}">扫码支付完成，若未进行跳转，请点击此处>>></a>
 				</form>
 			</div>
-		</section>
+		</section> --%>
+		<div class="payment-con">
+   		 <form  target="_blank" action="#" id="pay-form" method="post">
+        <div class="order-info">
+            <div class="icon-box">
+                <i class="iconfont"></i>
+            </div>
+            <div class="msg">
+                <h3>您的订单已提交成功！付款咯～</h3>
+                <p class="post-date">成功付款后，7天发货</p>
+            </div>
+            <form action="payDone.do" method="post" class="shopcart-form__box">
+	            <div class="info">
+	                <p>金额：<span class="pay-total">${orders.ONOWPRICE}元</span></p>
+	                <p>订单号：<input name="oid" type="text" readonly="readonly" 
+						style="width:40px; height:20px; border: 0px; 
+						outline:none; cursor: pointer;" value="${orders.OID}"></p>
+	                <p>
+	                <%-- <p>订单时间：<fmt:formatDate value="${orders.otime}" type="both"/></p> --%>
+	                <p>付款时间：${orders.OPAYTIME}</p>
+		                    配送：${orders.ACONSIGNEE }<span class="line">/</span>${orders.APHONE }<span class="line">/</span>
+		                  ${orders.ACITY } ${orders.ALOCATION }<span class="line">/</span>
+		                    不限送货时间<span class="line">/</span>个人电子发票</p>
+		            </div>
+            </form>
+        </div>
+		<div>
+            <div class="box-ft">
+            	<a href="userOrderPage.do?pageNo=1&type=10" class="next">查看订单</a>
+                <a href="goodsQueryPage.todo" class="modify">返回购物</a>
+			</div>
+		</div>
+	</form>  
 	</div>
+	<!-- 我家的 -->
+	
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script type="text/javascript">
+    p_nav_c.onmouseover = function(){
+        index_product_class.style.display = 'block';
+    }
+    p_nav_c.onmouseout = function() {
+        index_product_class.style.display = 'none';
+    }
+	</script>
 </body>
 </html>

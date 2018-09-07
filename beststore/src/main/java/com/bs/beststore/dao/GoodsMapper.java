@@ -20,6 +20,9 @@ public interface GoodsMapper {
 	@Update("update goods set gstatus=#{gstatus} where gid=#{gid}")
 	int updateGoodGstatus(Goods record);
 	
+	@Update("update goods set gnumber=gnumber-#{num} where gid=#{gid}")
+	int updateGoodNum(@Param("num")int num,@Param("gid")int gid);
+	
 	@Select("select a.gid,a.gphotopic,a.gnowprice from goods a\r\n" + 
 			"left join ordersdetail b on a.gid=b.gid\r\n" + 
 			"group by a.gid order by sum(b.num) desc limit 0,20")
@@ -113,6 +116,30 @@ public interface GoodsMapper {
 			"")
 	List<Map<String, Object>> goodsQuery(@Param("page")int page,@Param("rows")int rows);
 	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 order by a.gnowprice limit #{page},#{rows};\r\n" + 
+			"")
+	List<Map<String, Object>> goodsQueryAsc(@Param("page")int page,@Param("rows")int rows);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 order by d.count desc limit #{page},#{rows};\r\n" + 
+			"")
+	List<Map<String, Object>> goodsQueryOrder(@Param("page")int page,@Param("rows")int rows);
+	
 	
 	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 
@@ -154,6 +181,30 @@ public interface GoodsMapper {
 			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} order by c.num desc limit #{page},#{rows}")
 	List<Map<String, Object>> goodsQueryByTid(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid);
 	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} order by d.count desc limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTidOrder(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} order by a.gnowprice limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTidprice(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid);
+	
 	@Select("select count(*) from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 
 			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
@@ -171,6 +222,30 @@ public interface GoodsMapper {
 			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
 			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} order by c.num desc limit #{page},#{rows}")
 	List<Map<String, Object>> goodsQueryByTid1(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} order by a.gnowprice limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTid1Asc(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} order by d.count desc limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTid1Order(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid);
 	
 	@Select("select count(*) from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 
@@ -191,6 +266,30 @@ public interface GoodsMapper {
 			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} and gnowprice between #{price1} and #{price2} order by c.num desc limit #{page},#{rows}")
 	List<Map<String, Object>> goodsQueryByTid1AndPrice1(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1,@Param("price2")int price2);
 	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} and gnowprice between #{price1} and #{price2} order by a.gnowprice limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTid1AndPrice1Asc(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1,@Param("price2")int price2);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} and gnowprice between #{price1} and #{price2} order by d.count desc limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTid1AndPrice1Order(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1,@Param("price2")int price2);
+	
 	@Select("select count(*) from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 
 			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
@@ -210,6 +309,30 @@ public interface GoodsMapper {
 			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} and gnowprice>=#{price1} order by c.num desc limit #{page},#{rows}")
 	List<Map<String, Object>> goodsQueryByTid1AndPrice2(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1);
 	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} and gnowprice>=#{price1} order by a.gnowprice limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTid1AndPrice2Asc(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t2.tid=#{tid} and gnowprice>=#{price1} order by d.count desc limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTid1AndPrice2Order(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1);
+	
 	@Select("select count(*) from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 
 			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
@@ -228,6 +351,30 @@ public interface GoodsMapper {
 			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} and gnowprice between #{price1} and #{price2} order by c.num desc limit #{page},#{rows}")
 	List<Map<String, Object>> goodsQueryByTidAndPrice(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1,@Param("price2")int price2);
 	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} and gnowprice between #{price1} and #{price2} order by d.count desc limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTidAndPriceOrder(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1,@Param("price2")int price2);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} and gnowprice between #{price1} and #{price2} order by a.gnowprice limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTidAndPriceAsc(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1,@Param("price2")int price2);
+	
 	@Select("select count(*) from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 
 			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
@@ -245,6 +392,30 @@ public interface GoodsMapper {
 			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
 			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} and gnowprice>=#{price1} order by c.num desc limit #{page},#{rows}")
 	List<Map<String, Object>> goodsQueryByTidAndPrice1(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} and gnowprice>=#{price1} order by d.count desc limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTidAndPrice1Order(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join type t1 on t1.tid=a.tid left join type t2 on t1.tparentid=t2.tid left join type t3 on t2.tparentid=t3.tid \r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and t3.tid=#{tid} and gnowprice>=#{price1} order by a.gnowprice limit #{page},#{rows}")
+	List<Map<String, Object>> goodsQueryByTidAndPrice1Asc(@Param("page")int page,@Param("rows")int rows,@Param("tid")int tid,@Param("price1")int price1);
 	
 	@Select("select count(*) from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 
@@ -272,9 +443,57 @@ public interface GoodsMapper {
 			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
 			"left join \r\n" + 
 			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and gnowprice between #{price1} and #{price2} order by a.gnowprice limit #{page},#{rows};\r\n" + 
+			"")
+	List<Map<String, Object>> goodsQuery1Asc(@Param("page")int page,@Param("rows")int rows,@Param("price1")int price1,@Param("price2")int price2);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and gnowprice between #{price1} and #{price2} order by d.count desc limit #{page},#{rows};\r\n" + 
+			"")
+	List<Map<String, Object>> goodsQuery1Order(@Param("page")int page,@Param("rows")int rows,@Param("price1")int price1,@Param("price2")int price2);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
 			"where b.sstatus=1 and a.gstatus=1 and gnowprice>=#{price1} order by c.num desc limit #{page},#{rows};\r\n" + 
 			"")
 	List<Map<String, Object>> goodsQuery2(@Param("page")int page,@Param("rows")int rows,@Param("price1")int price1);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and gnowprice>=#{price1} order by a.gnowprice limit #{page},#{rows};\r\n" + 
+			"")
+	List<Map<String, Object>> goodsQuery2Asc(@Param("page")int page,@Param("rows")int rows,@Param("price1")int price1);
+	
+	@Select("select a.*,b.sname,c.num,d.count from goods a\r\n" + 
+			"left join store b on b.sid=a.sid\r\n" + 
+			"left join \r\n" + 
+			"(select sum(c.num) num, c.gid from ordersdetail c \r\n" + 
+			"left join orders d on c.oid=d.oid \r\n" + 
+			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid\r\n" + 
+			"left join \r\n" + 
+			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"where b.sstatus=1 and a.gstatus=1 and gnowprice>=#{price1} order by d.count desc limit #{page},#{rows};\r\n" + 
+			"")
+	List<Map<String, Object>> goodsQuery2Order(@Param("page")int page,@Param("rows")int rows,@Param("price1")int price1);
 	
 	@Select("select count(*) from goods a\r\n" + 
 			"left join store b on b.sid=a.sid\r\n" + 

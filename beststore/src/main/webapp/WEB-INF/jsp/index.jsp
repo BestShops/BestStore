@@ -100,7 +100,7 @@
 					</div>
 					<div class="buts-box bgf5">
 						<div class="but-div">
-							<a href="userOrderPage.do"> <i class="but-icon"></i>
+							<a href="userOrderPage.do?pageNo=1&type=10"> <i class="but-icon"></i>
 								<p>订单查看</p>
 							</a>
 						</div>

@@ -29,14 +29,19 @@ $(function() {
 			// 修改金额和数量
 			var num = 0;
 			var sum = 0;
+			var sum1 = 0;
 			$(".val").each(function(){
 				num = parseInt(num) + parseInt($(this).val());
 			});
 			$(".money").each(function(){
-				sum = parseFloat(sum) + parseFloat($(this).text().split(" ")[1]);
+				sum = (parseFloat(sum) + parseFloat($(this).text().split(" ")[1])).toFixed(2);
+			});
+			$(".money1").each(function(){
+				sum1 = (parseFloat(sum1) + parseFloat($(this).text().split(" ")[1])).toFixed(2);
 			});
 			$("#goodsNum").attr("value",num);
-			$("#sumprice").val(sum);
+			$("#sumprice").val(sum);			
+			$("#sumlastprice").val(sum1);
 			// 修改复选框
 			var idStr = [];
 			$(".selectBox").each(function() {
@@ -47,6 +52,7 @@ $(function() {
 			// 修改金额和数量
 			$("#goodsNum").attr("value",0);
 			$("#sumprice").val(0);
+			$("#sumlastprice").val(0);
 			// 修改复选框
 			$(".selectBox").each(function() {
 				$(this).removeAttr("checked", false);
@@ -59,12 +65,17 @@ $(function() {
 	$(".selectBox").change(function() {
 		var parent = $(this).parent().parent().parent().parent();
 		var money = parent.children("td.money").text().split(" ")[1];
+		var money1 = parent.children("td.money1").text().split(" ")[1];
 		if ($(this).is(":checked") == true) {
-			var sumprice = parseFloat($("#sumprice").val()) + parseFloat(money);
+			var sumprice = (parseFloat($("#sumprice").val()) + parseFloat(money)).toFixed(2);
 			$("#sumprice").val(sumprice);
+			var sumlastprice = (parseFloat($("#sumlastprice").val()) + parseFloat(money1)).toFixed(2);
+			$("#sumlastprice").val(sumlastprice);
 		} else {
-			var sumprice = parseFloat($("#sumprice").val()) - parseFloat(money);
+			var sumprice = (parseFloat($("#sumprice").val()) - parseFloat(money)).toFixed(2);
 			$("#sumprice").val(sumprice);
+			var sumlastprice = (parseFloat($("#sumlastprice").val()) - parseFloat(money1)).toFixed(2);
+			$("#sumlastprice").val(sumlastprice);
 		}
 		var idStr = [];
 		$(".selectBox").each(function() {
@@ -87,13 +98,15 @@ $(function() {
 
 function makeOrder(){
 	if (is == null || is.length <= 0 || is == "") {
-		alert("至少选择一件商品哦!");
+		$.message({
+            message:"至少选择一件商品哦!",
+            type:'warning'
+        });
 		return false;
 	} else {
 		return true;
 	}
 }
-
 
 </script>
 <body>
@@ -131,7 +144,10 @@ function makeOrder(){
 	<div class="content clearfix bgf5">
 		<section class="user-center inner clearfix">
 			<div class="user-content__box clearfix bgf">
-				<div class="title">购物车</div>
+				<div class="title">
+					购物车
+					<a style="float: right;color: #fff;text-align: center;line-height: 24px;margin-top: 4px;height: 24px;width: 90px;background-color: #b31e22;text-decoration: none;cursor: pointer;">清空购物车</a>
+				</div>
 				<form action="shopCartPayPage.do" onsubmit="return makeOrder()" method="post" enctype="multipart/form-data" class="shopcart-form__box">
 					<input id="gidsInput" name="cids" type="hidden">
 					<c:if test="${cartCount >= 1 }">
@@ -178,11 +194,11 @@ function makeOrder(){
 									</div>
 								</td>
 								<td class="money">¥ <fmt:formatNumber type="number" value="${lc.GNOWPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
-								<td><a type="button" id="delete" name="${lc.GID}">删除</a></td>
+								<td hidden="yes" class="money1">¥ <fmt:formatNumber type="number" value="${lc.GLASTPRICE * lc.CNUM}" pattern="0.00" maxFractionDigits="2"/></td>
+								<td><a onclick="deletegood(${lc.GID})" name="${lc.GID}" style="cursor: pointer;">删除</a></td>
 							</tr>
 							<c:set var="money" value='${money + lc.GNOWPRICE * lc.CNUM}'></c:set>
 						</c:forEach>
-
 						</tbody>
 					</table>
 					<div class="user-form-group tags-box shopcart-submit pull-right">
@@ -190,11 +206,12 @@ function makeOrder(){
 					</div>
 					<div class="checkbox shopcart-total">
 						<!-- <label><input type="checkbox" class="check-all"><i></i> 全选</label> -->
-						<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">删除</a> -->
+						<!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a type="button" id="deleteAll">清空购物车</a>  -->
 						<div class="pull-right">
-							已选商品 <span><input id="goodsNum" type="text" style="width:30px; height:20px;" value="0"/></span> 件
+							已选商品 <span><input style="width:20px; height:20px; border: 0px;outline:none;" class="fz16 cr" id="goodsNum" type="text" readonly="readonly" style="width:30px; height:20px;" value="0"/></span> 件
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;合计（不含运费）
-							<b class="cr">¥<input class="fz24" id="sumprice" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0"></input></b>
+							<b class="cr">¥<input class="fz24" pattern="0.00" id="sumprice" name="onowprice" type="text" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0" /></b>
+							<input class="fz24" pattern="0.00" id="sumlastprice" name="olastprice" type="hidden" readonly="readonly" style="width:88px; height:25px;border: 0px;outline:none;cursor: pointer;" value="0" />
 						</div>
 					</div>
 					</c:if>
@@ -208,7 +225,6 @@ function makeOrder(){
 						</tr>
 					</table>
 					</c:if>
-					
 					<script>
 					
 						$(document).ready(function(){
@@ -231,7 +247,6 @@ function makeOrder(){
 										var val = $(this).parent().parent().parent().parent().children("td.num").children().children("input.val").val();
 										num = parseInt(num) + parseInt(val);
 										num -- ;
-										console.log(val);
 									}
 									num ++;
 									$("#goodsNum").attr("value",num);
@@ -248,7 +263,7 @@ function makeOrder(){
 								console.log(gid);
 								if ($(this).hasClass('add')) {
 									$(this).siblings('.val').val(Math.min((value += 1),99));
-									// 加减购物车内商品数量
+									// 加购物车内商品数量
 									$.post("changeCartNum.do",{
 										cnum:value,
 										gid:gid
@@ -256,12 +271,16 @@ function makeOrder(){
 										if (data == "OK") {
 											window.location.href = "shopCartPage.do";
 										} else {
-											alert(data);
+											location.reload();
+											$.message({
+						                        message:data,
+						                        type:'error'
+						                    });
 										}
 									});
 								} else {
 									$(this).siblings('.val').val(Math.max((value -= 1),1));
-									// 加减购物车内商品数量
+									// 减购物车内商品数量
 									$.post("changeCartNum.do",{
 										cnum:value,
 										gid:gid
@@ -269,18 +288,27 @@ function makeOrder(){
 										if (data == "OK") {
 											window.location.href = "shopCartPage.do";
 										} else {
-											alert(data);
+											location.reload();
+											$.message({
+						                        message:data,
+						                        type:'error'
+						                    });
 										}
 									});
 								}
 							});
 							
-							// 失焦改变数量
-							$('.cart-num__box').on('blur', '.val', function() {
-								var value = $("input.val").val();
-								var gid =  document.getElementById('gid').innerText;
+							// onchange事件，改变数量
+							$('.cart-num__box').on('change', '.val', function() {
+								var value = $(this).parent().children('input').eq(1).val();
+								console.log(value);
+								var gid =  $(this).parent().parent().parent().children().children().children().children().val();
+								console.log(gid);
 								if( value == 0 || value == null ){
-									alert("商品数量不能为0或者为空");
+									$.message({
+				                        message:"商品数量不能为0或者为空",
+				                        type:'warning'
+				                    });
 								} 
 								// 改变购物车内商品数量
 								$.post("changeCartNum.do",{
@@ -290,27 +318,32 @@ function makeOrder(){
 									if (data == "OK") {
 										window.location.href = "shopCartPage.do";
 									} else {
-										alert(data);
+										location.reload();
+										$.message({
+					                        message:data,
+					                        type:'warning'
+					                    });
 									}
 								});
 							});
-							
-							// 删除购物车商品
-							$('#delete').click(function() {
-								var gid =  $(this).attr("name");
-								$.post("delete.do",{
-									gid:gid
-								},function(data){
-									if (data == "OK") {
-										alert("删除成功！");
-										window.location.href = "shopCartPage.do";
-									} else {
-										alert(data);
-									}
-								});
-							});
-							
 						});
+						
+						// 删除购物车商品
+						function deletegood(gid){
+							$.post("delete.do",{
+								gid:gid
+							},function(data){
+								if (data == "OK") {
+									$.message("删除成功！");
+									window.location.href = "shopCartPage.do";
+								} else {
+									$.message({
+				                        message:data,
+				                        type:'error'
+				                    });
+								}
+							});
+						}
 					</script>
 				</form>
 			</div>

@@ -47,7 +47,7 @@ public interface CartBiz {
 	 * @param cart	根据购物车信息去查找商品信息及商品图片信息
 	 * @return	商品信息和商品图片信息的集合
 	 */
-	List<Map<String, Object>> findGoodsByCids(String cids,long page, int rows);
+	List<Map<String, Object>> findGoodsByCids(String cids,long page, int rows,int hid);
 	
 	
 	/**
@@ -62,7 +62,7 @@ public interface CartBiz {
 	 * @param hid
 	 * @return
 	 */
-	long countByHid(Integer hid);
+	Long countByHid(Integer hid);
 
 	/**
 	 * 根据Hid和Gid查询商品是否已经存在购物车

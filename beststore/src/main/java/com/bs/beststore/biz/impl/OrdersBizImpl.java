@@ -1,6 +1,8 @@
 package com.bs.beststore.biz.impl;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +31,13 @@ public class OrdersBizImpl implements OrdersBiz{
 	 * 而且，一般的购物网站都提供两个时间，一个是下单时间，一个是付款时间
 	 */
 	public int updateOrders(Orders orders) {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		try {
+			orders.setOpaytime(sdf.parse(sdf.format(new Date())));
+		} catch (ParseException e) {
+			orders.setOpaytime(new Date());
+		}
+		orders.setOtime(null);
 		return OrdersMapper.updateOrders(orders);
 	}
 
@@ -91,6 +100,16 @@ public class OrdersBizImpl implements OrdersBiz{
 	@Override
 	public long findOrderBySidTotal(int sid) {
 		return OrdersMapper.findBySidTotal(sid);
+	}
+
+	@Override
+	public List<Map<String, Object>> findGoodsSale(int oid) {
+		return OrdersMapper.findGoodsSale(oid);
+	}
+
+	@Override
+	public List<Map<String, Object>> findAddressAndOrders(int oid) {
+		return OrdersMapper.findAddressAndOrders(oid);
 	}
 
 }

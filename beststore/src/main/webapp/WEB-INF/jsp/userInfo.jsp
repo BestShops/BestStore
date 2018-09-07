@@ -43,7 +43,11 @@
 	    user-select: none;
 	}
 </style>
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 			<div class="pull-right">
@@ -107,14 +111,20 @@
 					          	console.log(ext);
 					          	if (ext != 'jpg' && ext != 'png' && ext != 'jpeg' && ext != 'gif'){
 					        	  	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",true);// 将提交按钮锁定，禁止点击
-					              	alert("只能上传.jpg  .png  .jpeg  .gif类型的文件!"); 
+					        	  	$.message({
+				                        message:"只能上传.jpg  .png  .jpeg  .gif类型的文件!",
+				                        type:'warning'
+				                    }); 
 					              	return;  
 					          	} else {
 					        	 	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",false);
 					          	}
 					      	} else {  
 					    	  	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",true);
-						        alert("只能上传.jpg  .png  .jpeg  .gif类型的文件!"); 
+					    	  	$.message({
+			                        message:"只能上传.jpg  .png  .jpeg  .gif类型的文件!",
+			                        type:'warning'
+			                    }); 
 						        return;
 					      	} 
 					      
@@ -133,7 +143,10 @@
 	
 					      	if(fileSize>(1024 * 1024 * 2)) {    
 					    	  	$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",true);
-					          	alert("文件大小不能超过2M");  
+					    	  	$.message({
+			                        message:"文件大小不能超过2M",
+			                        type:'warning'
+			                    });  
 					          	return;
 					      	} else {
 					      		$("button.btn.btn-success.btn-block.avatar-save").attr("disabled",false);

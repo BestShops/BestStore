@@ -52,6 +52,7 @@ public class GoodsAction {
 		String price1=request.getParameter("price1");
 		String price2=request.getParameter("price2");
 		String page=request.getParameter("page");
+		String order=request.getParameter("order");
 		if(page==null || page=="" || page.equals("")) {
 			page="1";
 		}
@@ -60,6 +61,9 @@ public class GoodsAction {
 		}
 		if(price2==null || price2=="" || price2.equals("")) {
 			price2="0";
+		}
+		if(order==null || order=="" ||order.equals("")) {
+			order="0";
 		}
 		int rows=20;	//每页条数
 		long total=goodsBiz.goodsCountByGoods(goods,type,Integer.valueOf(tid2.trim()),Integer.valueOf(price1),Integer.valueOf(price2));	//总条数
@@ -72,11 +76,12 @@ public class GoodsAction {
 			page=totalPage+"";
 		}
 		request.setAttribute("page", page);	//当前页数
-		List<Map<String, Object>> list = goodsBiz.goodsQuery(goods,type,Integer.valueOf(tid2),Integer.valueOf(price1),Integer.valueOf(price2),Integer.valueOf(page), rows);
+		List<Map<String, Object>> list = goodsBiz.goodsQuery(goods,type,Integer.valueOf(tid2),Integer.valueOf(price1),Integer.valueOf(price2),Integer.valueOf(page), rows,Integer.valueOf(order));
 		request.setAttribute("goodsQueryList", list);
 		request.setAttribute("total", total);
 		request.setAttribute("rows", rows);
 		request.setAttribute("totalPage", totalPage);
+		request.setAttribute("order", order);
 		if(type.getTid()!=null) {
 			request.setAttribute("typeTid", type.getTid());
 			request.setAttribute("typeTname", typeBiz.findByTid(type.getTid()).getTpriname());
@@ -112,7 +117,7 @@ public class GoodsAction {
 		// 修改购物车数量信息
 		if (session.getAttribute("loginHuman") != null) {
 			Human human = (Human) session.getAttribute("loginHuman");
-			int cartCount = (int) cartBiz.countByHid(human.getHid());
+			Long cartCount = cartBiz.countByHid(human.getHid());
 			session.setAttribute("cartCount", cartCount);
 		}
 		if(color==null || color.equals("")) {
