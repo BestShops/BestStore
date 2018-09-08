@@ -21,7 +21,6 @@
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
 	<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
     <script src="js/message.min.js"></script>
-    
 	<title>U袋网</title>
 	<!-- <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css"> -->
 </head>
@@ -259,7 +258,7 @@ function makeOrder(){
 								$check_all.prop('checked', flag);
 							});
 							// 个数限制输入数字
-							$('input.val').onlyReg({reg: /[^0-9.]/g});
+							//$('input.val').onlyReg({reg:/[^0-9.]/});
 							// 加减个数
 							$('.cart-num__box').on('click', '.sub,.add', function() {
 								var value = Number($(this).siblings('.val').val());
