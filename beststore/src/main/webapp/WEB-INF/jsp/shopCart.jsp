@@ -13,17 +13,18 @@
 	<link rel="stylesheet" href="css/bootstrap-theme.min.css">
 	<link rel="stylesheet" href="css/swiper.min.css">
 	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="css/message.css">
 	<script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
 	<script src="js/bootstrap.min.js" charset="UTF-8"></script>
 	<script src="js/swiper.min.js" charset="UTF-8"></script>
 	<script src="js/global.js" charset="UTF-8"></script>
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
+	<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <script src="js/message.min.js"></script>
+    
 	<title>U袋网</title>
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
+	<!-- <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css"> -->
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <script type="text/javascript">
 var is;
 $(function() {
@@ -224,7 +225,7 @@ function makeOrder(){
 					<table class="table table-bordered">
 						<tr class="order-empty">
 							<td colspan='6'>
-								<div class="empty-msg">购物车里还没有东西，赶快去购物吧！<br><a href="index">点击这里，跳转购物>>></a></div>
+								<div class="empty-msg">购物车里还没有东西，赶快去购物吧！<br><a href="goodsQueryPage.todo">点击这里，跳转购物>>></a></div>
 							</td>
 						</tr>
 					</table>
@@ -339,7 +340,10 @@ function makeOrder(){
 							},function(data){
 								if (data == "OK") {
 									$.message("删除成功！");
-									window.location.href = "shopCartPage.do";
+									var t1=window.setTimeout(refreshCount, 1000 * 1);
+								    function refreshCount() {
+								    	window.location.href = "shopCartPage.do";
+								    }
 								} else {
 									$.message({
 				                        message:data,
@@ -353,9 +357,12 @@ function makeOrder(){
 							flag=confirm("确定清空购物车吗?");
 							if(flag){
 								$.post("removeAll.do",{},function(data){
-									if (data == "OK") {
+									if (data=="OK") {
 										$.message("清空购物车成功！");
-										window.location.href = "shopCartPage.do";
+										var t1=window.setTimeout(refreshCount, 1000 * 1);
+									    function refreshCount() {
+									    	window.location.href = "shopCartPage.do";
+									    }
 									} else {
 										$.message({
 					                        message:data,

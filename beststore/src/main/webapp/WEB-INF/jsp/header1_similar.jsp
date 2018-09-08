@@ -18,6 +18,10 @@
 	<script src="js/swiper.min.js" charset="UTF-8"></script>
 	<script src="js/global.js" charset="UTF-8"></script>
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
+	<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+	<script src="js/message.min.js"></script>
+	<link rel="stylesheet" href="css/message.css">
+	<script src="js/message.min.js"></script>
 	<title>U袋网</title>
 </head>
 <body>
@@ -83,7 +87,7 @@
 			<ul class="nva-list">
 				<a href="index"><li class="active">首页</li></a>
 				<a href="goodsQueryPage.todo"><li>商品筛选</li></a>
-				<a href="matchPage.do"><li>智能匹配</li></a>
+				<a href="matchPage.do"><li>店铺列表</li></a>
 				<a href="classRoomPage.do"><li>U袋学堂</li></a>
 				<a href="blogPage.do"><li>博客</li></a>
 				<a href="openStorePage.do"><li>申请网店</li></a>

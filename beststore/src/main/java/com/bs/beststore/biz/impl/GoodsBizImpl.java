@@ -180,7 +180,7 @@ public class GoodsBizImpl implements GoodsBiz {
 			}else if(goods.getGname().length()>=2) {
 				list=gm.goodsQueryByGname1((page-1)*rows, rows,goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
 			}
-		}else if(goods.getGname()==null) {
+		}else if(goods.getGname()==null && type.getTid()==null && tid2==0 &&price1==0 &&price2==0 &&order==0) {
 			list=gm.goodsQueryAll((page-1)*rows, rows);
 		} 
 		return list;
@@ -213,7 +213,7 @@ public class GoodsBizImpl implements GoodsBiz {
 			}else if(goods.getGname().length()>=2) {
 				count=gm.goodsQueryByGnameTotal1(goods.getGname().substring(0, 1),goods.getGname().substring(1,2));
 			}
-		}else if(goods.getGname()==null) {
+		}else if(goods.getGname()==null && type.getTid()==null && tid2==0 &&price1==0 &&price2==0) {
 			count=gm.goodsQueryAll1();
 		} 
 		return count;

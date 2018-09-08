@@ -16,14 +16,14 @@
 							  <div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
 							  <p class="step-flow__title-top">阅读条款</p>
 							</div>
-							<div class="step-flow__line step-flow__line_ing">
+							<div class="step-flow__line step-flow__li_done">
 							  <div class="step-flow__process"></div>
 							</div>
-							<div class="step-flow__li">
+							<div class="step-flow__li step-flow__li_done">
 							  <div class="step-flow__state"><i class="iconfont icon-ok"></i></div>
 							  <p  class="step-flow__title-top">店铺信息</p>
 							</div>
-							<div class="step-flow__line">
+							<div class="step-flow__line step-flow__line_ing">
 							  <div class="step-flow__process"></div>
 							</div>
 							<div class="step-flow__li">

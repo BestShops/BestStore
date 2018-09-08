@@ -57,13 +57,13 @@
 			<div class="user-content__box clearfix bgf">
 				<div class="title">购物车-确认支付 </div>
 				<div class="shop-title">收货地址</div>
-				<form action="pay.do" method="POST" class="shopcart-form__box">
+				<form action="pay.do" method="POST" class="shopcart-form__box" onsubmit="return checkAid()">
 					<div class="addr-radio">
 					<c:forEach items="${addresslist}" var="al">
 					<c:if test="${al.astatus == 1 }">
 						<div class="radio-line radio-box active">
 							<label class="radio-label ep" title="${al.acity } ${al.alocation } （${al.aconsignee } 收） ${al.aphone }">
-								<input name="aid" checked="" value="${al.aid}" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
+								<input class="aidText" name="aid" checked="" value="${al.aid}" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
 								${al.acity } ${al.alocation }
 								（${al.aconsignee } 收） ${al.aphone }
 							</label>
@@ -74,7 +74,7 @@
 					<c:if test="${al.astatus == 0 }">	
 						<div class="radio-line radio-box">
 							<label class="radio-label ep" title="${al.acity } ${al.alocation } （${al.aconsignee } 收） ${al.aphone }">
-								<input name="aid" value="${al.aid}" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
+								<input class="aidText" name="aid" value="${al.aid}" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
 								${al.acity } ${al.alocation }
 								（${al.aconsignee } 收） ${al.aphone }
 							</label>
@@ -119,7 +119,7 @@
 							
 							<c:forEach items="${listCart }" var="lc">
 								<tr>
-									<th scope="row"><a href="item_show.html"><div class="img"><img src="upload/${lc.GPHOTOPIC}" alt="" class="cover"></div></a></th>
+									<th scope="row"><a><div class="img"><img src="upload/${lc.GPHOTOPIC}" class="cover"></div></a></th>
 									<td>
 										<div class="name ep3">${lc.GNAME }</div>
 										<!--  <div class="type c9">颜色分类：深棕色  尺码：均码</div>  -->
@@ -183,5 +183,16 @@
 	</div>
 	<%@ include file="rightMenu.jsp" %>
 	<%@ include file="bottom.jsp" %>
+	<script type="text/javascript">
+		function checkAid(){
+			if($(".aidText").val()=="" || $(".aidText").val()==null){
+				alert("请填写收货地址!");
+				return false;
+			}else{
+				return true;
+			}
+			
+		}
+	</script>
 </body>
 </html>

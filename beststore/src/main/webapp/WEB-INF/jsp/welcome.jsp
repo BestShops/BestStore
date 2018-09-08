@@ -5,11 +5,8 @@
 <html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
+<!-- <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css"> -->
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 			<div class="pull-right">
@@ -129,7 +126,7 @@
 										</td>
 										<td class="order">
 											<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
-											<a href="pay.do?oid=${o.OID}" class="but but-primary">立即付款</a>
+											<a href="buyNow1.do?oid=${o.OID}" class="but but-primary">立即付款</a>
 											<a href="" onclick="del(${o.OID},${o.OSTATUS})" class="but c3">取消订单</a>
 										</td>
 										</c:if>

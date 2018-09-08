@@ -93,6 +93,18 @@ public class CartAction {
 		request.setAttribute("order", od);
 		return "shopCartPay";
 	}
+	
+	@RequestMapping(value = "buyNow1.do")
+	public String buyNow1(HttpServletRequest request, Ordersdetail ordersdetail) {
+		Human human = (Human) request.getSession().getAttribute("loginHuman");
+		request.setAttribute("addresslist", addressBiz.findAllAddress(human.getHid()));
+		List<Map<String, Object>> list = ordersdetailBiz.findOrdersDetail(ordersdetail);
+		request.setAttribute("listCart", list);
+		// 查找刚刚生成的订单，传入页面
+		Orders od = ordersBiz.findByOid(ordersdetail.getOid());
+		request.setAttribute("order", od);
+		return "shopCartPay";
+	}
 
 	// 添加商品到购物车
 	@RequestMapping(value = "addCart.do")

@@ -112,14 +112,12 @@ public class GoodsAction {
 		//收藏商品的判断
 		if(human!=null) {
 			List<Favorite> collectionGoods=favoriteBiz.findFavoriteByHidAndGid(human.getHid(), goods.getGid());
-			System.out.println(collectionGoods.get(0).getFstatus()+"--");
-			model.addAttribute("collectionGoods", collectionGoods.get(0));
-		}
-		List<Favorite> collectionGoods=favoriteBiz.findFavoriteByHidAndGid(human.getHid(), goods.getGid());
-		if(collectionGoods==null) {
-			model.addAttribute("collectionGoods", null);
-		}else {
-			model.addAttribute("collectionGoods", collectionGoods.get(0));
+			if(collectionGoods!=null) {
+				model.addAttribute("collectionGoods", collectionGoods.get(0));
+			}else {
+				model.addAttribute("collectionGoods", null);
+			}
+			
 		}
 		// 查询商品详情 根据gid查询
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);

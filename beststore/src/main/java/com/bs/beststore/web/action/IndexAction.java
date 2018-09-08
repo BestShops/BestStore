@@ -46,6 +46,11 @@ public class IndexAction {
 	@Resource
 	private OrdersdetailBiz ordersdetailBiz;
 
+	@RequestMapping(path = "addd.todo")
+	public String add() {
+		return "address1";
+	}
+	
 	// 超级管理员登录界面
 	@RequestMapping(path = "superLoginPage.todo")
 	public String superLoginPage() {

@@ -128,11 +128,7 @@
 				<i class="iconfont icon-skirt fz16"></i> ${firstList.get(0).tpriname }
 				<div class="case-list fz0 pull-right">
 					<c:forEach items="${secondType }" varStatus="abc" var="c">
-						<c:forEach items="${thirdList }" var="vv">
-							<c:if test="${(secondType.get(abc.index).tname2==vv.name2) && firstList.get(0).tpriname==vv.name1 }">
-								<a href="">${vv.name3 }</a>
-							</c:if>
-						</c:forEach>
+						<a href="goodsQueryPage.todo?tid=${firstList.get(0).tid }&tid2=${c.tid2 }">${c.tname2 }</a>
 					</c:forEach>
 				</div>
 			</div>
@@ -162,11 +158,7 @@
 				<i class="iconfont icon-fushi fz16"></i> ${firstList.get(1).tpriname }
 				<div class="case-list fz0 pull-right">
 					<c:forEach items="${secondType1 }" varStatus="abc" var="c">
-						<c:forEach items="${thirdList }" var="vv">
-							<c:if test="${(secondType1.get(abc.index).tname2==vv.name2) && firstList.get(1).tpriname==vv.name1 }">
-								<a href="">${vv.name3 }</a>
-							</c:if>
-						</c:forEach>
+						<a href="goodsQueryPage.todo?tid=${firstList.get(1).tid }&tid2=${c.tid2 }">${c.tname2 }</a>
 					</c:forEach>
 				</div>
 			</div>
@@ -196,11 +188,7 @@
 				<i class="iconfont icon-bao fz16"></i> ${firstList.get(2).tpriname }
 				<div class="case-list fz0 pull-right">
 					<c:forEach items="${secondType2 }" varStatus="abc" var="c">
-						<c:forEach items="${thirdList }" var="vv">
-							<c:if test="${(secondType2.get(abc.index).tname2==vv.name2) && firstList.get(2).tpriname==vv.name1 }">
-								<a href="">${vv.name3 }</a>
-							</c:if>
-						</c:forEach>
+						<a href="goodsQueryPage.todo?tid=${firstList.get(2).tid }&tid2=${c.tid2 }">${c.tname2 }</a>
 					</c:forEach>
 				</div>
 			</div>
@@ -230,11 +218,7 @@
 				<i class="iconfont icon-kid fz16"></i> ${firstList.get(3).tpriname }
 				<div class="case-list fz0 pull-right">
 					<c:forEach items="${secondType3 }" varStatus="abc" var="c">
-						<c:forEach items="${thirdList }" var="vv">
-							<c:if test="${(secondType3.get(abc.index).tname2==vv.name2) && firstList.get(3).tpriname==vv.name1 }">
-								<a href="">${vv.name3 }</a>
-							</c:if>
-						</c:forEach>
+						<a href="goodsQueryPage.todo?tid=${firstList.get(3).tid }&tid2=${c.tid2 }">${c.tname2 }</a>
 					</c:forEach>
 				</div>
 			</div>
@@ -264,11 +248,7 @@
 				<i class="iconfont icon-shoes fz16"></i>${firstList.get(4).tpriname }
 				<div class="case-list fz0 pull-right">
 					<c:forEach items="${secondType4 }" varStatus="abc" var="c">
-						<c:forEach items="${thirdList }" var="vv">
-							<c:if test="${(secondType4.get(abc.index).tname2==vv.name2) && firstList.get(4).tpriname==vv.name1 }">
-								<a href="">${vv.name3 }</a>
-							</c:if>
-						</c:forEach>
+						<a href="goodsQueryPage.todo?tid=${firstList.get(4).tid }&tid2=${c.tid2 }">${c.tname2 }</a>
 					</c:forEach>
 				</div>
 			</div>

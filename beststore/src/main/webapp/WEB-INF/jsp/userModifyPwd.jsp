@@ -13,7 +13,7 @@
 					<div class="modify_div">
 						<div class="clearfix">
 							<a href="userModifyPwdStep.do" role="button" class="but">修改登陆密码</a>
-							<a href="userLogin.do?p=resetpwd" role="button" class="but">忘记登陆密码</a>
+							<!-- <a href="userLogin.do?p=resetpwd" role="button" class="but">忘记登陆密码</a> -->
 						</div>
 						<div class="help-block">随时都能更改密码，保障您账户的安全</div>
 					</div>

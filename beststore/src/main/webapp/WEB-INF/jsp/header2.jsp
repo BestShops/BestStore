@@ -13,11 +13,14 @@
 <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="css/swiper.min.css">
 <link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/message.css">
 <script src="js/jquery.1.12.4.min.js" charset="UTF-8"></script>
 <script src="js/bootstrap.min.js" charset="UTF-8"></script>
 <script src="js/swiper.min.js" charset="UTF-8"></script>
 <script src="js/global.js" charset="UTF-8"></script>
 <script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <title>U袋网</title>
 </head>
 <body>
