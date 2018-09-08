@@ -190,9 +190,9 @@
 				</div>
 				
 				<div class="page text-right clearfix">
-					<a href="goodsQueryPage.todo?page=${page-1 }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}">上一页</a>
+					<a href="goodsQueryPage.todo?page=${page-1 }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&gname=${gname}">上一页</a>
 					<mt:page href="goodsQueryPage.todo" total="${total }" rows="${rows }"/>
-					<a href="goodsQueryPage.todo?page=${page+1 }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}">下一页</a>
+					<a href="goodsQueryPage.todo?page=${page+1 }&rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}&gname=${gname}">下一页</a>
 					<form method="post" action="goodsQueryPage.todo?rows=${rows}&tid=${typeTid }&tid2=${typeTid2 }&price1=${price1}&price2=${price2}" class="page-order">
 						到第
 						<input type="number" name="page" min="1" max="${totalPage }">

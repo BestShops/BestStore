@@ -26,7 +26,17 @@
 					</div>
 	
 					<div ><br><br>
-						<a>商品来源：<strong>${list.get(0).sname }</strong></a>
+						<a style="cursor: pointer;">商品来源：<strong>${list.get(0).sname }</strong></a>
+						<c:if test="${collectionGoods.fstatus==1 }">
+							<a onclick="removeCollectionGoods(${collectionGoods.fid})" style="float: right;color: #6c6c6c;cursor: pointer;">
+								<img src="${basePath }/images/xing2.png" style="width: 15px;height: 15px;margin-right: 5px;margin-top: -5px">已收藏
+							</a>
+						</c:if>
+						<c:if test="${collectionGoods.fstatus==0 || collectionGoods==null }">
+							<a onclick="collectionGoods(${list.get(0).GID })" style="float: right;color: #6c6c6c;cursor: pointer;">
+								<img src="${basePath }/images/xing1.png" style="width: 15px;height: 15px;margin-right: 5px;margin-top: -5px">收藏宝贝
+							</a>
+						</c:if>
 					</div>
 					
 					<div class="big-box">
@@ -832,6 +842,39 @@
 						.removeClass('in').removeClass('active');
 					});
 				});
+				
+				function collectionGoods(gid){
+					var loginHuman='${sessionScope.loginHuman}';
+					if(loginHuman==null || loginHuman==""){
+						window.location.href = "userLoginPage.do";
+					}else{
+						flag=confirm("确定收藏宝贝吗?");
+						if(flag){
+							$.post("addFavorite.do",{gid:gid},function(data){
+								if(data=="OK"){
+									alert("收藏成功");
+									document.location.reload();//当前页面 
+								}else{
+									alert(data);
+								}
+							})
+						}
+					}
+				}
+				
+				function removeCollectionGoods(fid){
+					flag=confirm("确定移除收藏的宝贝吗?");
+					if(flag){
+						$.post("removeFavorite.do",{fid:fid},function(data){
+							if(data=="OK"){
+								alert("已取消收藏");
+								document.location.reload();//当前页面 
+							}else{
+								alert(data);
+							}
+						})
+					}
+				}
 			</script>
 	</section>
 	</div>

@@ -21,6 +21,8 @@ public interface FavoriteBiz {
 	 */
 	int removeFavoriteGoods(Favorite favorite);
 	
+	int updateFstatus(Favorite favorite);
+	
 	/**
 	 * 根据用户id查看收藏夹内的所有商品信息
 	 * @param hid
@@ -43,5 +45,13 @@ public interface FavoriteBiz {
 	 * @return
 	 */
 	int getCount(int hid);
+	
+	/**
+	 * 通过用户id和商品id查看收藏商品没有
+	 * @param hid
+	 * @param gid
+	 * @return
+	 */
+	List<Favorite> findFavoriteByHidAndGid(int hid,int gid);
 	
 }

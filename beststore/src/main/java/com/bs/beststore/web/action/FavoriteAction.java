@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bs.beststore.biz.FavoriteBiz;
@@ -51,12 +52,41 @@ public class FavoriteAction {
 	
 	// 取消收藏
 	@RequestMapping(value="removeFavorite.do")
-	public void removeFavorite(HttpSession session,Human human, Favorite favorite, PrintWriter out) {
+	public void removeFavorite(Favorite favorite, PrintWriter out,Model model) {
 		if(favoriteBiz.removeFavoriteGoods(favorite) == 1) {
 			out.print("OK");
+			model.addAttribute("collectionGoods", null);
 		} else {
 			out.println("取消收藏失败，请重试！");
 		}
+		
+	}
+	
+	//添加收藏
+	@RequestMapping(value="addFavorite.do")
+	public void addFavorite(HttpSession session, Favorite favorite, PrintWriter out,Model model) {
+		Human human = (Human)session.getAttribute("loginHuman");
+		favorite.setHid(human.getHid());
+		List<Favorite> list=favoriteBiz.findFavoriteByHidAndGid(favorite.getHid(), favorite.getGid());
+		if(list.size()<=0) {
+			if(favoriteBiz.addFavoriteGoods(favorite) == 1) {
+				out.print("OK");
+				List<Favorite> collectionGoods=favoriteBiz.findFavoriteByHidAndGid(favorite.getHid(), favorite.getGid());
+				model.addAttribute("collectionGoods", collectionGoods.get(0));
+			} else {
+				out.println("收藏失败，请重试！");
+			}
+		}else {
+			favorite.setFstatus(1);
+			if(favoriteBiz.updateFstatus(favorite)>0) {
+				out.print("OK");
+				List<Favorite> collectionGoods=favoriteBiz.findFavoriteByHidAndGid(favorite.getHid(), favorite.getGid());
+				model.addAttribute("collectionGoods", collectionGoods.get(0));
+			}else {
+				out.println("收藏失败，请重试！");
+			}
+		}
+		
 		
 	}
 

@@ -19,10 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.bs.beststore.biz.CartBiz;
 import com.bs.beststore.biz.DiscussBiz;
+import com.bs.beststore.biz.FavoriteBiz;
 import com.bs.beststore.biz.GoodsBiz;
 import com.bs.beststore.biz.TypeBiz;
 import com.bs.beststore.util.Result;
 import com.bs.beststore.vo.Cart;
+import com.bs.beststore.vo.Favorite;
 import com.bs.beststore.vo.Goods;
 import com.bs.beststore.vo.Human;
 import com.bs.beststore.vo.Store;
@@ -40,6 +42,8 @@ public class GoodsAction {
 	private DiscussBiz discussBiz;
 	@Resource
 	private CartBiz cartBiz;
+	@Resource
+	private FavoriteBiz favoriteBiz;
 
 	@RequestMapping(path = "goodsQueryPage.todo")
 	public String goodsQueryPage(Goods goods,Type type,HttpServletRequest request,Cart cart) {
@@ -98,11 +102,19 @@ public class GoodsAction {
 			request.setAttribute("price1", price1);
 			request.setAttribute("price2", price2);
 		}
+		request.setAttribute("gname", goods.getGname());
 		return "goodsQuery";
 	}
 
 	@RequestMapping(path = "goodsShowPage.todo")
 	public String goodsShowPage(Goods goods, Model model,String color,String size, HttpSession session){
+		Human human = (Human) session.getAttribute("loginHuman");
+		//收藏商品的判断
+		if(human!=null) {
+			List<Favorite> collectionGoods=favoriteBiz.findFavoriteByHidAndGid(human.getHid(), goods.getGid());
+			System.out.println(collectionGoods.get(0).getFstatus()+"--");
+			model.addAttribute("collectionGoods", collectionGoods.get(0));
+		}
 		// 查询商品详情 根据gid查询
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
 		// 查询商品的相关评价
@@ -116,9 +128,10 @@ public class GoodsAction {
 		model.addAttribute("linkList", linkList);
 		// 修改购物车数量信息
 		if (session.getAttribute("loginHuman") != null) {
-			Human human = (Human) session.getAttribute("loginHuman");
 			Long cartCount = cartBiz.countByHid(human.getHid());
 			session.setAttribute("cartCount", cartCount);
+			long favoriteGoods=favoriteBiz.findAllTotal(human.getHid());
+			session.setAttribute("favoriteGoods", favoriteGoods);
 		}
 		if(color==null || color.equals("")) {
 			model.addAttribute("color", 1);

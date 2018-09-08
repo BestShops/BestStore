@@ -14,18 +14,31 @@
 					<div class="collection-list__area clearfix">
 					
 					<c:forEach items="${list}" var="v">
-						<c:if test="${v.FSTATUS == 1 }">
-						<div class="item-card" id="${v.FID }">
+						<c:if test="${v.GSTATUS!=1 || v.SSTATUS!=1 }">
+							<div class="item-card" id="${v.FID }">
+							<a href="" class="photo">
+								<img src="upload/${v.GPHOTOPIC }" alt="${v.GNAME }" class="cover">
+								<div class="name">${v.GNAME }</div>
+							</a>
+							<div class="middle">
+								<div style="color:gray;float: left"><s>￥${v.GNOWPRICE }</s>&nbsp;已下架</div>
+								<div class="sale"><a onclick="remove(${v.FID })" style="cursor: pointer;">取消收藏</a></div>
+							</div>
+						</div>
+						</c:if>
+						<c:if test="${v.GSTATUS==1 && v.SSTATUS==1 }">
+							<div class="item-card" id="${v.FID }">
 							<a href="goodsShowPage.todo?gid=${v.GID }" class="photo">
 								<img src="upload/${v.GPHOTOPIC }" alt="${v.GNAME }" class="cover">
 								<div class="name">${v.GNAME }</div>
 							</a>
 							<div class="middle">
 								<div class="price"><small>￥</small>${v.GNOWPRICE }</div>
-								<div class="sale"><a onclick="remove(${v.FID })" >取消收藏</a></div>
+								<div class="sale"><a onclick="remove(${v.FID })" style="cursor: pointer;">取消收藏</a></div>
 							</div>
-						</div>
+							</div>
 						</c:if>
+						
 					</c:forEach>
 						
 					</div>

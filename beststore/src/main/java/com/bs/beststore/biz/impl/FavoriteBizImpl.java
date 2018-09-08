@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.bs.beststore.biz.FavoriteBiz;
 import com.bs.beststore.dao.FavoriteMapper;
+import com.bs.beststore.vo.AddressExample.Criteria;
 import com.bs.beststore.vo.Favorite;
+import com.bs.beststore.vo.FavoriteExample;
 
 @Service
 public class FavoriteBizImpl implements FavoriteBiz {
@@ -35,6 +37,16 @@ public class FavoriteBizImpl implements FavoriteBiz {
 		return favoriteMapper.findByHid(hid,(page-1)*rows,rows);
 	}
 	
+	public List<Favorite> findFavoriteByHidAndGid(int hid,int gid){
+		List<Favorite> list;
+		if(favoriteMapper.findByHidAndGid(hid, gid).size()>0) {
+			list=favoriteMapper.findByHidAndGid(hid, gid);
+		}else {
+			list=null;
+		}
+		return list;
+	}
+	
 	@Override
 	public long findAllTotal(int hid) {
 		return favoriteMapper.selectAllTotal(hid);
@@ -49,6 +61,11 @@ public class FavoriteBizImpl implements FavoriteBiz {
 	public int getCount(int hid) {
 		String count = favoriteMapper.getCount(hid).get(0).get("count") + "";
 		return Integer.parseInt(count);
+	}
+
+	@Override
+	public int updateFstatus(Favorite favorite) {
+		return favoriteMapper.updateFstatus(favorite);
 	}
 
 }

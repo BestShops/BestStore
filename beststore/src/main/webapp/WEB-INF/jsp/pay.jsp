@@ -82,15 +82,11 @@
             <form action="payDone.do" method="post" class="shopcart-form__box">
 	            <div class="info">
 	                <p>金额：<span class="pay-total">${orders.ONOWPRICE}元</span></p>
-	                <p>订单号：<input name="oid" type="text" readonly="readonly" 
-						style="width:40px; height:20px; border: 0px; 
-						outline:none; cursor: pointer;" value="${orders.OID}"></p>
+	                <p>订单号：<span>${orders.OID}</span></p>
 	                <p>
-	                <%-- <p>订单时间：<fmt:formatDate value="${orders.otime}" type="both"/></p> --%>
 	                <p>付款时间：${orders.OPAYTIME}</p>
-		                    配送：${orders.ACONSIGNEE }<span class="line">/</span>${orders.APHONE }<span class="line">/</span>
-		                  ${orders.ACITY } ${orders.ALOCATION }<span class="line">/</span>
-		                    不限送货时间<span class="line">/</span>个人电子发票</p>
+	                <p> 配送：${orders.ACONSIGNEE }&nbsp;&nbsp;${orders.APHONE }&nbsp;&nbsp;
+		                  ${orders.ACITY } ${orders.ALOCATION }</p>
 		            </div>
             </form>
         </div>
