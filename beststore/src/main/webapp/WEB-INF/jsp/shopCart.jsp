@@ -19,7 +19,11 @@
 	<script src="js/global.js" charset="UTF-8"></script>
 	<script src="js/jquery.DJMask.2.1.1.js" charset="UTF-8"></script>
 	<title>U袋网</title>
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <script type="text/javascript">
 var is;
 $(function() {
@@ -98,7 +102,10 @@ $(function() {
 
 function makeOrder(){
 	if (is == null || is.length <= 0 || is == "") {
-		alert("至少选择一件商品哦!");
+		$.message({
+			message:"至少选择一件商品哦!",
+			type:'warning'
+		});
 		return false;
 	} else {
 		return true;
@@ -143,7 +150,7 @@ function makeOrder(){
 			<div class="user-content__box clearfix bgf">
 				<div class="title">
 					购物车
-					<a style="float: right;color: #fff;text-align: center;line-height: 24px;margin-top: 4px;height: 24px;width: 90px;background-color: #b31e22;text-decoration: none;cursor: pointer;">清空购物车</a>
+					<a onclick="removeAllGoods()" style="float: right;color: #fff;text-align: center;line-height: 24px;margin-top: 4px;height: 24px;width: 90px;background-color: #b31e22;text-decoration: none;cursor: pointer;">清空购物车</a>
 				</div>
 				<form action="shopCartPayPage.do" onsubmit="return makeOrder()" method="post" enctype="multipart/form-data" class="shopcart-form__box">
 					<input id="gidsInput" name="cids" type="hidden">
@@ -269,7 +276,10 @@ function makeOrder(){
 											window.location.href = "shopCartPage.do";
 										} else {
 											location.reload();
-											alert(data);
+											$.message({
+						                        message:data,
+						                        type:'error'
+						                    });
 										}
 									});
 								} else {
@@ -283,7 +293,10 @@ function makeOrder(){
 											window.location.href = "shopCartPage.do";
 										} else {
 											location.reload();
-											alert(data);
+											$.message({
+						                        message:data,
+						                        type:'error'
+						                    });
 										}
 									});
 								}
@@ -296,7 +309,10 @@ function makeOrder(){
 								var gid =  $(this).parent().parent().parent().children().children().children().children().val();
 								console.log(gid);
 								if( value == 0 || value == null ){
-									alert("商品数量不能为0或者为空");
+									$.message({
+										message:"商品数量不能为0或者为空",
+										type:'warning'
+									});
 								} 
 								// 改变购物车内商品数量
 								$.post("changeCartNum.do",{
@@ -307,7 +323,10 @@ function makeOrder(){
 										window.location.href = "shopCartPage.do";
 									} else {
 										location.reload();
-										alert(data);
+										$.message({
+					                        message:data,
+					                        type:'error'
+					                    });
 									}
 								});
 							});
@@ -319,12 +338,32 @@ function makeOrder(){
 								gid:gid
 							},function(data){
 								if (data == "OK") {
-									alert("删除成功！");
+									$.message("删除成功！");
 									window.location.href = "shopCartPage.do";
 								} else {
-									alert(data);
+									$.message({
+				                        message:data,
+				                        type:'error'
+				                    });
 								}
 							});
+						}
+						
+						function removeAllGoods(){
+							flag=confirm("确定清空购物车吗?");
+							if(flag){
+								$.post("removeAll.do",{},function(data){
+									if (data == "OK") {
+										$.message("清空购物车成功！");
+										window.location.href = "shopCartPage.do";
+									} else {
+										$.message({
+					                        message:data,
+					                        type:'error'
+					                    });
+									}
+								});
+							}
 						}
 					</script>
 				</form>

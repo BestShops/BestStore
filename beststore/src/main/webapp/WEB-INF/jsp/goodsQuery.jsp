@@ -5,7 +5,11 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header1_similar.jsp" %>
 	<div class="content inner">
@@ -231,7 +235,10 @@
 						},
 						function(data){
 							var d = eval("(" + data + ")");
-							alert(d.info);
+							$.message({
+		                        message:d.info,
+		                        type:'info'
+		                    });
 							var count = d.count;
 							$("#count").text(count);
 				}); 

@@ -6,7 +6,11 @@
 <meta charset="UTF-8">
 <title>Best Store店铺管理</title>
 <%@ include file="easyuiLink.jsp"%>
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <script>
 	//图片格式化
 	function imgFormatter(value, row, index) {
@@ -77,9 +81,12 @@
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
-					alert(d.data);
+					$.message(d.data);
 				} else {
-					alert(d.data);
+					$.message({
+                        message:d.data,
+                        type:'error'
+                    });
 				}
 			});
 		}
@@ -99,9 +106,12 @@
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
-					alert(d.data);
+					$.message(d.data);
 				} else {
-					alert(d.data);
+					$.message({
+                        message:d.data,
+                        type:'error'
+                    });
 				}
 			});
 		}
@@ -121,9 +131,12 @@
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
-					alert(d.data);
+					$.message(d.data);
 				} else {
-					alert(d.data);
+					$.message({
+                        message:d.data,
+                        type:'error'
+                    });
 				}
 			});
 		}
@@ -169,17 +182,29 @@
 		flag = confirm("修改之后商品需要去推至审核哦,确定修改吗?");
 		if (flag) {
 			if ($("#gname").val() == "" || $("#gname").val() == null) {
-				alert("商品名不能为空");
+				$.message({
+					message:"商品名不能为空",
+					type:'warning'
+				});
 				return;
 			}else if ($("#gname").val().length>50) {
-				alert("商品名不能超过50个字符");
+				$.message({
+					message:"商品名不能超过50个字符",
+					type:'warning'
+				});
 				return;
 			} else if ($("#gnowprice").val() == ""
 					|| $("#gnowprice").val() == null) {
-				alert("商品现价不能为空");
+				$.message({
+					message:"商品现价不能为空",
+					type:'warning'
+				});
 				return;
 			} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null || $("#gnumber").val()<=0) {
-				alert("商品库存数不能为空");
+				$.message({
+					message:"商品库存数不能为空",
+					type:'warning'
+				});
 				return;
 			} 
 			$("#form1").form("submit", {
@@ -190,9 +215,12 @@
 						//成功
 						$("#editAdd").dialog('close');
 						$("#foodGrid").datagrid('reload');
-						alert(d.data);
+						$.message(d.data);
 					} else {
-						alert(d.data);
+						$.message({
+	                        message:d.data,
+	                        type:'error'
+	                    });
 					}
 				}
 			});
@@ -202,16 +230,28 @@
 	//添加保存按钮
 	function save() {
 		if ($("#gname").val() == "" || $("#gname").val() == null) {
-			alert("商品名不能为空");
+			$.message({
+				message:"商品名不能为空",
+				type:'warning'
+			});
 			return;
 		}else if ($("#gname").val().length>50) {
-			alert("商品名不能超过50个字符");
+			$.message({
+				message:"商品名不能超过50个字符",
+				type:'warning'
+			});
 			return;
 		} else if ($("#gnowprice").val() == "" || $("#gnowprice").val() == null) {
-			alert("商品现价不能为空");
+			$.message({
+				message:"商品现价不能为空",
+				type:'warning'
+			});
 			return;
 		} else if ($("#gnumber").val() == "" || $("#gnumber").val() == null || $("#gnumber").val()<=0) {
-			alert("商品库存数不能为空");
+			$.message({
+				message:"商品库存数不能为空",
+				type:'warning'
+			});
 			return;
 		} 
 		//添加
@@ -223,9 +263,12 @@
 					//成功
 					$("#editAdd").dialog('close');
 					$("#foodGrid").datagrid('reload');
-					alert(d.data);
+					$.message(d.data);
 				} else {
-					alert(d.data);
+					$.message({
+                        message:d.data,
+                        type:'error'
+                    });
 				}
 			}
 		});

@@ -89,5 +89,10 @@ public class CartBizImpl implements CartBiz{
 		return cartMapper.selectByExample(cartExample);
 	}
 
+	@Override
+	public int removeAll(int hid) {
+		return cartMapper.removeAllByHid(hid);
+	}
+
 
 }

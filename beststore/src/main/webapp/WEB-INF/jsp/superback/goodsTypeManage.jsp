@@ -6,7 +6,11 @@
 <meta charset="UTF-8">
 <title>商品类别管理</title>
 <%@ include file="easyuiLink.jsp"%>
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <script>
 
 function openEdit1(){
@@ -62,7 +66,10 @@ function addSave(){
 	var t3 = $("#tparentname").textbox('getValue');
 	
 	if( (t2 == null || t2 == '') && (t3 == null || t3 == '') ){
-		alert("商品类别不能为空!");
+		$.message({
+			message:"商品类别不能为空!",
+			type:'warning'
+		});
 		return;
 	}
 	//添加
@@ -77,7 +84,10 @@ function addSave(){
 				$("#goodsTypeGrid2").datagrid('reload');
 				$("#goodsTypeGrid3").datagrid('reload');
 			} else {
-				alert(d.data);
+				$.message({
+                    message:d.data,
+                    type:'error'
+                });
 			} 
 	    }
 	});
@@ -119,7 +129,10 @@ function modSave2(){
 	flag = confirm("确定修改此商品类别吗?");
 	if(flag){
 		if($("#tpriname2").val() == "" || $("#tpriname2").val() == null){
-			alert("商品类别不能为空!");
+			$.message({
+				message:"商品类别不能为空!",
+				type:'warning'
+			});
 			return;
 		}
 		$("#form2").form("submit",{
@@ -130,9 +143,12 @@ function modSave2(){
 					//成功
 					$("#editWin").dialog('close');
 					$("#goodsTypeGrid2").datagrid('reload');
-					alert(d.data);
+					$.message(d.data);
 				} else {
-					alert(d.data);
+					$.message({
+                        message:d.data,
+                        type:'error'
+                    });
 				}
 			}
 		});
@@ -151,9 +167,12 @@ function del2(index){
 			if (d.code == "1") {
 				//成功
 				$("#goodsTypeGrid2").datagrid('reload');
-				alert(d.data);
+				$.message(d.data);
 			} else {
-				alert(d.data);
+				$.message({
+                    message:d.data,
+                    type:'error'
+                });
 			}
 		});
 	}
@@ -190,7 +209,10 @@ function modSave3(){
 	flag = confirm("确定修改此商品类别吗?");
 	if(flag){
 		if($("#tpriname3").val() == "" || $("#tpriname3").val() == null){
-			alert("商品类别不能为空!");
+			$.message({
+				message:"商品类别不能为空!",
+				type:'warning'
+			});
 			return;
 		}
 		$("#form3").form("submit",{
@@ -201,9 +223,12 @@ function modSave3(){
 					//成功
 					$("#editWin").dialog('close');
 					$("#goodsTypeGrid3").datagrid('reload');
-					alert(d.data);
+					$.message(d.data);
 				} else {
-					alert(d.data);
+					$.message({
+                        message:d.data,
+                        type:'error'
+                    });
 				}
 			}
 		});
@@ -222,9 +247,12 @@ function del3(index){
 			if (d.code == "1") {
 				//成功
 				$("#goodsTypeGrid3").datagrid('reload');
-				alert(d.data);
+				$.message(d.data);
 			} else {
-				alert(d.data);
+				$.message({
+                    message:d.data,
+                    type:'error'
+                });
 			}
 		});
 	}

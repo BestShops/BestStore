@@ -8,9 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.bs.beststore.biz.FavoriteBiz;
 import com.bs.beststore.dao.FavoriteMapper;
-import com.bs.beststore.vo.AddressExample.Criteria;
 import com.bs.beststore.vo.Favorite;
-import com.bs.beststore.vo.FavoriteExample;
 
 @Service
 public class FavoriteBizImpl implements FavoriteBiz {

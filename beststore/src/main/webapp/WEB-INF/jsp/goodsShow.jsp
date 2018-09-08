@@ -6,7 +6,11 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header1_similar.jsp"%>
 	<div class="content inner">
@@ -28,7 +32,11 @@
 					<div ><br><br>
 						<a style="cursor: pointer;">商品来源：<strong>${list.get(0).sname }</strong></a>
 						<c:if test="${collectionGoods.fstatus==1 }">
+<<<<<<< HEAD
 							<a onclick="removeCollectionGoods(${collectionGoods.fid})" style="float: right;color: #6c6c6c;cursor: pointer;">
+=======
+							<a onclick="removeCollectionGoods(${list.get(0).GID })" style="float: right;color: #6c6c6c;cursor: pointer;">
+>>>>>>> branch 'master' of https://github.com/BestShops/BestStore.git
 								<img src="${basePath }/images/xing2.png" style="width: 15px;height: 15px;margin-right: 5px;margin-top: -5px">已收藏
 							</a>
 						</c:if>
@@ -38,13 +46,13 @@
 							</a>
 						</c:if>
 					</div>
-					
 					<div class="big-box">
 						<img src="upload/${list.get(0).GPHOTOPIC }" alt="${list.get(0).GDESC }">
 					</div>
 				</div>
 				<script src="js/jquery.magnifier.js"></script>
 				<script>
+				
 				$(function () {
 					$('#magnifier').magnifier();
 				});
@@ -276,7 +284,10 @@
 				var gid = ${list.get(0).GID };
 				var maxnum = ${list.get(0).GNUMBER };
 				if (buynum > maxnum ) {
-					alert("超过商品库存!!!");
+					$.message({
+						message:"超过商品库存!!!",
+						type:'warning'
+					});
 					return;
 				}
 				$.post("addCart.do",{
@@ -284,7 +295,10 @@
 					gid:gid
 				},function(data){
 					var d = eval("(" + data + ")");
-					alert(d.info);
+					$.message({
+                        message:d.info,
+                        type:'info'
+                    });
 					var count = d.count;
 					$("#count").text(count);
 				});
@@ -852,6 +866,7 @@
 						if(flag){
 							$.post("addFavorite.do",{gid:gid},function(data){
 								if(data=="OK"){
+<<<<<<< HEAD
 									alert("收藏成功");
 									document.location.reload();//当前页面 
 								}else{
@@ -873,6 +888,17 @@
 								alert(data);
 							}
 						})
+=======
+									$.message("收藏成功");
+								}else{
+									$.message({
+				                        message:data,
+				                        type:'error'
+				                    });
+								}
+							})
+						}
+>>>>>>> branch 'master' of https://github.com/BestShops/BestStore.git
 					}
 				}
 			</script>

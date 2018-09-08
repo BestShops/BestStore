@@ -22,6 +22,13 @@ public interface CartBiz {
 	int removeCartGoods(int oid);
 	
 	/**
+	 * 清空购物车
+	 * @param hid
+	 * @return
+	 */
+	int removeAll(int hid);
+	
+	/**
 	 * 根据cid删除购物车商品
 	 * @param cart
 	 * @return

@@ -8,8 +8,11 @@
 
 <!-- jsp指令 (静态引入) -->
 <%@ include file="easyuiLink.jsp"%>
-
+<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
+<link rel="stylesheet" href="css/message.css">
 </head>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="js/message.min.js"></script>
 <script>
 //时间格式化
 function dataFormat(value){
@@ -68,11 +71,14 @@ function save(){
    			// 使用eval函数将 json 字符串转成 对象 d
 			eval("var d =" + data);
 			if(d.code == "1"){
-				alert(d.data);
+				$.message(d.data);
 				$("#editWin").dialog('close');
 				$("#storeGrid").datagrid('reload');
 			} else {
-				alert(d.data);
+				$.message({
+                    message:d.data,
+                    type:'error'
+                });
 			} 
     	}
 	});
