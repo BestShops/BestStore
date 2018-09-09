@@ -4,11 +4,7 @@
 <html lang="zh-cmn-Hans">
 <head>
 	<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 			<div class="pull-right">
@@ -109,9 +105,9 @@
 									console.info(odid);
 									var drank = $("input[name='opinion']:checked").val();
 									var depict = $("#depict").val();
-									if (depict.length > 80) {
+									if (depict.length > 80 || depict.length<5) {
 										$.message({
-											message:"评价描述的长度适合在15~80字之间，请不要超出范围",
+											message:"评价描述的长度适合在5~80字之间，请不要超出范围",
 											type:'warning'
 										});
 									}
@@ -131,8 +127,11 @@
 										    var data = xhr.responseText;
 										    if (data == 1) {// 订单全部评价完成
 										    	$.message("提交成功");
-												// 跳到评论显示页面
-												window.location.href="EvaluatePage.do?odid=" + odid;
+												var t1=window.setTimeout(refreshCount, 1000 * 1);
+											    function refreshCount() {
+											    	// 跳到评论显示页面
+													window.location.href="EvaluatePage.do?odid=" + odid;
+											    }
 											} else {
 												$.message({
 							                        message:data,

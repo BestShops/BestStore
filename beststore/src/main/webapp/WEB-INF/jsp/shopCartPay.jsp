@@ -146,8 +146,8 @@
 							<div class="form-group">
 								<label for="coupon" class="control-label"></label>
 							</div>
-							<div class="info-line">原价：<input class="fz16 cr" name="olastprice" type="text" readonly="readonly" style="width:90px; height:20px; border: 0px;outline:none;" value="${lastmoney}"></div>
-							<div class="info-line"><span class="favour-value">已优惠 ¥${lastmoney-money}</span>合计：<input class="fz16 cr" name="onowprice" type="text" readonly="readonly" style="width:90px; height:20px; border: 0px;outline:none;" value="${money}"></div>
+							<div class="info-line">原价：<input class="fz16 cr" name="olastprice" type="text" readonly="readonly" style="width:90px; height:20px; border: 0px;outline:none;" value="${order.olastprice}"></div>
+							<div class="info-line"><span class="favour-value">已优惠 ¥${order.olastprice-order.onowprice}</span>合计：<input class="fz16 cr" name="onowprice" type="text" readonly="readonly" style="width:90px; height:20px; border: 0px;outline:none;" value="${order.onowprice}"></div>
 						</div>
 					</div>
 					<div class="shop-title">支付方式</div>
@@ -157,14 +157,14 @@
 								<input name="paymode" value="1" autocomplete="off" type="radio" checked="checked"><i class="iconfont icon-radio"></i>
 								<img src="images/icons/alipay.png" alt="支付宝支付">
 							</label>
-							<div class="pay-value">支付<b class="fz16 cr">${money}</b>元</div>
+							<div class="pay-value">支付<b class="fz16 cr">${order.onowprice}</b>元</div>
 						</div>
 						<div class="radio-line radio-box">
 							<label class="radio-label ep">
 								<input name="paymode" value="2" autocomplete="off" type="radio"><i class="iconfont icon-radio"></i>
 								<img src="images/icons/paywechat.png" alt="微信支付">
 							</label>
-							<div class="pay-value">支付<b class="fz16 cr">${money}</b>元</div>
+							<div class="pay-value">支付<b class="fz16 cr">${order.onowprice}</b>元</div>
 						</div>
 					</div>
 					<div class="user-form-group shopcart-submit">

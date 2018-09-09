@@ -117,11 +117,11 @@ public class GoodsAction {
 			}else {
 				model.addAttribute("collectionGoods", null);
 			}
-			
 		}
 		// 查询商品详情 根据gid查询
 		List<Map<String, Object>> list = goodsBiz.findAll(goods, 0, 0);
 		// 查询商品的相关评价
+		model.addAttribute("drankList", discussBiz.findDrank(goods.getGid()));
 		List<Map<String, Object>> discussList = discussBiz.findAll(goods.getGid());
 		// 查询相关产品，实现相关推荐 根据tid查询
 		goods.setGid(null);
@@ -148,11 +148,6 @@ public class GoodsAction {
 			model.addAttribute("size", size);
 		}
 		return "goodsShow";
-	}
-
-	@RequestMapping(value="matchPage.do")
-	public String matchPage() {
-		return "match";
 	}
 
 	/**

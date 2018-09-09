@@ -45,7 +45,7 @@
 					<c:forEach items="${odlist}" var="od">
 					<div class="item">
 						<div class="tdf3">
-							<a href="item_show.html"><div class="img"><img src="upload/${od.gphotopic}" alt="" class="cover"></div>
+							<a href="goodsShowPage.todo?gid=${od.gid }"><div class="img"><img src="upload/${od.gphotopic}" alt="" class="cover"></div>
 							<div class="ep2 c6">${od.sname} ${od.gname}</div></a>
 						</div>
 						<div class="tdf2">${od.gdesc}</div>

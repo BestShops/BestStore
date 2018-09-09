@@ -111,6 +111,16 @@ public class StoreBizImpl implements StoreBiz {
 		return storeMapper.updateStoreSstatus(store);
 	}
 
+	@Override
+	public List<Map<String, Object>> findStoreAndGoods() {
+		return storeMapper.findStoreAndPic();
+	}
+
+	@Override
+	public List<Map<String, Object>> findStoreGoodsInfo(int sid) {
+		return storeMapper.findStoreGoods(sid);
+	}
+
 
 	
 }

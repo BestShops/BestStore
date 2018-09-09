@@ -63,4 +63,17 @@ public interface StoreBiz {
 	 */
 	int updateStoreStatus(Store store);
 	
+	/**
+	 * 查找所有店铺
+	 * @return
+	 */
+	List<Map<String,Object>> findStoreAndGoods();
+	
+	/**
+	 * 根据sid查找店铺信息和商品
+	 * @param sid
+	 * @return
+	 */
+	List<Map<String,Object>> findStoreGoodsInfo(int sid);
+	
 }

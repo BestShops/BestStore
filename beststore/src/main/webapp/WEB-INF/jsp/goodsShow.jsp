@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>	
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
@@ -343,7 +344,10 @@
 						aria-expanded="true">商品详情</a></li>
 					<li role="presentation"><a href="#evaluate" role="tab"
 						data-toggle="tab" aria-controls="evaluate">累计评价 <span
-							class="badge">1314</span></a></li>
+							class="badge">
+							<c:if test="${list.get(0).count==null }">0</c:if>
+							<c:if test="${list.get(0).count!=null }">${list.get(0).count }</c:if>
+							</span></a></li>
 					<li role="presentation"><a href="#service" role="tab"
 						data-toggle="tab" aria-controls="service">售后服务</a></li>
 				</ul>
@@ -384,19 +388,30 @@
 							<ul class="nav-tabs nav-pills clearfix" role="tablist">
 								<li role="presentation" class="active"><a href="#all"
 									role="tab" data-toggle="tab" aria-controls="all"
-									aria-expanded="true">全部评价 <span class="badge">1314</span></a></li>
+									aria-expanded="true">全部评价 <span class="badge">
+										<c:if test="${list.get(0).count==null }">0</c:if>
+										<c:if test="${list.get(0).count!=null }">${list.get(0).count }</c:if>
+									</span></a></li>
 								<li role="presentation"><a href="#good" role="tab"
 									data-toggle="tab" aria-controls="good">好评 <span
-										class="badge">1000</span></a></li>
+										class="badge">
+										<c:if test="${drankList.drank1!=null }">${drankList.drank1 }</c:if>
+										<c:if test="${drankList.drank1==null }">0</c:if>
+										</span></a></li>
 								<li role="presentation"><a href="#normal" role="tab"
 									data-toggle="tab" aria-controls="normal">中评 <span
-										class="badge">314</span></a></li>
+										class="badge">
+										<c:if test="${drankList.drank2!=null }">${drankList.drank2 }</c:if>
+										<c:if test="${drankList.drank2==null }">0</c:if>
+										</span></a></li>
 								<li role="presentation"><a href="#bad" role="tab"
 									data-toggle="tab" aria-controls="bad">差评 <span
-										class="badge">0</span></a></li>
+										class="badge">
+										<c:if test="${drankList.drank3!=null }">${drankList.drank3 }</c:if>
+										<c:if test="${drankList.drank3==null }">0</c:if>
+										</span></a></li>
 							</ul>
 						</div>
-
 
 						<!-- 全部评价 -->
 						<div class="evaluate-content">
@@ -408,8 +423,14 @@
 										<div class="eval-box">
 											<div class="eval-author">
 												<div class="port">
-													<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
-														class="cover b-r50">
+													<c:if test="${dl.HPHOTO==null }">
+														<img src="images/icons/default_avt.png" 
+															class="cover b-r50">
+													</c:if>
+													<c:if test="${dl.HPHOTO!=null }">
+														<img src="upload/${dl.HPHOTO }" 
+															class="cover b-r50">
+													</c:if>
 												</div>
 												<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
 												<c:if test="${dl.DSTATUS == 1}">
@@ -423,31 +444,13 @@
 												<!-- 评价描述 -->
 												<div class="eval-text">${dl.DEPICT }</div>
 												<div class="eval-imgs">
-													<div class="img-temp">
-														<img src="images/temp/S-001-1_s.jpg"
-															data-src="images/temp/S-001-1_b.jpg" data-action="zoom"
-															class="cover">
-													</div>
-													<div class="img-temp">
-														<img src="images/temp/S-001-2_s.jpg"
-															data-src="images/temp/S-001-2_b.jpg" data-action="zoom"
-															class="cover">
-													</div>
-													<div class="img-temp">
-														<img src="images/temp/S-001-3_s.jpg"
-															data-src="images/temp/S-001-3_b.jpg" data-action="zoom"
-															class="cover">
-													</div>
-													<div class="img-temp">
-														<img src="images/temp/S-001-4_s.jpg"
-															data-src="images/temp/S-001-4_b.jpg" data-action="zoom"
-															class="cover">
-													</div>
-													<div class="img-temp">
-														<img src="images/temp/S-001-5_s.jpg"
-															data-src="images/temp/S-001-5_b.jpg" data-action="zoom"
-															class="cover">
-													</div>
+													<c:forEach items="${fn:split(dl.DPHOTO,',') }" var="p">
+															<div class="img-temp">
+																<img src="upload/${p }"
+																	data-src="upload/${p }" data-action="zoom"
+																	class="cover">
+															</div>
+														</c:forEach>
 												</div>
 												<div class="eval-time">${dl.DTIME }</div>
 											</div>
@@ -456,12 +459,12 @@
 
 
 									<!-- 分页 -->
-									<div class="page text-center clearfix">
+									<!-- <div class="page text-center clearfix">
 										<a class="disabled">上一页</a> <a class="select">1</a> <a href="">2</a>
 										<a href="">3</a> <a href="">4</a> <a href="">5</a> <a href="">6</a>
 										<a href="">7</a> <a href="">8</a> <a class="" href="">下一页</a>
 										<a class="disabled">1/60页</a>
-									</div>
+									</div> -->
 								</div>
 
 								<!-- 好评 -->
@@ -474,9 +477,15 @@
 											<div class="eval-box">
 												<div class="eval-author">
 													<div class="port">
-														<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
+													<c:if test="${dl.HPHOTO==null }">
+														<img src="images/icons/default_avt.png" 
 															class="cover b-r50">
-													</div>
+													</c:if>
+													<c:if test="${dl.HPHOTO!=null }">
+														<img src="upload/${dl.HPHOTO }" 
+															class="cover b-r50">
+													</c:if>
+												</div>
 													<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
 													<c:if test="${dl.DSTATUS == 1}">
 														<div class="name">${dl.HNAME}</div>
@@ -486,48 +495,30 @@
 													</c:if>
 												</div>
 												<div class="eval-content">
-													<!-- 评价描述 -->
-													<div class="eval-text">${dl.DEPICT }</div>
-													<div class="eval-imgs">
-														<div class="img-temp">
-															<img src="images/temp/S-001-1_s.jpg"
-																data-src="images/temp/S-001-1_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-2_s.jpg"
-																data-src="images/temp/S-001-2_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-3_s.jpg"
-																data-src="images/temp/S-001-3_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-4_s.jpg"
-																data-src="images/temp/S-001-4_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-5_s.jpg"
-																data-src="images/temp/S-001-5_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-													</div>
-													<div class="eval-time">${dl.DTIME }</div>
+												<!-- 评价描述 -->
+												<div class="eval-text">${dl.DEPICT }</div>
+												<div class="eval-imgs">
+													<c:forEach items="${fn:split(dl.DPHOTO,',') }" var="p">
+															<div class="img-temp">
+																<img src="upload/${p }"
+																	data-src="upload/${p }" data-action="zoom"
+																	class="cover">
+															</div>
+														</c:forEach>
 												</div>
+												<div class="eval-time">${dl.DTIME }</div>
+											</div>
 											</div>
 										</c:if>
 									</c:forEach>
 
 									<!-- 分页 -->
-									<div class="page text-center clearfix">
+									<!-- <div class="page text-center clearfix">
 										<a class="disabled">上一页</a> <a class="select">1</a> <a href="">2</a>
 										<a href="">3</a> <a href="">4</a> <a href="">5</a> <a href="">6</a>
 										<a href="">7</a> <a href="">8</a> <a class="" href="">下一页</a>
 										<a class="disabled">1/20页</a>
-									</div>
+									</div> -->
 								</div>
 
 
@@ -541,9 +532,15 @@
 											<div class="eval-box">
 												<div class="eval-author">
 													<div class="port">
-														<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
+													<c:if test="${dl.HPHOTO==null }">
+														<img src="images/icons/default_avt.png" 
 															class="cover b-r50">
-													</div>
+													</c:if>
+													<c:if test="${dl.HPHOTO!=null }">
+														<img src="upload/${dl.HPHOTO }" 
+															class="cover b-r50">
+													</c:if>
+												</div>
 													<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
 													<c:if test="${dl.DSTATUS == 1}">
 														<div class="name">${dl.HNAME}</div>
@@ -553,47 +550,29 @@
 													</c:if>
 												</div>
 												<div class="eval-content">
-													<!-- 评价描述 -->
-													<div class="eval-text">${dl.DEPICT }</div>
-													<div class="eval-imgs">
-														<div class="img-temp">
-															<img src="images/temp/S-001-1_s.jpg"
-																data-src="images/temp/S-001-1_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-2_s.jpg"
-																data-src="images/temp/S-001-2_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-3_s.jpg"
-																data-src="images/temp/S-001-3_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-4_s.jpg"
-																data-src="images/temp/S-001-4_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-5_s.jpg"
-																data-src="images/temp/S-001-5_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-													</div>
-													<div class="eval-time">${dl.DTIME }</div>
+												<!-- 评价描述 -->
+												<div class="eval-text">${dl.DEPICT }</div>
+												<div class="eval-imgs">
+													<c:forEach items="${fn:split(dl.DPHOTO,',') }" var="p">
+															<div class="img-temp">
+																<img src="upload/${p }"
+																	data-src="upload/${p }" data-action="zoom"
+																	class="cover">
+															</div>
+														</c:forEach>
 												</div>
+												<div class="eval-time">${dl.DTIME }</div>
+											</div>
 											</div>
 										</c:if>
 									</c:forEach>
 
 									<!-- 分页 -->
-									<div class="page text-center clearfix">
+									<!-- <div class="page text-center clearfix">
 										<a class="disabled">上一页</a> <a class="select">1</a> <a href="">2</a>
 										<a href="">3</a> <a href="">4</a> <a href="">5</a> <a class=""
 											href="">下一页</a> <a class="disabled">1/5页</a>
-									</div>
+									</div> -->
 								</div>
 
 
@@ -607,9 +586,15 @@
 											<div class="eval-box">
 												<div class="eval-author">
 													<div class="port">
-														<img src="images/icons/default_avt.png" alt="欢迎来到U袋网"
+													<c:if test="${dl.HPHOTO==null }">
+														<img src="images/icons/default_avt.png" 
 															class="cover b-r50">
-													</div>
+													</c:if>
+													<c:if test="${dl.HPHOTO!=null }">
+														<img src="upload/${dl.HPHOTO }" 
+															class="cover b-r50">
+													</c:if>
+												</div>
 													<!-- 如果状态是1，则显示名字，如果为0，则显示匿名 -->
 													<c:if test="${dl.DSTATUS == 1}">
 														<div class="name">${dl.HNAME}</div>
@@ -619,49 +604,31 @@
 													</c:if>
 												</div>
 												<div class="eval-content">
-													<!-- 评价描述 -->
-													<div class="eval-text">${dl.DEPICT }</div>
-													<div class="eval-imgs">
-														<div class="img-temp">
-															<img src="images/temp/S-001-1_s.jpg"
-																data-src="images/temp/S-001-1_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-2_s.jpg"
-																data-src="images/temp/S-001-2_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-3_s.jpg"
-																data-src="images/temp/S-001-3_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-4_s.jpg"
-																data-src="images/temp/S-001-4_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-														<div class="img-temp">
-															<img src="images/temp/S-001-5_s.jpg"
-																data-src="images/temp/S-001-5_b.jpg" data-action="zoom"
-																class="cover">
-														</div>
-													</div>
-													<div class="eval-time">${dl.DTIME }</div>
+												<!-- 评价描述 -->
+												<div class="eval-text">${dl.DEPICT }</div>
+												<div class="eval-imgs">
+													<c:forEach items="${fn:split(dl.DPHOTO,',') }" var="p">
+															<div class="img-temp">
+																<img src="upload/${p }"
+																	data-src="upload/${p }" data-action="zoom"
+																	class="cover">
+															</div>
+														</c:forEach>
 												</div>
+												<div class="eval-time">${dl.DTIME }</div>
+											</div>
 											</div>
 										</c:if>
 									</c:forEach>
 
 									<!-- 分页 -->
 									<!-- 分页 -->
-									<div class="page text-center clearfix">
+									<!-- <div class="page text-center clearfix">
 										<a class="disabled">上一页</a> <a class="select">1</a> <a href="">2</a>
 										<a href="">3</a> <a href="">4</a> <a href="">5</a> <a href="">6</a>
 										<a href="">7</a> <a href="">8</a> <a class="" href="">下一页</a>
 										<a class="disabled">1/60页</a>
-									</div>
+									</div> -->
 
 								</div>
 							</div>

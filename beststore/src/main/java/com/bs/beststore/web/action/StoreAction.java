@@ -46,6 +46,23 @@ public class StoreAction {
 	@Resource
 	private GoodsBiz goodsBiz;
 	
+	//店铺列表
+	@RequestMapping(value="storeShowPage.todo")
+	public String storeShowPage(Model model) {
+		List<Map<String,Object>> list=storeBiz.findStoreAndGoods();
+		model.addAttribute("list", list);
+		return "storeShow";
+	}
+	
+	//店铺详情
+	@RequestMapping(value="storeShowInfoPage.todo")
+	public String storeShowInfoPage(int sid,Model model) {
+		List<Map<String,Object>> list=storeBiz.findStoreGoodsInfo(sid);
+		model.addAttribute("list", list);
+		return "storeShowInfo";
+	}
+
+	
 	// 开店用户的信息判断
 	@RequestMapping(value="openStoreStep1Page.do")
 	public String openStoreStep1Page(HttpSession session, Model model){

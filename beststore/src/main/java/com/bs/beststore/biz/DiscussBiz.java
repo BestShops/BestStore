@@ -17,12 +17,16 @@ public interface DiscussBiz {
 	 */
 	int addDiscuss(Discuss discuss);
 	
+	Map<String,Object> findDrank(int gid);
+	
 	/**
 	 * 修改评论信息
 	 * @param discuss
 	 * @return
 	 */
 	int modifyDiscuss(Discuss discuss);
+	
+	Long countByGid(int gid);
 	
 	/**
 	 * 根据did移除该评论，修改评论状态，改为0
@@ -57,6 +61,8 @@ public interface DiscussBiz {
 	 * @return
 	 */
 	List<Map<String, Object>> findInfoByGid(int gid);
+	
+	List<Map<String, Object>> findDiscussByGid(int gid,int page,int rows);
 	
 	/**
 	 * 根据gid查询商品的评价数

@@ -31,12 +31,6 @@ public class OrdersBizImpl implements OrdersBiz{
 	 * 而且，一般的购物网站都提供两个时间，一个是下单时间，一个是付款时间
 	 */
 	public int updateOrders(Orders orders) {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		try {
-			orders.setOpaytime(sdf.parse(sdf.format(new Date())));
-		} catch (ParseException e) {
-			orders.setOpaytime(new Date());
-		}
 		return OrdersMapper.updateOrders(orders);
 	}
 
@@ -82,23 +76,29 @@ public class OrdersBizImpl implements OrdersBiz{
 
 	@Override
 	public List<Map<String, Object>> findInfoByOid(int oid) {
-		return null;
+		return OrdersMapper.findInfoByOid(oid);
 	}
 
 	@Override
-	public List<Map<String, Object>> findAllOrderBySid(int sid,Orders orders, int pageNo, int pageSize) {
+	public List<Map<String, Object>> findAllOrderBySid(Orders orders, int pageNo, int pageSize) {
 		List<Map<String, Object>> list;
 		if(orders.getOstatus()!=null) {
-			list=OrdersMapper.findBySidAndOstatus(sid, orders.getOstatus(), pageNo, pageSize);
+			list=OrdersMapper.findBySidAndOstatus(orders.getOstatus(), (pageNo-1)*pageSize, pageSize);
 		}else {
-			list=OrdersMapper.findAllBySid(sid, (pageNo-1)*pageSize, pageSize);
+			list=OrdersMapper.findAllBySid((pageNo-1)*pageSize, pageSize);
 		}
 		return list;
 	}
 
 	@Override
-	public long findOrderBySidTotal(int sid) {
-		return OrdersMapper.findBySidTotal(sid);
+	public long findOrderBySidTotal(Orders orders) {
+		long count;
+		if(orders.getOstatus()!=null) {
+			count=OrdersMapper.findBySstatusTotal(orders.getOstatus());
+		}else {
+			count=OrdersMapper.findBySidTotal();;
+		}
+		return count;
 	}
 
 	@Override
@@ -109,6 +109,26 @@ public class OrdersBizImpl implements OrdersBiz{
 	@Override
 	public List<Map<String, Object>> findAddressAndOrders(int oid) {
 		return OrdersMapper.findAddressAndOrders(oid);
+	}
+
+	@Override
+	public int updateStatus(Orders orders) {
+		return OrdersMapper.updateOrdersStatus(orders);
+	}
+
+	@Override
+	public int updateOtimeOstatus(Orders orders) {
+		return OrdersMapper.updateOtimeAndStatus(orders);
+	}
+
+	@Override
+	public int updateOdealtime(Orders orders) {
+		return OrdersMapper.updateOdealtime(orders);
+	}
+
+	@Override
+	public int updateReturnOrder(Orders orders) {
+		return OrdersMapper.updateReturnOrders(orders);
 	}
 
 }

@@ -5,14 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>用户反馈</title>
-
-<!-- jsp指令 (静态引入) -->
 <%@ include file="easyuiLink.jsp"%>
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <script>
 //时间格式化
 function dataFormat(value){

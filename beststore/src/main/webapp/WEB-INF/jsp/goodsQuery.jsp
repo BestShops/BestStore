@@ -5,7 +5,6 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
-<!-- <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css"> -->
 </head>
 <body>
 	<%@ include file="header1_similar.jsp" %>

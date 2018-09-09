@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>	
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
@@ -87,7 +87,7 @@
 			<ul class="nva-list">
 				<a href="index"><li class="active">首页</li></a>
 				<a href="goodsQueryPage.todo"><li>商品筛选</li></a>
-				<a href="matchPage.do"><li>店铺列表</li></a>
+				<a href="storeShowPage.todo"><li>店铺列表</li></a>
 				<a href="classRoomPage.do"><li>U袋学堂</li></a>
 				<a href="blogPage.do"><li>博客</li></a>
 				<a href="openStorePage.do"><li>申请网店</li></a>

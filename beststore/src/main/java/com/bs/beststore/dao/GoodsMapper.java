@@ -37,7 +37,7 @@ public interface GoodsMapper {
 			"left join orders d on c.oid=d.oid \r\n" + 
 			"where d.OSTATUS<>6 and d.OSTATUS<>-1 and d.OSTATUS<>5 group by c.gid) c on c.gid=a.gid \r\n" + 
 			"left join \r\n" + 
-			"(select count(*) count,gid from discuss) d on d.gid=a.gid\r\n" + 
+			"(select count(*) count,gid from discuss where gid=#{gid}) d on d.gid=a.gid\r\n" + 
 			"where b.sstatus=1 and a.gstatus=1 and t1.tparentid is not null and t2.tparentid is not null and a.gid=#{gid}")
 	List<Map<String, Object>> findByGid(@Param("gid") int gid);
 

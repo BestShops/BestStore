@@ -6,11 +6,7 @@
 <meta charset="UTF-8">
 <title>Best Store店铺管理</title>
 <%@ include file="easyuiLink.jsp"%>
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <script>
 	//图片格式化
 	function imgFormatter(value, row, index) {
@@ -80,13 +76,8 @@
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
-				}
+				} 
+				alert(d.data);
 			});
 		}
 	}
@@ -105,13 +96,8 @@
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
-				}
+				} 
+				alert(d.data);
 			});
 		}
 	}
@@ -130,13 +116,8 @@
 				if (d.code == "1") {
 					//成功
 					$("#foodGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
-				}
+				} 
+				alert(d.data);
 			});
 		}
 	}
@@ -172,16 +153,10 @@
 		flag = confirm("修改之后博客需要去推至审核哦,确定修改吗?");
 		if(flag){
 			if ($("#btitle").val() == "" || $("#btitle").val() == null) {
-				$.message({
-					message:"博客标题不能为空",
-					type:'warning'
-				});
+				alert("博客标题不能为空");
 				return;
 			} else if ($("#bdesc").val() == "" || $("#bdesc").val() == null) {
-				$.message({
-					message:"博客描述不能为空",
-					type:'warning'
-				});
+				alert("博客描述不能为空");
 				return;
 			} 
 			$("#form1").form("submit", {
@@ -192,13 +167,8 @@
 						//成功
 						$("#editAdd").dialog('close');
 						$("#foodGrid").datagrid('reload');
-						$.message(d.data);
-					} else {
-						$.message({
-	                        message:d.data,
-	                        type:'error'
-	                    });
 					}
+					alert(d.data);
 				}
 			});
 		}
@@ -208,16 +178,10 @@
 	//添加保存按钮
 	function save() {
 		if ($("#btitle").val() == "" || $("#btitle").val() == null) {
-			$.message({
-				message:"博客标题不能为空",
-				type:'warning'
-			});
+			alert("博客标题不能为空");
 			return;
 		} else if ($("#bdesc").val() == "" || $("#bdesc").val() == null) {
-			$.message({
-				message:"博客描述不能为空",
-				type:'warning'
-			});
+			alert("博客描述不能为空");
 			return;
 		} 
 		$("#form1").form("submit", {
@@ -228,13 +192,8 @@
 					//成功
 					$("#editAdd").dialog('close');
 					$("#foodGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
 				}
+				alert(d.data);
 			}
 		});
 	}

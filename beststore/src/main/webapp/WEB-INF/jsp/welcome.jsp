@@ -4,8 +4,7 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-	<meta charset="UTF-8">
-<!-- <link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css"> -->
+<meta charset="UTF-8">
 </head>
 <body>
 	<%@ include file="header2.jsp" %>
@@ -139,8 +138,8 @@
 										</td>
 										<td class="order">
 											<div class="del"><span class="glyphicon glyphicon-trash" aria-hidden="true" onclick="del(${o.OID},${o.OSTATUS})"></span></div>
-											<c:if test="${o.OSTATUS==1}"><a href="" class="but but-primary" onclick="$.message({message:'您的订单还未发货，不能确认收货',type:'warning'});">确认收货</a></c:if>
-											<c:if test="${o.OSTATUS==2}"><a href="receiptedOrder.do?oid=${o.OID}" class="but but-primary">确认收货</a></c:if>
+											<c:if test="${o.OSTATUS==1}"><a class="but but-primary" style="cursor: pointer;" onclick="$.message({message:'您的订单还未发货，不能确认收货',type:'warning'});">确认收货</a></c:if>
+											<c:if test="${o.OSTATUS==2}"><a href="receiptedOrder.do?oid=${o.OID}" style="cursor: pointer;" class="but but-primary">确认收货</a></c:if>
 											<a href="userOrderReturn.do?oid=${o.OID}" class="but c3">退款/退货</a>
 										</td>
 										</c:if>
@@ -225,13 +224,12 @@
 				$.post("delOrder.do",{
 					oid:oid
 				},function(data){
-					$.message({
-                        message:data,
-                        type:'info'
-                    });
-					var i = '${requestScope.pageNo}';
-					var type = '${requestScope.type}';
-					window.location.href="userOrderPage.do?pageNo=" + i + "&type=" + type;
+					if(data=="OK"){
+						alert("订单删除成功!");
+					}else{
+						alert(data);
+					}
+			    	window.location.href="welcomePage.do";
 				});
 			}
 		}

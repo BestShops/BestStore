@@ -58,9 +58,7 @@
 		<div title="系统管理" style="text-align: center">
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'storeInfoPage.do')" data-options="iconCls:'icon-search'" >店铺资料</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsManagePage.do')" data-options="iconCls:'icon-search'" >商品管理</a>
-			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'ordersManagePage.do')" data-options="iconCls:'icon-search'" >订单管理</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'ordersReturnManagePage.do')" data-options="iconCls:'icon-search'" >退货管理</a>
-			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'${basePath}/back/takeCourse.jsp')" data-options="iconCls:'icon-search'" >商品评价</a>
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'blogManagePage.do')" data-options="iconCls:'icon-search'" >博客管理</a>  
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsSaleReportPage.do')" data-options="iconCls:'icon-search'" >销量图表</a>    
 		</div>

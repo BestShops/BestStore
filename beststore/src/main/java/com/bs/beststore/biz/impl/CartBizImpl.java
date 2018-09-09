@@ -60,8 +60,12 @@ public class CartBizImpl implements CartBiz{
 	public int removeCartGoods(int oid) {
 		int result = 0;
 		List<Cart> lists=cartMapper.selectCidByOid(oid);
-		for(Cart c:lists) {
-			result=cartMapper.deleteByPrimaryKey(c.getCid());
+		if(lists!=null && lists.size()>0) {
+			for(Cart c:lists) {
+				if(c!=null) {
+					result=cartMapper.deleteByPrimaryKey(c.getCid());
+				}
+			}
 		}
 		return result;
 	}

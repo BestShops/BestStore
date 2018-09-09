@@ -43,11 +43,7 @@
 	    user-select: none;
 	}
 </style>
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 			<div class="pull-right">

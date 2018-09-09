@@ -45,11 +45,6 @@ public class IndexAction {
 	private StoreBiz storeBiz;
 	@Resource
 	private OrdersdetailBiz ordersdetailBiz;
-
-	@RequestMapping(path = "addd.todo")
-	public String add() {
-		return "address1";
-	}
 	
 	// 超级管理员登录界面
 	@RequestMapping(path = "superLoginPage.todo")
@@ -219,7 +214,7 @@ public class IndexAction {
 	// 后台店铺订单管理界面
 	@RequestMapping(value = "ordersManagePage.do")
 	public String ordersManagePage() {
-		return "back/ordersManage";
+		return "superback/ordersManage";
 	}
 
 	// 后台店铺订单退货管理界面

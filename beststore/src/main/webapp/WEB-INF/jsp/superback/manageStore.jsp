@@ -6,11 +6,7 @@
 <meta charset="UTF-8">
 <title>店铺管理</title>
 <%@ include file="easyuiLink.jsp"%>
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <script>
 	//时间格式化
 	function dataFormat(value) {
@@ -56,13 +52,8 @@
 				eval("var d=" + data);
 				if (d.code == "1") {
 					$("#storeGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
-				}
+				} 
+				alert(d.data);
 			});
 		}
 	}
@@ -80,13 +71,8 @@
 				eval("var d=" + data);
 				if (d.code == "1") {
 					$("#storeGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
-				}
+				} 
+				alert(d.data);
 			});
 		}
 	}

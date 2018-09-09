@@ -61,7 +61,8 @@
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsTypeManagePage.do')" data-options="iconCls:'icon-edit'" >商品类别管理</a>  
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'goodsExaminePage.do')" data-options="iconCls:'icon-reload'" >商品审核</a>  
 			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'blogExaminePage.do')" data-options="iconCls:'icon-reload'" >博客审核</a>
-			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'userfeedback.do')" data-options="iconCls:'icon-man'" >用户反馈</a>
+			<a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'ordersManagePage.do')" data-options="iconCls:'icon-search'" >订单管理</a>
+			<!-- <a href="#" class="easyui-linkbutton" onclick="addTab(this.innerText,'userfeedback.do')" data-options="iconCls:'icon-man'" >用户反馈</a> -->
 		</div>
 	</div>
 	<div data-options="region:'south'" style="text-align: center;padding: 3px">

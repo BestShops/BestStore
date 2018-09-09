@@ -10,13 +10,13 @@ import org.apache.ibatis.annotations.Select;
 
 public interface OrdersreturnMapper {
 	
-	@Select("select a.orid,a.oid,d.gname,b.odealtime,b.onowprice,ortype from ordersreturn a\r\n" + 
+	@Select("select a.orid,a.oid,d.gname,d.gphotopic,b.odealtime,b.onowprice,ortype from ordersreturn a\r\n" + 
 			"left join orders b on a.oid=b.oid\r\n" + 
 			"left join ordersdetail c on a.oid=c.oid\r\n" + 
 			"left join goods d on c.gid=d.gid where hid=#{hid} and a.ortype<>2 group by orid limit #{pageNo},#{pageSize}")
 	List<Map<String, Object>> findAllOrdersReturn(@Param("hid")int hid, @Param("pageNo")int pageNo, @Param("pageSize")int pageSize);
 	
-	@Select("select a.orid,a.oid,d.gname,b.odealtime,b.onowprice,ortype from ordersreturn a\r\n" + 
+	@Select("select a.orid,a.oid,d.gname,d.gphotopic,b.odealtime,b.onowprice,ortype from ordersreturn a\r\n" + 
 			"left join orders b on a.oid=b.oid\r\n" + 
 			"left join ordersdetail c on a.oid=c.oid\r\n" + 
 			"left join goods d on c.gid=d.gid where hid=#{hid} and orservice=#{type} and a.ortype<>2 group by orid limit #{pageNo},#{pageSize}")

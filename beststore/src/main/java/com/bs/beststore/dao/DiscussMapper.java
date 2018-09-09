@@ -22,6 +22,20 @@ public interface DiscussMapper {
 			+ "where d.gid=#{gid};")
 	List<Map<String, Object>> findByGid(@Param("gid")int gid);
 	
+	@Select("select * from discuss d "
+			+ "left join goods g on d.gid=g.gid "
+			+ "where d.gid=#{gid} limit #{page},#{rows};")
+	List<Map<String, Object>> findByGidInfo(@Param("gid")int gid,@Param("page")int page,@Param("rows")int rows);
+	
+	@Select("select count(*) count from discuss where gid=#{gid} and drank=#{drank}")
+	Long findDrank(@Param("gid")int gid,@Param("drank")int drank);
+	
+	@Select("select count(*) from discuss d "
+			+ "left join goods g on d.gid=g.gid "
+			+ "left join human h on d.hid = h.hid "
+			+ "where d.gid=#{gid};")
+	Long findByGidCount(@Param("gid")int gid);
+	
 	@Select("select a.*,b.sname,sum(c.num) num from goods a\r\n" + 
 			"left join store b on a.sid=b.sid\r\n" + 
 			"right join ordersdetail c on c.gid=a.gid\r\n" + 

@@ -1,6 +1,8 @@
 package com.bs.beststore.biz.impl;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ import com.bs.beststore.vo.Discuss;
 
 @Service
 public class DiscussBizImpl implements DiscussBiz {
-	
+
 	@Autowired
 	private DiscussMapper discussMapper;
 
@@ -74,6 +76,26 @@ public class DiscussBizImpl implements DiscussBiz {
 	public List<Map<String, Object>> findByOdid(int odid) {
 		List<Map<String, Object>> list = discussMapper.findByOdid(odid);
 		return list;
+	}
+
+	@Override
+	public Long countByGid(int gid) {
+		return discussMapper.findByGidCount(gid);
+	}
+
+	@Override
+	public List<Map<String, Object>> findDiscussByGid(int gid, int page, int rows) {
+		return discussMapper.findByGidInfo(gid, (page-1)*rows, rows);
+	}
+
+	@Override
+	public Map<String, Object> findDrank(int gid) {
+		Map<String, Object> map= new HashMap<String,Object>();
+		map.put("drank1", discussMapper.findDrank(gid,0));
+		map.put("drank2", discussMapper.findDrank(gid,1));
+		map.put("drank3", discussMapper.findDrank(gid,2));
+		System.out.println(map);
+		return map;
 	}
 
 }

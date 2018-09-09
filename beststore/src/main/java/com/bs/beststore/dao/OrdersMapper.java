@@ -49,26 +49,43 @@ public interface OrdersMapper {
 	
 	@Select("select a.*,b.num ,c.gname,c.gnowprice,c.gphotopic,d.hname from orders a\r\n"
 			+ "left join ordersdetail b on a.oid=b.oid\r\n" + "left join goods c on b.gid=c.gid left join human d on d.hid=a.hid\r\n"
-			+ "where c.sid=#{sid} and ostatus<>5 group by oid order by oid desc limit #{pageNo},#{pageSize}")
-	List<Map<String, Object>> findAllBySid(@Param("sid") int sid, @Param("pageNo")int pageNo, @Param("pageSize")int pageSize);
+			+ "where ostatus<>5 group by oid order by oid desc limit #{pageNo},#{pageSize}")
+	List<Map<String, Object>> findAllBySid(@Param("pageNo")int pageNo, @Param("pageSize")int pageSize);
 	
 	@Select("select count(distinct a.oid) from orders a\r\n"
 			+ "left join ordersdetail b on a.oid=b.oid\r\n" + "left join goods c on b.gid=c.gid\r\n"
-			+ "where c.sid=#{sid} and ostatus<>5")
-	long findBySidTotal(@Param("sid") int sid);
+			+ "where ostatus<>5")
+	long findBySidTotal();
+	
+	@Select("select count(distinct a.oid) from orders a\r\n"
+			+ "left join ordersdetail b on a.oid=b.oid\r\n" + "left join goods c on b.gid=c.gid\r\n"
+			+ "where ostatus=#{ostatus}")
+	long findBySstatusTotal(@Param("ostatus")int ostatus);
 	
 	@Select("select a.*,b.num ,c.gname,c.gnowprice,c.gphotopic,d.hname from orders a\r\n"
 			+ "left join ordersdetail b on a.oid=b.oid\r\n" + "left join goods c on b.gid=c.gid left join human d on d.hid=a.hid\r\n"
-			+ "where c.sid=#{sid} and ostatus=#{ostatus} group by oid order by oid desc limit #{pageNo},#{pageSize}")
-	List<Map<String, Object>> findBySidAndOstatus(@Param("sid") int sid,@Param("ostatus") int ostatus, @Param("pageNo")int pageNo, @Param("pageSize")int pageSize);
+			+ "where ostatus=#{ostatus} group by oid order by oid desc limit #{pageNo},#{pageSize}")
+	List<Map<String, Object>> findBySidAndOstatus(@Param("ostatus") int ostatus, @Param("pageNo")int pageNo, @Param("pageSize")int pageSize);
 	
 	@Insert("insert into orders values(null,current_timestamp(6),null,null,0,null,#{hid},#{olastprice},#{onowprice})")
 	@Options(useGeneratedKeys=true,keyColumn="oid",keyProperty="oid")
 	int insertOrders(Orders orders);
 	
 	
-	@Update("update orders set otime=otime,opaytime=#{opaytime},ostatus=#{ostatus},aid=#{aid} where oid=#{oid}")
+	@Update("update orders set otime=otime,opaytime=current_timestamp(6),ostatus=#{ostatus},aid=#{aid} where oid=#{oid}")
 	int updateOrders(Orders orders);
+	
+	@Update("update orders set otime=otime,opaytime=opaytime,odealtime=current_timestamp(6),ostatus=#{ostatus} where oid=#{oid}")
+	int updateOdealtime(Orders orders);
+	
+	@Update("update orders set otime=otime,opaytime=opaytime,odealtime=null,ostatus=#{ostatus} where oid=#{oid}")
+	int updateReturnOrders(Orders orders);
+	
+	@Update("update orders set otime=otime,opaytime=opaytime,ostatus=#{ostatus} where oid=#{oid}")
+	int updateOrdersStatus(Orders orders);
+	
+	@Update("update orders set otime=otime,opaytime=opaytime,odealtime=current_timestamp(6),ostatus=#{ostatus} where oid=#{oid}")
+	int updateOtimeAndStatus(Orders orders);
 	
 	@Select("select num,g.gid from orders o\r\n" + 
 			"left join ordersdetail od on o.oid=od.oid\r\n" + 

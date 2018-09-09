@@ -21,6 +21,14 @@ public interface OrdersBiz {
 	 */
 	int updateOrders(Orders orders);
 	
+	int updateOdealtime(Orders orders);
+	
+	int updateStatus(Orders orders);
+	
+	int updateOtimeOstatus(Orders orders);
+	
+	int updateReturnOrder(Orders orders);
+	
 	/**
 	 * 用户删除自己的订单
 	 * @param orders	根据订单id将订单状态设为0
@@ -67,9 +75,9 @@ public interface OrdersBiz {
 	List<Map<String, Object>> findInfoByOid(int oid);
 	
 	//店铺下的所有交易订单
-	List<Map<String,Object>> findAllOrderBySid(int sid,Orders orders, int pageNo, int pageSize);
+	List<Map<String,Object>> findAllOrderBySid(Orders orders, int pageNo, int pageSize);
 	
-	long findOrderBySidTotal(int sid);
+	long findOrderBySidTotal(Orders orders);
 	
 	List<Map<String,Object>> findGoodsSale(int oid);
 	

@@ -29,22 +29,27 @@
 			<article role="pge-title-content">
 				<header>
 					<h2>
-						<span>avana</span> A Brand new Agency.
+						<span>U袋</span>
 					</h2>
 				</header>
-				<p>This is the story of Avana, a minimal Bootstrap template for
-					creative agency.</p>
+				<p>欢迎加入我们.</p>
 			</article>
 		</section>
 		<!-- <div class="clearfix"></div> -->
-		<c:forEach items="${blogList }" var="c">
+		<c:forEach items="${list }" var="c">
 			<section class="col-xs-12 col-sm-6 col-md-6 col-lg-6 grid" style="width: 580px;height: 450px;padding-top: 35px;">
 				<figure class="effect-oscar">
-					<img src="${basePath }/upload/${c.BPHOTO}" width="550px" height="415px"
+					<c:if test="${c.GPHOTOPIC==null}">
+						<img src="${basePath }/upload/O1CN011O951700.jpg" width="550px" height="415px"
 								class="img-responsive" />
+					</c:if>
+					<c:if test="${c.GPHOTOPIC!=null}">
+						<img src="${basePath }/upload/${c.GPHOTOPIC }" width="550px" height="415px"
+								class="img-responsive" />
+					</c:if>
 					<figcaption>
-						<h2>${c.BTITLE } <br /><span>${c.SNAME }</span></h2>
-						<p>${c.BDESC }</p>
+						<h2>${c.SNAME } <br /><span>${c.SDESC }</span></h2>
+						<p>${c.GPUBLISH }</p>
 						<a href="storeShowInfoPage.todo?sid=${c.SID }">View more</a>
 					</figcaption>		
 				</figure>

@@ -6,11 +6,7 @@
 <meta charset="UTF-8">
 <title>商品审核</title>
 <%@ include file="easyuiLink.jsp"%>
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <script>
 	//图片格式化
 	function imgFormatter(value, row, index) {
@@ -53,13 +49,8 @@
 				if (d.code == "1") {
 					//成功
 					$("#goodsShenheGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
-				}
+				} 
+				alert(d.data);
 			});
 		}
 	}
@@ -78,13 +69,8 @@
 				if (d.code == "1") {
 					//成功
 					$("#goodsShenheGrid").datagrid('reload');
-					$.message(d.data);
-				} else {
-					$.message({
-                        message:d.data,
-                        type:'error'
-                    });
-				}
+				} 
+				alert(d.data);
 			});
 		}
 	}

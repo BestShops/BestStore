@@ -68,6 +68,8 @@ public class UserOrderAction {
 	        } 
 	        file.transferTo(f);
 	        ordersreturn.setOrphoto(fileName);
+		}else {
+			ordersreturn.setOrphoto(null);
 		}
 		try {
 			// 添加一条退货记录
@@ -78,12 +80,12 @@ public class UserOrderAction {
 			orders.setOstatus(5);
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			orders.setOdealtime(format.parse(format.format(new Date())));
-			ordersBiz.updateOrders(orders);
+			ordersBiz.updateOdealtime(orders);
 			if (index == 1) {
 				// 清空错误信息
 				session.setAttribute("errorInfo", new Ordersreturn());
 				session.setAttribute("errorOrderReturn", "");
-				return "redirect:/userOrderRefundPage.do?pageNo=1";
+				return "redirect:/userOrderRefundPage.do?pageNo=1&type=2";
 			} else {
 				// 添加失败
 				session.setAttribute("errorInfo", ordersreturn);
@@ -111,15 +113,15 @@ public class UserOrderAction {
 		Orders orders = new Orders();
 		orders.setOid(oid);
 		orders.setOstatus(3);// 3代表待评价
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		/*SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date date = new Date();
 		try {
 			date = format.parse(format.format(new Date()));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		orders.setOdealtime(date);// 修改交易完成时间
-		int index = ordersBiz.updateOrders(orders);
+		orders.setOdealtime(date);// 修改交易完成时间	*/
+		int index = ordersBiz.updateOtimeOstatus(orders);
 		if (index == 1) {
 			out.print("OK");
 		} else {
@@ -145,11 +147,13 @@ public class UserOrderAction {
 	
 	// 删除未支付或者已完成的订单
 	@RequestMapping("delOrder.do")
-	public void delOrder(int oid, PrintWriter out) {
-		Orders orders = new Orders();
-		orders.setOid(oid);
-		ordersBiz.deleteOrders(orders);
-		out.print("订单已删除");
+	public void delOrder(Orders orders, PrintWriter out) {
+		if(ordersBiz.deleteOrders(orders)>=1) {
+			out.print("OK");
+		}else {
+			out.print("订单删除失败");
+		}
+		
 	}
 
 	// 展示当前用户所有的订单 type=10为所有
@@ -224,7 +228,7 @@ public class UserOrderAction {
 		Orders orders = new Orders();
 		orders.setOid(ordersreturn.getOid());
 		orders.setOstatus(2);
-		ordersBiz.updateOrders(orders);
+		ordersBiz.updateReturnOrder(orders);
 		out.print("取消退款成功，已经把该订单放回到您的订单中心");
 	}
 	
@@ -263,7 +267,6 @@ public class UserOrderAction {
 			}
 		}
 		files  =files.substring(1, files.length());
-		System.out.println(files.length());
 		Human human = (Human) session.getAttribute("loginHuman");
 		discuss.setHid(human.getHid());
 		discuss.setOdid(odid);
@@ -304,7 +307,6 @@ public class UserOrderAction {
 	 */
 	@RequestMapping(value="findOrderBySid.do")
 	public void findOrderBySid(Orders orders,HttpServletRequest request,PrintWriter out){
-		Store storeHuman=(Store) request.getSession().getAttribute("storeHuman");
 		String page=request.getParameter("page");
 		String rows=request.getParameter("rows");
 		int intPage;
@@ -319,8 +321,8 @@ public class UserOrderAction {
 		}else{
 			intRows=Integer.valueOf(rows);
 		}
-		List<Map<String, Object>> list=ordersBiz.findAllOrderBySid(storeHuman.getSid(),orders,intPage,intRows);
-		long total=ordersBiz.findOrderBySidTotal(storeHuman.getSid());
+		List<Map<String, Object>> list=ordersBiz.findAllOrderBySid(orders,intPage,intRows);
+		long total=ordersBiz.findOrderBySidTotal(orders);
 		Map<String,Object> data=new HashMap<String,Object>();
 		data.put("rows", list);
 		data.put("total", total);
@@ -335,7 +337,7 @@ public class UserOrderAction {
 	@RequestMapping(value="operateOrders.do")
 	public void operateOrders(Orders orders,PrintWriter out) {
 		String data;
-		int result=ordersBiz.updateOrders(orders);
+		int result=ordersBiz.updateStatus(orders);
 		if(result>0) {
 			data=new Gson().toJson(Result.getSuccess("发货成功!"));
 		}else {
@@ -387,5 +389,32 @@ public class UserOrderAction {
 		out.print(data);
 	}
 
+	
+	
+	@RequestMapping(value="discussShow.do")
+	public void discussShow(Discuss discuss,HttpServletRequest request){
+		String page=request.getParameter("page");
+		if(page==null) {
+			page="1";
+		}
+		int rows=8;	//每页条数
+		long total=discussBiz.countByGid(discuss.getGid());	//总条数
+		int totalPage=(int) (total%rows==0 ? total/rows: total/rows+1);	//总页数
+		request.setAttribute("totalPage", totalPage);
+		if(Integer.parseInt(page)<=1) {
+			page="1";
+		}
+		if(Integer.parseInt(page)>=totalPage && totalPage>0){
+			page=totalPage+"";
+		}
+		request.setAttribute("page", page);	//当前页数
+		List<Map<String, Object>> list=discussBiz.findDiscussByGid(discuss.getGid(),Integer.parseInt(page),rows);
+		if(list.size()>0) {
+			request.setAttribute("list", list);
+			request.setAttribute("total", total);
+			request.setAttribute("rows", rows);
+		}
+	}
+	
 	
 }

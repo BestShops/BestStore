@@ -9,11 +9,7 @@
 		 text-align:center;
 	}
 </style>
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 			<div class="pull-right">
@@ -42,6 +38,7 @@
 									<table class="table table-hover table-striped text-center">
 										<tr>
 											<th width="170">申请单号</th>
+											<th width="170">商品图片</th>
 											<th width="170">原订单号</th>
 											<th width="170">商品名称</th>
 											<th width="105">申请时间</th>
@@ -51,7 +48,8 @@
 										</tr>
 										<c:forEach items="${orderlist}" var="ol">
 											<tr>
-												<td>${ol.orid}</td>
+												<td>${ol.orid}</td>  
+												<td><img style="width: 80px;height: 80px;" src="upload/${ol.gphotopic}"></td>
 												<td>${ol.oid}</td>
 												<td class="text-left">
 													<div class="name ep" style="width: 180px">${ol.gname}</div>
@@ -118,7 +116,10 @@
                     message:data,
                     type:'info'
                 });
-				window.location.reload();
+				var t1=window.setTimeout(refreshCount, 1000 * 1);
+			    function refreshCount() {
+			    	window.location.reload();
+			    }
 			});
 		}
 	</script>

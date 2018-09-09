@@ -5,11 +5,7 @@
 <html lang="zh-cmn-Hans">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="http://www.jq22.com/jquery/bootstrap-3.3.4.css">
-<link rel="stylesheet" href="css/message.css">
 </head>
-<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
-<script src="js/message.min.js"></script>
 <body>
 	<%@ include file="header2.jsp" %>
 			<div class="pull-right">
@@ -143,7 +139,10 @@
 				},function(data){
 					if (data == "OK") {
 						$.message("订单确认完成");
-						window.location.href="userOrderPage.do?pageNo=1&type=10";
+						var t1=window.setTimeout(refreshCount, 1000 * 1);
+					    function refreshCount() {
+					    	window.location.href="userOrderPage.do?pageNo=1&type=10";
+					    }
 					} else {
 						$.message({
 	                        message:data,
