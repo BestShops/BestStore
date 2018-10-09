@@ -1,5 +1,5 @@
 BestStore网上购物商城
-开发周期	
+开发周期	<br>
   2018/06—2018/07
 软件环境	
   Windows2007 jdk1.8 tomcat8.0 mysql
